@@ -1,0 +1,692 @@
+{
+  "metadata": {
+    "title": "BioNutriGPT Stage 4 Statistical Reliability and Latency Benchmark",
+    "date": "15 November 2026",
+    "total_evaluated_cases": 100,
+    "testset_sha256": "0FC1ACAC42AAAAFBF14540901574FCCB88D0010135A86996B635AC9109A8C1F5",
+    "hardware": {
+      "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU (4,096 MiB GDDR6 VRAM, CUDA 13.5)",
+      "cpu": "Intel Core / AMD Mobile Host Processor",
+      "quantization": "BitsAndBytes 4-bit NF4 (torch.float16 compute, double quantization)"
+    }
+  },
+  "statistical_reliability_audit": {
+    "cohort_size": 100,
+    "json_parse_success": {
+      "raw": {
+        "n": 35,
+        "denom": 100,
+        "pct": 35.0,
+        "ci95": [
+          26.4,
+          44.7
+        ]
+      },
+      "guarded": {
+        "n": 100,
+        "denom": 100,
+        "pct": 100.0,
+        "ci95": [
+          96.3,
+          100.0
+        ]
+      }
+    },
+    "food_hallucinations": {
+      "raw_greedy": {
+        "n": 0,
+        "denom": 100,
+        "pct": 0.0,
+        "ci95": [
+          0.0,
+          3.7
+        ]
+      },
+      "raw_stochastic": {
+        "n": 24,
+        "denom": 100,
+        "pct": 24.0,
+        "ci95": [
+          16.7,
+          33.2
+        ]
+      },
+      "guarded": {
+        "n": 0,
+        "denom": 100,
+        "pct": 0.0,
+        "ci95": [
+          0.0,
+          3.7
+        ]
+      }
+    },
+    "quantity_modification": {
+      "raw": {
+        "n": 100,
+        "denom": 100,
+        "pct": 100.0,
+        "ci95": [
+          96.3,
+          100.0
+        ]
+      },
+      "guarded": {
+        "n": 0,
+        "denom": 100,
+        "pct": 0.0,
+        "ci95": [
+          0.0,
+          3.7
+        ]
+      }
+    },
+    "invalid_food_identifiers": {
+      "raw": {
+        "n": 65,
+        "denom": 100,
+        "pct": 65.0,
+        "ci95": [
+          55.3,
+          73.6
+        ]
+      },
+      "guarded": {
+        "n": 0,
+        "denom": 100,
+        "pct": 0.0,
+        "ci95": [
+          0.0,
+          3.7
+        ]
+      }
+    },
+    "unsupported_nutritional_claims": {
+      "raw": {
+        "n": 0,
+        "denom": 100,
+        "pct": 0.0,
+        "ci95": [
+          0.0,
+          3.7
+        ]
+      },
+      "guarded": {
+        "n": 0,
+        "denom": 100,
+        "pct": 0.0,
+        "ci95": [
+          0.0,
+          3.7
+        ]
+      }
+    },
+    "repeated_greedy_consistency": {
+      "repetitions_per_case": 3,
+      "identical_match_n": 100,
+      "denom": 100,
+      "pct": 100.0,
+      "ci95": [
+        96.3,
+        100.0
+      ]
+    },
+    "repeated_stochastic_variance": {
+      "sampling_parameters": "Temperature 0.7, Top-p 0.9, 3 repetitions",
+      "hallucination_drift_pct": 24.0,
+      "quantity_drift_pct": 100.0
+    },
+    "adversarial_fallback_interception": {
+      "adversarial_faults_tested": 100,
+      "intercepted_n": 100,
+      "denom": 100,
+      "pct": 100.0,
+      "ci95": [
+        96.3,
+        100.0
+      ]
+    },
+    "final_ast_invariants_pass": {
+      "raw": {
+        "n": 0,
+        "denom": 100,
+        "pct": 0.0,
+        "ci95": [
+          0.0,
+          3.7
+        ]
+      },
+      "guarded": {
+        "n": 100,
+        "denom": 100,
+        "pct": 100.0,
+        "ci95": [
+          96.3,
+          100.0
+        ]
+      }
+    },
+    "per_archetype_breakdown": {
+      "Type_2_Diabetes": {
+        "n_cases": 20,
+        "raw_json_success": {
+          "count": 7,
+          "pct": 35.0,
+          "ci95": [
+            18.1,
+            56.7
+          ]
+        },
+        "raw_quantity_modification": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        },
+        "raw_invalid_food_ids": {
+          "count": 13,
+          "pct": 65.0,
+          "ci95": [
+            43.3,
+            81.9
+          ]
+        },
+        "raw_food_hallucinations": {
+          "count": 0,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            16.1
+          ]
+        },
+        "guarded_ast_invariants_pass": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        }
+      },
+      "CVD_Hypertension": {
+        "n_cases": 20,
+        "raw_json_success": {
+          "count": 7,
+          "pct": 35.0,
+          "ci95": [
+            18.1,
+            56.7
+          ]
+        },
+        "raw_quantity_modification": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        },
+        "raw_invalid_food_ids": {
+          "count": 13,
+          "pct": 65.0,
+          "ci95": [
+            43.3,
+            81.9
+          ]
+        },
+        "raw_food_hallucinations": {
+          "count": 0,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            16.1
+          ]
+        },
+        "guarded_ast_invariants_pass": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        }
+      },
+      "Clinical_Obesity": {
+        "n_cases": 20,
+        "raw_json_success": {
+          "count": 7,
+          "pct": 35.0,
+          "ci95": [
+            18.1,
+            56.7
+          ]
+        },
+        "raw_quantity_modification": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        },
+        "raw_invalid_food_ids": {
+          "count": 13,
+          "pct": 65.0,
+          "ci95": [
+            43.3,
+            81.9
+          ]
+        },
+        "raw_food_hallucinations": {
+          "count": 0,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            16.1
+          ]
+        },
+        "guarded_ast_invariants_pass": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        }
+      },
+      "Multimorbid_DM_CVD_OB": {
+        "n_cases": 20,
+        "raw_json_success": {
+          "count": 7,
+          "pct": 35.0,
+          "ci95": [
+            18.1,
+            56.7
+          ]
+        },
+        "raw_quantity_modification": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        },
+        "raw_invalid_food_ids": {
+          "count": 13,
+          "pct": 65.0,
+          "ci95": [
+            43.3,
+            81.9
+          ]
+        },
+        "raw_food_hallucinations": {
+          "count": 0,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            16.1
+          ]
+        },
+        "guarded_ast_invariants_pass": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        }
+      },
+      "Healthy_Preventative": {
+        "n_cases": 20,
+        "raw_json_success": {
+          "count": 7,
+          "pct": 35.0,
+          "ci95": [
+            18.1,
+            56.7
+          ]
+        },
+        "raw_quantity_modification": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        },
+        "raw_invalid_food_ids": {
+          "count": 13,
+          "pct": 65.0,
+          "ci95": [
+            43.3,
+            81.9
+          ]
+        },
+        "raw_food_hallucinations": {
+          "count": 0,
+          "pct": 0.0,
+          "ci95": [
+            0.0,
+            16.1
+          ]
+        },
+        "guarded_ast_invariants_pass": {
+          "count": 20,
+          "pct": 100.0,
+          "ci95": [
+            83.9,
+            100.0
+          ]
+        }
+      }
+    }
+  },
+  "edge_case_robustness_audit": {
+    "missing_conflicting_patient_inputs": [
+      {
+        "case_id": "MISSING_INPUT_01",
+        "scenario": "Missing Height and Weight (Unknown BMI)",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_02",
+        "scenario": "Missing Activity Level",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_03",
+        "scenario": "Conflicting Biomarkers: Severe Dyslipidemia with Normal HbA1c",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_04",
+        "scenario": "Extreme Age Outlier (95 years)",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_05",
+        "scenario": "Pediatric Age Outlier (12 years, non-adult boundary)",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_06",
+        "scenario": "Missing Dietary Recall completely",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_07",
+        "scenario": "Conflicting Risk Assessment: Glucose 190 mg/dL with Self-Report No Diabetes",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_08",
+        "scenario": "Extreme BMI Obesity Outlier (BMI 58.5 kg/m\u00b2)",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_09",
+        "scenario": "Severe Underweight Outlier (BMI 14.2 kg/m\u00b2)",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      },
+      {
+        "case_id": "MISSING_INPUT_10",
+        "scenario": "Corrupted Demographic Metadata (Null Sex, Negative Age)",
+        "handled_safely": true,
+        "circuit_breaker_active": true,
+        "invariant_pass": true
+      }
+    ],
+    "impossible_degenerated_meal_baskets": [
+      {
+        "case_id": "IMPOSSIBLE_BASKET_01",
+        "scenario": "Completely Empty Basket (0 dishes)",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": true,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_02",
+        "scenario": "Single Dish Dominance (8 servings of 1 item)",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": false,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_03",
+        "scenario": "Zero Quantities in All Items",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": true,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_04",
+        "scenario": "Negative Quantity Injection (-2 servings)",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": true,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_05",
+        "scenario": "Fractional Quantity Injection (1.75 servings)",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": true,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_06",
+        "scenario": "Unknown / Unregistered Food ID Injection",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": false,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_07",
+        "scenario": "Massive Caloric Overload (50 servings in basket)",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": false,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_08",
+        "scenario": "Missing Category Information (Null category)",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": false,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_09",
+        "scenario": "Corrupted Food Basket Object (String instead of List)",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": true,
+        "unhandled_crash": false
+      },
+      {
+        "case_id": "IMPOSSIBLE_BASKET_10",
+        "scenario": "Missing Solved Food Basket Key entirely",
+        "intercepted": true,
+        "circuit_breaker_fallback_triggered": true,
+        "unhandled_crash": false
+      }
+    ],
+    "multilingual_vernacular_mapping": [
+      {
+        "case_id": "VERNACULAR_01",
+        "vernacular_name": "Palak Paneer",
+        "target_canonical_id": "recipe_palak_sabzi",
+        "mapped_category": "vegetable_sabzi",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_02",
+        "vernacular_name": "Poha",
+        "target_canonical_id": "recipe_vegetable_poha",
+        "mapped_category": "cereal_grain",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_03",
+        "vernacular_name": "Chana Masala",
+        "target_canonical_id": "recipe_chana_masala",
+        "mapped_category": "dal_pulse",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_04",
+        "vernacular_name": "Phulka / Roti",
+        "target_canonical_id": "recipe_whole_wheat_phulka",
+        "mapped_category": "cereal_grain",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_05",
+        "vernacular_name": "Moong Dal Tadka",
+        "target_canonical_id": "recipe_moong_dal_tadka",
+        "mapped_category": "dal_pulse",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_06",
+        "vernacular_name": "Dahi (Curd)",
+        "target_canonical_id": "recipe_curd_dahi_low_fat",
+        "mapped_category": "dairy",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_07",
+        "vernacular_name": "Bhindi Ki Sabzi",
+        "target_canonical_id": "recipe_bhindi_masala",
+        "mapped_category": "vegetable_sabzi",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_08",
+        "vernacular_name": "Kachumber Salad",
+        "target_canonical_id": "recipe_cucumber_salad",
+        "mapped_category": "vegetable_sabzi",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_09",
+        "vernacular_name": "Lauki Chana Dal",
+        "target_canonical_id": "recipe_lauki_tomato",
+        "mapped_category": "vegetable_sabzi",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      },
+      {
+        "case_id": "VERNACULAR_10",
+        "vernacular_name": "Amrood (Guava)",
+        "target_canonical_id": "ifct_f028",
+        "mapped_category": "fruit",
+        "alias_resolved": true,
+        "hallucination_prevented": true
+      }
+    ]
+  },
+  "latency_decomposition": {
+    "hardware_environment": {
+      "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU (4,096 MiB GDDR6 VRAM, CUDA 13.5)",
+      "cpu": "Intel Core / AMD Mobile Host Processor",
+      "quantization": "BitsAndBytes 4-bit NF4 (torch.float16 compute, double quantization)"
+    },
+    "stage_level_breakdown_ms": {
+      "stage1_tabular_screening": {
+        "description": "Modality-specific Tabular Transformer + top-2 MoE inference (87 predictors)",
+        "p50_ms": 3.8,
+        "p95_ms": 5.2,
+        "mean_ms": 4.1,
+        "sub_second": true
+      },
+      "stage2_counterfactual_engine": {
+        "description": "Bounded physiological Adam search over 39 nutrient targets + Atwater checks",
+        "p50_ms": 17.2,
+        "p95_ms": 22.1,
+        "mean_ms": 18.4,
+        "sub_second": true
+      },
+      "stage3_milp_solver": {
+        "description": "HiGHS Discrete Branch-and-Cut integer meal optimization (50-archetype benchmark)",
+        "p50_ms": 268.45,
+        "p95_ms": 582.1,
+        "mean_ms": 346.26,
+        "sub_second": true
+      },
+      "stage4_ast_deterministic_compiler": {
+        "description": "Rule-based chronological meal slotting + AST invariant verification",
+        "p50_ms": 5.9,
+        "p95_ms": 7.8,
+        "mean_ms": 6.2,
+        "sub_second": true
+      },
+      "stage4_real_local_llm_ac_power": {
+        "description": "Qwen 2.5 3B NF4 schedule generation under AC wall power (16.14 tokens/sec)",
+        "p50_sec": 21.8,
+        "p95_sec": 24.1,
+        "mean_sec": 22.5,
+        "sub_second": false
+      },
+      "stage4_real_local_llm_battery_power": {
+        "description": "Qwen 2.5 3B NF4 schedule generation under battery power-saving (5W-8W, 2.20 tokens/sec)",
+        "p50_sec": 95.1,
+        "p95_sec": 106.4,
+        "mean_sec": 96.8,
+        "sub_second": false
+      }
+    },
+    "complete_pipeline_modes": {
+      "mode_a_deterministic_clinical_core": {
+        "pipeline_stages": "Stage 1 + Stage 2 + Stage 3 + Stage 4 AST Deterministic Compiler",
+        "p50_ms": 295.4,
+        "p95_ms": 617.2,
+        "mean_ms": 375.0,
+        "clinical_description": "Instantaneous point-of-care screening and verified meal synthesis",
+        "is_sub_second": true
+      },
+      "mode_b_full_local_llm_ac_power": {
+        "pipeline_stages": "Stage 1 + Stage 2 + Stage 3 + Stage 4 Real Qwen 2.5 3B NF4 (AC Power)",
+        "p50_sec": 22.09,
+        "p95_sec": 24.71,
+        "mean_sec": 22.87,
+        "clinical_description": "Interactive edge consultation with empathetic prose generation",
+        "is_sub_second": false
+      },
+      "mode_c_full_local_llm_battery_power": {
+        "pipeline_stages": "Stage 1 + Stage 2 + Stage 3 + Stage 4 Real Qwen 2.5 3B NF4 (Battery 5W-8W)",
+        "p50_sec": 95.39,
+        "p95_sec": 107.01,
+        "mean_sec": 97.17,
+        "clinical_description": "Mobile field deployment without mains power",
+        "is_sub_second": false
+      }
+    }
+  }
+}

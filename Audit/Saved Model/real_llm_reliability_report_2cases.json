@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "evaluation_title": "BioNutriGPT Stage 4 Real LLM Reliability Benchmark",
+    "model_id": "Qwen/Qwen2.5-3B-Instruct",
+    "quantization": "BitsAndBytes 4-bit NF4 (torch.float16 compute, double quantization)",
+    "hardware_device": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "total_evaluated_cases": 2,
+    "phenotype_distribution": {
+      "Type_2_Diabetes": 2,
+      "CVD_Hypertension": 0,
+      "Clinical_Obesity": 0,
+      "Multimorbid_DM_CVD_OB": 0,
+      "Healthy_Preventative": 0
+    },
+    "eval_runtime_seconds": 47.02,
+    "mean_case_latency_ms": 23483.35,
+    "median_case_latency_ms": 23483.35
+  },
+  "raw_unconstrained_llm_metrics": {
+    "description": "Raw outputs directly from Qwen 2.5 3B without Stage 4 circuit-breaker guards",
+    "json_parsing_success_rate_pct": 0.0,
+    "food_hallucination_rate_pct": 0.0,
+    "quantity_modification_rate_pct": 100.0,
+    "invalid_food_identifier_rate_pct": 100.0,
+    "unsupported_nutritional_claims_rate_pct": 0.0
+  },
+  "guarded_stage4_pipeline_metrics": {
+    "description": "Final patient reports after passing through Stage 4 AST circuit-breakers and deterministic repair",
+    "circuit_breaker_repair_activation_rate_pct": 100.0,
+    "final_ast_clinical_invariants_pass_rate_pct": 100.0,
+    "final_food_conservation_pass_rate_pct": 100.0,
+    "final_quantity_conservation_pass_rate_pct": 100.0,
+    "final_zero_calculation_authority_pass_rate_pct": 100.0,
+    "final_schema_validity_pass_rate_pct": 100.0
+  },
+  "repeated_generation_consistency": {
+    "cases_evaluated": 1,
+    "greedy_deterministic_consistency_pct": 100.0,
+    "stochastic_mean_hallucination_rate_pct": 0.0,
+    "stochastic_mean_quantity_modification_rate_pct": 100.0
+  },
+  "fault_injection_fallback_audit": {
+    "adversarial_cases_tested": 2,
+    "hallucinated_dish_intercept_rate_pct": 100.0,
+    "quantity_tampering_intercept_rate_pct": 100.0,
+    "broken_json_intercept_rate_pct": 100.0,
+    "deterministic_fallback_safety_pass_rate_pct": 100.0
+  },
+  "case_level_details": [
+    {
+      "case_id": "CASE_001_Type_2_Diabetes",
+      "phenotype": "Type_2_Diabetes",
+      "elapsed_ms": 24448.75,
+      "raw_audit": {
+        "json_parse_ok": false,
+        "has_food_hallucinations": false,
+        "hallucinated_foods": [],
+        "has_quantity_modifications": true,
+        "quantity_modifications": {
+          "all": "Unparseable JSON"
+        },
+        "has_invalid_food_ids": true,
+        "invalid_food_ids": [
+          "Unparseable JSON"
+        ],
+        "has_unsupported_nutritional_claims": false,
+        "unsupported_nutritional_claims": [],
+        "schedule_valid": false
+      },
+      "guarded_audit": {
+        "circuit_breaker_tripped": true,
+        "schedule_repaired": true,
+        "invariants_passed": true,
+        "invariant_failures": [],
+        "guarded_all_servings_preserved": true,
+        "guarded_basket_preserved": true
+      }
+    },
+    {
+      "case_id": "CASE_002_Type_2_Diabetes",
+      "phenotype": "Type_2_Diabetes",
+      "elapsed_ms": 22517.95,
+      "raw_audit": {
+        "json_parse_ok": false,
+        "has_food_hallucinations": false,
+        "hallucinated_foods": [],
+        "has_quantity_modifications": true,
+        "quantity_modifications": {
+          "all": "Unparseable JSON"
+        },
+        "has_invalid_food_ids": true,
+        "invalid_food_ids": [
+          "Unparseable JSON"
+        ],
+        "has_unsupported_nutritional_claims": false,
+        "unsupported_nutritional_claims": [],
+        "schedule_valid": false
+      },
+      "guarded_audit": {
+        "circuit_breaker_tripped": true,
+        "schedule_repaired": true,
+        "invariants_passed": true,
+        "invariant_failures": [],
+        "guarded_all_servings_preserved": true,
+        "guarded_basket_preserved": true
+      }
+    }
+  ]
+}

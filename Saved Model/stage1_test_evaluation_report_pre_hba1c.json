@@ -1,0 +1,33 @@
+{
+  "evaluation": "temporal_external_validation",
+  "cohort": "NHANES 2017-2020",
+  "n_samples": 7046,
+  "target_order": [
+    "TARGET_DIABETES",
+    "TARGET_OBESITY",
+    "TARGET_CVD"
+  ],
+  "metrics": {
+    "diabetes": {
+      "auroc": 0.9558042755377913,
+      "pr_auc_average_precision": 0.8980895217108694,
+      "brier_score": 0.07510021328926086
+    },
+    "obesity": {
+      "auroc": 0.7579760581287505,
+      "pr_auc_average_precision": 0.7027058320808309,
+      "brier_score": 0.19840168952941895
+    },
+    "cvd": {
+      "auroc": 0.8282781265476366,
+      "pr_auc_average_precision": 0.4000953235954661,
+      "brier_score": 0.1964433193206787
+    },
+    "mean": {
+      "auroc": 0.8473528200713928,
+      "pr_auc_average_precision": 0.6669635591290555,
+      "brier_score": 0.15664840737978616
+    }
+  },
+  "checkpoint": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\Saved Model\\bionutrigpt_stage1_best.pt"
+}

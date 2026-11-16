@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560" role="img" aria-labelledby="title desc">
+<title id="title">Matched meal optimizer comparison</title><desc id="desc">Pass rates for integer plans, plate rules, and all seven nutrient bounds across four methods on 20 synthetic cases.</desc>
+<style>
+.bg{fill:#fbfcfe}.h{font:700 24px Arial;fill:#17344c}.lab{font:15px Arial;fill:#253b4c}.small{font:13px Arial;fill:#52687b}.a{fill:#3478b8}.b{fill:#39a779}.c{fill:#e19b36}.axis{stroke:#9aabba;stroke-width:1}.grid{stroke:#dce3e9;stroke-width:1}
+</style>
+<rect class="bg" width="1080" height="560"/>
+<text x="540" y="38" text-anchor="middle" class="h">Matched optimizer benchmark (N=20)</text>
+<text x="540" y="65" text-anchor="middle" class="lab">Pass rate by criterion</text>
+<line x1="100" y1="430" x2="1025" y2="430" class="axis"/>
+<line x1="100" y1="130" x2="100" y2="430" class="axis"/>
+<line x1="100" y1="130" x2="1025" y2="130" class="grid"/><line x1="100" y1="280" x2="1025" y2="280" class="grid"/>
+<text x="80" y="435" text-anchor="end" class="small">0%</text><text x="80" y="285" text-anchor="end" class="small">50%</text><text x="80" y="135" text-anchor="end" class="small">100%</text>
+<!-- LP: integer 0, plate 80, nutrient 100 -->
+<rect x="165" y="430" width="36" height="0" class="a"/><rect x="207" y="190" width="36" height="240" class="b"/><rect x="249" y="130" width="36" height="300" class="c"/>
+<!-- LP with binary food selection: 5, 100, 100 -->
+<rect x="385" y="415" width="36" height="15" class="a"/><rect x="427" y="130" width="36" height="300" class="b"/><rect x="469" y="130" width="36" height="300" class="c"/>
+<!-- MILP: 100,100,95 -->
+<rect x="605" y="130" width="36" height="300" class="a"/><rect x="647" y="130" width="36" height="300" class="b"/><rect x="689" y="145" width="36" height="285" class="c"/>
+<!-- Qwen: 100,0,0 -->
+<rect x="825" y="130" width="36" height="300" class="a"/><rect x="867" y="430" width="36" height="0" class="b"/><rect x="909" y="430" width="36" height="0" class="c"/>
+<text x="225" y="458" text-anchor="middle" class="small">Continuous LP</text><text x="445" y="458" text-anchor="middle" class="small">Continuous + binary</text><text x="665" y="458" text-anchor="middle" class="small">Discrete MILP</text><text x="885" y="458" text-anchor="middle" class="small">Direct Qwen</text>
+<rect x="230" y="490" width="18" height="14" class="a"/><text x="255" y="502" class="small">Integer servings</text><rect x="395" y="490" width="18" height="14" class="b"/><text x="420" y="502" class="small">Plate rules</text><rect x="520" y="490" width="18" height="14" class="c"/><text x="545" y="502" class="small">All 7 nutrient bounds</text>
+<text x="540" y="535" text-anchor="middle" class="small">Synthetic cases; estimated food composition and prices. One MILP case missed a nutrient bound.</text>
+</svg>

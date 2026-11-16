@@ -1,0 +1,126 @@
+================================================================================
+BIONUTRIGPT DATA CLEANING LOG (PLAIN-ENGLISH EDITION)
+================================================================================
+
+--------------------------------------------------------------------------------
+1. WHERE THE DATA STARTED & WHAT CLEAN FILES WE CREATED
+--------------------------------------------------------------------------------
+- Starting Raw File : Models/Less Data/Data/BioNutriGPT_merged_raw_2005_2020.csv
+                      (45,980 adults, 848 raw survey columns)
+- Cleaning Script   : Models/Less Data/Data/preprocess_raw_genuinely.py
+
+Clean Outputs Created (Real clinical units only - NO fake numbers, NO ML scaling):
+  1. Training File (2007-2016)    : BioNutriGPT_train_2007_2016_clean.csv (23,694 people, 69 cols)
+  2. Future Test File (2017-2020) : BioNutriGPT_test_2017_2020_clean.csv  ( 7,046 people, 69 cols)
+  * Total Clean Patients          : 30,740 real adults (23,694 train + 7,046 future test)
+
+--------------------------------------------------------------------------------
+2. INITIAL VS. PRESENT ROWS & WHY WE REMOVED ROWS (SIMPLE BREAKDOWN)
+--------------------------------------------------------------------------------
+- Initial Raw Rows : 45,980 adults
+- Final Clean Rows : 30,740 adults (15,240 removed total)
+
+Step 1 - Remove Duplicate People (45,980 -> 45,980 | 0 removed)
+  Why: Checked Patient IDs (SEQN). Every person was already unique.
+
+Step 2 - Remove Older Years 2005-2006 (45,980 -> 40,417 | 5,563 removed)
+  Why: Sitting hours (PAD680) and modern exercise questions (PAQ605-PAQ675) started
+       in 2007. People from 2005-2006 had 100% blank exercise answers.
+
+Step 3 - Remove People Missing Disease Answers (40,417 -> 35,502 | 4,915 removed)
+  Why: Every person must have a clear Yes (1) or No (0) answer for all 3 diseases:
+       Diabetes, Obesity, and Heart Disease (CVD).
+
+Step 4 - Keep People With Real Non-Fasting Blood Tests (35,502 -> 33,263 | 2,239 removed)
+  Why: In NHANES, tests are split into two groups:
+       * Non-Fasting Tests (taken anytime of day): HbA1c, HDL, Total Cholesterol.
+         About 94% of people in this step had all 3 non-fasting tests (33,263 people).
+       * Morning-Only Fasting Tests: Fasting Glucose, Triglycerides, LDL.
+         Only 44% of people took morning fasting tests (15,760 people).
+
+  Medical Confidence for Dropping the 3 Fasting Labs (Why This is Clinically Sound):
+    1. Gold-Standard Diabetes Marker Kept: HbA1c measures average blood sugar over
+       3 full months. It is far more reliable and stable than single-day morning
+       fasting glucose, which fluctuates wildly from stress or a late dinner.
+    2. Complete Cardiovascular Risk Captured: From Total Cholesterol and HDL (Good
+       Cholesterol), we calculate Non-HDL Cholesterol (Total - HDL). Cardiologists
+       widely recommend Non-HDL as an equal or superior measure of all bad cholesterol
+       (including LDL and VLDL) without requiring patients to fast.
+    3. Real-World Walk-In Clinic Usability: In real hospitals and telehealth, patients
+       visit in the afternoon after eating. Requiring fasting tests makes AI unusable
+       for walk-in patients. Non-fasting labs work for anyone, morning or afternoon.
+    4. Zero Faked / Guessed Labs: Avoided guessing 20,000 missing lab numbers, giving
+       us 30,740 100% genuine measured patient records.
+
+Step 5 - Remove Unreliable or Incomplete Food Diaries (33,263 -> 31,023 | 2,240 removed)
+  Why: Removed people whose 24-hour food diary was marked unreliable (DR1DRSTZ != 1)
+       or was missing any of the 39 daily nutrients.
+
+Step 6 - Remove Impossible Numbers & Typos (31,023 -> 30,740 | 283 removed)
+  Why: Removed obvious errors like logging under 500 or over 8,000 calories in a day,
+       negative nutrients, or impossible lab numbers (HbA1c outside 3-20, HDL
+       outside 10-200, Total Cholesterol outside 50-600).
+
+Final Disease Counts:
+  - Train Set (2007-2016 | 23,694 people):
+      Diabetes: 3,022 Yes (12.75%) | Obesity: 8,932 Yes (37.70%) | CVD: 2,205 Yes (9.31%)
+  - Future Test Set (2017-2020 | 7,046 people):
+      Diabetes: 1,409 Yes (20.00%) | Obesity: 3,075 Yes (43.64%) | CVD: 845 Yes (11.99%)
+
+--------------------------------------------------------------------------------
+3. SANITIZATION & EMPTY VALUES (NO GUESSING / NO FAKE VALUES)
+--------------------------------------------------------------------------------
+- Fixed 41,769 tiny computer float glitches (~5.3976e-79 -> 0.0).
+- Converted NHANES "Refused / Don't Know" codes (7/9, 77/99, 7777/9999) to blank (NaN).
+- Converted smoking & exercise skip questions into real numbers (e.g., if a person
+  answered "No" to vigorous work, weekly work minutes = 0.0 instead of blank).
+- Genuine blanks (like missing income ratio INDFMPIR or missing sitting minutes)
+  were left blank (NaN) so no values were invented during cleaning.
+
+--------------------------------------------------------------------------------
+4. INITIAL VS. PRESENT COLUMNS & WHY WE DROPPED COLUMNS
+--------------------------------------------------------------------------------
+- Initial Raw Columns : 848 columns
+- Final Clean Columns :  69 columns (772 dropped, 16 combined into 8, 2 derived)
+
+All 69 Clean Columns Kept (Same in Both Train & Future Test):
+  * 5 ID & Diseases   : SEQN, NHANES_CYCLE, Diabetes, Obesity, Heart Disease (CVD).
+  * 4 Non-Fasting Labs: HbA1c, HDL, Total Cholesterol, and Non-HDL Cholesterol (TC - HDL).
+  * 6 Demographics    : Age, Sex, Race, Education, Marital Status, Income Ratio.
+  * 39 Nutrients      : Calories, Protein, Carbs, Sugar, Fiber, Fats, Vitamins & Minerals.
+  * 15 Lifestyle      : Sleep Hours, Sleep Trouble (SLQ050), Daily Sitting Minutes,
+                        Smoking Status, all 5 WHO Activity Questions (Work/Walk/Gym
+                        Yes/No + Minutes/Week), and Total MET Activity Score.
+
+Why 772 Columns Were Dropped (Including 134 100% Empty Columns):
+  1. Completely Empty / Retired Survey Columns (134 cols 100% empty, 294 cols total):
+     - In raw NHANES, 134 columns were completely empty (100% NaN) across modern years
+       because the CDC discontinued old questions (e.g., PAD020/PAD120 old exercise,
+       INDHHINC old income codes, DMDBORN old birth country code).
+     - Dropped these completely along with other unused survey modules (blood pressure
+       cuff tests, alcohol surveys, and administrative barcodes).
+  2. Answer-Revealing Cheating Columns (324 cols):
+     - Body weight/waist (BMX*, WHQ*, WHD*, BMI*) directly give away Obesity.
+     - Doctor diagnosis answers (MCQ*, DIQ*, CDQ*) directly give away Diabetes & CVD.
+  3. Morning-Only Fasting Labs (3 cols):
+     - Fasting Glucose (LBXGLU), Triglycerides (LBXTR), LDL (LBDLDL). Dropped to keep
+       30,740 real people with 0% fake lab guesses instead of cutting down to 14k.
+  4. Extra Diet Questions (126 cols):
+     - 66 rare fish/shellfish frequency columns, 19 redundant fatty-acid sub-types,
+       15 special-diet leak flags (e.g., "Are you on a diabetic diet?"), 7 extra
+       sub-nutrients, and 19 interviewer/water admin codes.
+  5. Rare or Duplicate Lab Columns (14 cols):
+     - Rare blood tests (like LBXAPB apolipoprotein B, which was 100% blank) and
+       duplicate metric unit copies (*SI cols like LBDGLUSI, LBDTCSI).
+  6. Survey Weights & Filter-Only Col (11 cols):
+     - Census population weights (WT*) and DR1DRSTZ (dropped after filtering == 1).
+  7. Family Size (DMDHHSIZ - 1 col):
+     - CDC omitted DMDHHSIZ from the 2017-2020 file. Dropped so the test set has
+       zero 100%-empty columns.
+
+What Happened to Columns Whose Names Changed Across Years:
+  - DMDMARTL (2007-2016) + DMDMARTZ (2017-2020) -> merged into MARITAL_STATUS (1, 2, 3).
+  - SLD010H (2007-2014) + SLD012 (2015-2020)    -> merged into SLEEP_HOURS.
+  - Dropped 2021-2023 completely so we could KEEP all 10 full 2007-2020 lifestyle
+    features (work activity, walking/biking, and SLQ050 doctor sleep disorder).
+================================================================================

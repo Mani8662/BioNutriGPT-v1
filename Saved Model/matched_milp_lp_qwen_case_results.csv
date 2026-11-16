@@ -1,0 +1,81 @@
+case_id,phenotype,method,runtime_ms,estimated_cost_inr,objective_score,solver_objective,nutrient_violations,hard_rules_met,integer_serving_plan,fractional_food_count,fractional_serving_distance_sum,llm_parse_ok
+DM_01,Type 2 Diabetes Screening Profile,MILP,511.357,118.0,1.78,1.78,0,True,True,0,0.0,
+DM_01,Type 2 Diabetes Screening Profile,Continuous LP,19.89,114.41,1.74407,1.7093763114101734,0,True,False,2,0.4975,
+DM_01,Type 2 Diabetes Screening Profile,Continuous servings (binary dish selection),249.323,114.32,1.743208,1.743207547169811,0,True,False,2,0.5283,
+DM_01,Type 2 Diabetes Screening Profile,Real Qwen 2.5 3B,9621.201,69.0,398.738095,398.738095,6,False,True,0,0.0,True
+DM_05,Type 2 Diabetes Screening Profile,MILP,925.531,127.0,1.87,1.87,0,True,True,0,0.0,
+DM_05,Type 2 Diabetes Screening Profile,Continuous LP,2.261,123.46,1.834576,1.795215252152522,0,True,False,2,0.6679,
+DM_05,Type 2 Diabetes Screening Profile,Continuous servings (binary dish selection),71.488,123.08,1.830755,1.830754716981132,0,True,False,2,0.5396,
+DM_05,Type 2 Diabetes Screening Profile,Real Qwen 2.5 3B,7007.863,56.0,644.739087,644.739087,7,False,True,0,0.0,True
+DM_08,Type 2 Diabetes Screening Profile,MILP,628.92,144.0,1.94,1.94,0,True,True,0,0.0,
+DM_08,Type 2 Diabetes Screening Profile,Continuous LP,2.317,129.66,1.996592,1.8632584670231733,0,True,False,1,0.1157,
+DM_08,Type 2 Diabetes Screening Profile,Continuous servings (binary dish selection),35.671,129.69,1.896886,1.8968858033437235,0,True,False,1,0.1216,
+DM_08,Type 2 Diabetes Screening Profile,Real Qwen 2.5 3B,7762.611,69.0,484.938258,484.938258,6,False,True,0,0.0,True
+DM_11,Type 2 Diabetes Screening Profile,MILP,1299.75,154.0,2.04,2.04,0,True,True,0,0.0,
+DM_11,Type 2 Diabetes Screening Profile,Continuous LP,4.35,139.18,2.091834,1.9424693990365627,0,True,False,4,1.5338,
+DM_11,Type 2 Diabetes Screening Profile,Continuous servings (binary dish selection),213.582,148.08,1.980825,1.9808247422680412,0,True,False,2,0.5773,
+DM_11,Type 2 Diabetes Screening Profile,Real Qwen 2.5 3B,7939.767,69.0,521.506723,521.506723,6,False,True,0,0.0,True
+DM_15,Type 2 Diabetes Screening Profile,MILP,1648.727,166.0,2.16,2.16,0,True,True,0,0.0,
+DM_15,Type 2 Diabetes Screening Profile,Continuous LP,3.845,152.28,2.222836,2.051359867330016,0,True,False,4,1.3134,
+DM_15,Type 2 Diabetes Screening Profile,Continuous servings (binary dish selection),75.343,157.32,2.073196,2.07319587628866,0,True,False,2,0.5361,
+DM_15,Type 2 Diabetes Screening Profile,Real Qwen 2.5 3B,6692.887,56.0,763.619312,763.619312,7,False,True,0,0.0,True
+OB_01,Obesity Caloric Deficit Profile,MILP,2129.497,127.0,1.77,1.77,0,True,True,0,0.0,
+OB_01,Obesity Caloric Deficit Profile,Continuous LP,3.353,113.29,1.932897,1.6336506069516705,0,True,False,3,0.6335,
+OB_01,Obesity Caloric Deficit Profile,Continuous servings (binary dish selection),146.685,116.17,1.661739,1.6617391304347777,0,True,False,1,0.1304,
+OB_01,Obesity Caloric Deficit Profile,Real Qwen 2.5 3B,6516.79,46.0,678.863222,678.863222,7,False,True,0,0.0,True
+OB_05,Obesity Caloric Deficit Profile,MILP,234.424,124.0,1.74,1.74,0,True,True,0,0.0,
+OB_05,Obesity Caloric Deficit Profile,Continuous LP,2.306,120.25,1.902476,1.7037219977750455,0,True,False,1,0.2918,
+OB_05,Obesity Caloric Deficit Profile,Continuous servings (binary dish selection),77.894,123.25,1.732533,1.7325333333333335,0,True,False,2,0.1667,
+OB_05,Obesity Caloric Deficit Profile,Real Qwen 2.5 3B,6693.776,46.0,735.802026,735.802026,7,False,True,0,0.0,True
+OB_08,Obesity Caloric Deficit Profile,MILP,560.804,134.0,1.84,1.84,0,True,True,0,0.0,
+OB_08,Obesity Caloric Deficit Profile,Continuous LP,2.367,125.57,2.055706,1.7687444794952687,0,True,False,5,0.6835,
+OB_08,Obesity Caloric Deficit Profile,Continuous servings (binary dish selection),190.816,129.55,1.795533,1.7955333333333332,0,True,False,2,0.5417,
+OB_08,Obesity Caloric Deficit Profile,Real Qwen 2.5 3B,6530.89,46.0,778.265206,778.265206,7,False,True,0,0.0,True
+OB_11,Obesity Caloric Deficit Profile,MILP,1864.089,147.0,1.97,1.97,0,True,True,0,0.0,
+OB_11,Obesity Caloric Deficit Profile,Continuous LP,3.946,133.11,2.131075,1.846014773776547,0,True,False,5,1.0488,
+OB_11,Obesity Caloric Deficit Profile,Continuous servings (binary dish selection),85.563,136.26,1.862637,1.8626373626373525,0,True,False,2,0.2418,
+OB_11,Obesity Caloric Deficit Profile,Real Qwen 2.5 3B,6507.742,56.0,759.753244,759.753244,7,False,True,0,0.0,True
+OB_15,Obesity Caloric Deficit Profile,MILP,2888.504,153.0,2.13,2.13,0,True,True,0,0.0,
+OB_15,Obesity Caloric Deficit Profile,Continuous LP,2.37,144.63,2.246281,1.9531646647795378,0,True,False,6,1.1978,
+OB_15,Obesity Caloric Deficit Profile,Continuous servings (binary dish selection),777.043,152.2,2.021976,2.021975560081169,0,True,False,2,0.3259,
+OB_15,Obesity Caloric Deficit Profile,Real Qwen 2.5 3B,6793.113,56.0,805.113858,805.113858,7,False,True,0,0.0,True
+CVD_01,Hypertension / CVD DASH Profile,MILP,1488.614,139.0,1.99,1.99,0,True,True,0,0.0,
+CVD_01,Hypertension / CVD DASH Profile,Continuous LP,2.343,131.56,2.015647,1.8634705422722309,0,True,False,5,1.5977,
+CVD_01,Hypertension / CVD DASH Profile,Continuous servings (binary dish selection),226.373,140.3,1.903043,1.903043478260868,0,True,False,1,0.4783,
+CVD_01,Hypertension / CVD DASH Profile,Real Qwen 2.5 3B,6674.951,46.0,728.770167,728.770167,7,False,True,0,0.0,True
+CVD_03,Hypertension / CVD DASH Profile,MILP,1962.819,148.0,2.08,2.08,0,True,True,0,0.0,
+CVD_03,Hypertension / CVD DASH Profile,Continuous LP,2.554,139.37,2.193677,1.9284632234770926,0,True,False,5,0.9873,
+CVD_03,Hypertension / CVD DASH Profile,Continuous servings (binary dish selection),149.324,146.39,1.963913,1.9639130434782595,0,True,True,0,0.0435,
+CVD_03,Hypertension / CVD DASH Profile,Real Qwen 2.5 3B,6720.569,56.0,706.834091,706.834091,6,False,True,0,0.0,True
+CVD_05,Hypertension / CVD DASH Profile,MILP,2073.827,158.0,2.18,2.18,0,True,True,0,0.0,
+CVD_05,Hypertension / CVD DASH Profile,Continuous LP,3.127,147.82,2.278214,2.0028847723318073,0,True,False,6,1.6463,
+CVD_05,Hypertension / CVD DASH Profile,Continuous servings (binary dish selection),962.293,160.91,2.109121,2.109120879120634,0,True,False,2,0.7473,
+CVD_05,Hypertension / CVD DASH Profile,Real Qwen 2.5 3B,6763.483,56.0,736.305,736.305,6,False,True,0,0.0,True
+CVD_08,Hypertension / CVD DASH Profile,MILP,2578.264,166.0,2.36,2.36,0,True,True,0,0.0,
+CVD_08,Hypertension / CVD DASH Profile,Continuous LP,2.58,156.43,2.464267,2.126216105785542,0,False,False,5,1.279,
+CVD_08,Hypertension / CVD DASH Profile,Continuous servings (binary dish selection),601.093,164.79,2.247905,2.2479050736497546,0,True,False,1,0.4828,
+CVD_08,Hypertension / CVD DASH Profile,Real Qwen 2.5 3B,6912.418,56.0,780.34331,780.34331,6,False,True,0,0.0,True
+CVD_10,Hypertension / CVD DASH Profile,MILP,2269.213,179.0,2.55,2.55,1,True,True,0,0.0,
+CVD_10,Hypertension / CVD DASH Profile,Continuous LP,2.245,166.11,2.461063,2.227730062742129,0,True,False,5,1.7436,
+CVD_10,Hypertension / CVD DASH Profile,Continuous servings (binary dish selection),429.671,175.79,2.357856,2.3578560201194527,0,True,False,3,0.7576,
+CVD_10,Hypertension / CVD DASH Profile,Real Qwen 2.5 3B,6789.013,46.0,860.587187,860.587187,7,False,True,0,0.0,True
+MULTI_01,Multimorbid (T2D + HTN + Obesity) Profile,MILP,2300.13,140.0,1.9,1.9,0,True,True,0,0.0,
+MULTI_01,Multimorbid (T2D + HTN + Obesity) Profile,Continuous LP,2.57,127.71,2.077077,1.77707691163621,0,False,False,4,1.0453,
+MULTI_01,Multimorbid (T2D + HTN + Obesity) Profile,Continuous servings (binary dish selection),512.552,131.53,1.815257,1.815257142857138,0,True,False,2,0.5714,
+MULTI_01,Multimorbid (T2D + HTN + Obesity) Profile,Real Qwen 2.5 3B,6707.664,46.0,760.862206,760.862206,7,False,True,0,0.0,True
+MULTI_03,Multimorbid (T2D + HTN + Obesity) Profile,MILP,1449.976,142.0,1.92,1.92,0,True,True,0,0.0,
+MULTI_03,Multimorbid (T2D + HTN + Obesity) Profile,Continuous LP,2.417,130.74,2.107361,1.8073606127646937,0,False,False,4,1.491,
+MULTI_03,Multimorbid (T2D + HTN + Obesity) Profile,Continuous servings (binary dish selection),326.791,135.22,1.852169,1.8521686746987907,0,True,False,2,0.6928,
+MULTI_03,Multimorbid (T2D + HTN + Obesity) Profile,Real Qwen 2.5 3B,6643.438,46.0,782.876626,782.876626,7,False,True,0,0.0,True
+MULTI_05,Multimorbid (T2D + HTN + Obesity) Profile,MILP,2671.088,139.0,1.99,1.99,0,True,True,0,0.0,
+MULTI_05,Multimorbid (T2D + HTN + Obesity) Profile,Continuous LP,2.181,133.76,2.137644,1.8376443138931775,0,False,False,4,0.7575,
+MULTI_05,Multimorbid (T2D + HTN + Obesity) Profile,Continuous servings (binary dish selection),428.738,138.67,1.886743,1.8867428571428537,0,True,False,2,0.4286,
+MULTI_05,Multimorbid (T2D + HTN + Obesity) Profile,Real Qwen 2.5 3B,6732.099,46.0,804.845219,804.845219,7,False,True,0,0.0,True
+MULTI_08,Multimorbid (T2D + HTN + Obesity) Profile,MILP,1904.001,146.0,2.06,2.06,0,True,True,0,0.0,
+MULTI_08,Multimorbid (T2D + HTN + Obesity) Profile,Continuous LP,2.429,138.51,2.08509,1.88509032943677,0,True,False,4,1.178,
+MULTI_08,Multimorbid (T2D + HTN + Obesity) Profile,Continuous servings (binary dish selection),215.534,142.45,1.924514,1.924514285714284,0,True,False,2,0.1429,
+MULTI_08,Multimorbid (T2D + HTN + Obesity) Profile,Real Qwen 2.5 3B,8188.981,69.0,541.506386,541.506386,6,False,True,0,0.0,True
+MULTI_10,Multimorbid (T2D + HTN + Obesity) Profile,MILP,1900.192,156.0,2.06,2.06,0,True,True,0,0.0,
+MULTI_10,Multimorbid (T2D + HTN + Obesity) Profile,Continuous LP,2.686,141.84,2.118431,1.9184307474318099,0,True,False,4,1.1674,
+MULTI_10,Multimorbid (T2D + HTN + Obesity) Profile,Continuous servings (binary dish selection),497.494,149.88,1.998828,1.998828451882836,0,True,False,1,0.09,
+MULTI_10,Multimorbid (T2D + HTN + Obesity) Profile,Real Qwen 2.5 3B,7899.883,69.0,563.955942,563.955942,6,False,True,0,0.0,True

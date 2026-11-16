@@ -1,0 +1,28 @@
+{
+  "total_cases": 5,
+  "backend": "transformers",
+  "passed_cases": 5,
+  "failed_cases": 0,
+  "pass_rate_pct": 100.0,
+  "invariants_verified": [
+    "Invariant 1: Food Conservation (Zero Hallucination)",
+    "Invariant 2: Quantity Conservation (100% Serving Count Preservation)",
+    "Invariant 3: Zero Calculation Authority (No Nutrient Recalculation)",
+    "Invariant 4: Strict JSON Schema Validity"
+  ],
+  "latency_profile_ms": {
+    "mean": 179826.86,
+    "p50": 173757.84,
+    "p95": 305866.93,
+    "p99": 305866.93
+  },
+  "failures": [],
+  "hardware_profile": {
+    "device_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "cuda_available": true,
+    "quantization": "BitsAndBytes 4-Bit NF4 (bnb_4bit_compute_dtype=float16, double_quant=True)",
+    "allocated_vram_mb": 1971.4,
+    "reserved_vram_mb": 2284.0,
+    "token_throughput_tok_per_sec": 16.14
+  }
+}

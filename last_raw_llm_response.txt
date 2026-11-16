@@ -1,0 +1,131 @@
+{
+  "health_narrative": "These are model-based screening estimates, not a diagnosis. They can help guide a conversation with your healthcare professional; they should be interpreted alongside your history, examination, and laboratory results. The Stage 1 model estimated type 2 diabetes probability at 34.4% (NORMAL / LOW RISK). The Stage 1 model estimated clinical obesity probability at 23.8% (NORMAL / LOW RISK). The Stage 1 model estimated cardiovascular disease probability at 3.9% (NORMAL / LOW RISK).",
+  "biomarker_driver_explanations": [
+    {
+      "modality": "BIO",
+      "plain_language_explanation": "The model paid comparatively more attention to NON_HDL_CHOL (attention weight 20.22%), CHOL_HDL_RATIO (attention weight 20.18%), LBDHDD (attention weight 20.06%). Attention weights describe model focus; they do not establish that these features caused a condition."
+    },
+    {
+      "modality": "DIET",
+      "plain_language_explanation": "The model paid comparatively more attention to DR1TFIBE (attention weight 2.29%), SODIUM_POTASSIUM_RATIO (attention weight 2.27%), DR1TATOC (attention weight 2.27%). Attention weights describe model focus; they do not establish that these features caused a condition."
+    },
+    {
+      "modality": "LIFE",
+      "plain_language_explanation": "The model paid comparatively more attention to PA_MOD_WORK_MIN_WK (attention weight 5.58%), PAQ620 (attention weight 5.43%), PAD680 (attention weight 5.40%). Attention weights describe model focus; they do not establish that these features caused a condition."
+    },
+    {
+      "modality": "DEMO",
+      "plain_language_explanation": "The model paid comparatively more attention to RACE_NH_BLACK (attention weight 5.95%), RACE_MEX_AMER (attention weight 5.94%), MARITAL_PREV_MARRIED (attention weight 5.94%). Attention weights describe model focus; they do not establish that these features caused a condition."
+    }
+  ],
+  "meal_schedule": [
+    {
+      "meal": "Breakfast",
+      "time": "07:30",
+      "items": [
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Vegetable Pulao",
+          "quantity": 1,
+          "serving_unit": "1 Cup (180 g)",
+          "clinical_rationale": "Staple Grain — Controlled complex carbohydrates for baseline metabolic energy"
+        },
+        {
+          "food_id": "recipe_lowfat_paneer_bhurji",
+          "name": "Low-Fat Paneer Bhurji",
+          "quantity": 1,
+          "serving_unit": "1 Katori (120 g)",
+          "clinical_rationale": "Quality Dairy Protein — Slow-release casein & essential calcium"
+        }
+      ],
+      "guidance": "Eat the assigned basket portions at a regular morning mealtime."
+    },
+    {
+      "meal": "Mid-Morning Snack",
+      "time": "10:30",
+      "items": [
+        {
+          "food_id": "ifct_e019",
+          "name": "Dates, processed",
+          "quantity": 1,
+          "serving_unit": "1 Medium / 100 g Portion",
+          "clinical_rationale": "Whole Fruit — Natural antioxidants, micronutrients & cellular hydration"
+        }
+      ],
+      "guidance": "Use the assigned whole-fruit or snack portion as listed; do not add another food item."
+    },
+    {
+      "meal": "Lunch",
+      "time": "13:00",
+      "items": [
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Vegetable Pulao",
+          "quantity": 1,
+          "serving_unit": "1 Cup (180 g)",
+          "clinical_rationale": "Staple Grain — Controlled complex carbohydrates for baseline metabolic energy"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chana Masala",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "High-Fiber Lentil — Complex plant protein & steady carbohydrate release"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Aloo Gobi",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Cooked Vegetable — Dietary fiber, micronutrients & low energy density"
+        }
+      ],
+      "guidance": "Use this as the main midday meal, eating the assigned portions as prepared."
+    },
+    {
+      "meal": "Evening Snack",
+      "time": "16:30",
+      "items": [],
+      "guidance": "No Stage 3 basket item is assigned to this time; do not add an unplanned dish."
+    },
+    {
+      "meal": "Dinner",
+      "time": "19:30",
+      "items": [
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Moong Dal Khichdi",
+          "quantity": 1,
+          "serving_unit": "1 Bowl (200 g)",
+          "clinical_rationale": "High-Protein Pulse — Bioavailable plant protein, enzymes & postprandial satiety"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Rajma Curry",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "High-Fiber Lentil — Complex plant protein & steady carbohydrate release"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Palak Paneer",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Nutrient-Dense Greens — Folate, lutein & cellular antioxidant defense"
+        }
+      ],
+      "guidance": "Finish the remaining assigned portions at dinner; avoid adding extra dishes."
+    }
+  ],
+  "culinary_directives": [
+    "Use measured cooking oil and build flavour with herbs, spices, garlic, ginger, and other aromatics rather than relying on extra salt.",
+    "When preparing pulses or dals, use suitable soaking and thorough cooking; pair the meal with a vitamin-C-containing component only when it is already part of the planned basket or approved by the care team.",
+    "For the planned leafy-green dish, cook gently and briefly rather than boiling it for a long time; avoid discarding nutrient-containing cooking liquid when appropriate."
+  ],
+  "lifestyle_hydration_guidance": {
+    "hydration": "Drink fluids regularly across the day, guided by thirst, climate, and your clinician's advice. Follow any prescribed fluid restriction, particularly if you have heart or kidney disease.",
+    "post_meal_activity": "When safe for your mobility and medical condition, consider a gentle walk after meals. Start comfortably and follow any activity limits given by your healthcare professional.",
+    "sleep_hygiene": "Keep a consistent sleep and wake time, reduce bright screens late in the evening, and create a quiet, dark sleep environment. Discuss persistent sleep problems with your clinician."
+  },
+  "closing_message": "Use this plan as a practical discussion aid. Your healthcare team can tailor it to your preferences, medicines, laboratory results, and any medical restrictions."
+}

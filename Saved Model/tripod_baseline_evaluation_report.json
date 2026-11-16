@@ -1,0 +1,1029 @@
+{
+  "metadata": {
+    "train_cohort": "NHANES 2007-2016 (N=23,694)",
+    "test_cohort": "NHANES 2017-March 2020 Pre-Pandemic Temporal Holdout (N=7,046)",
+    "feature_count": 87,
+    "hba1c_included_in_features": false,
+    "survey_weight_variable": "WTMECPRP (MEC 2-Year / Pre-Pandemic Exam Weight)"
+  },
+  "target_summaries": {
+    "TARGET_DIABETES": {
+      "unweighted_prevalence": 0.2,
+      "survey_weighted_prevalence": 0.1488,
+      "positive_cases": 1409,
+      "total_samples": 7046
+    },
+    "TARGET_OBESITY": {
+      "unweighted_prevalence": 0.4364,
+      "survey_weighted_prevalence": 0.4248,
+      "positive_cases": 3075,
+      "total_samples": 7046
+    },
+    "TARGET_CVD": {
+      "unweighted_prevalence": 0.1199,
+      "survey_weighted_prevalence": 0.0978,
+      "positive_cases": 845,
+      "total_samples": 7046
+    }
+  },
+  "model_comparisons": {
+    "TARGET_DIABETES": {
+      "BioNutriGPT_Stage1": {
+        "unweighted": {
+          "auroc": 0.7999,
+          "auroc_95ci": [
+            0.7872,
+            0.8122
+          ],
+          "prauc": 0.4852,
+          "prauc_95ci": [
+            0.4566,
+            0.5117
+          ],
+          "brier": 0.2051,
+          "brier_95ci": [
+            0.1996,
+            0.2106
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8151,
+          "auroc_95ci": [
+            0.7953,
+            0.8333
+          ],
+          "prauc": 0.4464,
+          "prauc_95ci": [
+            0.41,
+            0.4868
+          ],
+          "brier": 0.166,
+          "brier_95ci": [
+            0.1591,
+            0.1737
+          ]
+        },
+        "calibration": {
+          "slope": 0.7904,
+          "intercept": -1.4988,
+          "ece_10bin": 0.2353
+        }
+      },
+      "BioNutriGPT_Stage1_Calibrated": {
+        "unweighted": {
+          "auroc": 0.7999,
+          "auroc_95ci": [
+            0.7872,
+            0.8122
+          ],
+          "prauc": 0.4852,
+          "prauc_95ci": [
+            0.4566,
+            0.5117
+          ],
+          "brier": 0.1324,
+          "brier_95ci": [
+            0.1264,
+            0.1382
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8151,
+          "auroc_95ci": [
+            0.7953,
+            0.8333
+          ],
+          "prauc": 0.4464,
+          "prauc_95ci": [
+            0.41,
+            0.4868
+          ],
+          "brier": 0.1042,
+          "brier_95ci": [
+            0.0964,
+            0.1125
+          ]
+        },
+        "calibration": {
+          "slope": 0.8144,
+          "intercept": 0.2241,
+          "ece_10bin": 0.0543
+        }
+      },
+      "Logistic_Regression": {
+        "unweighted": {
+          "auroc": 0.79,
+          "auroc_95ci": [
+            0.7771,
+            0.8027
+          ],
+          "prauc": 0.4766,
+          "prauc_95ci": [
+            0.4499,
+            0.5051
+          ],
+          "brier": 0.1918,
+          "brier_95ci": [
+            0.187,
+            0.1973
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.808,
+          "auroc_95ci": [
+            0.7892,
+            0.8261
+          ],
+          "prauc": 0.4244,
+          "prauc_95ci": [
+            0.3924,
+            0.4603
+          ],
+          "brier": 0.1539,
+          "brier_95ci": [
+            0.1483,
+            0.1598
+          ]
+        },
+        "calibration": {
+          "slope": 0.8579,
+          "intercept": -1.4072,
+          "ece_10bin": 0.2242
+        }
+      },
+      "Random_Forest": {
+        "unweighted": {
+          "auroc": 0.7843,
+          "auroc_95ci": [
+            0.7718,
+            0.7965
+          ],
+          "prauc": 0.4746,
+          "prauc_95ci": [
+            0.4486,
+            0.4998
+          ],
+          "brier": 0.1385,
+          "brier_95ci": [
+            0.1324,
+            0.1444
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8024,
+          "auroc_95ci": [
+            0.7816,
+            0.8211
+          ],
+          "prauc": 0.4352,
+          "prauc_95ci": [
+            0.3962,
+            0.4724
+          ],
+          "brier": 0.1074,
+          "brier_95ci": [
+            0.0998,
+            0.1155
+          ]
+        },
+        "calibration": {
+          "slope": 1.2812,
+          "intercept": 0.8947,
+          "ece_10bin": 0.0561
+        }
+      },
+      "Gradient_Boosted_Trees": {
+        "unweighted": {
+          "auroc": 0.806,
+          "auroc_95ci": [
+            0.7941,
+            0.8175
+          ],
+          "prauc": 0.4967,
+          "prauc_95ci": [
+            0.4694,
+            0.5237
+          ],
+          "brier": 0.1318,
+          "brier_95ci": [
+            0.1255,
+            0.1377
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8279,
+          "auroc_95ci": [
+            0.8104,
+            0.8441
+          ],
+          "prauc": 0.4603,
+          "prauc_95ci": [
+            0.424,
+            0.5014
+          ],
+          "brier": 0.1034,
+          "brier_95ci": [
+            0.0955,
+            0.1117
+          ]
+        },
+        "calibration": {
+          "slope": 0.9094,
+          "intercept": 0.3525,
+          "ece_10bin": 0.0566
+        }
+      }
+    },
+    "TARGET_OBESITY": {
+      "BioNutriGPT_Stage1": {
+        "unweighted": {
+          "auroc": 0.7518,
+          "auroc_95ci": [
+            0.7414,
+            0.7632
+          ],
+          "prauc": 0.6831,
+          "prauc_95ci": [
+            0.6655,
+            0.7015
+          ],
+          "brier": 0.2015,
+          "brier_95ci": [
+            0.1973,
+            0.2057
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.7501,
+          "auroc_95ci": [
+            0.7336,
+            0.7662
+          ],
+          "prauc": 0.6821,
+          "prauc_95ci": [
+            0.6576,
+            0.7062
+          ],
+          "brier": 0.2017,
+          "brier_95ci": [
+            0.1955,
+            0.208
+          ]
+        },
+        "calibration": {
+          "slope": 0.942,
+          "intercept": -0.179,
+          "ece_10bin": 0.0383
+        }
+      },
+      "BioNutriGPT_Stage1_Calibrated": {
+        "unweighted": {
+          "auroc": 0.7518,
+          "auroc_95ci": [
+            0.7414,
+            0.7632
+          ],
+          "prauc": 0.6831,
+          "prauc_95ci": [
+            0.6655,
+            0.7015
+          ],
+          "brier": 0.203,
+          "brier_95ci": [
+            0.1987,
+            0.2071
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.7501,
+          "auroc_95ci": [
+            0.7336,
+            0.7662
+          ],
+          "prauc": 0.6821,
+          "prauc_95ci": [
+            0.6576,
+            0.7062
+          ],
+          "brier": 0.202,
+          "brier_95ci": [
+            0.1958,
+            0.2083
+          ]
+        },
+        "calibration": {
+          "slope": 1.0608,
+          "intercept": 0.2792,
+          "ece_10bin": 0.0534
+        }
+      },
+      "Logistic_Regression": {
+        "unweighted": {
+          "auroc": 0.7453,
+          "auroc_95ci": [
+            0.7341,
+            0.7559
+          ],
+          "prauc": 0.6718,
+          "prauc_95ci": [
+            0.6553,
+            0.69
+          ],
+          "brier": 0.2045,
+          "brier_95ci": [
+            0.2007,
+            0.2083
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.7471,
+          "auroc_95ci": [
+            0.7314,
+            0.7632
+          ],
+          "prauc": 0.675,
+          "prauc_95ci": [
+            0.6518,
+            0.7004
+          ],
+          "brier": 0.2021,
+          "brier_95ci": [
+            0.1967,
+            0.2074
+          ]
+        },
+        "calibration": {
+          "slope": 1.0343,
+          "intercept": -0.2246,
+          "ece_10bin": 0.0462
+        }
+      },
+      "Random_Forest": {
+        "unweighted": {
+          "auroc": 0.7305,
+          "auroc_95ci": [
+            0.7194,
+            0.7417
+          ],
+          "prauc": 0.6619,
+          "prauc_95ci": [
+            0.6453,
+            0.6816
+          ],
+          "brier": 0.214,
+          "brier_95ci": [
+            0.2107,
+            0.2176
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.7328,
+          "auroc_95ci": [
+            0.7152,
+            0.7501
+          ],
+          "prauc": 0.6571,
+          "prauc_95ci": [
+            0.6308,
+            0.6856
+          ],
+          "brier": 0.2117,
+          "brier_95ci": [
+            0.2059,
+            0.2175
+          ]
+        },
+        "calibration": {
+          "slope": 1.4926,
+          "intercept": 0.4764,
+          "ece_10bin": 0.0632
+        }
+      },
+      "Gradient_Boosted_Trees": {
+        "unweighted": {
+          "auroc": 0.7542,
+          "auroc_95ci": [
+            0.7433,
+            0.765
+          ],
+          "prauc": 0.6836,
+          "prauc_95ci": [
+            0.6668,
+            0.7026
+          ],
+          "brier": 0.2025,
+          "brier_95ci": [
+            0.1985,
+            0.2065
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.7503,
+          "auroc_95ci": [
+            0.734,
+            0.7664
+          ],
+          "prauc": 0.6805,
+          "prauc_95ci": [
+            0.656,
+            0.7054
+          ],
+          "brier": 0.2025,
+          "brier_95ci": [
+            0.1958,
+            0.209
+          ]
+        },
+        "calibration": {
+          "slope": 1.1017,
+          "intercept": 0.3123,
+          "ece_10bin": 0.0546
+        }
+      }
+    },
+    "TARGET_CVD": {
+      "BioNutriGPT_Stage1": {
+        "unweighted": {
+          "auroc": 0.826,
+          "auroc_95ci": [
+            0.8127,
+            0.8399
+          ],
+          "prauc": 0.394,
+          "prauc_95ci": [
+            0.3612,
+            0.4265
+          ],
+          "brier": 0.1813,
+          "brier_95ci": [
+            0.176,
+            0.1871
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8427,
+          "auroc_95ci": [
+            0.8203,
+            0.8626
+          ],
+          "prauc": 0.3685,
+          "prauc_95ci": [
+            0.3298,
+            0.4157
+          ],
+          "brier": 0.1509,
+          "brier_95ci": [
+            0.1441,
+            0.1589
+          ]
+        },
+        "calibration": {
+          "slope": 0.8233,
+          "intercept": -1.958,
+          "ece_10bin": 0.2452
+        }
+      },
+      "BioNutriGPT_Stage1_Calibrated": {
+        "unweighted": {
+          "auroc": 0.826,
+          "auroc_95ci": [
+            0.8127,
+            0.8399
+          ],
+          "prauc": 0.394,
+          "prauc_95ci": [
+            0.3612,
+            0.4265
+          ],
+          "brier": 0.0884,
+          "brier_95ci": [
+            0.0836,
+            0.0936
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8427,
+          "auroc_95ci": [
+            0.8203,
+            0.8626
+          ],
+          "prauc": 0.3685,
+          "prauc_95ci": [
+            0.3298,
+            0.4157
+          ],
+          "brier": 0.0739,
+          "brier_95ci": [
+            0.0671,
+            0.0807
+          ]
+        },
+        "calibration": {
+          "slope": 0.9492,
+          "intercept": 0.2283,
+          "ece_10bin": 0.0251
+        }
+      },
+      "Logistic_Regression": {
+        "unweighted": {
+          "auroc": 0.8296,
+          "auroc_95ci": [
+            0.8167,
+            0.843
+          ],
+          "prauc": 0.381,
+          "prauc_95ci": [
+            0.3507,
+            0.416
+          ],
+          "brier": 0.1755,
+          "brier_95ci": [
+            0.1707,
+            0.1813
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8436,
+          "auroc_95ci": [
+            0.8237,
+            0.862
+          ],
+          "prauc": 0.3576,
+          "prauc_95ci": [
+            0.3195,
+            0.4005
+          ],
+          "brier": 0.1471,
+          "brier_95ci": [
+            0.141,
+            0.1546
+          ]
+        },
+        "calibration": {
+          "slope": 0.8853,
+          "intercept": -1.9924,
+          "ece_10bin": 0.2515
+        }
+      },
+      "Random_Forest": {
+        "unweighted": {
+          "auroc": 0.8046,
+          "auroc_95ci": [
+            0.7893,
+            0.8194
+          ],
+          "prauc": 0.3626,
+          "prauc_95ci": [
+            0.3334,
+            0.3967
+          ],
+          "brier": 0.0907,
+          "brier_95ci": [
+            0.0857,
+            0.0961
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8202,
+          "auroc_95ci": [
+            0.798,
+            0.8402
+          ],
+          "prauc": 0.3383,
+          "prauc_95ci": [
+            0.2969,
+            0.3851
+          ],
+          "brier": 0.076,
+          "brier_95ci": [
+            0.069,
+            0.0832
+          ]
+        },
+        "calibration": {
+          "slope": 1.2268,
+          "intercept": 0.5715,
+          "ece_10bin": 0.0209
+        }
+      },
+      "Gradient_Boosted_Trees": {
+        "unweighted": {
+          "auroc": 0.8236,
+          "auroc_95ci": [
+            0.81,
+            0.8369
+          ],
+          "prauc": 0.3748,
+          "prauc_95ci": [
+            0.345,
+            0.411
+          ],
+          "brier": 0.0887,
+          "brier_95ci": [
+            0.0836,
+            0.0938
+          ]
+        },
+        "survey_weighted": {
+          "auroc": 0.8407,
+          "auroc_95ci": [
+            0.8211,
+            0.8594
+          ],
+          "prauc": 0.3449,
+          "prauc_95ci": [
+            0.3062,
+            0.3893
+          ],
+          "brier": 0.0748,
+          "brier_95ci": [
+            0.0679,
+            0.0821
+          ]
+        },
+        "calibration": {
+          "slope": 0.8809,
+          "intercept": 0.0591,
+          "ece_10bin": 0.0208
+        }
+      }
+    }
+  },
+  "decision_curve_analysis": {
+    "TARGET_DIABETES": {
+      "thresholds": [
+        0.05,
+        0.075,
+        0.1,
+        0.125,
+        0.15,
+        0.175,
+        0.2,
+        0.225,
+        0.25,
+        0.275,
+        0.3,
+        0.325,
+        0.35,
+        0.375,
+        0.4,
+        0.425,
+        0.45,
+        0.475,
+        0.5
+      ],
+      "net_benefit_model": [
+        0.1625,
+        0.1458,
+        0.1297,
+        0.1139,
+        0.0979,
+        0.0819,
+        0.0651,
+        0.048,
+        0.0316,
+        0.0145,
+        -0.0029,
+        -0.0202,
+        -0.0358,
+        -0.0543,
+        -0.0713,
+        -0.0869,
+        -0.1044,
+        -0.1169,
+        -0.1306
+      ],
+      "net_benefit_all": [
+        0.1579,
+        0.1351,
+        0.1111,
+        0.0857,
+        0.0588,
+        0.0303,
+        -0.0,
+        -0.0323,
+        -0.0667,
+        -0.1035,
+        -0.1429,
+        -0.1852,
+        -0.2308,
+        -0.28,
+        -0.3334,
+        -0.3914,
+        -0.4546,
+        -0.5239,
+        -0.6001
+      ],
+      "net_benefit_none": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "TARGET_OBESITY": {
+      "thresholds": [
+        0.05,
+        0.075,
+        0.1,
+        0.125,
+        0.15,
+        0.175,
+        0.2,
+        0.225,
+        0.25,
+        0.275,
+        0.3,
+        0.325,
+        0.35,
+        0.375,
+        0.4,
+        0.425,
+        0.45,
+        0.475,
+        0.5
+      ],
+      "net_benefit_model": [
+        0.4071,
+        0.3917,
+        0.3755,
+        0.3593,
+        0.3437,
+        0.3261,
+        0.3099,
+        0.2937,
+        0.2796,
+        0.2641,
+        0.2495,
+        0.2338,
+        0.2172,
+        0.1986,
+        0.18,
+        0.1647,
+        0.152,
+        0.1383,
+        0.1194
+      ],
+      "net_benefit_all": [
+        0.4068,
+        0.3907,
+        0.3738,
+        0.3559,
+        0.337,
+        0.3169,
+        0.2955,
+        0.2728,
+        0.2486,
+        0.2226,
+        0.1949,
+        0.1651,
+        0.133,
+        0.0983,
+        0.0607,
+        0.0199,
+        -0.0247,
+        -0.0735,
+        -0.1272
+      ],
+      "net_benefit_none": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "TARGET_CVD": {
+      "thresholds": [
+        0.05,
+        0.075,
+        0.1,
+        0.125,
+        0.15,
+        0.175,
+        0.2,
+        0.225,
+        0.25,
+        0.275,
+        0.3,
+        0.325,
+        0.35,
+        0.375,
+        0.4,
+        0.425,
+        0.45,
+        0.475,
+        0.5
+      ],
+      "net_benefit_model": [
+        0.0845,
+        0.068,
+        0.0524,
+        0.0365,
+        0.0211,
+        0.0048,
+        -0.0109,
+        -0.026,
+        -0.0401,
+        -0.0536,
+        -0.067,
+        -0.0798,
+        -0.0938,
+        -0.1049,
+        -0.1171,
+        -0.1284,
+        -0.1425,
+        -0.1535,
+        -0.1652
+      ],
+      "net_benefit_all": [
+        0.0736,
+        0.0486,
+        0.0221,
+        -0.0058,
+        -0.0354,
+        -0.0668,
+        -0.1001,
+        -0.1356,
+        -0.1734,
+        -0.2139,
+        -0.2572,
+        -0.3038,
+        -0.354,
+        -0.4081,
+        -0.4668,
+        -0.5306,
+        -0.6001,
+        -0.6763,
+        -0.7601
+      ],
+      "net_benefit_none": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "subgroup_analyses": {
+    "sex_male": {
+      "n_samples": 3426,
+      "targets": {
+        "TARGET_DIABETES": {
+          "cases": 759,
+          "unweighted_auroc": 0.8034,
+          "survey_weighted_auroc": 0.8175,
+          "brier": 0.2157
+        },
+        "TARGET_OBESITY": {
+          "cases": 1383,
+          "unweighted_auroc": 0.7385,
+          "survey_weighted_auroc": 0.7324,
+          "brier": 0.2018
+        },
+        "TARGET_CVD": {
+          "cases": 499,
+          "unweighted_auroc": 0.8309,
+          "survey_weighted_auroc": 0.858,
+          "brier": 0.2082
+        }
+      }
+    },
+    "sex_female": {
+      "n_samples": 3620,
+      "targets": {
+        "TARGET_DIABETES": {
+          "cases": 650,
+          "unweighted_auroc": 0.7935,
+          "survey_weighted_auroc": 0.8107,
+          "brier": 0.195
+        },
+        "TARGET_OBESITY": {
+          "cases": 1692,
+          "unweighted_auroc": 0.7609,
+          "survey_weighted_auroc": 0.769,
+          "brier": 0.2012
+        },
+        "TARGET_CVD": {
+          "cases": 346,
+          "unweighted_auroc": 0.8079,
+          "survey_weighted_auroc": 0.8206,
+          "brier": 0.1557
+        }
+      }
+    },
+    "age_18_44": {
+      "n_samples": 2713,
+      "targets": {
+        "TARGET_DIABETES": {
+          "cases": 167,
+          "unweighted_auroc": 0.7493,
+          "survey_weighted_auroc": 0.7411,
+          "brier": 0.0873
+        },
+        "TARGET_OBESITY": {
+          "cases": 1162,
+          "unweighted_auroc": 0.762,
+          "survey_weighted_auroc": 0.7681,
+          "brier": 0.1961
+        },
+        "TARGET_CVD": {
+          "cases": 49,
+          "unweighted_auroc": 0.726,
+          "survey_weighted_auroc": 0.7972,
+          "brier": 0.0316
+        }
+      }
+    },
+    "age_45_64": {
+      "n_samples": 2623,
+      "targets": {
+        "TARGET_DIABETES": {
+          "cases": 638,
+          "unweighted_auroc": 0.7219,
+          "survey_weighted_auroc": 0.7674,
+          "brier": 0.2715
+        },
+        "TARGET_OBESITY": {
+          "cases": 1214,
+          "unweighted_auroc": 0.7563,
+          "survey_weighted_auroc": 0.7449,
+          "brier": 0.2038
+        },
+        "TARGET_CVD": {
+          "cases": 325,
+          "unweighted_auroc": 0.7128,
+          "survey_weighted_auroc": 0.7411,
+          "brier": 0.2149
+        }
+      }
+    },
+    "age_65_plus": {
+      "n_samples": 1710,
+      "targets": {
+        "TARGET_DIABETES": {
+          "cases": 604,
+          "unweighted_auroc": 0.7342,
+          "survey_weighted_auroc": 0.7407,
+          "brier": 0.29
+        },
+        "TARGET_OBESITY": {
+          "cases": 699,
+          "unweighted_auroc": 0.7297,
+          "survey_weighted_auroc": 0.7287,
+          "brier": 0.2064
+        },
+        "TARGET_CVD": {
+          "cases": 471,
+          "unweighted_auroc": 0.7153,
+          "survey_weighted_auroc": 0.7106,
+          "brier": 0.3671
+        }
+      }
+    }
+  }
+}

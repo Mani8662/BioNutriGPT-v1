@@ -1,0 +1,153 @@
+{
+  "health_narrative": "These are model-based screening estimates, not a diagnosis. They can help guide a conversation with your healthcare professional; they should be interpreted alongside your history, examination, and laboratory results. The Stage 1 model estimated type 2 diabetes probability at 24.5% ([NORMAL / LOW RISK]). The Stage 1 model estimated clinical obesity probability at 28.3% ([NORMAL / LOW RISK]). The Stage 1 model estimated cardiovascular disease probability at 10.9% ([NORMAL / LOW RISK]).",
+  "biomarker_driver_explanations": [
+    {
+      "modality": "BLOOD_BIOMARKERS",
+      "plain_language_explanation": "The model paid comparatively more attention to NON_HDL_CHOL, LBXTC, NON_HDL_TO_HDL_RATIO. Attention weights describe model focus; they do not establish that these features caused a condition."
+    },
+    {
+      "modality": "DIETARY_FEATURES",
+      "plain_language_explanation": "The model paid comparatively more attention to DR1TSUGR, DR1TPOTA, DR1TACAR. Attention weights describe model focus; they do not establish that these features caused a condition."
+    },
+    {
+      "modality": "LIFESTYLE_SLEEP",
+      "plain_language_explanation": "The model paid comparatively more attention to SLEEP_HOURS, SMOKE_NEVER. Attention weights describe model focus; they do not establish that these features caused a condition."
+    },
+    {
+      "modality": "DEMOGRAPHICS",
+      "plain_language_explanation": "The model paid comparatively more attention to MARITAL_MARRIED, INDFMPIR. Attention weights describe model focus; they do not establish that these features caused a condition."
+    }
+  ],
+  "meal_schedule": [
+    {
+      "meal": "Breakfast",
+      "time": "07:30",
+      "items": [
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable Poha",
+          "quantity": 2,
+          "serving_unit": "1 Plate (150 g)",
+          "clinical_rationale": "Morning Energy Staple — Easily digestible breakfast carbohydrate"
+        },
+        {
+          "food_id": "recipe_curd_dahi_low_fat",
+          "name": "Low-Fat Curd (Dahi)",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Dairy Nutrition — High-biological-value protein & bone mineral support"
+        }
+      ],
+      "guidance": "Eat the assigned basket portions at a regular morning mealtime."
+    },
+    {
+      "meal": "Mid-Morning Snack",
+      "time": "10:30",
+      "items": [
+        {
+          "food_id": "ifct_f028",
+          "name": "Guava, white flesh",
+          "quantity": 1,
+          "serving_unit": "1 Medium / 100 g Portion",
+          "clinical_rationale": "Whole Fruit — Natural antioxidants, micronutrients & cellular hydration"
+        }
+      ],
+      "guidance": "Use the assigned whole-fruit or snack portion as listed; do not add another food item."
+    },
+    {
+      "meal": "Lunch",
+      "time": "13:00",
+      "items": [
+        {
+          "food_id": "recipe_sprouted_moong_usal",
+          "name": "Sprouted Moong Usal",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "High-Protein Pulse — Bioavailable plant protein, enzymes & postprandial satiety"
+        },
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Moong Dal Tadka",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "High-Protein Pulse — Bioavailable plant protein, enzymes & postprandial satiety"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Aloo Gobi",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Cooked Vegetable — Dietary fiber, micronutrients & low energy density"
+        },
+        {
+          "food_id": "recipe_lauki_tomato",
+          "name": "Lauki Tomato Sabzi",
+          "quantity": 2,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Cooked Vegetable — Dietary fiber, micronutrients & low energy density"
+        }
+      ],
+      "guidance": "Use this as the main midday meal, eating the assigned portions as prepared."
+    },
+    {
+      "meal": "Evening Snack",
+      "time": "16:30",
+      "items": [
+        {
+          "food_id": "recipe_curd_dahi_low_fat",
+          "name": "Low-Fat Curd (Dahi)",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Dairy Nutrition — High-biological-value protein & bone mineral support"
+        }
+      ],
+      "guidance": "Keep this snack to the exact assigned Stage 3 portions."
+    },
+    {
+      "meal": "Dinner",
+      "time": "19:30",
+      "items": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Moong Dal Tadka",
+          "quantity": 2,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "High-Protein Pulse — Bioavailable plant protein, enzymes & postprandial satiety"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Aloo Gobi",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Cooked Vegetable — Dietary fiber, micronutrients & low energy density"
+        },
+        {
+          "food_id": "recipe_lauki_tomato",
+          "name": "Lauki Tomato Sabzi",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Cooked Vegetable — Dietary fiber, micronutrients & low energy density"
+        },
+        {
+          "food_id": "recipe_curd_dahi_low_fat",
+          "name": "Low-Fat Curd (Dahi)",
+          "quantity": 1,
+          "serving_unit": "1 Katori (150 g)",
+          "clinical_rationale": "Dairy Nutrition — High-biological-value protein & bone mineral support"
+        }
+      ],
+      "guidance": "Finish the remaining assigned portions at dinner; avoid adding extra dishes."
+    }
+  ],
+  "culinary_directives": [
+    "Use measured cooking oil and build flavour with herbs, spices, garlic, ginger, and other aromatics rather than relying on extra salt.",
+    "When preparing pulses or dals, use suitable soaking and thorough cooking; pair the meal with a vitamin-C-containing component only when it is already part of the planned basket or approved by the care team.",
+    "Cook leafy vegetables gently and avoid prolonged boiling; use the cooking liquid when appropriate so water-soluble nutrients are not unnecessarily discarded."
+  ],
+  "lifestyle_hydration_guidance": {
+    "hydration": "Drink fluids regularly across the day, guided by thirst, climate, and your clinician's advice. Follow any prescribed fluid restriction, particularly if you have heart or kidney disease.",
+    "post_meal_activity": "When safe for your mobility and medical condition, consider a gentle walk after meals. Start comfortably and follow any activity limits given by your healthcare professional.",
+    "sleep_hygiene": "Keep a consistent sleep and wake time, reduce bright screens late in the evening, and create a quiet, dark sleep environment. Discuss persistent sleep problems with your clinician."
+  },
+  "closing_message": "Use this plan as a practical discussion aid. Your healthcare team can tailor it to your preferences, medicines, laboratory results, and any medical restrictions."
+}

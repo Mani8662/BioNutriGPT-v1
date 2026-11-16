@@ -1,0 +1,129 @@
+================================================================================
+BIONUTRIGPT MACHINE LEARNING PREPROCESSING GUIDE
+================================================================================
+
+--------------------------------------------------------------------------------
+1. WHAT WE STARTED WITH & WHAT WE CREATED
+--------------------------------------------------------------------------------
+Script Used : Models/Less Data/Data/preprocess_for_training.py
+Saved Rules : Models/Less Data/Data/preprocessing_artifacts.joblib (Saved rules)
+
+The Two Input Files (Clean data with real medical units like mg/dL and grams):
+  1. Training File (2007-2016) : BioNutriGPT_train_2007_2016_clean.csv (23,694 people, 69 cols)
+  2. Test File (2017-2020)     : BioNutriGPT_test_2017_2020_clean.csv  ( 7,046 people, 69 cols)
+
+The Two Output Files (100% Numeric & scaled, ready to train the AI model):
+  1. Training Ready (2007-2016): BioNutriGPT_train_2007_2016_ml_ready.csv (23,694 people, 93 cols)
+  2. Test Ready (2017-2020)    : BioNutriGPT_test_2017_2020_ml_ready.csv  ( 7,046 people, 93 cols)
+
+Why We Preprocessed Them Separately (Preventing "Data Leakage"):
+  - The Golden Rule in AI: The model must never peek at future test data during training.
+  - What we did: We calculated all averages, middle numbers (medians), and scaling rules
+    ONLY from the older Training patients (2007-2016). Then, we applied those exact saved
+    rules to both files separately.
+  - Why this matters:
+    1. Zero cheating: Future patients from 2017-2020 never influenced training rules.
+    2. Same ruler: A scaled number like +1.5 means the exact same blood sugar or calorie
+       level in both files.
+    3. Ready for real hospitals: If a single new patient walks into a clinic today, we
+       can transform their numbers instantly using these saved rules.
+
+--------------------------------------------------------------------------------
+2. STEP-BY-STEP PREPROCESSING (WHAT WE DID & WHY WE DID IT)
+--------------------------------------------------------------------------------
+
+Step 1 - Kept IDs and Disease Labels Untouched (5 columns)
+  - What: Kept Patient ID (SEQN) and Survey Year (NHANES_CYCLE) as reference tags.
+    Kept the 3 disease labels (Diabetes, Obesity, Heart Disease) as clean Yes (1) or No (0).
+  - Why:
+    1. If we feed "Survey Year" to the AI, it might memorize the year instead of learning biology.
+    2. Disease labels must remain pure 1s and 0s so the model can learn classification cleanly.
+
+Step 2 - Added "Missing Question" Flags Before Filling Blanks (5 binary 0/1 columns)
+  - What: Before filling in any blank answer, we added a 1 if the patient skipped the question,
+    and a 0 if they answered it. We did this for Income Ratio (INDFMPIR_MISS), Sleep, Sitting,
+    and Activity.
+  - Why:
+    In surveys, skipping a question is often a clue in itself (called "informative missingness").
+    For example, people who skip income questions often have different financial situations
+    than those who answer. These flags let the AI know someone skipped the question even
+    after we fill the blank in Step 3.
+  - How the Model Uses These 0s and 1s:
+    Think of the flag like a light switch:
+      * Flag = 0 (Answered): The model looks 100% at the patient's real answer. The flag stays silent.
+      * Flag = 1 (Skipped): In Step 3, we fill the empty cell with a typical middle value (like 2.09).
+        The "1" flag warns the model: "This number was filled in by us. Treat this patient based on
+        how people who skip this question usually behave."
+    This allows neural networks and decision trees to adjust their predictions without getting
+    fooled by filled-in numbers.
+
+Step 3 - Filled Remaining Blanks with Training Medians & Modes (No Guessing on Blood Labs)
+  - What:
+    * For numbers (like income ratio or sleep hours), we filled blanks using the middle number
+      (median) from the Training set (e.g., Sleep = 7.0 hours, Income Ratio = 2.09).
+    * For categories (like marital status or smoking), we filled blanks with the most common
+      answer (mode) from Training (e.g., Non-smoker, Married).
+  - Why:
+    1. Why median instead of average? A few people exercise 20 hours a day, which pulls the
+       average up too high. The median gives a true "typical" person.
+    2. Note: All 4 blood tests and all 39 food nutrients were already 100% measured and complete,
+       so zero blood tests or diet numbers were ever guessed.
+
+Step 4 - Created 10 Clinical Ratios (Feature Engineering)
+  - What: Calculated 10 standard medical ratios from each patient's own numbers:
+    1. Cholesterol-to-HDL Ratio & Non-HDL-to-HDL Ratio: Heart disease risk markers.
+    2. Protein, Carb, and Fat % of Calories: Shows diet quality instead of just total food eaten.
+    3. Fiber per 1,000 Calories: Measures nutrient density regardless of meal size.
+    4. Sugar-to-Fiber Ratio & Sodium-to-Potassium Ratio: Key markers for diabetes and blood pressure.
+    5. Saturated-to-Unsaturated Fat Ratio: Measures bad fats vs. healthy fats.
+    6. Sleep Deviation (|Sleep - 7.5 hours|): Measures how far someone sleeps from the healthy 7.5-hour sweet spot.
+  - Why:
+    AI models find it hard to do complex divisions on their own. By giving them established medical
+    formulas upfront, we help the model spot disease risks much more easily.
+
+Step 5 - Tamed Extreme Numbers with Log-Transform (log1p on 55 columns)
+  - What: For numbers that have huge spikes (like Vitamin K, which ranges from 0 up to 15,000 mcg,
+    or exercise minutes), we applied a standard mathematical curve called "log(1 + x)".
+  - Why:
+    If one person eats a huge amount of a vitamin, that giant number can confuse the AI's math,
+    overshadowing other patients. Log-transform shrinks giant numbers into a manageable scale
+    while keeping the order intact (higher intake is still higher, but without extreme spikes).
+
+Step 6 - Clipped Rare Extreme Outliers (Winsorization at 0.1% and 99.9%)
+  - What: Capped the top 0.1% and bottom 0.1% of extreme values based on Training thresholds.
+  - Why:
+    We used very gentle limits (0.1% and 99.9%) so we would NOT accidentally flatten real medical
+    emergencies (like a severe diabetic with an HbA1c of 14%), while still preventing crazy
+    computer typos from crashing model training.
+
+Step 7 - Scaled All Numbers to Standard Score (StandardScaler: Mean = 0, Std = 1)
+  - What: Converted all 64 continuous measurements so that 0 represents the average, +1 means
+    above average, and -1 means below average.
+  - Why:
+    Without scaling, a calorie count of 3,000 would overpower an HbA1c blood test of 6.5 simply
+    because 3,000 is a bigger number. Standardizing puts every single lab and food metric on an
+    equal playing field.
+
+Step 8 - Converted Categories to 1s and 0s (One-Hot Encoding)
+  - What:
+    * Yes/No questions (like sleep trouble or exercise) were turned into simple 1 (Yes) or 0 (No).
+    * Multi-choice groups without a ranking (like Race, Marital Status, and Smoking) were split
+      into separate 1/0 columns (for example: RACE_NH_WHITE = 1 or 0).
+    * Education level (DMDEDUC2: 1 to 5) was kept as an ordered number (Grade School up to College).
+  - Why:
+    Computers cannot understand words like "Married" or "Divorced". But if you label them 1, 2, 3,
+    the model might falsely assume "3 is greater than 1". Splitting them into separate 1/0 columns
+    keeps the math unbiased.
+
+--------------------------------------------------------------------------------
+3. FINAL SUMMARY: READY FOR TRAINING
+--------------------------------------------------------------------------------
+- Total Columns in Both Datasets : 93 columns
+    * 2 Reference Tags : SEQN (Patient ID), NHANES_CYCLE (Survey Wave)
+    * 3 Disease Targets: Diabetes, Obesity, Heart Disease (CVD)
+    * 88 Input Features: 64 scaled continuous numbers + 24 binary 1/0 flags
+- Empty Cells (NaNs)            : 0 in Train | 0 in Test (100% complete)
+- Mathematical Infs             : 0 in Train | 0 in Test
+- Column Alignment              : 100% identical columns in the exact same order
+- Patient Separation            : 0 overlapping patients between Train and Test
+================================================================================

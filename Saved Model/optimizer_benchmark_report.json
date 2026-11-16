@@ -1,0 +1,6729 @@
+{
+  "metadata": {
+    "num_archetypes": 50,
+    "phenotype_breakdown": {
+      "Diabetes_predominant": 15,
+      "Obesity_deficit": 15,
+      "Hypertension_DASH": 10,
+      "Multimorbid": 10
+    },
+    "catalog_food_count": 32,
+    "solvers_compared": [
+      "Continuous_Linear_Programming (Relaxed LP)",
+      "Continuous_LP_PostHoc_Rounding (Nearest Integer)",
+      "Continuous_LP_Heuristic_Tuning (Greedy Plate Repair)",
+      "Unconstrained_Generative_LLM (Qwen 2.5 3B heuristic)",
+      "BioNutriGPT_Discrete_MILP (HiGHS Branch-and-Cut)"
+    ]
+  },
+  "per_paradigm_metrics": {
+    "Continuous_Linear_Programming": {
+      "paradigm_type": "Relaxed Continuous Optimization (Baseline)",
+      "hard_constraints": {
+        "integer_servings_enforced": false,
+        "integer_serving_rate_pct": 0.0,
+        "fractional_servings_per_plan": {
+          "mean": 3.08,
+          "median": 3.0,
+          "std": 0.59,
+          "min": 2.0,
+          "max": 4.0
+        },
+        "balanced_plate_compliance_pct": 0.0,
+        "household_cookability": "Unviable (Contains fractional servings: e.g. 0.38 phulka, 0.24 katori dal)"
+      },
+      "soft_constraints_and_slack": {
+        "nutrient_envelope_boundary_violations": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "mean_l1_slack_magnitude": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "slack_reporting": "Exact continuous L1 slacks tracked"
+      },
+      "economic_and_runtime": {
+        "daily_cost_inr": {
+          "mean": 143.55,
+          "median": 142.35,
+          "std": 10.13,
+          "min": 124.15,
+          "max": 163.85
+        },
+        "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+        "latency_ms": {
+          "mean": 4.57,
+          "median": 4.52,
+          "std": 1.92,
+          "min": 1.71,
+          "max": 8.69
+        }
+      }
+    },
+    "Continuous_LP_PostHoc_Rounding": {
+      "paradigm_type": "Two-Stage Heuristic: Continuous LP + Nearest-Integer Rounding",
+      "hard_constraints": {
+        "integer_servings_enforced": true,
+        "integer_serving_rate_pct": 100.0,
+        "fractional_servings_per_plan": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "balanced_plate_compliance_pct": 0.0,
+        "household_cookability": "Unviable (Severe category dropouts: 0 katoris dal, collapses plate diversity)"
+      },
+      "soft_constraints_and_slack": {
+        "nutrient_envelope_boundary_violations": {
+          "mean": 2.64,
+          "median": 3.0,
+          "std": 1.14,
+          "min": 0.0,
+          "max": 4.0
+        },
+        "mean_l1_slack_magnitude": {
+          "mean": 212.47,
+          "median": 202.5,
+          "std": 174.49,
+          "min": 0.0,
+          "max": 607.3
+        },
+        "slack_reporting": "Extreme boundary drift due to decoupled integer rounding"
+      },
+      "economic_and_runtime": {
+        "daily_cost_inr": {
+          "mean": 140.62,
+          "median": 139.0,
+          "std": 14.87,
+          "min": 114.0,
+          "max": 176.0
+        },
+        "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+        "latency_ms": {
+          "mean": 8.0,
+          "median": 8.29,
+          "std": 3.07,
+          "min": 2.87,
+          "max": 15.41
+        }
+      }
+    },
+    "Continuous_LP_Heuristic_Tuning": {
+      "paradigm_type": "Two-Stage Heuristic: Continuous LP + Greedy Plate Repair Tuning",
+      "hard_constraints": {
+        "integer_servings_enforced": true,
+        "integer_serving_rate_pct": 100.0,
+        "fractional_servings_per_plan": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "balanced_plate_compliance_pct": 0.0,
+        "household_cookability": "Nominally plate-compliant, but clinically hazardous (severe caloric/sodium overshoot)"
+      },
+      "soft_constraints_and_slack": {
+        "nutrient_envelope_boundary_violations": {
+          "mean": 3.96,
+          "median": 4.0,
+          "std": 1.0,
+          "min": 2.0,
+          "max": 6.0
+        },
+        "mean_l1_slack_magnitude": {
+          "mean": 397.03,
+          "median": 405.0,
+          "std": 227.69,
+          "min": 10.9,
+          "max": 844.5
+        },
+        "slack_reporting": "Heuristic category padding causes massive caloric and macronutrient overshoots"
+      },
+      "economic_and_runtime": {
+        "daily_cost_inr": {
+          "mean": 180.14,
+          "median": 176.0,
+          "std": 12.92,
+          "min": 158.0,
+          "max": 212.0
+        },
+        "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+        "latency_ms": {
+          "mean": 8.26,
+          "median": 8.03,
+          "std": 3.62,
+          "min": 2.85,
+          "max": 16.21
+        }
+      }
+    },
+    "Unconstrained_Generative_LLM": {
+      "paradigm_type": "Stochastic Prompt-Based LLM (Qwen 2.5 3B Heuristic Baseline)",
+      "hard_constraints": {
+        "integer_servings_enforced": true,
+        "integer_serving_rate_pct": 100.0,
+        "fractional_servings_per_plan": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "balanced_plate_compliance_pct": 46.0,
+        "household_cookability": "Nominally discrete, but clinically unfeasible"
+      },
+      "soft_constraints_and_slack": {
+        "nutrient_envelope_boundary_violations": {
+          "mean": 6.16,
+          "median": 7.0,
+          "std": 1.05,
+          "min": 4.0,
+          "max": 7.0
+        },
+        "mean_l1_slack_magnitude": {
+          "mean": 2087.25,
+          "median": 1954.75,
+          "std": 803.85,
+          "min": 804.7,
+          "max": 4044.6
+        },
+        "slack_reporting": "Uncontrolled nutrient drift and severe boundary violations"
+      },
+      "economic_and_runtime": {
+        "daily_cost_inr": {
+          "mean": 80.72,
+          "median": 81.0,
+          "std": 18.7,
+          "min": 46.0,
+          "max": 114.0
+        },
+        "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+        "latency_ms": {
+          "mean": 855.69,
+          "median": 855.51,
+          "std": 0.71,
+          "min": 855.11,
+          "max": 859.12
+        }
+      }
+    },
+    "BioNutriGPT_Discrete_MILP": {
+      "paradigm_type": "Mixed-Integer Linear Programming (HiGHS Branch-and-Cut)",
+      "hard_constraints": {
+        "integer_servings_enforced": true,
+        "integer_serving_rate_pct": 100.0,
+        "fractional_servings_per_plan": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "balanced_plate_compliance_pct": 100.0,
+        "balanced_plate_category_bounds": "Strictly satisfied (Cereals 2-5, Dals 1-3, Veg 2-5, Dairy 0-2)",
+        "plate_cardinality": "Strictly satisfied (4 to 8 active dishes)",
+        "household_cookability": "100% Feasible (Only whole household units: whole phulkas, integer katoris)"
+      },
+      "soft_constraints_and_slack": {
+        "nutrient_envelope_boundary_violations": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "mean_l1_slack_magnitude": {
+          "mean": 0.0,
+          "median": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "slack_reporting": "Auditable two-sided L1 goal-programming slacks explicitly logged"
+      },
+      "economic_and_runtime": {
+        "daily_cost_inr": {
+          "mean": 155.93,
+          "median": 157.5,
+          "std": 14.03,
+          "min": 127.0,
+          "max": 189.0
+        },
+        "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+        "latency_ms": {
+          "mean": 346.26,
+          "median": 268.45,
+          "std": 269.39,
+          "min": 22.41,
+          "max": 903.42
+        }
+      }
+    }
+  },
+  "archetype_results": [
+    {
+      "case_id": "DM_01",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.2426000002487854,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 2.302,
+          "vegetable_pulao": 0.207,
+          "lowfat_paneer": 0.647
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 136.12,
+        "actual_nutrients": {
+          "DR1TKCAL": 1400.0,
+          "DR1TPROT": 81.3,
+          "DR1TCARB": 188.9,
+          "DR1TFIBE": 43.8,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1923.5,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 4.094500000064727,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 170.0,
+        "total_cost_inr": 129.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1350.0,
+          "DR1TPROT": 85.0,
+          "DR1TCARB": 173.0,
+          "DR1TFIBE": 41.0,
+          "DR1TSFAT": 9.1,
+          "DR1TSODI": 1820.0,
+          "DR1TPOTA": 2680.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 2.9690999999729684,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "lowfat_paneer": 1,
+          "phulka": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 484.0,
+        "total_cost_inr": 173.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1780.0,
+          "DR1TPROT": 99.0,
+          "DR1TCARB": 243.0,
+          "DR1TFIBE": 57.0,
+          "DR1TSFAT": 10.9,
+          "DR1TSODI": 2270.0,
+          "DR1TPOTA": 3680.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 108.76409999991665,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_oats_upma": 2,
+          "cabbage_peas": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 145.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1540.0,
+          "DR1TPROT": 80.0,
+          "DR1TCARB": 207.0,
+          "DR1TFIBE": 45.0,
+          "DR1TSFAT": 10.5,
+          "DR1TSODI": 1860.0,
+          "DR1TPOTA": 2920.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.2837999996882,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 6,
+        "total_slack": 1991.6,
+        "total_cost_inr": 86.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 880.0,
+          "DR1TPROT": 34.4,
+          "DR1TCARB": 137.0,
+          "DR1TFIBE": 22.4,
+          "DR1TSFAT": 5.6,
+          "DR1TSODI": 942.0,
+          "DR1TPOTA": 1660.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_02",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 1.7272000000048138,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 2.227,
+          "vegetable_pulao": 0.382,
+          "lowfat_paneer": 0.613
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.19,
+        "actual_nutrients": {
+          "DR1TKCAL": 1420.0,
+          "DR1TPROT": 80.5,
+          "DR1TCARB": 193.6,
+          "DR1TFIBE": 43.8,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1916.8,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 2.8747999999723106,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 190.0,
+        "total_cost_inr": 129.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1350.0,
+          "DR1TPROT": 85.0,
+          "DR1TCARB": 173.0,
+          "DR1TFIBE": 41.0,
+          "DR1TSFAT": 9.1,
+          "DR1TSODI": 1820.0,
+          "DR1TPOTA": 2680.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 2.930499999820313,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "lowfat_paneer": 1,
+          "phulka": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 461.0,
+        "total_cost_inr": 173.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1780.0,
+          "DR1TPROT": 99.0,
+          "DR1TCARB": 243.0,
+          "DR1TFIBE": 57.0,
+          "DR1TSFAT": 10.9,
+          "DR1TSODI": 2270.0,
+          "DR1TPOTA": 3680.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 92.81800000007934,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 163.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1590.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 213.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1680.0,
+          "DR1TPOTA": 3320.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4834000002302,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 6,
+        "total_slack": 1757.9,
+        "total_cost_inr": 90.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 985.0,
+          "DR1TPROT": 37.9,
+          "DR1TCARB": 157.0,
+          "DR1TFIBE": 25.4,
+          "DR1TSFAT": 5.8,
+          "DR1TSODI": 977.0,
+          "DR1TPOTA": 1750.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_03",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 1.8418999998175423,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 2.152,
+          "vegetable_pulao": 0.556,
+          "lowfat_paneer": 0.58
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 140.26,
+        "actual_nutrients": {
+          "DR1TKCAL": 1440.0,
+          "DR1TPROT": 79.6,
+          "DR1TCARB": 198.3,
+          "DR1TFIBE": 43.7,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1910.0,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 2.926099999967846,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 0.0,
+        "total_cost_inr": 154.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1595.0,
+          "DR1TPROT": 90.0,
+          "DR1TCARB": 215.0,
+          "DR1TFIBE": 44.5,
+          "DR1TSFAT": 10.3,
+          "DR1TSODI": 2000.0,
+          "DR1TPOTA": 2940.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 2.845200000137993,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 747.0,
+        "total_cost_inr": 194.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1920.0,
+          "DR1TPROT": 100.5,
+          "DR1TCARB": 265.0,
+          "DR1TFIBE": 57.5,
+          "DR1TSFAT": 11.9,
+          "DR1TSODI": 2415.0,
+          "DR1TPOTA": 3850.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 391.8565999997554,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_oats_upma": 2,
+          "aloo_gobi": 2,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1550.0,
+          "DR1TPROT": 90.0,
+          "DR1TCARB": 188.0,
+          "DR1TFIBE": 36.0,
+          "DR1TSFAT": 14.6,
+          "DR1TSODI": 1700.0,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.478900000071,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 2365.6,
+        "total_cost_inr": 66.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 730.0,
+          "DR1TPROT": 32.5,
+          "DR1TCARB": 115.0,
+          "DR1TFIBE": 23.0,
+          "DR1TSFAT": 2.9,
+          "DR1TSODI": 1040.0,
+          "DR1TPOTA": 1410.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_04",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 2.6234000001750246,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 2.077,
+          "vegetable_pulao": 0.731,
+          "lowfat_paneer": 0.547
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 142.33,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 78.7,
+          "DR1TCARB": 203.0,
+          "DR1TFIBE": 43.7,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1903.3,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 5.543499999930646,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 0.0,
+        "total_cost_inr": 154.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1595.0,
+          "DR1TPROT": 90.0,
+          "DR1TCARB": 215.0,
+          "DR1TFIBE": 44.5,
+          "DR1TSFAT": 10.3,
+          "DR1TSODI": 2000.0,
+          "DR1TPOTA": 2940.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 6.232899999758956,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 724.0,
+        "total_cost_inr": 194.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1920.0,
+          "DR1TPROT": 100.5,
+          "DR1TCARB": 265.0,
+          "DR1TFIBE": 57.5,
+          "DR1TSFAT": 11.9,
+          "DR1TSODI": 2415.0,
+          "DR1TPOTA": 3850.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 289.3519999997807,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_pulao": 2,
+          "cabbage_peas": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 151.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1475.0,
+          "DR1TPROT": 70.0,
+          "DR1TCARB": 204.0,
+          "DR1TFIBE": 39.0,
+          "DR1TSFAT": 10.4,
+          "DR1TSODI": 1570.0,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4040000004534,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 1108.9,
+        "total_cost_inr": 102.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1060.0,
+          "DR1TPROT": 46.5,
+          "DR1TCARB": 159.0,
+          "DR1TFIBE": 31.0,
+          "DR1TSFAT": 6.6,
+          "DR1TSODI": 1365.0,
+          "DR1TPOTA": 2130.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_05",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 1.7580999997335311,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 2.003,
+          "vegetable_pulao": 0.905,
+          "lowfat_paneer": 0.514
+        },
+        "fractional_serving_count": 2,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 144.4,
+        "actual_nutrients": {
+          "DR1TKCAL": 1480.0,
+          "DR1TPROT": 77.9,
+          "DR1TCARB": 207.7,
+          "DR1TFIBE": 43.7,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1896.6,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 3.2255999999506457,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 0.0,
+        "total_cost_inr": 154.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1595.0,
+          "DR1TPROT": 90.0,
+          "DR1TCARB": 215.0,
+          "DR1TFIBE": 44.5,
+          "DR1TSFAT": 10.3,
+          "DR1TSODI": 2000.0,
+          "DR1TPOTA": 2940.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 3.463399999873218,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 701.0,
+        "total_cost_inr": 194.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1920.0,
+          "DR1TPROT": 100.5,
+          "DR1TCARB": 265.0,
+          "DR1TFIBE": 57.5,
+          "DR1TSFAT": 11.9,
+          "DR1TSODI": 2415.0,
+          "DR1TPOTA": 3850.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 136.19020000032833,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 163.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1590.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 213.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1680.0,
+          "DR1TPOTA": 3320.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.1073999998152,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": false,
+        "active_dish_count": 4,
+        "total_slack": 1131.9,
+        "total_cost_inr": 102.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1060.0,
+          "DR1TPROT": 46.5,
+          "DR1TCARB": 159.0,
+          "DR1TFIBE": 31.0,
+          "DR1TSFAT": 6.6,
+          "DR1TSODI": 1365.0,
+          "DR1TPOTA": 2130.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_06",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 2.468800000315241,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.928,
+          "vegetable_pulao": 1.08,
+          "lowfat_paneer": 0.48
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 146.47,
+        "actual_nutrients": {
+          "DR1TKCAL": 1500.0,
+          "DR1TPROT": 77.0,
+          "DR1TCARB": 212.4,
+          "DR1TFIBE": 43.7,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1889.8,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 3.7361999998211104,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 197.2,
+        "total_cost_inr": 139.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1405.0,
+          "DR1TPROT": 66.0,
+          "DR1TCARB": 208.0,
+          "DR1TFIBE": 43.5,
+          "DR1TSFAT": 5.8,
+          "DR1TSODI": 1820.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 3.57110000004468,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 295.1,
+        "total_cost_inr": 179.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1730.0,
+          "DR1TPROT": 76.5,
+          "DR1TCARB": 258.0,
+          "DR1TFIBE": 56.5,
+          "DR1TSFAT": 7.4,
+          "DR1TSODI": 2235.0,
+          "DR1TPOTA": 3610.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 63.73500000017884,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "bhindi_masala": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 167.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1630.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 217.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1560.0,
+          "DR1TPOTA": 2840.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4801000001135,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "lowfat_curd": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 1980.8,
+        "total_cost_inr": 80.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 845.0,
+          "DR1TPROT": 39.5,
+          "DR1TCARB": 124.0,
+          "DR1TFIBE": 23.0,
+          "DR1TSFAT": 5.7,
+          "DR1TSODI": 1140.0,
+          "DR1TPOTA": 1630.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_07",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 2.010799999879964,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.853,
+          "vegetable_pulao": 1.255,
+          "lowfat_paneer": 0.447
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 148.54,
+        "actual_nutrients": {
+          "DR1TKCAL": 1520.0,
+          "DR1TPROT": 76.2,
+          "DR1TCARB": 217.1,
+          "DR1TFIBE": 43.7,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1883.1,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 3.419500000291009,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 217.2,
+        "total_cost_inr": 139.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1405.0,
+          "DR1TPROT": 66.0,
+          "DR1TCARB": 208.0,
+          "DR1TFIBE": 43.5,
+          "DR1TSFAT": 5.8,
+          "DR1TSODI": 1820.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 3.6956000003556255,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 273.1,
+        "total_cost_inr": 179.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1730.0,
+          "DR1TPROT": 76.5,
+          "DR1TCARB": 258.0,
+          "DR1TFIBE": 56.5,
+          "DR1TSFAT": 7.4,
+          "DR1TSODI": 2235.0,
+          "DR1TPOTA": 3610.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 69.51549999985218,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "aloo_gobi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 159.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1670.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 231.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1580.0,
+          "DR1TPOTA": 3040.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.1339999999982,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 1616.2,
+        "total_cost_inr": 94.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1090.0,
+          "DR1TPROT": 41.4,
+          "DR1TCARB": 177.0,
+          "DR1TFIBE": 28.4,
+          "DR1TSFAT": 6.0,
+          "DR1TSODI": 1012.0,
+          "DR1TPOTA": 1840.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_08",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 1.7351999999846157,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.778,
+          "vegetable_pulao": 1.429,
+          "lowfat_paneer": 0.414
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 150.62,
+        "actual_nutrients": {
+          "DR1TKCAL": 1540.0,
+          "DR1TPROT": 75.3,
+          "DR1TCARB": 221.8,
+          "DR1TFIBE": 43.6,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1876.4,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 3.1353999997918436,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 238.2,
+        "total_cost_inr": 139.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1405.0,
+          "DR1TPROT": 66.0,
+          "DR1TCARB": 208.0,
+          "DR1TFIBE": 43.5,
+          "DR1TSFAT": 5.8,
+          "DR1TSODI": 1820.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 3.189200000178971,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 261.1,
+        "total_cost_inr": 179.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1730.0,
+          "DR1TPROT": 76.5,
+          "DR1TCARB": 258.0,
+          "DR1TFIBE": 56.5,
+          "DR1TSFAT": 7.4,
+          "DR1TSODI": 2235.0,
+          "DR1TPOTA": 3610.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 205.64169999988735,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "bhindi_masala": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 167.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1630.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 217.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1560.0,
+          "DR1TPOTA": 2840.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.3311000001486,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 4,
+        "total_slack": 2285.9,
+        "total_cost_inr": 72.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 845.0,
+          "DR1TPROT": 32.0,
+          "DR1TCARB": 140.0,
+          "DR1TFIBE": 28.0,
+          "DR1TSFAT": 3.1,
+          "DR1TSODI": 910.0,
+          "DR1TPOTA": 1590.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_09",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 1.7075999999178748,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.703,
+          "vegetable_pulao": 1.604,
+          "lowfat_paneer": 0.381
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 152.69,
+        "actual_nutrients": {
+          "DR1TKCAL": 1560.0,
+          "DR1TPROT": 74.4,
+          "DR1TCARB": 226.5,
+          "DR1TFIBE": 43.6,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1869.6,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 3.0790000005254115,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 15.0,
+        "total_cost_inr": 164.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1650.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 250.0,
+          "DR1TFIBE": 47.0,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 2000.0,
+          "DR1TPOTA": 2960.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 2.9461999997693056,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 536.0,
+        "total_cost_inr": 200.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1870.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 280.0,
+          "DR1TFIBE": 57.0,
+          "DR1TSFAT": 8.4,
+          "DR1TSODI": 2380.0,
+          "DR1TPOTA": 3780.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 219.56689999979062,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "aloo_gobi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 159.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1670.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 231.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1580.0,
+          "DR1TPOTA": 3040.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6679000003896,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 2246.9,
+        "total_cost_inr": 70.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 835.0,
+          "DR1TPROT": 36.0,
+          "DR1TCARB": 135.0,
+          "DR1TFIBE": 26.0,
+          "DR1TSFAT": 3.1,
+          "DR1TSODI": 1075.0,
+          "DR1TPOTA": 1500.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_10",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.933999999844673,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.628,
+          "vegetable_pulao": 1.779,
+          "lowfat_paneer": 0.347
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 154.76,
+        "actual_nutrients": {
+          "DR1TKCAL": 1580.0,
+          "DR1TPROT": 73.6,
+          "DR1TCARB": 231.2,
+          "DR1TFIBE": 43.6,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1862.9,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 6.227899999885267,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 13.0,
+        "total_cost_inr": 164.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1650.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 250.0,
+          "DR1TFIBE": 47.0,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 2000.0,
+          "DR1TPOTA": 2960.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 6.160299999464769,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 514.0,
+        "total_cost_inr": 200.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1870.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 280.0,
+          "DR1TFIBE": 57.0,
+          "DR1TSFAT": 8.4,
+          "DR1TSODI": 2380.0,
+          "DR1TPOTA": 3780.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 54.27779999990889,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "aloo_gobi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 159.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1670.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 231.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1580.0,
+          "DR1TPOTA": 3040.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.649899999753,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 1025.2,
+        "total_cost_inr": 106.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1165.0,
+          "DR1TPROT": 50.0,
+          "DR1TCARB": 179.0,
+          "DR1TFIBE": 34.0,
+          "DR1TSFAT": 6.8,
+          "DR1TSODI": 1400.0,
+          "DR1TPOTA": 2220.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_11",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.5505999999259075,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.554,
+          "vegetable_pulao": 1.953,
+          "lowfat_paneer": 0.314
+        },
+        "fractional_serving_count": 2,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 156.83,
+        "actual_nutrients": {
+          "DR1TKCAL": 1600.0,
+          "DR1TPROT": 72.7,
+          "DR1TCARB": 235.9,
+          "DR1TFIBE": 43.6,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1856.1,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.246100000178558,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 11.0,
+        "total_cost_inr": 164.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1650.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 250.0,
+          "DR1TFIBE": 47.0,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 2000.0,
+          "DR1TPOTA": 2960.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 7.727500000328291,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 492.0,
+        "total_cost_inr": 200.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1870.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 280.0,
+          "DR1TFIBE": 57.0,
+          "DR1TSFAT": 8.4,
+          "DR1TSODI": 2380.0,
+          "DR1TPOTA": 3780.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 27.794499999799882,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "bhindi_masala": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 167.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1630.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 217.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1560.0,
+          "DR1TPOTA": 2840.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6784999997035,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": false,
+        "active_dish_count": 6,
+        "total_slack": 1300.7,
+        "total_cost_inr": 106.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1085.0,
+          "DR1TPROT": 45.4,
+          "DR1TCARB": 167.0,
+          "DR1TFIBE": 28.4,
+          "DR1TSFAT": 6.5,
+          "DR1TSODI": 1332.0,
+          "DR1TPOTA": 2070.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_12",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.779099999974278,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.479,
+          "vegetable_pulao": 2.128,
+          "lowfat_paneer": 0.281
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 158.9,
+        "actual_nutrients": {
+          "DR1TKCAL": 1620.0,
+          "DR1TPROT": 71.9,
+          "DR1TCARB": 240.7,
+          "DR1TFIBE": 43.6,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1849.4,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 7.246600000144099,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 544.3,
+        "total_cost_inr": 140.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1430.0,
+          "DR1TPROT": 58.5,
+          "DR1TCARB": 218.0,
+          "DR1TFIBE": 39.0,
+          "DR1TSFAT": 6.2,
+          "DR1TSODI": 1570.0,
+          "DR1TPOTA": 2460.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 7.5199999996584665,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 11.9,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1650.0,
+          "DR1TPROT": 65.5,
+          "DR1TCARB": 248.0,
+          "DR1TFIBE": 49.0,
+          "DR1TSFAT": 7.6,
+          "DR1TSODI": 1950.0,
+          "DR1TPOTA": 3280.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 22.908800000095653,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "bhindi_masala": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 167.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1630.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 217.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1560.0,
+          "DR1TPOTA": 2840.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.2850999995826,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 3625.5,
+        "total_cost_inr": 46.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 525.0,
+          "DR1TPROT": 21.5,
+          "DR1TCARB": 85.0,
+          "DR1TFIBE": 17.0,
+          "DR1TSFAT": 2.0,
+          "DR1TSODI": 650.0,
+          "DR1TPOTA": 1000.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_13",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.048300000045856,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.396,
+          "vegetable_pulao": 2.267,
+          "lowfat_paneer": 0.303
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 160.72,
+        "actual_nutrients": {
+          "DR1TKCAL": 1640.0,
+          "DR1TPROT": 72.0,
+          "DR1TCARB": 244.0,
+          "DR1TFIBE": 43.4,
+          "DR1TSFAT": 8.2,
+          "DR1TSODI": 1842.8,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 3.654499999811378,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 565.3,
+        "total_cost_inr": 140.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1430.0,
+          "DR1TPROT": 58.5,
+          "DR1TCARB": 218.0,
+          "DR1TFIBE": 39.0,
+          "DR1TSFAT": 6.2,
+          "DR1TSODI": 1570.0,
+          "DR1TPOTA": 2460.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 3.0447999997704756,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 10.9,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1650.0,
+          "DR1TPROT": 65.5,
+          "DR1TCARB": 248.0,
+          "DR1TFIBE": 49.0,
+          "DR1TSFAT": 7.6,
+          "DR1TSODI": 1950.0,
+          "DR1TPOTA": 3280.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 28.9757999998983,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "aloo_gobi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 159.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1670.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 231.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1580.0,
+          "DR1TPOTA": 3040.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6429999999636,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 2402.7,
+        "total_cost_inr": 74.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 860.0,
+          "DR1TPROT": 34.9,
+          "DR1TCARB": 143.0,
+          "DR1TFIBE": 23.4,
+          "DR1TSFAT": 3.0,
+          "DR1TSODI": 1042.0,
+          "DR1TPOTA": 1440.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_14",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 1.8871000002036453,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.305,
+          "vegetable_pulao": 2.371,
+          "lowfat_paneer": 0.379
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 162.28,
+        "actual_nutrients": {
+          "DR1TKCAL": 1660.0,
+          "DR1TPROT": 73.3,
+          "DR1TCARB": 246.0,
+          "DR1TFIBE": 43.1,
+          "DR1TSFAT": 8.6,
+          "DR1TSODI": 1836.2,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 3.126099999917642,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 586.3,
+        "total_cost_inr": 140.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1430.0,
+          "DR1TPROT": 58.5,
+          "DR1TCARB": 218.0,
+          "DR1TFIBE": 39.0,
+          "DR1TSFAT": 6.2,
+          "DR1TSODI": 1570.0,
+          "DR1TPOTA": 2460.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 2.887799999825802,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 19.9,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1650.0,
+          "DR1TPROT": 65.5,
+          "DR1TCARB": 248.0,
+          "DR1TFIBE": 49.0,
+          "DR1TSFAT": 7.6,
+          "DR1TSODI": 1950.0,
+          "DR1TPOTA": 3280.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 22.40990000018428,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "aloo_gobi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 159.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1670.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 231.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 1580.0,
+          "DR1TPOTA": 3040.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.5235999998331,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 3414.8,
+        "total_cost_inr": 50.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 630.0,
+          "DR1TPROT": 25.0,
+          "DR1TCARB": 105.0,
+          "DR1TFIBE": 20.0,
+          "DR1TSFAT": 2.2,
+          "DR1TSODI": 685.0,
+          "DR1TPOTA": 1090.0
+        }
+      }
+    },
+    {
+      "case_id": "DM_15",
+      "phenotype": "Type 2 Diabetes Screening Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 2.330800000436284,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.215,
+          "vegetable_pulao": 2.475,
+          "lowfat_paneer": 0.455
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 163.85,
+        "actual_nutrients": {
+          "DR1TKCAL": 1680.0,
+          "DR1TPROT": 74.5,
+          "DR1TCARB": 248.0,
+          "DR1TFIBE": 42.8,
+          "DR1TSFAT": 9.0,
+          "DR1TSODI": 1829.7,
+          "DR1TPOTA": 2800.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 3.851400000257854,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 607.3,
+        "total_cost_inr": 140.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1430.0,
+          "DR1TPROT": 58.5,
+          "DR1TCARB": 218.0,
+          "DR1TFIBE": 39.0,
+          "DR1TSFAT": 6.2,
+          "DR1TSODI": 1570.0,
+          "DR1TPOTA": 2460.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 4.755100000238599,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 38.9,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1650.0,
+          "DR1TPROT": 65.5,
+          "DR1TCARB": 248.0,
+          "DR1TFIBE": 49.0,
+          "DR1TSFAT": 7.6,
+          "DR1TSODI": 1950.0,
+          "DR1TPOTA": 3280.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 845.6875000001673,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 3,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 178.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1680.0,
+          "DR1TPROT": 92.5,
+          "DR1TCARB": 211.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 15.5,
+          "DR1TSODI": 1810.0,
+          "DR1TPOTA": 3190.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4988000001686,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 1935.3,
+        "total_cost_inr": 82.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1070.0,
+          "DR1TPROT": 41.9,
+          "DR1TCARB": 183.0,
+          "DR1TFIBE": 29.4,
+          "DR1TSFAT": 3.4,
+          "DR1TSODI": 1112.0,
+          "DR1TPOTA": 1620.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_01",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.879499999788095,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 2.121,
+          "vegetable_pulao": 0.117,
+          "lowfat_paneer": 0.288
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 124.15,
+        "actual_nutrients": {
+          "DR1TKCAL": 1270.0,
+          "DR1TPROT": 70.0,
+          "DR1TCARB": 176.8,
+          "DR1TFIBE": 41.7,
+          "DR1TSFAT": 6.1,
+          "DR1TSODI": 1764.9,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 10.913300000083836,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 2,
+        "total_slack": 280.4,
+        "total_cost_inr": 114.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1160.0,
+          "DR1TPROT": 61.0,
+          "DR1TCARB": 166.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 4.6,
+          "DR1TSODI": 1640.0,
+          "DR1TPOTA": 2440.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 9.897200000068551,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "phulka": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 212.0,
+        "total_cost_inr": 158.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1590.0,
+          "DR1TPROT": 75.0,
+          "DR1TCARB": 236.0,
+          "DR1TFIBE": 56.0,
+          "DR1TSFAT": 6.4,
+          "DR1TSODI": 2090.0,
+          "DR1TPOTA": 3440.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 333.37410000012824,
+        "selected_dishes": {
+          "dal_moong_tadka": 2,
+          "vegetable_oats_upma": 2,
+          "cabbage_peas": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 129.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1305.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 174.0,
+          "DR1TFIBE": 39.0,
+          "DR1TSFAT": 9.6,
+          "DR1TSODI": 2090.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4512000001523,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 1869.9,
+        "total_cost_inr": 72.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 845.0,
+          "DR1TPROT": 32.0,
+          "DR1TCARB": 140.0,
+          "DR1TFIBE": 28.0,
+          "DR1TSFAT": 3.1,
+          "DR1TSODI": 910.0,
+          "DR1TPOTA": 1590.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_02",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 5.99370000009003,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 2.036,
+          "vegetable_pulao": 0.246,
+          "lowfat_paneer": 0.326
+        },
+        "fractional_serving_count": 2,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 125.89,
+        "actual_nutrients": {
+          "DR1TKCAL": 1290.0,
+          "DR1TPROT": 70.5,
+          "DR1TCARB": 179.7,
+          "DR1TFIBE": 41.5,
+          "DR1TSFAT": 6.4,
+          "DR1TSODI": 1758.3,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 9.460699999635835,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 2,
+        "total_slack": 300.9,
+        "total_cost_inr": 114.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1160.0,
+          "DR1TPROT": 61.0,
+          "DR1TCARB": 166.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 4.6,
+          "DR1TSODI": 1640.0,
+          "DR1TPOTA": 2440.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 8.851600000070903,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "phulka": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 190.0,
+        "total_cost_inr": 158.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1590.0,
+          "DR1TPROT": 75.0,
+          "DR1TCARB": 236.0,
+          "DR1TFIBE": 56.0,
+          "DR1TSFAT": 6.4,
+          "DR1TSODI": 2090.0,
+          "DR1TPOTA": 3440.0
+        }
+      },
+      "discrete_milp": {
+        "status": "infeasible",
+        "latency_ms": 1026.5590999997585
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.2478000002338,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 1658.5,
+        "total_cost_inr": 78.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 965.0,
+          "DR1TPROT": 38.4,
+          "DR1TCARB": 163.0,
+          "DR1TFIBE": 26.4,
+          "DR1TSFAT": 3.2,
+          "DR1TSODI": 1077.0,
+          "DR1TPOTA": 1530.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_03",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.2272000000593835,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.951,
+          "vegetable_pulao": 0.374,
+          "lowfat_paneer": 0.364
+        },
+        "fractional_serving_count": 2,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 127.63,
+        "actual_nutrients": {
+          "DR1TKCAL": 1310.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 182.7,
+          "DR1TFIBE": 41.3,
+          "DR1TSFAT": 6.6,
+          "DR1TSODI": 1751.7,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.187400000224443,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 2,
+        "total_slack": 321.4,
+        "total_cost_inr": 114.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1160.0,
+          "DR1TPROT": 61.0,
+          "DR1TCARB": 166.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 4.6,
+          "DR1TSODI": 1640.0,
+          "DR1TPOTA": 2440.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 7.443200000125216,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "phulka": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 168.0,
+        "total_cost_inr": 158.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1590.0,
+          "DR1TPROT": 75.0,
+          "DR1TCARB": 236.0,
+          "DR1TFIBE": 56.0,
+          "DR1TSFAT": 6.4,
+          "DR1TSODI": 2090.0,
+          "DR1TPOTA": 3440.0
+        }
+      },
+      "discrete_milp": {
+        "status": "infeasible",
+        "latency_ms": 1004.6425999998974
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6163999997807,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1,
+          "lowfat_curd": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 2020.4,
+        "total_cost_inr": 76.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 980.0,
+          "DR1TPROT": 37.9,
+          "DR1TCARB": 162.0,
+          "DR1TFIBE": 23.4,
+          "DR1TSFAT": 5.3,
+          "DR1TSODI": 822.0,
+          "DR1TPOTA": 1430.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_04",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.856799999743089,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.865,
+          "vegetable_pulao": 0.502,
+          "lowfat_paneer": 0.403
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 129.37,
+        "actual_nutrients": {
+          "DR1TKCAL": 1330.0,
+          "DR1TPROT": 71.5,
+          "DR1TCARB": 185.6,
+          "DR1TFIBE": 41.1,
+          "DR1TSFAT": 6.9,
+          "DR1TSODI": 1745.1,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 10.41960000020481,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 17.7,
+        "total_cost_inr": 139.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1405.0,
+          "DR1TPROT": 66.0,
+          "DR1TCARB": 208.0,
+          "DR1TFIBE": 43.5,
+          "DR1TSFAT": 5.8,
+          "DR1TSODI": 1820.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 8.585000000039145,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 443.5,
+        "total_cost_inr": 179.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1730.0,
+          "DR1TPROT": 76.5,
+          "DR1TCARB": 258.0,
+          "DR1TFIBE": 56.5,
+          "DR1TSFAT": 7.4,
+          "DR1TSODI": 2235.0,
+          "DR1TPOTA": 3610.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 665.6197999996039,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_oats_upma": 2,
+          "cabbage_peas": 2,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1490.0,
+          "DR1TPROT": 92.0,
+          "DR1TCARB": 180.0,
+          "DR1TFIBE": 38.0,
+          "DR1TSFAT": 14.0,
+          "DR1TSODI": 1780.0,
+          "DR1TPOTA": 2680.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.8635000000322,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": false,
+        "active_dish_count": 6,
+        "total_slack": 804.7,
+        "total_cost_inr": 106.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1085.0,
+          "DR1TPROT": 45.4,
+          "DR1TCARB": 167.0,
+          "DR1TFIBE": 28.4,
+          "DR1TSFAT": 6.5,
+          "DR1TSODI": 1332.0,
+          "DR1TPOTA": 2070.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_05",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 5.435200000192708,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.78,
+          "vegetable_pulao": 0.63,
+          "lowfat_paneer": 0.441
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 131.11,
+        "actual_nutrients": {
+          "DR1TKCAL": 1350.0,
+          "DR1TPROT": 72.0,
+          "DR1TCARB": 188.5,
+          "DR1TFIBE": 40.9,
+          "DR1TSFAT": 7.2,
+          "DR1TSODI": 1738.5,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.769800000209216,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 16.2,
+        "total_cost_inr": 139.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1405.0,
+          "DR1TPROT": 66.0,
+          "DR1TCARB": 208.0,
+          "DR1TFIBE": 43.5,
+          "DR1TSFAT": 5.8,
+          "DR1TSODI": 1820.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 12.463799999750336,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 421.5,
+        "total_cost_inr": 179.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1730.0,
+          "DR1TPROT": 76.5,
+          "DR1TCARB": 258.0,
+          "DR1TFIBE": 56.5,
+          "DR1TSFAT": 7.4,
+          "DR1TSODI": 2235.0,
+          "DR1TPOTA": 3610.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 903.4196999996311,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_oats_upma": 2,
+          "cabbage_peas": 2,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1490.0,
+          "DR1TPROT": 92.0,
+          "DR1TCARB": 180.0,
+          "DR1TFIBE": 38.0,
+          "DR1TSFAT": 14.0,
+          "DR1TSODI": 1780.0,
+          "DR1TPOTA": 2680.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 856.8065000000388,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 2694.1,
+        "total_cost_inr": 54.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 735.0,
+          "DR1TPROT": 28.5,
+          "DR1TCARB": 125.0,
+          "DR1TFIBE": 23.0,
+          "DR1TSFAT": 2.4,
+          "DR1TSODI": 720.0,
+          "DR1TPOTA": 1180.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_06",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.511800000069343,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.695,
+          "vegetable_pulao": 0.759,
+          "lowfat_paneer": 0.48
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 132.85,
+        "actual_nutrients": {
+          "DR1TKCAL": 1370.0,
+          "DR1TPROT": 72.5,
+          "DR1TCARB": 191.5,
+          "DR1TFIBE": 40.7,
+          "DR1TSFAT": 7.4,
+          "DR1TSODI": 1731.8,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 7.400800000596064,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 14.7,
+        "total_cost_inr": 139.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1405.0,
+          "DR1TPROT": 66.0,
+          "DR1TCARB": 208.0,
+          "DR1TFIBE": 43.5,
+          "DR1TSFAT": 5.8,
+          "DR1TSODI": 1820.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 7.322800000110874,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 399.5,
+        "total_cost_inr": 179.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1730.0,
+          "DR1TPROT": 76.5,
+          "DR1TCARB": 258.0,
+          "DR1TFIBE": 56.5,
+          "DR1TSFAT": 7.4,
+          "DR1TSODI": 2235.0,
+          "DR1TPOTA": 3610.0
+        }
+      },
+      "discrete_milp": {
+        "status": "infeasible",
+        "latency_ms": 1007.3809999998957
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6137999999919,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 4,
+        "total_slack": 2495.8,
+        "total_cost_inr": 64.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 635.0,
+          "DR1TPROT": 25.0,
+          "DR1TCARB": 100.0,
+          "DR1TFIBE": 22.0,
+          "DR1TSFAT": 2.7,
+          "DR1TSODI": 840.0,
+          "DR1TPOTA": 1410.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_07",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 7.263499999680789,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.61,
+          "vegetable_pulao": 0.887,
+          "lowfat_paneer": 0.518
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 134.59,
+        "actual_nutrients": {
+          "DR1TKCAL": 1390.0,
+          "DR1TPROT": 73.0,
+          "DR1TCARB": 194.4,
+          "DR1TFIBE": 40.5,
+          "DR1TSFAT": 7.7,
+          "DR1TSODI": 1725.2,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 11.037300000225514,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 58.0,
+        "total_cost_inr": 154.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1595.0,
+          "DR1TPROT": 90.0,
+          "DR1TCARB": 215.0,
+          "DR1TFIBE": 44.5,
+          "DR1TSFAT": 10.3,
+          "DR1TSODI": 2000.0,
+          "DR1TPOTA": 2940.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 12.108099999750266,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 808.0,
+        "total_cost_inr": 194.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1920.0,
+          "DR1TPROT": 100.5,
+          "DR1TCARB": 265.0,
+          "DR1TFIBE": 57.5,
+          "DR1TSFAT": 11.9,
+          "DR1TSODI": 2415.0,
+          "DR1TPOTA": 3850.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 890.5544999997801,
+        "selected_dishes": {
+          "dal_masoor": 2,
+          "vegetable_oats_upma": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 134.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1390.0,
+          "DR1TPROT": 91.0,
+          "DR1TCARB": 164.0,
+          "DR1TFIBE": 36.0,
+          "DR1TSFAT": 13.4,
+          "DR1TSODI": 2020.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 856.5483000003042,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "lowfat_curd": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 1244.5,
+        "total_cost_inr": 88.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1055.0,
+          "DR1TPROT": 46.5,
+          "DR1TCARB": 164.0,
+          "DR1TFIBE": 29.0,
+          "DR1TSFAT": 6.1,
+          "DR1TSODI": 1210.0,
+          "DR1TPOTA": 1810.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_08",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 8.685600000262639,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.525,
+          "vegetable_pulao": 1.015,
+          "lowfat_paneer": 0.557
+        },
+        "fractional_serving_count": 2,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 136.33,
+        "actual_nutrients": {
+          "DR1TKCAL": 1410.0,
+          "DR1TPROT": 73.5,
+          "DR1TCARB": 197.3,
+          "DR1TFIBE": 40.3,
+          "DR1TSFAT": 7.9,
+          "DR1TSODI": 1718.6,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 10.385499999756576,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 36.0,
+        "total_cost_inr": 154.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1595.0,
+          "DR1TPROT": 90.0,
+          "DR1TCARB": 215.0,
+          "DR1TFIBE": 44.5,
+          "DR1TSFAT": 10.3,
+          "DR1TSODI": 2000.0,
+          "DR1TPOTA": 2940.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 10.690300000078423,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 2,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 785.5,
+        "total_cost_inr": 194.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1920.0,
+          "DR1TPROT": 100.5,
+          "DR1TCARB": 265.0,
+          "DR1TFIBE": 57.5,
+          "DR1TSFAT": 11.9,
+          "DR1TSODI": 2415.0,
+          "DR1TPOTA": 3850.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 583.8550000003124,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_oats_upma": 2,
+          "cabbage_peas": 2,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1490.0,
+          "DR1TPROT": 92.0,
+          "DR1TCARB": 180.0,
+          "DR1TFIBE": 38.0,
+          "DR1TSFAT": 14.0,
+          "DR1TSODI": 1780.0,
+          "DR1TPOTA": 2680.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 859.1170000000602,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 2761.6,
+        "total_cost_inr": 54.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 735.0,
+          "DR1TPROT": 28.5,
+          "DR1TCARB": 125.0,
+          "DR1TFIBE": 23.0,
+          "DR1TSFAT": 2.4,
+          "DR1TSODI": 720.0,
+          "DR1TPOTA": 1180.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_09",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 5.007899999782239,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.44,
+          "vegetable_pulao": 1.144,
+          "lowfat_paneer": 0.595
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.07,
+        "actual_nutrients": {
+          "DR1TKCAL": 1430.0,
+          "DR1TPROT": 74.0,
+          "DR1TCARB": 200.3,
+          "DR1TFIBE": 40.1,
+          "DR1TSFAT": 8.2,
+          "DR1TSODI": 1712.0,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.036100000026636,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 215.0,
+        "total_cost_inr": 130.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1375.0,
+          "DR1TPROT": 77.5,
+          "DR1TCARB": 183.0,
+          "DR1TFIBE": 36.5,
+          "DR1TSFAT": 9.5,
+          "DR1TSODI": 1570.0,
+          "DR1TPOTA": 2440.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 15.230200000132754,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 137.0,
+        "total_cost_inr": 170.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1700.0,
+          "DR1TPROT": 88.0,
+          "DR1TCARB": 233.0,
+          "DR1TFIBE": 49.5,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1985.0,
+          "DR1TPOTA": 3350.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 662.7215999997134,
+        "selected_dishes": {
+          "rajma_curry": 2,
+          "vegetable_pulao": 2,
+          "cabbage_peas": 2,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 156.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1520.0,
+          "DR1TPROT": 91.0,
+          "DR1TCARB": 192.0,
+          "DR1TFIBE": 35.0,
+          "DR1TSFAT": 14.0,
+          "DR1TSODI": 1920.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6122000000869,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 1731.2,
+        "total_cost_inr": 74.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 940.0,
+          "DR1TPROT": 39.5,
+          "DR1TCARB": 155.0,
+          "DR1TFIBE": 29.0,
+          "DR1TSFAT": 3.3,
+          "DR1TSODI": 1110.0,
+          "DR1TPOTA": 1590.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_10",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 6.039299999883951,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.354,
+          "vegetable_pulao": 1.272,
+          "lowfat_paneer": 0.634
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 139.81,
+        "actual_nutrients": {
+          "DR1TKCAL": 1450.0,
+          "DR1TPROT": 74.5,
+          "DR1TCARB": 203.2,
+          "DR1TFIBE": 39.9,
+          "DR1TSFAT": 8.5,
+          "DR1TSODI": 1705.4,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 12.330499999734457,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 235.0,
+        "total_cost_inr": 130.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1375.0,
+          "DR1TPROT": 77.5,
+          "DR1TCARB": 183.0,
+          "DR1TFIBE": 36.5,
+          "DR1TSFAT": 9.5,
+          "DR1TSODI": 1570.0,
+          "DR1TPOTA": 2440.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 7.227300000067771,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 115.0,
+        "total_cost_inr": 170.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1700.0,
+          "DR1TPROT": 88.0,
+          "DR1TCARB": 233.0,
+          "DR1TFIBE": 49.5,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1985.0,
+          "DR1TPOTA": 3350.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 124.37240000008387,
+        "selected_dishes": {
+          "dal_masoor": 3,
+          "vegetable_pulao": 2,
+          "bhindi_masala": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 149.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1465.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 193.0,
+          "DR1TFIBE": 37.0,
+          "DR1TSFAT": 10.0,
+          "DR1TSODI": 1860.0,
+          "DR1TPOTA": 2750.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.3953999999976,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 1618.6,
+        "total_cost_inr": 86.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 960.0,
+          "DR1TPROT": 39.0,
+          "DR1TCARB": 149.0,
+          "DR1TFIBE": 28.0,
+          "DR1TSFAT": 5.9,
+          "DR1TSODI": 1010.0,
+          "DR1TPOTA": 1810.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_11",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.349600000092323,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.269,
+          "vegetable_pulao": 1.4,
+          "lowfat_paneer": 0.672
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 141.55,
+        "actual_nutrients": {
+          "DR1TKCAL": 1470.0,
+          "DR1TPROT": 75.0,
+          "DR1TCARB": 206.1,
+          "DR1TFIBE": 39.7,
+          "DR1TSFAT": 8.7,
+          "DR1TSODI": 1698.8,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 9.408799999619077,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 255.0,
+        "total_cost_inr": 130.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1375.0,
+          "DR1TPROT": 77.5,
+          "DR1TCARB": 183.0,
+          "DR1TFIBE": 36.5,
+          "DR1TSFAT": 9.5,
+          "DR1TSODI": 1570.0,
+          "DR1TPOTA": 2440.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 7.551700000476558,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 93.0,
+        "total_cost_inr": 170.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1700.0,
+          "DR1TPROT": 88.0,
+          "DR1TCARB": 233.0,
+          "DR1TFIBE": 49.5,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1985.0,
+          "DR1TPOTA": 3350.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 247.5573000001532,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_oats_upma": 2,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 149.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1520.0,
+          "DR1TPROT": 80.0,
+          "DR1TCARB": 197.0,
+          "DR1TFIBE": 43.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1880.0,
+          "DR1TPOTA": 3320.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.7455000001028,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "lowfat_curd": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 1398.2,
+        "total_cost_inr": 92.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1080.0,
+          "DR1TPROT": 45.4,
+          "DR1TCARB": 172.0,
+          "DR1TFIBE": 26.4,
+          "DR1TSFAT": 6.0,
+          "DR1TSODI": 1177.0,
+          "DR1TPOTA": 1750.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_12",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 6.260599999677652,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.184,
+          "vegetable_pulao": 1.528,
+          "lowfat_paneer": 0.711
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 143.29,
+        "actual_nutrients": {
+          "DR1TKCAL": 1490.0,
+          "DR1TPROT": 75.5,
+          "DR1TCARB": 209.1,
+          "DR1TFIBE": 39.5,
+          "DR1TSFAT": 9.0,
+          "DR1TSODI": 1692.2,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 9.488599999713188,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 1,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 13.0,
+        "total_cost_inr": 155.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1620.0,
+          "DR1TPROT": 82.5,
+          "DR1TCARB": 225.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1750.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 9.752300000400282,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 263.0,
+        "total_cost_inr": 191.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1840.0,
+          "DR1TPROT": 89.5,
+          "DR1TCARB": 255.0,
+          "DR1TFIBE": 50.0,
+          "DR1TSFAT": 12.1,
+          "DR1TSODI": 2130.0,
+          "DR1TPOTA": 3520.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 124.24640000017462,
+        "selected_dishes": {
+          "rajma_curry": 2,
+          "vegetable_pulao": 2,
+          "cabbage_peas": 2,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 156.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1520.0,
+          "DR1TPROT": 91.0,
+          "DR1TCARB": 192.0,
+          "DR1TFIBE": 35.0,
+          "DR1TSFAT": 14.0,
+          "DR1TSODI": 1920.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.365399999846,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "lowfat_curd": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 1182.2,
+        "total_cost_inr": 96.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1185.0,
+          "DR1TPROT": 48.9,
+          "DR1TCARB": 192.0,
+          "DR1TFIBE": 29.4,
+          "DR1TSFAT": 6.2,
+          "DR1TSODI": 1212.0,
+          "DR1TPOTA": 1840.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_13",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.913199999919016,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.099,
+          "vegetable_pulao": 1.657,
+          "lowfat_paneer": 0.749
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 145.03,
+        "actual_nutrients": {
+          "DR1TKCAL": 1510.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 212.0,
+          "DR1TFIBE": 39.3,
+          "DR1TSFAT": 9.2,
+          "DR1TSODI": 1685.6,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.835600000111299,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 1,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 11.0,
+        "total_cost_inr": 155.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1620.0,
+          "DR1TPROT": 82.5,
+          "DR1TCARB": 225.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1750.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 6.367099999806669,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 241.0,
+        "total_cost_inr": 191.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1840.0,
+          "DR1TPROT": 89.5,
+          "DR1TCARB": 255.0,
+          "DR1TFIBE": 50.0,
+          "DR1TSFAT": 12.1,
+          "DR1TSODI": 2130.0,
+          "DR1TPOTA": 3520.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 114.6177999999054,
+        "selected_dishes": {
+          "rajma_curry": 2,
+          "vegetable_pulao": 2,
+          "cabbage_peas": 2,
+          "lowfat_paneer": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 156.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1520.0,
+          "DR1TPROT": 91.0,
+          "DR1TCARB": 192.0,
+          "DR1TFIBE": 35.0,
+          "DR1TSFAT": 14.0,
+          "DR1TSODI": 1920.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.3813999998056,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 3130.8,
+        "total_cost_inr": 50.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 630.0,
+          "DR1TPROT": 25.0,
+          "DR1TCARB": 105.0,
+          "DR1TFIBE": 20.0,
+          "DR1TSFAT": 2.2,
+          "DR1TSODI": 685.0,
+          "DR1TPOTA": 1090.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_14",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 6.9826000003558875,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.014,
+          "vegetable_pulao": 1.785,
+          "lowfat_paneer": 0.788
+        },
+        "fractional_serving_count": 2,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 146.77,
+        "actual_nutrients": {
+          "DR1TKCAL": 1530.0,
+          "DR1TPROT": 76.5,
+          "DR1TCARB": 214.9,
+          "DR1TFIBE": 39.1,
+          "DR1TSFAT": 9.5,
+          "DR1TSODI": 1679.0,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 10.097999999743479,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 1,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 9.0,
+        "total_cost_inr": 155.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1620.0,
+          "DR1TPROT": 82.5,
+          "DR1TCARB": 225.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1750.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 8.89450000022407,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 219.0,
+        "total_cost_inr": 191.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1840.0,
+          "DR1TPROT": 89.5,
+          "DR1TCARB": 255.0,
+          "DR1TFIBE": 50.0,
+          "DR1TSFAT": 12.1,
+          "DR1TSODI": 2130.0,
+          "DR1TPOTA": 3520.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 100.90609999997469,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 163.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1590.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 213.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1680.0,
+          "DR1TPOTA": 3320.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.164600000171,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": false,
+        "active_dish_count": 4,
+        "total_slack": 953.0,
+        "total_cost_inr": 100.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1180.0,
+          "DR1TPROT": 45.4,
+          "DR1TCARB": 198.0,
+          "DR1TFIBE": 34.4,
+          "DR1TSFAT": 4.1,
+          "DR1TSODI": 1302.0,
+          "DR1TPOTA": 2030.0
+        }
+      }
+    },
+    {
+      "case_id": "OB_15",
+      "phenotype": "Obesity Caloric Deficit Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.770400000121299,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.929,
+          "vegetable_pulao": 1.913,
+          "lowfat_paneer": 0.826
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 148.51,
+        "actual_nutrients": {
+          "DR1TKCAL": 1550.0,
+          "DR1TPROT": 77.0,
+          "DR1TCARB": 217.9,
+          "DR1TFIBE": 39.0,
+          "DR1TSFAT": 9.8,
+          "DR1TSODI": 1672.4,
+          "DR1TPOTA": 2600.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.068699999512319,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 1,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 7.0,
+        "total_cost_inr": 155.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1620.0,
+          "DR1TPROT": 82.5,
+          "DR1TCARB": 225.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1750.0,
+          "DR1TPOTA": 2700.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 8.865799999966839,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 197.0,
+        "total_cost_inr": 191.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1840.0,
+          "DR1TPROT": 89.5,
+          "DR1TCARB": 255.0,
+          "DR1TFIBE": 50.0,
+          "DR1TSFAT": 12.1,
+          "DR1TSODI": 2130.0,
+          "DR1TPOTA": 3520.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 103.31550000000789,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 163.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1590.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 213.0,
+          "DR1TFIBE": 40.0,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1680.0,
+          "DR1TPOTA": 3320.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4086000000098,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 3432.5,
+        "total_cost_inr": 46.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 525.0,
+          "DR1TPROT": 21.5,
+          "DR1TCARB": 85.0,
+          "DR1TFIBE": 17.0,
+          "DR1TSFAT": 2.0,
+          "DR1TSODI": 650.0,
+          "DR1TPOTA": 1000.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_01",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 6.712899999911315,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.483,
+          "sprouted_moong_usal": 3.0,
+          "vegetable_pulao": 0.564,
+          "palak_sabzi": 0.138,
+          "lowfat_paneer": 0.146
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 141.06,
+        "actual_nutrients": {
+          "DR1TKCAL": 1500.0,
+          "DR1TPROT": 78.9,
+          "DR1TCARB": 218.5,
+          "DR1TFIBE": 51.5,
+          "DR1TSFAT": 6.0,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 10.23189999978058,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 280.6,
+        "total_cost_inr": 136.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 219.0,
+          "DR1TFIBE": 48.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1320.0,
+          "DR1TPOTA": 3260.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 9.618799999771,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 365.5,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1785.0,
+          "DR1TPROT": 81.5,
+          "DR1TCARB": 269.0,
+          "DR1TFIBE": 61.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1735.0,
+          "DR1TPOTA": 4170.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 788.9334999999846,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_oats_upma": 2,
+          "aloo_gobi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1510.0,
+          "DR1TPROT": 75.0,
+          "DR1TCARB": 207.0,
+          "DR1TFIBE": 44.0,
+          "DR1TSFAT": 10.1,
+          "DR1TSODI": 1490.0,
+          "DR1TPOTA": 3580.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4832999999235,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": false,
+        "active_dish_count": 4,
+        "total_slack": 1853.5,
+        "total_cost_inr": 102.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1060.0,
+          "DR1TPROT": 46.5,
+          "DR1TCARB": 159.0,
+          "DR1TFIBE": 31.0,
+          "DR1TSFAT": 6.6,
+          "DR1TSODI": 1365.0,
+          "DR1TPOTA": 2130.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_02",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 8.262400000148773,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.43,
+          "sprouted_moong_usal": 3.0,
+          "vegetable_pulao": 0.751,
+          "palak_sabzi": 0.114,
+          "lowfat_paneer": 0.108
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 143.54,
+        "actual_nutrients": {
+          "DR1TKCAL": 1525.0,
+          "DR1TPROT": 78.2,
+          "DR1TCARB": 224.2,
+          "DR1TFIBE": 51.6,
+          "DR1TSFAT": 6.0,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 10.367200000018784,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 305.6,
+        "total_cost_inr": 136.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 219.0,
+          "DR1TFIBE": 48.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1320.0,
+          "DR1TPOTA": 3260.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 8.891800000128569,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 338.5,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1785.0,
+          "DR1TPROT": 81.5,
+          "DR1TCARB": 269.0,
+          "DR1TFIBE": 61.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1735.0,
+          "DR1TPOTA": 4170.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 489.50760000025184,
+        "selected_dishes": {
+          "sprouted_moong_usal": 2,
+          "vegetable_pulao": 3,
+          "palak_sabzi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 168.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1540.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 213.0,
+          "DR1TFIBE": 37.5,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3740.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.2098999999544,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 2131.2,
+        "total_cost_inr": 94.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1090.0,
+          "DR1TPROT": 41.4,
+          "DR1TCARB": 177.0,
+          "DR1TFIBE": 28.4,
+          "DR1TSFAT": 6.0,
+          "DR1TSODI": 1012.0,
+          "DR1TPOTA": 1840.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_03",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 6.391099999746075,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.377,
+          "sprouted_moong_usal": 3.0,
+          "vegetable_pulao": 0.939,
+          "palak_sabzi": 0.09,
+          "lowfat_paneer": 0.07
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 146.03,
+        "actual_nutrients": {
+          "DR1TKCAL": 1550.0,
+          "DR1TPROT": 77.5,
+          "DR1TCARB": 229.9,
+          "DR1TFIBE": 51.7,
+          "DR1TSFAT": 6.0,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 7.287400000222988,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 330.6,
+        "total_cost_inr": 136.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 219.0,
+          "DR1TFIBE": 48.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1320.0,
+          "DR1TPOTA": 3260.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 7.349000000431261,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 311.5,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1785.0,
+          "DR1TPROT": 81.5,
+          "DR1TCARB": 269.0,
+          "DR1TFIBE": 61.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1735.0,
+          "DR1TPOTA": 4170.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 338.2652999998754,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 3,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 167.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1610.0,
+          "DR1TPROT": 77.0,
+          "DR1TCARB": 228.0,
+          "DR1TFIBE": 40.5,
+          "DR1TSFAT": 10.5,
+          "DR1TSODI": 1440.0,
+          "DR1TPOTA": 3700.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.7311999999001,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 3050.6,
+        "total_cost_inr": 68.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 740.0,
+          "DR1TPROT": 28.5,
+          "DR1TCARB": 120.0,
+          "DR1TFIBE": 25.0,
+          "DR1TSFAT": 2.9,
+          "DR1TSODI": 875.0,
+          "DR1TPOTA": 1500.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_04",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.6731000002182554,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.324,
+          "sprouted_moong_usal": 3.0,
+          "vegetable_pulao": 1.127,
+          "palak_sabzi": 0.066,
+          "lowfat_paneer": 0.033
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 148.51,
+        "actual_nutrients": {
+          "DR1TKCAL": 1575.0,
+          "DR1TPROT": 76.7,
+          "DR1TCARB": 235.6,
+          "DR1TFIBE": 51.8,
+          "DR1TSFAT": 6.0,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 13.328699999874516,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 355.6,
+        "total_cost_inr": 136.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 219.0,
+          "DR1TFIBE": 48.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1320.0,
+          "DR1TPOTA": 3260.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 9.91790000034598,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 284.5,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1785.0,
+          "DR1TPROT": 81.5,
+          "DR1TCARB": 269.0,
+          "DR1TFIBE": 61.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1735.0,
+          "DR1TPOTA": 4170.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 215.92550000013944,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 3,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 167.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1610.0,
+          "DR1TPROT": 77.0,
+          "DR1TCARB": 228.0,
+          "DR1TFIBE": 40.5,
+          "DR1TSFAT": 10.5,
+          "DR1TSODI": 1440.0,
+          "DR1TPOTA": 3700.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.8197999996992,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1,
+          "lowfat_curd": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 3359.0,
+        "total_cost_inr": 64.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 745.0,
+          "DR1TPROT": 32.0,
+          "DR1TCARB": 114.0,
+          "DR1TFIBE": 20.0,
+          "DR1TSFAT": 5.0,
+          "DR1TSODI": 785.0,
+          "DR1TPOTA": 1310.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_05",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 7.549599999947532,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.25,
+          "sprouted_moong_usal": 3.0,
+          "vegetable_pulao": 1.23,
+          "palak_sabzi": 0.043,
+          "lowfat_paneer": 0.129
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 150.38,
+        "actual_nutrients": {
+          "DR1TKCAL": 1600.0,
+          "DR1TPROT": 78.5,
+          "DR1TCARB": 238.0,
+          "DR1TFIBE": 51.6,
+          "DR1TSFAT": 6.5,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 9.81210000009014,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 380.6,
+        "total_cost_inr": 136.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 219.0,
+          "DR1TFIBE": 48.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1320.0,
+          "DR1TPOTA": 3260.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 12.940900000103284,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 272.5,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1785.0,
+          "DR1TPROT": 81.5,
+          "DR1TCARB": 269.0,
+          "DR1TFIBE": 61.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1735.0,
+          "DR1TPOTA": 4170.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 178.6170000000311,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 3,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 167.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1610.0,
+          "DR1TPROT": 77.0,
+          "DR1TCARB": 228.0,
+          "DR1TFIBE": 40.5,
+          "DR1TSFAT": 10.5,
+          "DR1TSODI": 1440.0,
+          "DR1TPOTA": 3700.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.5288999997174,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 2849.9,
+        "total_cost_inr": 72.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 845.0,
+          "DR1TPROT": 32.0,
+          "DR1TCARB": 140.0,
+          "DR1TFIBE": 28.0,
+          "DR1TSFAT": 3.1,
+          "DR1TSODI": 910.0,
+          "DR1TPOTA": 1590.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_06",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.2898000004024652,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.175,
+          "sprouted_moong_usal": 3.0,
+          "vegetable_pulao": 1.322,
+          "palak_sabzi": 0.02,
+          "lowfat_paneer": 0.241
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 152.18,
+        "actual_nutrients": {
+          "DR1TKCAL": 1625.0,
+          "DR1TPROT": 80.7,
+          "DR1TCARB": 240.0,
+          "DR1TFIBE": 51.3,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.117199999560398,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 405.6,
+        "total_cost_inr": 136.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 219.0,
+          "DR1TFIBE": 48.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1320.0,
+          "DR1TPOTA": 3260.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 16.210400000545633,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 270.5,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1785.0,
+          "DR1TPROT": 81.5,
+          "DR1TCARB": 269.0,
+          "DR1TFIBE": 61.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1735.0,
+          "DR1TPOTA": 4170.0
+        }
+      },
+      "discrete_milp": {
+        "status": "infeasible",
+        "latency_ms": 1010.3739999999561
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.5598999997528,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 2921.7,
+        "total_cost_inr": 74.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 860.0,
+          "DR1TPROT": 34.9,
+          "DR1TCARB": 143.0,
+          "DR1TFIBE": 23.4,
+          "DR1TSFAT": 3.0,
+          "DR1TSODI": 1042.0,
+          "DR1TPOTA": 1440.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_07",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 7.429199999933189,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.097,
+          "sprouted_moong_usal": 2.997,
+          "vegetable_pulao": 1.417,
+          "lowfat_paneer": 0.353
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 154.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1650.0,
+          "DR1TPROT": 82.7,
+          "DR1TCARB": 242.0,
+          "DR1TFIBE": 51.1,
+          "DR1TSFAT": 7.6,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 13.086100000236911,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 430.6,
+        "total_cost_inr": 136.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 219.0,
+          "DR1TFIBE": 48.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1320.0,
+          "DR1TPOTA": 3260.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 9.320499999830645,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 268.5,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1785.0,
+          "DR1TPROT": 81.5,
+          "DR1TCARB": 269.0,
+          "DR1TFIBE": 61.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1735.0,
+          "DR1TPOTA": 4170.0
+        }
+      },
+      "discrete_milp": {
+        "status": "infeasible",
+        "latency_ms": 1011.5971000000172
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.5197000001499,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 2969.7,
+        "total_cost_inr": 76.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 870.0,
+          "DR1TPROT": 30.9,
+          "DR1TCARB": 148.0,
+          "DR1TFIBE": 25.4,
+          "DR1TSFAT": 3.0,
+          "DR1TSODI": 877.0,
+          "DR1TPOTA": 1530.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_08",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.3901000001606008,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.012,
+          "sprouted_moong_usal": 2.973,
+          "vegetable_pulao": 1.525,
+          "lowfat_paneer": 0.464
+        },
+        "fractional_serving_count": 2,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 155.97,
+        "actual_nutrients": {
+          "DR1TKCAL": 1675.0,
+          "DR1TPROT": 84.7,
+          "DR1TCARB": 244.0,
+          "DR1TFIBE": 50.7,
+          "DR1TSFAT": 8.1,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 6.152299999939714,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 1,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 17.0,
+        "total_cost_inr": 161.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1705.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 261.0,
+          "DR1TFIBE": 52.0,
+          "DR1TSFAT": 6.6,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3520.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 6.1324000002969115,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 484.0,
+        "total_cost_inr": 197.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1925.0,
+          "DR1TPROT": 83.0,
+          "DR1TCARB": 291.0,
+          "DR1TFIBE": 62.0,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1880.0,
+          "DR1TPOTA": 4340.0
+        }
+      },
+      "discrete_milp": {
+        "status": "infeasible",
+        "latency_ms": 1006.5283999997519
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4067000000941,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 2490.1,
+        "total_cost_inr": 86.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 960.0,
+          "DR1TPROT": 39.0,
+          "DR1TCARB": 149.0,
+          "DR1TFIBE": 28.0,
+          "DR1TSFAT": 5.9,
+          "DR1TSODI": 1010.0,
+          "DR1TPOTA": 1810.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_09",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 7.231000000047061,
+        "selected_dishes": {
+          "chana_masala": 2.767,
+          "sprouted_moong_usal": 3.0,
+          "vegetable_pulao": 1.714,
+          "lowfat_paneer": 0.622,
+          "guava": 0.041
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 158.67,
+        "actual_nutrients": {
+          "DR1TKCAL": 1700.0,
+          "DR1TPROT": 86.8,
+          "DR1TCARB": 246.0,
+          "DR1TFIBE": 50.0,
+          "DR1TSFAT": 8.8,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 10.449000000335218,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 204.0,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1895.0,
+          "DR1TPROT": 100.0,
+          "DR1TCARB": 268.0,
+          "DR1TFIBE": 53.0,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1680.0,
+          "DR1TPOTA": 3760.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 9.972100000140927,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 844.5,
+        "total_cost_inr": 212.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 2115.0,
+          "DR1TPROT": 107.0,
+          "DR1TCARB": 298.0,
+          "DR1TFIBE": 63.0,
+          "DR1TSFAT": 12.5,
+          "DR1TSODI": 2060.0,
+          "DR1TPOTA": 4580.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 432.9333000000588,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 3,
+          "bhindi_masala": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 189.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1765.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 244.0,
+          "DR1TFIBE": 44.5,
+          "DR1TSFAT": 11.7,
+          "DR1TSODI": 1440.0,
+          "DR1TPOTA": 3540.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.2680999997392,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 1676.2,
+        "total_cost_inr": 114.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1295.0,
+          "DR1TPROT": 52.4,
+          "DR1TCARB": 207.0,
+          "DR1TFIBE": 34.4,
+          "DR1TSFAT": 6.9,
+          "DR1TSODI": 1402.0,
+          "DR1TPOTA": 2250.0
+        }
+      }
+    },
+    {
+      "case_id": "CVD_10",
+      "phenotype": "Hypertension / CVD DASH Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.4797999998991145,
+        "selected_dishes": {
+          "chana_masala": 2.508,
+          "sprouted_moong_usal": 3.0,
+          "vegetable_pulao": 1.919,
+          "lowfat_paneer": 0.79,
+          "guava": 0.114
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 161.72,
+        "actual_nutrients": {
+          "DR1TKCAL": 1725.0,
+          "DR1TPROT": 89.0,
+          "DR1TCARB": 248.0,
+          "DR1TFIBE": 49.2,
+          "DR1TSFAT": 9.6,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3500.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.336400000189315,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 201.0,
+        "total_cost_inr": 176.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1895.0,
+          "DR1TPROT": 100.0,
+          "DR1TCARB": 268.0,
+          "DR1TFIBE": 53.0,
+          "DR1TSFAT": 11.1,
+          "DR1TSODI": 1680.0,
+          "DR1TPOTA": 3760.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 11.562400000457274,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 2,
+          "lowfat_paneer": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 816.5,
+        "total_cost_inr": 212.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 2115.0,
+          "DR1TPROT": 107.0,
+          "DR1TCARB": 298.0,
+          "DR1TFIBE": 63.0,
+          "DR1TSFAT": 12.5,
+          "DR1TSODI": 2060.0,
+          "DR1TPOTA": 4580.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 455.9257000000798,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 3,
+          "bhindi_masala": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 189.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1765.0,
+          "DR1TPROT": 78.0,
+          "DR1TCARB": 244.0,
+          "DR1TFIBE": 44.5,
+          "DR1TSFAT": 11.7,
+          "DR1TSODI": 1440.0,
+          "DR1TPOTA": 3540.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6878000000324,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 4044.6,
+        "total_cost_inr": 54.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 655.0,
+          "DR1TPROT": 23.9,
+          "DR1TCARB": 113.0,
+          "DR1TFIBE": 17.4,
+          "DR1TSFAT": 2.1,
+          "DR1TSODI": 652.0,
+          "DR1TPOTA": 1030.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_01",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.550600000129634,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.246,
+          "sprouted_moong_usal": 1.533,
+          "vegetable_pulao": 0.312,
+          "lowfat_paneer": 0.245
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 130.37,
+        "actual_nutrients": {
+          "DR1TKCAL": 1370.0,
+          "DR1TPROT": 74.3,
+          "DR1TCARB": 195.0,
+          "DR1TFIBE": 46.0,
+          "DR1TSFAT": 6.1,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 9.36539999975139,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 121.4,
+        "total_cost_inr": 120.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1270.0,
+          "DR1TPROT": 68.5,
+          "DR1TCARB": 184.0,
+          "DR1TFIBE": 46.0,
+          "DR1TSFAT": 4.6,
+          "DR1TSODI": 1450.0,
+          "DR1TPOTA": 2980.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 14.560800000253948,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 2,
+          "phulka": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 539.0,
+        "total_cost_inr": 164.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1700.0,
+          "DR1TPROT": 82.5,
+          "DR1TCARB": 254.0,
+          "DR1TFIBE": 62.0,
+          "DR1TSFAT": 6.4,
+          "DR1TSODI": 1900.0,
+          "DR1TPOTA": 3980.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 504.82130000000325,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "bajra_roti": 2,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 127.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1370.0,
+          "DR1TPROT": 75.6,
+          "DR1TCARB": 179.0,
+          "DR1TFIBE": 38.6,
+          "DR1TSFAT": 9.5,
+          "DR1TSODI": 1336.0,
+          "DR1TPOTA": 3040.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 856.0114000002613,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 4,
+        "total_slack": 2398.4,
+        "total_cost_inr": 72.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 765.0,
+          "DR1TPROT": 27.4,
+          "DR1TCARB": 128.0,
+          "DR1TFIBE": 22.4,
+          "DR1TSFAT": 2.8,
+          "DR1TSODI": 842.0,
+          "DR1TPOTA": 1440.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_02",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 8.3319999998821,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.2,
+          "sprouted_moong_usal": 1.519,
+          "vegetable_pulao": 0.397,
+          "lowfat_paneer": 0.28
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 131.7,
+        "actual_nutrients": {
+          "DR1TKCAL": 1385.0,
+          "DR1TPROT": 74.9,
+          "DR1TCARB": 197.0,
+          "DR1TFIBE": 45.9,
+          "DR1TSFAT": 6.3,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 12.600799999745504,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 136.4,
+        "total_cost_inr": 120.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1270.0,
+          "DR1TPROT": 68.5,
+          "DR1TCARB": 184.0,
+          "DR1TFIBE": 46.0,
+          "DR1TSFAT": 4.6,
+          "DR1TSODI": 1450.0,
+          "DR1TPOTA": 2980.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 16.129600000112987,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 2,
+          "phulka": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 522.0,
+        "total_cost_inr": 164.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1700.0,
+          "DR1TPROT": 82.5,
+          "DR1TCARB": 254.0,
+          "DR1TFIBE": 62.0,
+          "DR1TSFAT": 6.4,
+          "DR1TSODI": 1900.0,
+          "DR1TPOTA": 3980.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 899.130399999649,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 2,
+          "cabbage_peas": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1385.0,
+          "DR1TPROT": 72.0,
+          "DR1TCARB": 196.0,
+          "DR1TFIBE": 39.0,
+          "DR1TSFAT": 9.1,
+          "DR1TSODI": 1240.0,
+          "DR1TPOTA": 3040.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6233000000248,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 863.7,
+        "total_cost_inr": 114.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1295.0,
+          "DR1TPROT": 52.4,
+          "DR1TCARB": 207.0,
+          "DR1TFIBE": 34.4,
+          "DR1TSFAT": 6.9,
+          "DR1TSODI": 1402.0,
+          "DR1TPOTA": 2250.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_03",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.759100000024773,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.153,
+          "sprouted_moong_usal": 1.504,
+          "vegetable_pulao": 0.483,
+          "lowfat_paneer": 0.314
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 133.03,
+        "actual_nutrients": {
+          "DR1TKCAL": 1400.0,
+          "DR1TPROT": 75.4,
+          "DR1TCARB": 199.0,
+          "DR1TFIBE": 45.8,
+          "DR1TSFAT": 6.5,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 9.3962000000829,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 3,
+        "category_rule_violated": true,
+        "active_dish_count": 3,
+        "total_slack": 151.4,
+        "total_cost_inr": 120.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1270.0,
+          "DR1TPROT": 68.5,
+          "DR1TCARB": 184.0,
+          "DR1TFIBE": 46.0,
+          "DR1TSFAT": 4.6,
+          "DR1TSODI": 1450.0,
+          "DR1TPOTA": 2980.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 8.329600000251958,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 2,
+          "phulka": 2,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 505.0,
+        "total_cost_inr": 164.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1700.0,
+          "DR1TPROT": 82.5,
+          "DR1TCARB": 254.0,
+          "DR1TFIBE": 62.0,
+          "DR1TSFAT": 6.4,
+          "DR1TSODI": 1900.0,
+          "DR1TPOTA": 3980.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 326.37090000025637,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 157.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1445.0,
+          "DR1TPROT": 70.0,
+          "DR1TCARB": 189.0,
+          "DR1TFIBE": 36.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3400.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 857.086099999924,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": false,
+        "active_dish_count": 4,
+        "total_slack": 1233.5,
+        "total_cost_inr": 102.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1060.0,
+          "DR1TPROT": 46.5,
+          "DR1TCARB": 159.0,
+          "DR1TFIBE": 31.0,
+          "DR1TSFAT": 6.6,
+          "DR1TSODI": 1365.0,
+          "DR1TPOTA": 2130.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_04",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.85530000014478,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.107,
+          "sprouted_moong_usal": 1.49,
+          "vegetable_pulao": 0.568,
+          "lowfat_paneer": 0.349
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 134.37,
+        "actual_nutrients": {
+          "DR1TKCAL": 1415.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 201.0,
+          "DR1TFIBE": 45.6,
+          "DR1TSFAT": 6.7,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 7.2650999995858,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 348.6,
+        "total_cost_inr": 130.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1350.0,
+          "DR1TPROT": 63.5,
+          "DR1TCARB": 201.0,
+          "DR1TFIBE": 42.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1510.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 10.170499999730964,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 478.5,
+        "total_cost_inr": 170.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1675.0,
+          "DR1TPROT": 74.0,
+          "DR1TCARB": 251.0,
+          "DR1TFIBE": 55.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1925.0,
+          "DR1TPOTA": 3630.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 557.4846000004072,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 157.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1445.0,
+          "DR1TPROT": 70.0,
+          "DR1TCARB": 189.0,
+          "DR1TFIBE": 36.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3400.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.4328999999598,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": false,
+        "active_dish_count": 4,
+        "total_slack": 1047.5,
+        "total_cost_inr": 106.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1165.0,
+          "DR1TPROT": 50.0,
+          "DR1TCARB": 179.0,
+          "DR1TFIBE": 34.0,
+          "DR1TSFAT": 6.8,
+          "DR1TSODI": 1400.0,
+          "DR1TPOTA": 2220.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_05",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.9796999999452964,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.061,
+          "sprouted_moong_usal": 1.476,
+          "vegetable_pulao": 0.654,
+          "lowfat_paneer": 0.383
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 135.7,
+        "actual_nutrients": {
+          "DR1TKCAL": 1430.0,
+          "DR1TPROT": 76.5,
+          "DR1TCARB": 203.0,
+          "DR1TFIBE": 45.5,
+          "DR1TSFAT": 6.9,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 6.848500000160129,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 364.1,
+        "total_cost_inr": 130.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1350.0,
+          "DR1TPROT": 63.5,
+          "DR1TCARB": 201.0,
+          "DR1TFIBE": 42.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1510.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 6.07460000037463,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 461.5,
+        "total_cost_inr": 170.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1675.0,
+          "DR1TPROT": 74.0,
+          "DR1TCARB": 251.0,
+          "DR1TFIBE": 55.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1925.0,
+          "DR1TPOTA": 3630.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 196.1670000000595,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 157.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1445.0,
+          "DR1TPROT": 70.0,
+          "DR1TCARB": 189.0,
+          "DR1TFIBE": 36.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3400.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 858.1406999997853,
+        "selected_dishes": {
+          "phulka": 2,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 3395.5,
+        "total_cost_inr": 46.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 525.0,
+          "DR1TPROT": 21.5,
+          "DR1TCARB": 85.0,
+          "DR1TFIBE": 17.0,
+          "DR1TSFAT": 2.0,
+          "DR1TSODI": 650.0,
+          "DR1TPOTA": 1000.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_06",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.648999999972148,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 1.014,
+          "sprouted_moong_usal": 1.462,
+          "vegetable_pulao": 0.74,
+          "lowfat_paneer": 0.418
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 137.03,
+        "actual_nutrients": {
+          "DR1TKCAL": 1445.0,
+          "DR1TPROT": 77.0,
+          "DR1TCARB": 205.0,
+          "DR1TFIBE": 45.4,
+          "DR1TSFAT": 7.2,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 9.259899999960908,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 379.6,
+        "total_cost_inr": 130.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1350.0,
+          "DR1TPROT": 63.5,
+          "DR1TCARB": 201.0,
+          "DR1TFIBE": 42.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1510.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 13.454999999794381,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 444.5,
+        "total_cost_inr": 170.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1675.0,
+          "DR1TPROT": 74.0,
+          "DR1TCARB": 251.0,
+          "DR1TFIBE": 55.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1925.0,
+          "DR1TPOTA": 3630.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 211.85919999970793,
+        "selected_dishes": {
+          "chana_masala": 2,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 157.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1445.0,
+          "DR1TPROT": 70.0,
+          "DR1TCARB": 189.0,
+          "DR1TFIBE": 36.0,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3400.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.3091999998287,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "lowfat_curd": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 1824.6,
+        "total_cost_inr": 84.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 950.0,
+          "DR1TPROT": 43.0,
+          "DR1TCARB": 144.0,
+          "DR1TFIBE": 26.0,
+          "DR1TSFAT": 5.9,
+          "DR1TSODI": 1175.0,
+          "DR1TPOTA": 1720.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_07",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 4.984499999864056,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.968,
+          "sprouted_moong_usal": 1.448,
+          "vegetable_pulao": 0.825,
+          "lowfat_paneer": 0.452
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.37,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 77.6,
+          "DR1TCARB": 207.0,
+          "DR1TFIBE": 45.2,
+          "DR1TSFAT": 7.4,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 15.405199999804609,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 395.1,
+        "total_cost_inr": 130.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1350.0,
+          "DR1TPROT": 63.5,
+          "DR1TCARB": 201.0,
+          "DR1TFIBE": 42.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1510.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 10.654499999418476,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 427.5,
+        "total_cost_inr": 170.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1675.0,
+          "DR1TPROT": 74.0,
+          "DR1TCARB": 251.0,
+          "DR1TFIBE": 55.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1925.0,
+          "DR1TPOTA": 3630.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 599.6259000003192,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_pulao": 2,
+          "palak_sabzi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 158.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1460.0,
+          "DR1TPROT": 76.0,
+          "DR1TCARB": 196.0,
+          "DR1TFIBE": 41.0,
+          "DR1TSFAT": 9.9,
+          "DR1TSODI": 1440.0,
+          "DR1TPOTA": 4000.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.7700000002114,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 1974.2,
+        "total_cost_inr": 74.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 940.0,
+          "DR1TPROT": 39.5,
+          "DR1TCARB": 155.0,
+          "DR1TFIBE": 29.0,
+          "DR1TSFAT": 3.3,
+          "DR1TSODI": 1110.0,
+          "DR1TPOTA": 1590.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_08",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 6.036600000243197,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.922,
+          "sprouted_moong_usal": 1.433,
+          "vegetable_pulao": 0.911,
+          "lowfat_paneer": 0.487
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 139.7,
+        "actual_nutrients": {
+          "DR1TKCAL": 1475.0,
+          "DR1TPROT": 78.1,
+          "DR1TCARB": 209.0,
+          "DR1TFIBE": 45.1,
+          "DR1TSFAT": 7.6,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 9.508000000096217,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 4,
+        "total_slack": 410.6,
+        "total_cost_inr": 130.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1350.0,
+          "DR1TPROT": 63.5,
+          "DR1TCARB": 201.0,
+          "DR1TFIBE": 42.5,
+          "DR1TSFAT": 5.4,
+          "DR1TSODI": 1510.0,
+          "DR1TPOTA": 2720.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 12.151600000379403,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 6,
+        "total_slack": 410.5,
+        "total_cost_inr": 170.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1675.0,
+          "DR1TPROT": 74.0,
+          "DR1TCARB": 251.0,
+          "DR1TFIBE": 55.5,
+          "DR1TSFAT": 7.0,
+          "DR1TSODI": 1925.0,
+          "DR1TPOTA": 3630.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 749.9265000001287,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "brown_rice": 3,
+          "palak_sabzi": 2,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 149.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1475.0,
+          "DR1TPROT": 76.1,
+          "DR1TCARB": 207.0,
+          "DR1TFIBE": 38.4,
+          "DR1TSFAT": 9.3,
+          "DR1TSODI": 1335.0,
+          "DR1TPOTA": 3055.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.1824000001943,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 6,
+        "category_rule_violated": false,
+        "active_dish_count": 5,
+        "total_slack": 1756.6,
+        "total_cost_inr": 86.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 960.0,
+          "DR1TPROT": 39.0,
+          "DR1TCARB": 149.0,
+          "DR1TFIBE": 28.0,
+          "DR1TSFAT": 5.9,
+          "DR1TSODI": 1010.0,
+          "DR1TPOTA": 1810.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_09",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 3.1974000003174297,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.875,
+          "sprouted_moong_usal": 1.419,
+          "vegetable_pulao": 0.996,
+          "lowfat_paneer": 0.521
+        },
+        "fractional_serving_count": 3,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 141.03,
+        "actual_nutrients": {
+          "DR1TKCAL": 1490.0,
+          "DR1TPROT": 78.6,
+          "DR1TCARB": 211.0,
+          "DR1TFIBE": 44.9,
+          "DR1TSFAT": 7.8,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 8.71080000024449,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 130.0,
+        "total_cost_inr": 145.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1540.0,
+          "DR1TPROT": 87.5,
+          "DR1TCARB": 208.0,
+          "DR1TFIBE": 43.5,
+          "DR1TSFAT": 9.9,
+          "DR1TSODI": 1690.0,
+          "DR1TPOTA": 2960.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 7.38069999988511,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 7,
+        "total_slack": 780.5,
+        "total_cost_inr": 185.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1865.0,
+          "DR1TPROT": 98.0,
+          "DR1TCARB": 258.0,
+          "DR1TFIBE": 56.5,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 2105.0,
+          "DR1TPOTA": 3870.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 431.82290000004286,
+        "selected_dishes": {
+          "sprouted_moong_usal": 3,
+          "vegetable_oats_upma": 2,
+          "aloo_gobi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 138.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1510.0,
+          "DR1TPROT": 75.0,
+          "DR1TCARB": 207.0,
+          "DR1TFIBE": 44.0,
+          "DR1TSFAT": 10.1,
+          "DR1TSODI": 1490.0,
+          "DR1TPOTA": 3580.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.2402999999686,
+        "selected_dishes": {
+          "phulka": 4,
+          "dal_toor": 2,
+          "mixed_veg_sabzi": 1,
+          "lowfat_curd": 1,
+          "steamed_rice": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 4,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 1490.7,
+        "total_cost_inr": 96.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1185.0,
+          "DR1TPROT": 48.9,
+          "DR1TCARB": 192.0,
+          "DR1TFIBE": 29.4,
+          "DR1TSFAT": 6.2,
+          "DR1TSODI": 1212.0,
+          "DR1TPOTA": 1840.0
+        }
+      }
+    },
+    {
+      "case_id": "MULTI_10",
+      "phenotype": "Multimorbid (T2D + HTN + Obesity) Profile",
+      "relaxed_lp": {
+        "status": "success",
+        "latency_ms": 5.801899999823945,
+        "selected_dishes": {
+          "chana_masala": 3.0,
+          "rajma_curry": 0.829,
+          "sprouted_moong_usal": 1.405,
+          "vegetable_pulao": 1.082,
+          "lowfat_paneer": 0.556
+        },
+        "fractional_serving_count": 4,
+        "is_100pct_integer": false,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 142.37,
+        "actual_nutrients": {
+          "DR1TKCAL": 1505.0,
+          "DR1TPROT": 79.2,
+          "DR1TCARB": 213.0,
+          "DR1TFIBE": 44.8,
+          "DR1TSFAT": 8.0,
+          "DR1TSODI": 1600.0,
+          "DR1TPOTA": 3000.0
+        }
+      },
+      "lp_with_rounding": {
+        "status": "success",
+        "latency_ms": 7.1818999995230115,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 2,
+        "category_rule_violated": true,
+        "active_dish_count": 5,
+        "total_slack": 130.0,
+        "total_cost_inr": 145.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1540.0,
+          "DR1TPROT": 87.5,
+          "DR1TCARB": 208.0,
+          "DR1TFIBE": 43.5,
+          "DR1TSFAT": 9.9,
+          "DR1TSODI": 1690.0,
+          "DR1TPOTA": 2960.0
+        }
+      },
+      "lp_with_heuristic_tuning": {
+        "status": "success",
+        "latency_ms": 6.756399999630958,
+        "selected_dishes": {
+          "chana_masala": 3,
+          "rajma_curry": 1,
+          "sprouted_moong_usal": 1,
+          "vegetable_pulao": 1,
+          "lowfat_paneer": 1,
+          "phulka": 1,
+          "mixed_veg_sabzi": 2
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 5,
+        "category_rule_violated": true,
+        "active_dish_count": 7,
+        "total_slack": 763.0,
+        "total_cost_inr": 185.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1865.0,
+          "DR1TPROT": 98.0,
+          "DR1TCARB": 258.0,
+          "DR1TFIBE": 56.5,
+          "DR1TSFAT": 11.5,
+          "DR1TSODI": 2105.0,
+          "DR1TPOTA": 3870.0
+        }
+      },
+      "discrete_milp": {
+        "status": "success",
+        "latency_ms": 424.0156000000752,
+        "selected_dishes": {
+          "sprouted_moong_usal": 2,
+          "vegetable_pulao": 3,
+          "palak_sabzi": 3,
+          "lowfat_paneer": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 0,
+        "total_slack": 0.0,
+        "total_cost_inr": 168.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 1540.0,
+          "DR1TPROT": 71.0,
+          "DR1TCARB": 213.0,
+          "DR1TFIBE": 37.5,
+          "DR1TSFAT": 10.7,
+          "DR1TSODI": 1500.0,
+          "DR1TPOTA": 3740.0
+        }
+      },
+      "unconstrained_llm": {
+        "status": "success",
+        "latency_ms": 855.6375999997726,
+        "selected_dishes": {
+          "phulka": 3,
+          "dal_toor": 1,
+          "mixed_veg_sabzi": 2,
+          "lowfat_curd": 1,
+          "steamed_rice": 1,
+          "apple_fresh": 1
+        },
+        "fractional_serving_count": 0,
+        "is_100pct_integer": true,
+        "boundary_violations": 7,
+        "category_rule_violated": false,
+        "active_dish_count": 6,
+        "total_slack": 1845.4,
+        "total_cost_inr": 90.0,
+        "actual_nutrients": {
+          "DR1TKCAL": 985.0,
+          "DR1TPROT": 37.9,
+          "DR1TCARB": 157.0,
+          "DR1TFIBE": 25.4,
+          "DR1TSFAT": 5.8,
+          "DR1TSODI": 977.0,
+          "DR1TPOTA": 1750.0
+        }
+      }
+    }
+  ]
+}

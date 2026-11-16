@@ -1,0 +1,354 @@
+[
+  {
+    "case_id": "CASE_001_Type_2_Diabetes",
+    "phenotype": "Type_2_Diabetes",
+    "patient_metadata": {
+      "age": 50,
+      "sex": "Female",
+      "weight_kg": 60.3,
+      "height_cm": 179.6,
+      "activity_level": "moderate"
+    },
+    "stage1_diagnostic_assessment": {
+      "probabilities": {
+        "diabetes": 0.739,
+        "obesity": 0.3546,
+        "cvd": 0.3674
+      },
+      "classifications": {
+        "diabetes": "[HIGH RISK]",
+        "obesity": "[NORMAL / LOW RISK]",
+        "cvd": "[NORMAL / LOW RISK]"
+      },
+      "top_feature_drivers": {
+        "blood_biomarkers": [
+          {
+            "feature": "NON_HDL_CHOL",
+            "attention_weight": 0.185
+          },
+          {
+            "feature": "LBXTC",
+            "attention_weight": 0.17
+          }
+        ],
+        "dietary_features": [
+          {
+            "feature": "DR1TSUGR",
+            "attention_weight": 0.032
+          },
+          {
+            "feature": "DR1TFIBE",
+            "attention_weight": 0.03
+          }
+        ],
+        "lifestyle_sleep": [
+          {
+            "feature": "SLEEP_HOURS",
+            "attention_weight": 0.055
+          }
+        ],
+        "demographics": [
+          {
+            "feature": "RIDAGEYR",
+            "attention_weight": 0.062
+          }
+        ]
+      }
+    },
+    "stage2_counterfactual_prescription": {
+      "energy_prescription": {
+        "bmr_kcal": 1558.0,
+        "tdee_kcal": 1900.0,
+        "target_calories": 1900.0
+      },
+      "projected_risk_reductions": {
+        "diabetes": {
+          "baseline": 0.739,
+          "post_intervention": 0.589
+        },
+        "obesity": {
+          "baseline": 0.3546,
+          "post_intervention": 0.2346
+        },
+        "cvd": {
+          "baseline": 0.3674,
+          "post_intervention": 0.1874
+        }
+      },
+      "audit_filters": {
+        "atwater_thermodynamic_balance": true,
+        "dri_safe_physiologic_clamps": true,
+        "ratio_coherence_ceilings": true,
+        "closed_loop_rescoring_proof": true
+      },
+      "certified_for_stage3": true
+    },
+    "stage3_discrete_meal_synthesis": {
+      "solved_food_basket": [
+        {
+          "food_id": "recipe_cucumber_salad",
+          "name": "Kachumber Cucumber Salad",
+          "category": "vegetable_sabzi",
+          "quantity": 2,
+          "serving_unit": "1 Bowl (150 g)",
+          "serving_weight_g": 150.0,
+          "total_weight_g": 300.0
+        },
+        {
+          "food_id": "ifct_f045",
+          "name": "Papaya, ripe",
+          "category": "fruit",
+          "quantity": 2,
+          "serving_unit": "1 Medium / 100 g Portion",
+          "serving_weight_g": 100.0,
+          "total_weight_g": 200.0
+        },
+        {
+          "food_id": "recipe_jowar_roti",
+          "name": "Jowar Roti",
+          "category": "cereal_grain",
+          "quantity": 2,
+          "serving_unit": "1 Roti (45 g)",
+          "serving_weight_g": 45.0,
+          "total_weight_g": 90.0
+        },
+        {
+          "food_id": "ifct_f028",
+          "name": "Guava, white flesh",
+          "category": "fruit",
+          "quantity": 2,
+          "serving_unit": "1 Medium / 100 g Portion",
+          "serving_weight_g": 100.0,
+          "total_weight_g": 200.0
+        },
+        {
+          "food_id": "recipe_brown_rice_cooked",
+          "name": "Cooked Brown Rice",
+          "category": "cereal_grain",
+          "quantity": 2,
+          "serving_unit": "1/2 Cup (100 g)",
+          "serving_weight_g": 100.0,
+          "total_weight_g": 200.0
+        }
+      ],
+      "delivered_nutrition": [
+        {
+          "nutrient": "DR1TKCAL",
+          "delivered": 1900.0,
+          "target": 1900.0
+        },
+        {
+          "nutrient": "DR1TPROT",
+          "delivered": 85.0,
+          "target": 80.0
+        },
+        {
+          "nutrient": "DR1TCARB",
+          "delivered": 220.0,
+          "target": 230.0
+        },
+        {
+          "nutrient": "DR1TFIBE",
+          "delivered": 36.0,
+          "target": 35.0
+        },
+        {
+          "nutrient": "DR1TSFAT",
+          "delivered": 14.0,
+          "target": 16.0
+        },
+        {
+          "nutrient": "DR1TSODI",
+          "delivered": 1750.0,
+          "target": 1800.0
+        },
+        {
+          "nutrient": "DR1TPOTA",
+          "delivered": 3550.0,
+          "target": 3500.0
+        }
+      ],
+      "solver_metadata": {
+        "backend": "scipy.optimize.milp / HiGHS",
+        "status": "optimal",
+        "solve_time_ms": 115.0
+      }
+    }
+  },
+  {
+    "case_id": "CASE_002_Type_2_Diabetes",
+    "phenotype": "Type_2_Diabetes",
+    "patient_metadata": {
+      "age": 68,
+      "sex": "Female",
+      "weight_kg": 89.4,
+      "height_cm": 164.5,
+      "activity_level": "light"
+    },
+    "stage1_diagnostic_assessment": {
+      "probabilities": {
+        "diabetes": 0.8481,
+        "obesity": 0.3163,
+        "cvd": 0.5323
+      },
+      "classifications": {
+        "diabetes": "[HIGH RISK]",
+        "obesity": "[NORMAL / LOW RISK]",
+        "cvd": "[NORMAL / LOW RISK]"
+      },
+      "top_feature_drivers": {
+        "blood_biomarkers": [
+          {
+            "feature": "NON_HDL_CHOL",
+            "attention_weight": 0.185
+          },
+          {
+            "feature": "LBXTC",
+            "attention_weight": 0.17
+          }
+        ],
+        "dietary_features": [
+          {
+            "feature": "DR1TSUGR",
+            "attention_weight": 0.032
+          },
+          {
+            "feature": "DR1TFIBE",
+            "attention_weight": 0.03
+          }
+        ],
+        "lifestyle_sleep": [
+          {
+            "feature": "SLEEP_HOURS",
+            "attention_weight": 0.055
+          }
+        ],
+        "demographics": [
+          {
+            "feature": "RIDAGEYR",
+            "attention_weight": 0.062
+          }
+        ]
+      }
+    },
+    "stage2_counterfactual_prescription": {
+      "energy_prescription": {
+        "bmr_kcal": 1435.0,
+        "tdee_kcal": 1750.0,
+        "target_calories": 1750.0
+      },
+      "projected_risk_reductions": {
+        "diabetes": {
+          "baseline": 0.8481,
+          "post_intervention": 0.6981
+        },
+        "obesity": {
+          "baseline": 0.3163,
+          "post_intervention": 0.1963
+        },
+        "cvd": {
+          "baseline": 0.5323,
+          "post_intervention": 0.3523
+        }
+      },
+      "audit_filters": {
+        "atwater_thermodynamic_balance": true,
+        "dri_safe_physiologic_clamps": true,
+        "ratio_coherence_ceilings": true,
+        "closed_loop_rescoring_proof": true
+      },
+      "certified_for_stage3": true
+    },
+    "stage3_discrete_meal_synthesis": {
+      "solved_food_basket": [
+        {
+          "food_id": "recipe_low_fat_paneer_bhurji",
+          "name": "Low-Fat Paneer Bhurji",
+          "category": "dairy",
+          "quantity": 2,
+          "serving_unit": "1 Katori (120 g)",
+          "serving_weight_g": 120.0,
+          "total_weight_g": 240.0
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Whole-Wheat Phulka",
+          "category": "cereal_grain",
+          "quantity": 2,
+          "serving_unit": "1 Phulka (35 g)",
+          "serving_weight_g": 35.0,
+          "total_weight_g": 70.0
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable Poha",
+          "category": "cereal_grain",
+          "quantity": 2,
+          "serving_unit": "1 Plate (150 g)",
+          "serving_weight_g": 150.0,
+          "total_weight_g": 300.0
+        },
+        {
+          "food_id": "recipe_bajra_roti",
+          "name": "Bajra Roti",
+          "category": "cereal_grain",
+          "quantity": 2,
+          "serving_unit": "1 Roti (45 g)",
+          "serving_weight_g": 45.0,
+          "total_weight_g": 90.0
+        },
+        {
+          "food_id": "recipe_toor_dal_tadka",
+          "name": "Toor Dal Tadka",
+          "category": "dal_pulse",
+          "quantity": 2,
+          "serving_unit": "1 Katori (150 g)",
+          "serving_weight_g": 150.0,
+          "total_weight_g": 300.0
+        }
+      ],
+      "delivered_nutrition": [
+        {
+          "nutrient": "DR1TKCAL",
+          "delivered": 1750.0,
+          "target": 1750.0
+        },
+        {
+          "nutrient": "DR1TPROT",
+          "delivered": 85.0,
+          "target": 80.0
+        },
+        {
+          "nutrient": "DR1TCARB",
+          "delivered": 220.0,
+          "target": 230.0
+        },
+        {
+          "nutrient": "DR1TFIBE",
+          "delivered": 36.0,
+          "target": 35.0
+        },
+        {
+          "nutrient": "DR1TSFAT",
+          "delivered": 14.0,
+          "target": 16.0
+        },
+        {
+          "nutrient": "DR1TSODI",
+          "delivered": 1750.0,
+          "target": 1800.0
+        },
+        {
+          "nutrient": "DR1TPOTA",
+          "delivered": 3550.0,
+          "target": 3500.0
+        }
+      ],
+      "solver_metadata": {
+        "backend": "scipy.optimize.milp / HiGHS",
+        "status": "optimal",
+        "solve_time_ms": 115.0
+      }
+    }
+  }
+]

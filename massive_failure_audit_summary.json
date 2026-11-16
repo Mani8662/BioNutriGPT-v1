@@ -1,0 +1,15 @@
+{
+  "track_a_stage1_cases": 5000,
+  "track_a_passes": 5000,
+  "track_b_stage2_cases": 100,
+  "track_b_passes": 100,
+  "track_b_certified": 0,
+  "track_b_filter_failures": {
+    "filter_1": 0,
+    "filter_2": 3,
+    "filter_3": 84,
+    "filter_4": 42
+  },
+  "s1_failures": [],
+  "s2_crashes": []
+}

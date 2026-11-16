@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+<title id="title">BioNutriGPT four-stage research prototype</title>
+<desc id="desc">NHANES training and temporal holdout feed a risk model. A model-based nutrient search feeds a discrete Indian meal optimizer, followed by guarded local language-model formatting. No Indian-population validation is shown.</desc>
+<style>
+.bg{fill:#f7f9fc}.box{fill:#fff;stroke:#37516b;stroke-width:2;rx:16}.train{fill:#e9f2ff;stroke:#306bb3}.s2{fill:#fff4df;stroke:#bd7b18}.s3{fill:#e9f7ef;stroke:#27834f}.s4{fill:#f3ecff;stroke:#7a55b7}.warn{fill:#fff0ee;stroke:#bb4b43;stroke-width:2;rx:14}.h{font:700 24px Arial;fill:#15334d}.t{font:17px Arial;fill:#253b4c}.small{font:15px Arial;fill:#465d70}.arrow{stroke:#536d82;stroke-width:3;fill:none;marker-end:url(#a)}.dash{stroke-dasharray:8 7}
+</style>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#536d82"/></marker></defs>
+<rect class="bg" width="1400" height="760"/>
+<text x="700" y="42" text-anchor="middle" class="h">BioNutriGPT: modular research prototype</text>
+<rect x="55" y="75" width="1290" height="88" class="warn"/>
+<text x="700" y="108" text-anchor="middle" class="h" fill="#8f302b">Domain boundary</text>
+<text x="700" y="137" text-anchor="middle" class="t">Stage 1 uses U.S. NHANES data; Indian-user inference is not externally validated.</text>
+
+<rect x="60" y="220" width="260" height="190" class="box train"/>
+<text x="190" y="255" text-anchor="middle" class="h">Inputs and data</text>
+<text x="82" y="292" class="t">NHANES adults</text>
+<text x="82" y="320" class="t">87 predictors:</text>
+<text x="82" y="348" class="small">lipids | diet | lifestyle</text>
+<text x="82" y="373" class="small">demographics</text>
+<text x="82" y="397" class="small">Temporal holdout: 2017-March 2020</text>
+
+<rect x="380" y="220" width="270" height="190" class="box train"/>
+<text x="515" y="255" text-anchor="middle" class="h">Stage 1</text>
+<text x="405" y="292" class="t">Tabular Transformer</text>
+<text x="405" y="320" class="small">modality-specific pooling</text>
+<text x="405" y="346" class="small">top-2-of-4 MoE</text>
+<text x="405" y="376" class="t">Prevalent-status estimates</text>
+<text x="405" y="400" class="small">diabetes | obesity | CVD</text>
+
+<rect x="710" y="220" width="285" height="190" class="box s2"/>
+<text x="852" y="255" text-anchor="middle" class="h">Stage 2</text>
+<text x="735" y="292" class="t">Nutrient-envelope search</text>
+<text x="735" y="320" class="small">energy estimate + bounded</text>
+<text x="735" y="345" class="small">feature perturbation</text>
+<text x="735" y="375" class="t">Closed-loop Stage 1 rescore</text>
+<text x="735" y="400" class="small">model-based; not causal</text>
+
+<rect x="1055" y="220" width="285" height="190" class="box s3"/>
+<text x="1197" y="255" text-anchor="middle" class="h">Stage 3</text>
+<text x="1080" y="292" class="t">Discrete MILP optimizer</text>
+<text x="1080" y="320" class="small">Indian recipe catalog</text>
+<text x="1080" y="345" class="small">whole servings + plate rules</text>
+<text x="1080" y="375" class="t">Food basket and portions</text>
+<text x="1080" y="400" class="small">nutrient bounds may use slack</text>
+
+<path class="arrow" d="M320 315 H375"/><path class="arrow" d="M650 315 H705"/><path class="arrow" d="M995 315 H1050"/>
+
+<rect x="375" y="500" width="340" height="170" class="box s4"/>
+<text x="545" y="535" text-anchor="middle" class="h">Stage 4</text>
+<text x="400" y="573" class="t">Local Qwen formatter</text>
+<text x="400" y="601" class="small">formats explanation and meal slots</text>
+<text x="400" y="628" class="small">deterministic basket/quantity checks</text>
+<text x="400" y="653" class="small">raw output audited separately</text>
+
+<rect x="805" y="500" width="330" height="170" class="box"/>
+<text x="970" y="535" text-anchor="middle" class="h">User-facing result</text>
+<text x="830" y="575" class="t">Stage estimates and status</text>
+<text x="830" y="603" class="t">Meal slots and whole portions</text>
+<text x="830" y="631" class="small">prototype output, not diagnosis</text>
+<text x="830" y="656" class="small">no clinical-effect claim</text>
+<path class="arrow" d="M1197 410 V465 H545 V495"/>
+<path class="arrow" d="M715 585 H800"/>
+<text x="700" y="720" text-anchor="middle" class="small">Each stage has a separate data source, method, and evaluation boundary.</text>
+</svg>

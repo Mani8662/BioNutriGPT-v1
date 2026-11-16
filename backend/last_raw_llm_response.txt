@@ -1,0 +1,82 @@
+{
+  "health_narrative": "Your body is working well, but we can make some small adjustments to help you feel even better. We've included all the foods from your special basket in your meals, so you can enjoy them while staying healthy.",
+  "biomarker_driver_explanations": [
+    {"modality": "Blood Tests", "plain_language_explanation": "We look at your blood to see how well your body is working. Your numbers are good, but we can make small changes to keep them that way."}
+  ],
+  "meal_schedule": [
+    {
+      "meal": "Breakfast",
+      "time": "07:30",
+      "items": [
+        {
+          "food_id": "ifct_e019",
+          "name": "Dates, processed",
+          "quantity": 1,
+          "guidance": "Enjoy a sweet start to your day with these delicious dates."
+        }
+      ],
+      "guidance": "Start your day with a healthy breakfast that includes a variety of nutrients."
+    },
+    {
+      "meal": "Mid-Morning Snack",
+      "time": "10:00",
+      "items": [
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chana Masala",
+          "quantity": 1,
+          "guidance": "This tasty dal is a great snack to keep you full until lunch."
+        }
+      ],
+      "guidance": "Have a small, balanced snack to keep your energy up."
+    },
+    {
+      "meal": "Lunch",
+      "time": "12:30",
+      "items": [
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Rajma Curry",
+          "quantity": 1,
+          "guidance": "This hearty curry is perfect for lunch. It's packed with protein and fiber."
+        }
+      ],
+      "guidance": "Enjoy a nutritious and satisfying lunch."
+    },
+    {
+      "meal": "Evening Snack",
+      "time": "18:00",
+      "items": [
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Vegetable Pulao",
+          "quantity": 1,
+          "guidance": "This delicious pulao is a great option for an evening snack. It's full of flavor and nutrients."
+        }
+      ],
+      "guidance": "Have a light, healthy snack to help you wind down after work."
+    },
+    {
+      "meal": "Dinner",
+      "time": "20:30",
+      "items": [
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Aloo Gobi",
+          "quantity": 1,
+          "guidance": "This tasty sabzi is a great choice for dinner. It's packed with flavor and nutrients."
+        }
+      ],
+      "guidance": "End your day with a satisfying and nutritious dinner."
+    }
+  ],
+  "culinary_directives": [
+    "Make sure to drink plenty of water throughout the day to stay hydrated."
+  ],
+  "lifestyle_hydration_guidance": {
+    "hydration": "Stay hydrated by drinking water regularly throughout the day.",
+    "post_meal_activity": "After meals, take a short walk to help with digestion and reduce bloating.",
+    "sleep_hygiene": "Ensure you get enough sleep and maintain a consistent bedtime routine."
+  },
+  "closing_message": "Remember, these meals are just suggestions. Feel free to adjust them as needed to suit your taste and lifestyle."
+}
