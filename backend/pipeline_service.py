@@ -11,6 +11,7 @@ import json
 import logging
 import math
 import os
+import urllib.request
 import re
 import sys
 import threading
@@ -376,17 +377,31 @@ def run_nutrition_chat(message: str, history: list[dict[str, str]] | None = None
         *safe_history,
         {"role": "user", "content": f"Retrieved records (JSON):\n{context}\n\nQuestion: {message}"},
     ]
-    tokenizer, model = p14._load_local_qwen_cached(p14.DEFAULT_MODEL)
-    rendered = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-    device = model.get_input_embeddings().weight.device
-    inputs = {key: value.to(device) for key, value in tokenizer(rendered, return_tensors="pt").items()}
-    with _MODEL_LOCK, torch.inference_mode():
-        generated = model.generate(
-            **inputs, max_new_tokens=300, do_sample=False, repetition_penalty=1.03,
-            pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id,
-            eos_token_id=tokenizer.eos_token_id,
+    if os.getenv("BIONUTRIGPT_CHAT_BACKEND", "transformers").lower() == "ollama":
+        prompt = "\n\n".join(f"{turn['role'].upper()}: {turn['content']}" for turn in messages)
+        payload = json.dumps({
+            "model": os.getenv("BIONUTRIGPT_CHAT_MODEL", p14.DEFAULT_MODEL),
+            "prompt": prompt, "stream": False,
+            "options": {"temperature": 0, "num_predict": 300},
+        }).encode("utf-8")
+        request = urllib.request.Request(
+            p14.DEFAULT_OLLAMA_URL, data=payload,
+            headers={"Content-Type": "application/json"},
         )
-    answer = tokenizer.decode(generated[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+        with urllib.request.urlopen(request, timeout=120) as response:
+            answer = json.loads(response.read().decode("utf-8")).get("response", "").strip()
+    else:
+        tokenizer, model = p14._load_local_qwen_cached(p14.DEFAULT_MODEL)
+        rendered = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        device = model.get_input_embeddings().weight.device
+        inputs = {key: value.to(device) for key, value in tokenizer(rendered, return_tensors="pt").items()}
+        with _MODEL_LOCK, torch.inference_mode():
+            generated = model.generate(
+                **inputs, max_new_tokens=300, do_sample=False, repetition_penalty=1.03,
+                pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id,
+                eos_token_id=tokenizer.eos_token_id,
+            )
+        answer = tokenizer.decode(generated[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
     if not answer:
         raise RuntimeError("The local nutrition assistant returned an empty response.")
     return {"answer": answer, "sources": facts, "status": "answered"}

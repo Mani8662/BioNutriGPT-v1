@@ -5,6 +5,7 @@ python-multipart
 numpy
 pandas
 scipy
+scikit-learn
 torch
 transformers
 bitsandbytes
