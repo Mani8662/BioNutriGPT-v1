@@ -354,6 +354,23 @@ def run_compilation(dossier: dict[str, Any], backend: str = "transformers") -> d
 
 def run_nutrition_chat(message: str, history: list[dict[str, str]] | None = None) -> dict[str, Any]:
     """Answer food-composition questions with local retrieval-grounded Qwen."""
+    lab_context = " ".join(
+        [message] + [turn.get("content", "") for turn in (history or [])[-6:] if turn.get("role") == "user"]
+    ).lower()
+    lab_terms = re.compile(
+        r"\b(blood\s+report|blood\s+test|lab\s+result|lab\s+report|fasting\s+glucose|"
+        r"blood\s+sugar|hba1c|a1c|ldl|hdl|triglycerides?|cholesterol|creatinine|"
+        r"hemoglobin|haemoglobin|cbc|alt|ast|tsh|diagnos(?:e|is|ed)|medical\s+test)\b"
+    )
+    if lab_terms.search(lab_context):
+        return {
+            "answer": (
+                "I can’t interpret blood tests or diagnose a condition. The food database available to this chat "
+                "doesn’t contain clinical reference ranges. Please discuss these results with a qualified healthcare "
+                "professional, who can consider the lab’s reference interval and your medical context."
+            ),
+            "sources": [], "status": "insufficient_evidence",
+        }
     facts = retrieve_food_facts(message)
     if not facts:
         return {
