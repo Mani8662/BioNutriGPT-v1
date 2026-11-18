@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import {
   Play,
   RotateCcw,
-  Sparkles,
   Layers,
   HeartPulse,
   Sliders,
@@ -37,8 +36,8 @@ export const App: React.FC = () => {
   const [features, setFeatures] = useState<number[]>([...CANONICAL_SAMPLE_FEATURES])
   const [metadata, setMetadata] = useState<PatientMetadata>({ ...CANONICAL_SAMPLE_METADATA })
 
-  // Input modes: structured form, file upload, or a free-form chat question.
-  const [inputMode, setInputMode] = useState<'typing' | 'upload' | 'chat'>('typing')
+  // Input modes: structured form or file upload.
+  const [inputMode, setInputMode] = useState<'typing' | 'upload'>('typing')
 
   // Execution Backend for Stage 4: Local Qwen 2.5 3B NF4 GPU
   const stage4Backend = 'transformers' as const
@@ -53,33 +52,6 @@ export const App: React.FC = () => {
   // Hardware Status State
   const [health, setHealth] = useState<HealthStatus | null>(null)
   const [chatOpen, setChatOpen] = useState(false)
-  const [freeText, setFreeText] = useState('')
-  const [freeTextAnswer, setFreeTextAnswer] = useState('')
-  const [freeTextLoading, setFreeTextLoading] = useState(false)
-  const [freeTextError, setFreeTextError] = useState('')
-
-  const handleFreeTextSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
-    if (!freeText.trim() || freeTextLoading) return
-    setFreeTextLoading(true)
-    setFreeTextError('')
-    setFreeTextAnswer('')
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: freeText.trim() }),
-      })
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.detail || 'The model could not answer right now.')
-      const groundingNote = data.status === 'answered'
-        ? '\n\nFood data was retrieved for this answer.'
-        : '\n\nGeneral model response; it may not be source-grounded.'
-      setFreeTextAnswer(`${data.answer}${groundingNote}`)
-    } catch (err) {
-      setFreeTextError(err instanceof Error ? err.message : 'The model could not answer right now.')
-    } finally { setFreeTextLoading(false) }
-  }
-
   // Fetch health status on mount and interval
   useEffect(() => {
     const fetchHealth = async () => {
@@ -231,15 +203,6 @@ export const App: React.FC = () => {
 
                   <button
                     type="button"
-                    onClick={() => setInputMode('chat')}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${inputMode === 'chat' ? 'bg-white text-slate-900 shadow-sm border border-slate-200' : 'text-slate-600 hover:text-slate-900'}`}
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Option 3: Ask with text</span>
-                  </button>
-
-                  <button
-                    type="button"
                     onClick={() => setInputMode('upload')}
                     className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
                       inputMode === 'upload'
@@ -248,7 +211,7 @@ export const App: React.FC = () => {
                     }`}
                   >
                     <FileUp className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Option 2: TXT File Upload</span>
+                    <span>Option 2: File Upload</span>
                   </button>
                 </div>
               </div>
@@ -294,22 +257,11 @@ export const App: React.FC = () => {
                 onLoadSample={handleLoadSample}
                 onReset={handleReset}
               />
-            ) : inputMode === 'upload' ? (
+            ) : (
               <TxtFileUpload
                 onParsedSuccess={handleParsedFromTxt}
                 onRunFileDirectly={handleRunFileDirectly}
               />
-            ) : (
-              <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
-                <div><h2 className="text-lg font-bold text-slate-900">Ask a question in your own words</h2><p className="mt-1 text-sm text-slate-600">Type a general, health, or nutrition question. The text is sent to the configured local chat model.</p></div>
-                <form onSubmit={handleFreeTextSubmit} className="space-y-3">
-                  <textarea value={freeText} onChange={e=>setFreeText(e.target.value)} maxLength={2000} rows={5} aria-label="Your question for the model" placeholder="Example: I eat vegetarian and want to add more fiber to lunch. What are some practical ideas?" className="w-full rounded-xl border border-slate-300 p-3 text-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-100" />
-                  <button disabled={freeTextLoading || !freeText.trim()} className="rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50">{freeTextLoading ? 'Sending to model…' : 'Send to model'}</button>
-                </form>
-                {freeTextError && <p role="alert" className="rounded-lg bg-rose-50 p-3 text-sm text-rose-700">{freeTextError}</p>}
-                {freeTextAnswer && <div className="whitespace-pre-wrap rounded-xl bg-slate-50 p-4 text-sm leading-6 text-slate-800" aria-live="polite">{freeTextAnswer}</div>}
-                <p className="text-xs text-slate-500">Do not enter personal identifiers. General model answers may be wrong; lab interpretation and diagnosis requests are blocked.</p>
-              </section>
             )}
           </div>
         )}

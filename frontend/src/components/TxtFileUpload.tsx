@@ -9,8 +9,8 @@ import {
   ArrowRight,
   Info,
 } from 'lucide-react'
-import { uploadTxtFile, parseRawText } from '../services/api'
-import { PatientMetadata, TxtParseResponse } from '../types/api'
+import { uploadDocumentForChat, uploadTxtFile, parseRawText } from '../services/api'
+import { DocumentChatResponse, PatientMetadata, TxtParseResponse } from '../types/api'
 
 interface TxtFileUploadProps {
   onParsedSuccess: (features: number[], metadata: Partial<PatientMetadata>) => void
@@ -29,6 +29,25 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
   const [rawTextPaste, setRawTextPaste] = useState('')
   const [copied, setCopied] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const documentInputRef = useRef<HTMLInputElement>(null)
+  const [selectedDocument, setSelectedDocument] = useState<File | null>(null)
+  const [documentResult, setDocumentResult] = useState<DocumentChatResponse | null>(null)
+  const [documentLoading, setDocumentLoading] = useState(false)
+  const [documentError, setDocumentError] = useState<string | null>(null)
+
+  const sendDocumentToModel = async () => {
+    if (!selectedDocument || documentLoading) return
+    setDocumentLoading(true)
+    setDocumentError(null)
+    setDocumentResult(null)
+    try {
+      setDocumentResult(await uploadDocumentForChat(selectedDocument))
+    } catch (err) {
+      setDocumentError(err instanceof Error ? err.message : 'Could not read this file')
+    } finally {
+      setDocumentLoading(false)
+    }
+  }
 
   const sampleFormatGuide = `56.0 178.0 122.0 3.178571 2.178571 1990.0 90.0 250.0 42.0 30.0 ... (87 space-separated floats)
 # CLINICAL_METADATA: weight_kg=74.0 height_cm=176.0 activity_level=sedentary age=42 is_female=0`
@@ -114,11 +133,11 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
           <div className="flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
             <h2 className="text-lg font-bold text-slate-900 tracking-tight">
-              Option 2: Spaced TXT File Upload / Vector Paste
+              TXT / CSV Patient Vector Upload or Paste
             </h2>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Upload or paste an 87-feature whitespace- or comma-separated TXT file matching the canonical patient record.
+            Upload or paste an 87-feature whitespace- or comma-separated TXT/CSV file matching the canonical patient record.
           </p>
         </div>
 
@@ -133,6 +152,47 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
       </div>
 
       <div className="p-6 space-y-6">
+        <section className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-4 space-y-3">
+          <div>
+            <h3 className="text-sm font-bold text-slate-900">Ask about a document</h3>
+            <p className="mt-1 text-xs text-slate-600">Upload a PDF, PNG, JPG, TXT, or CSV. We’ll read its text and send it to the nutrition chat model.</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <input
+              ref={documentInputRef}
+              type="file"
+              accept=".pdf,.png,.jpg,.jpeg,.txt,.csv,application/pdf,image/png,image/jpeg,text/plain,text/csv"
+              className="sr-only"
+              onChange={(event) => {
+                const file = event.target.files?.[0] ?? null
+                setSelectedDocument(file)
+                setDocumentResult(null)
+                setDocumentError(null)
+              }}
+            />
+            <button type="button" onClick={() => documentInputRef.current?.click()} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">
+              Choose a document
+            </button>
+            <span className="max-w-full truncate text-xs text-slate-600">{selectedDocument?.name ?? 'No file selected'}</span>
+            <button type="button" onClick={sendDocumentToModel} disabled={!selectedDocument || documentLoading} className="rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
+              {documentLoading ? 'Reading and sending…' : 'Send file to model'}
+            </button>
+          </div>
+          <p className="text-[11px] text-slate-500">Files up to 8 MB; PDFs read up to 6 pages. Image reading uses English OCR. Avoid files with personal identifiers.</p>
+          {documentError && <p role="alert" className="rounded-lg bg-rose-50 p-3 text-xs text-rose-700">{documentError}</p>}
+          {documentResult && (
+            <div className="space-y-3" aria-live="polite">
+              <div className="whitespace-pre-wrap rounded-lg bg-white p-4 text-sm leading-6 text-slate-800">{documentResult.answer}</div>
+              {documentResult.status === 'insufficient_evidence' && <p className="text-xs text-amber-800">The assistant can’t interpret lab results or diagnose conditions. Please review them with a healthcare professional.</p>}
+              {documentResult.truncated && <p className="text-xs text-amber-800">Part of this file exceeded the processing limits. Up to 6 PDF pages and 12,000 extracted characters are sent to the model.</p>}
+              <details className="rounded-lg border border-slate-200 bg-white p-3">
+                <summary className="cursor-pointer text-xs font-semibold text-slate-700">Review text read from the file</summary>
+                <pre className="mt-2 max-h-56 overflow-auto whitespace-pre-wrap text-xs text-slate-600">{documentResult.extracted_text}</pre>
+              </details>
+            </div>
+          )}
+        </section>
+
         {/* Drag and Drop Zone */}
         <div
           onDragEnter={handleDrag}

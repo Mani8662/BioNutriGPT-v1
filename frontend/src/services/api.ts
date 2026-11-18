@@ -1,5 +1,6 @@
 import {
   ClinicalReport,
+  DocumentChatResponse,
   FeatureFieldInfo,
   FullPipelineResponse,
   HealthStatus,
@@ -10,6 +11,17 @@ import {
 } from '../types/api'
 
 const API_BASE = '/api'
+
+export async function uploadDocumentForChat(file: File): Promise<DocumentChatResponse> {
+  const formData = new FormData()
+  formData.append('file', file)
+  const res = await fetch(`${API_BASE}/chat/upload`, { method: 'POST', body: formData })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: res.statusText }))
+    throw new Error(err.detail || 'Could not read this file')
+  }
+  return res.json()
+}
 
 export async function checkHealth(): Promise<HealthStatus> {
   const res = await fetch(`${API_BASE}/health`)

@@ -26,6 +26,14 @@ export interface TxtParseResponse {
   summary: string
 }
 
+export interface DocumentChatResponse {
+  answer: string
+  sources: Array<Record<string, unknown>>
+  status: 'answered' | 'general_response' | 'insufficient_evidence'
+  extracted_text: string
+  truncated: boolean
+}
+
 export interface RiskProbabilities {
   diabetes: number
   obesity: number

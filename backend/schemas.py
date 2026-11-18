@@ -62,6 +62,11 @@ class NutritionChatResponse(BaseModel):
     status: Literal["answered", "general_response", "insufficient_evidence"]
 
 
+class DocumentChatResponse(NutritionChatResponse):
+    extracted_text: str
+    truncated: bool = False
+
+
 class FullPipelineRequest(BaseModel):
     """End-to-end pipeline request (Stages 1 → 4)."""
     features: list[float] = Field(..., description="87 float32 NHANES features")
