@@ -59,7 +59,7 @@ class NutritionChatRequest(BaseModel):
 class NutritionChatResponse(BaseModel):
     answer: str
     sources: list[dict[str, Any]]
-    status: Literal["answered", "insufficient_evidence"]
+    status: Literal["answered", "general_response", "insufficient_evidence"]
 
 
 class FullPipelineRequest(BaseModel):

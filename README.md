@@ -1,6 +1,6 @@
 # BioNutriGPT prototype
 
-BioNutriGPT is a local research prototype with a React frontend, FastAPI pipeline API, and a retrieval-grounded nutrition chat. The chat answers questions about foods represented in `food_composition_ifct2017.json`; it does not interpret laboratory results, diagnose, prescribe, or replace professional care.
+BioNutriGPT is a local research prototype with a React frontend, FastAPI pipeline API, and a chat assistant for general conversation and health/nutrition education. It uses retrieval for food-composition questions and the local model's general knowledge for other questions. General model answers are not source-grounded and may be wrong. The chat does not interpret laboratory results, diagnose, prescribe, or replace professional care.
 
 ## Run locally (macOS/Linux)
 
@@ -36,7 +36,7 @@ Use the exact installed Ollama tag in both model variables. The environment vari
 
 ## Nutrition chat data and limits
 
-Retrieval currently searches food names and categories in the bundled food-composition JSON and returns the listed nutrient values and serving basis. This is a structured food-data knowledge base, not a broad nutrition guideline library. Questions about lab reports and diagnoses are blocked before model generation. The lab guard is a basic safeguard; it is not a guarantee that every unsafe or out-of-scope request is detected. The model can still make mistakes, so do not use this prototype for clinical decisions.
+Retrieval currently searches food names and categories in the bundled food-composition JSON and returns the listed nutrient values and serving basis. This is a structured food-data knowledge base, not a broad nutrition guideline library. Other questions are answered from the model's general knowledge and are explicitly marked as not source-grounded. Requests to diagnose or interpret personal lab results are blocked before generation. The lab guard is a basic safeguard; it is not a guarantee that every unsafe or out-of-scope request is detected. The model can still make mistakes, so do not use this prototype for clinical decisions.
 
 The bundled food dataset identifies ICMR-NIN IFCT 2017 as its source. Confirm permissions for storage, retrieval, and display before public or commercial deployment.
 
