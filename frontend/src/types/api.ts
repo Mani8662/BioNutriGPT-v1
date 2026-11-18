@@ -26,12 +26,22 @@ export interface TxtParseResponse {
   summary: string
 }
 
-export interface DocumentChatResponse {
-  answer: string
-  sources: Array<Record<string, unknown>>
-  status: 'answered' | 'general_response' | 'insufficient_evidence'
-  extracted_text: string
+export interface ExtractedModelValue {
+  name: string
+  label: string
+  value: number
+  unit: string
+}
+
+export interface DocumentPipelineResponse {
+  status: 'needs_more_input' | 'completed'
+  extracted_values: ExtractedModelValue[]
+  extracted_metadata: Record<string, unknown>
+  missing_features: Array<{ name: string; label: string; category: string; unit: string }>
+  rejected_values: Array<{ name: string; value: unknown; reason: string }>
   truncated: boolean
+  notices: string[]
+  model_output: FullPipelineResponse | null
 }
 
 export interface RiskProbabilities {

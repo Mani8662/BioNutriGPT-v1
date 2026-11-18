@@ -62,11 +62,6 @@ class NutritionChatResponse(BaseModel):
     status: Literal["answered", "general_response", "insufficient_evidence"]
 
 
-class DocumentChatResponse(NutritionChatResponse):
-    extracted_text: str
-    truncated: bool = False
-
-
 class FullPipelineRequest(BaseModel):
     """End-to-end pipeline request (Stages 1 → 4)."""
     features: list[float] = Field(..., description="87 float32 NHANES features")
@@ -190,6 +185,24 @@ class FullPipelineResponse(BaseModel):
     clinical_report: ClinicalReport | None
     pipeline_latency: dict[str, float]
     mode_a_subsecond: bool
+
+
+class ExtractedModelValue(BaseModel):
+    name: str
+    label: str
+    value: float
+    unit: str
+
+
+class DocumentPipelineResponse(BaseModel):
+    status: Literal["needs_more_input", "completed"]
+    extracted_values: list[ExtractedModelValue]
+    extracted_metadata: dict[str, Any]
+    missing_features: list[dict[str, str]]
+    rejected_values: list[dict[str, Any]]
+    truncated: bool = False
+    notices: list[str] = Field(default_factory=list)
+    model_output: FullPipelineResponse | None = None
 
 
 class HealthStatus(BaseModel):

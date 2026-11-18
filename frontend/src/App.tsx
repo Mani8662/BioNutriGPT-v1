@@ -29,7 +29,7 @@ import {
   CANONICAL_SAMPLE_METADATA,
 } from './data/featureDefinitions'
 import { checkHealth, runFullPipeline, runFullPipelineFile } from './services/api'
-import { FullPipelineResponse, HealthStatus, PatientMetadata } from './types/api'
+import { DocumentPipelineResponse, FullPipelineResponse, HealthStatus, PatientMetadata } from './types/api'
 
 export const App: React.FC = () => {
   // Input State
@@ -44,10 +44,11 @@ export const App: React.FC = () => {
 
   // UI Flow State
   const [activeTab, setActiveTab] = useState<'input' | 'results'>('input')
-  const [resultsSection, setResultsSection] = useState<'risk' | 'prescription' | 'mealplan' | 'report'>('risk')
+  const [resultsSection, setResultsSection] = useState<'overview' | 'risk' | 'prescription' | 'mealplan' | 'report'>('risk')
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [results, setResults] = useState<FullPipelineResponse | null>(null)
+  const [documentAnalysis, setDocumentAnalysis] = useState<DocumentPipelineResponse | null>(null)
 
   // Hardware Status State
   const [health, setHealth] = useState<HealthStatus | null>(null)
@@ -83,6 +84,7 @@ export const App: React.FC = () => {
   const handleLoadSample = () => {
     setFeatures([...CANONICAL_SAMPLE_FEATURES])
     setMetadata({ ...CANONICAL_SAMPLE_METADATA })
+    setDocumentAnalysis(null)
     setError(null)
   }
 
@@ -96,6 +98,7 @@ export const App: React.FC = () => {
       activity_level: 'sedentary',
     })
     setResults(null)
+    setDocumentAnalysis(null)
     setError(null)
     setActiveTab('input')
   }
@@ -107,12 +110,14 @@ export const App: React.FC = () => {
       ...newMeta,
     }))
     setError(null)
+    setDocumentAnalysis(null)
   }
 
   // Execution: Run Full 4-Stage Pipeline
   const handleExecutePipeline = async () => {
     setLoading(true)
     setError(null)
+    setDocumentAnalysis(null)
     try {
       const response = await runFullPipeline({
         features,
@@ -121,7 +126,7 @@ export const App: React.FC = () => {
       })
       setResults(response)
       setActiveTab('results')
-      setResultsSection('risk')
+    setResultsSection('overview')
     } catch (err: any) {
       setError(err.message || 'Execution failed. Ensure FastAPI backend is running on :8000.')
     } finally {
@@ -133,6 +138,7 @@ export const App: React.FC = () => {
   const handleRunFileDirectly = async (file: File) => {
     setLoading(true)
     setError(null)
+    setDocumentAnalysis(null)
     try {
       const response = await runFullPipelineFile(file, stage4Backend, metadata)
       setResults(response)
@@ -143,6 +149,14 @@ export const App: React.FC = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleDocumentPipelineComplete = (response: DocumentPipelineResponse) => {
+    if (!response.model_output) return
+    setDocumentAnalysis(response)
+    setResults(response.model_output)
+    setActiveTab('results')
+    setResultsSection('risk')
   }
 
   return (
@@ -261,6 +275,7 @@ export const App: React.FC = () => {
               <TxtFileUpload
                 onParsedSuccess={handleParsedFromTxt}
                 onRunFileDirectly={handleRunFileDirectly}
+                onPipelineComplete={handleDocumentPipelineComplete}
               />
             )}
           </div>
@@ -271,9 +286,31 @@ export const App: React.FC = () => {
         {/* ========================================================================= */}
         {activeTab === 'results' && results && (
           <div className="space-y-6">
+            {documentAnalysis && (
+              <section className="rounded-xl border border-blue-200 bg-blue-50/60 p-4">
+                <h2 className="text-sm font-bold text-slate-900">Uploaded document analysis</h2>
+                <p className="mt-1 text-xs text-slate-700">The LLM extracted these values, the 87-feature predictor produced the screening output, and the report LLM compiled the analysis and meal plan when the optimizer safety gate allowed it.</p>
+                {documentAnalysis.notices.map((notice) => <p key={notice} className="mt-1 text-xs text-slate-600">{notice}</p>)}
+                <details className="mt-2">
+                  <summary className="cursor-pointer text-xs font-semibold text-blue-900">Review {documentAnalysis.extracted_values.length} extracted values</summary>
+                  <div className="mt-2 grid grid-cols-1 gap-1 text-xs sm:grid-cols-2">
+                    {documentAnalysis.extracted_values.map((value) => <div key={value.name}><span className="font-medium">{value.label}:</span> {value.value} {value.unit}</div>)}
+                  </div>
+                </details>
+              </section>
+            )}
             {/* Results Section Sub-Navigation Tabs */}
             <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-sm flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center space-x-1.5 overflow-x-auto">
+                {documentAnalysis && (
+                  <button
+                    onClick={() => setResultsSection('overview')}
+                    className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition ${resultsSection === 'overview' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+                  >
+                    <Layers className="w-4 h-4 text-emerald-400" />
+                    <span>Uploaded Report: All Results</span>
+                  </button>
+                )}
                 <button
                   onClick={() => setResultsSection('risk')}
                   className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition ${
@@ -339,6 +376,15 @@ export const App: React.FC = () => {
             </div>
 
             {/* Results Section Content */}
+            {resultsSection === 'overview' && documentAnalysis && (
+              <div className="space-y-6">
+                <Stage1RiskCards screening={results.screening} />
+                <Stage2Prescription screening={results.screening} />
+                {results.meal_plan && <Stage3MealSchedule mealPlan={results.meal_plan} />}
+                {results.clinical_report && <Stage4ClinicalReport report={results.clinical_report} />}
+                {!results.clinical_report && <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">The predictor returned its screening output, but its safety gate did not produce a personalized meal plan for this input.</p>}
+              </div>
+            )}
             {resultsSection === 'risk' && <Stage1RiskCards screening={results.screening} />}
 
             {resultsSection === 'prescription' && (

@@ -9,17 +9,19 @@ import {
   ArrowRight,
   Info,
 } from 'lucide-react'
-import { uploadDocumentForChat, uploadTxtFile, parseRawText } from '../services/api'
-import { DocumentChatResponse, PatientMetadata, TxtParseResponse } from '../types/api'
+import { uploadDocumentForPipeline, uploadTxtFile, parseRawText } from '../services/api'
+import { DocumentPipelineResponse, PatientMetadata, TxtParseResponse } from '../types/api'
 
 interface TxtFileUploadProps {
   onParsedSuccess: (features: number[], metadata: Partial<PatientMetadata>) => void
   onRunFileDirectly: (file: File) => void
+  onPipelineComplete: (response: DocumentPipelineResponse) => void
 }
 
 export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
   onParsedSuccess,
   onRunFileDirectly,
+  onPipelineComplete,
 }) => {
   const [dragActive, setDragActive] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -31,17 +33,19 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null)
   const documentInputRef = useRef<HTMLInputElement>(null)
   const [selectedDocument, setSelectedDocument] = useState<File | null>(null)
-  const [documentResult, setDocumentResult] = useState<DocumentChatResponse | null>(null)
+  const [documentResult, setDocumentResult] = useState<DocumentPipelineResponse | null>(null)
   const [documentLoading, setDocumentLoading] = useState(false)
   const [documentError, setDocumentError] = useState<string | null>(null)
 
-  const sendDocumentToModel = async () => {
+  const processDocument = async () => {
     if (!selectedDocument || documentLoading) return
     setDocumentLoading(true)
     setDocumentError(null)
     setDocumentResult(null)
     try {
-      setDocumentResult(await uploadDocumentForChat(selectedDocument))
+      const result = await uploadDocumentForPipeline(selectedDocument)
+      setDocumentResult(result)
+      if (result.model_output) onPipelineComplete(result)
     } catch (err) {
       setDocumentError(err instanceof Error ? err.message : 'Could not read this file')
     } finally {
@@ -154,8 +158,8 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
       <div className="p-6 space-y-6">
         <section className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-4 space-y-3">
           <div>
-            <h3 className="text-sm font-bold text-slate-900">Ask about a document</h3>
-            <p className="mt-1 text-xs text-slate-600">Upload a PDF, PNG, JPG, TXT, or CSV. We’ll read its text and send it to the nutrition chat model.</p>
+            <h3 className="text-sm font-bold text-slate-900">Analyze a health or nutrition document</h3>
+            <p className="mt-1 text-xs text-slate-600">The LLM extracts only values shown in the file. Complete inputs are sent to the project predictor; its output then goes to the report LLM for analysis and a meal plan.</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <input
@@ -174,21 +178,40 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
               Choose a document
             </button>
             <span className="max-w-full truncate text-xs text-slate-600">{selectedDocument?.name ?? 'No file selected'}</span>
-            <button type="button" onClick={sendDocumentToModel} disabled={!selectedDocument || documentLoading} className="rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
-              {documentLoading ? 'Reading and sending…' : 'Send file to model'}
+            <button type="button" onClick={processDocument} disabled={!selectedDocument || documentLoading} className="rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
+              {documentLoading ? 'Extracting values…' : 'Extract values and run analysis'}
             </button>
           </div>
           <p className="text-[11px] text-slate-500">Files up to 8 MB; PDFs read up to 6 pages. Image reading uses English OCR. Avoid files with personal identifiers.</p>
           {documentError && <p role="alert" className="rounded-lg bg-rose-50 p-3 text-xs text-rose-700">{documentError}</p>}
           {documentResult && (
             <div className="space-y-3" aria-live="polite">
-              <div className="whitespace-pre-wrap rounded-lg bg-white p-4 text-sm leading-6 text-slate-800">{documentResult.answer}</div>
-              {documentResult.status === 'insufficient_evidence' && <p className="text-xs text-amber-800">The assistant can’t interpret lab results or diagnose conditions. Please review them with a healthcare professional.</p>}
-              {documentResult.truncated && <p className="text-xs text-amber-800">Part of this file exceeded the processing limits. Up to 6 PDF pages and 12,000 extracted characters are sent to the model.</p>}
-              <details className="rounded-lg border border-slate-200 bg-white p-3">
-                <summary className="cursor-pointer text-xs font-semibold text-slate-700">Review text read from the file</summary>
-                <pre className="mt-2 max-h-56 overflow-auto whitespace-pre-wrap text-xs text-slate-600">{documentResult.extracted_text}</pre>
-              </details>
+              {documentResult.status === 'needs_more_input' && (
+                <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-xs text-amber-950">
+                  <p className="font-semibold">The model was not run because the document is incomplete.</p>
+                  <p className="mt-1">This predictor requires all 87 trained values. Missing fields are never filled with demo defaults.</p>
+                  <details className="mt-2">
+                    <summary className="cursor-pointer font-semibold">View {documentResult.missing_features.length} missing model inputs</summary>
+                    <ul className="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2">
+                      {documentResult.missing_features.map((field) => <li key={field.name}>{field.label} ({field.unit})</li>)}
+                    </ul>
+                  </details>
+                </div>
+              )}
+              {documentResult.extracted_values.length > 0 && (
+                <details className="rounded-lg border border-slate-200 bg-white p-3" open={documentResult.status === 'needs_more_input'}>
+                  <summary className="cursor-pointer text-xs font-semibold text-slate-700">Review {documentResult.extracted_values.length} values extracted by the LLM</summary>
+                  <div className="mt-2 overflow-x-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead className="text-slate-500"><tr><th className="py-1 pr-3">Measurement</th><th className="py-1 pr-3">Value</th><th className="py-1">Unit</th></tr></thead>
+                      <tbody>{documentResult.extracted_values.map((value) => <tr key={value.name} className="border-t border-slate-100"><td className="py-1.5 pr-3">{value.label}</td><td className="py-1.5 pr-3 font-mono">{value.value}</td><td className="py-1.5">{value.unit}</td></tr>)}</tbody>
+                    </table>
+                  </div>
+                </details>
+              )}
+              {documentResult.rejected_values.length > 0 && <p className="text-xs text-amber-800">Some extracted values were outside the model’s supported ranges and were excluded.</p>}
+              {documentResult.truncated && <p className="text-xs text-amber-800">The file exceeded processing limits; only its supported portion was read.</p>}
+              {documentResult.notices.map((notice) => <p key={notice} className="text-xs text-slate-600">{notice}</p>)}
             </div>
           )}
         </section>
