@@ -23,6 +23,7 @@ import { Stage1RiskCards } from './components/Stage1RiskCards'
 import { Stage2Prescription } from './components/Stage2Prescription'
 import { Stage3MealSchedule } from './components/Stage3MealSchedule'
 import { Stage4ClinicalReport } from './components/Stage4ClinicalReport'
+import { NutritionChat } from './components/NutritionChat'
 
 import {
   CANONICAL_SAMPLE_FEATURES,
@@ -51,6 +52,7 @@ export const App: React.FC = () => {
 
   // Hardware Status State
   const [health, setHealth] = useState<HealthStatus | null>(null)
+  const [chatOpen, setChatOpen] = useState(false)
 
   // Fetch health status on mount and interval
   useEffect(() => {
@@ -360,6 +362,8 @@ export const App: React.FC = () => {
       <HardwareStatusBar
         health={health}
       />
+      <button onClick={() => setChatOpen(value => !value)} className="fixed bottom-6 right-5 z-50 rounded-full bg-emerald-800 px-5 py-3 font-semibold text-white shadow-lg hover:bg-emerald-700" aria-expanded={chatOpen} aria-label="Open nutrition chat">{chatOpen ? 'Close chat' : 'Nutrition chat'}</button>
+      {chatOpen && <NutritionChat onClose={() => setChatOpen(false)} />}
     </div>
   )
 }

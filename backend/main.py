@@ -27,6 +27,8 @@ from schemas import (
     FullPipelineResponse,
     HealthStatus,
     LLMCompileRequest,
+    NutritionChatRequest,
+    NutritionChatResponse,
     MealPlanResult,
     PatientInput,
     RawTextInput,
@@ -43,6 +45,16 @@ app = FastAPI(
     description="End-to-End Cardiometabolic Risk Diagnostics & Discrete Indian Meal Synthesis",
     version="1.0.0",
 )
+
+
+@app.post("/api/chat", response_model=NutritionChatResponse, tags=["Nutrition Chat"])
+def nutrition_chat(payload: NutritionChatRequest) -> NutritionChatResponse:
+    """Retrieve local food nutrient facts and explain them with the local LLM."""
+    try:
+        return NutritionChatResponse(**ps.run_nutrition_chat(payload.message, payload.history))
+    except Exception as exc:
+        LOGGER.exception("Nutrition chat failed")
+        raise HTTPException(status_code=503, detail="Nutrition chat is temporarily unavailable.") from exc
 
 # Configure CORS for local development and testing
 app.add_middleware(
