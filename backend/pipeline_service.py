@@ -406,6 +406,7 @@ def run_nutrition_chat(message: str, history: list[dict[str, str]] | None = None
     else:
         system_prompt = (
             "You are BioNutriGPT, a friendly general-purpose assistant with a focus on health and nutrition education. "
+            "Answer directly and keep responses concise enough to finish cleanly, usually in 3-5 short bullet points. "
             "Answer ordinary greetings and general questions naturally. This turn has no matching food-data records, so do not claim "
             "to have retrieved or cited evidence; be transparent that health information is general model knowledge. Do not diagnose, "
             "interpret personal lab results, prescribe treatment or medication, or give individualized clinical targets. For personal "
@@ -423,7 +424,7 @@ def run_nutrition_chat(message: str, history: list[dict[str, str]] | None = None
         payload = json.dumps({
             "model": os.getenv("BIONUTRIGPT_CHAT_MODEL", p14.DEFAULT_MODEL),
             "prompt": prompt, "stream": False,
-            "options": {"temperature": 0, "num_predict": 300},
+            "options": {"temperature": 0, "num_predict": 450},
         }).encode("utf-8")
         request = urllib.request.Request(
             p14.DEFAULT_OLLAMA_URL, data=payload,
