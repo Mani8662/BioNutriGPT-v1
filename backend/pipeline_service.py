@@ -343,7 +343,11 @@ def run_optimization(dossier: dict[str, Any]) -> dict[str, Any]:
 def run_compilation(dossier: dict[str, Any], backend: str = "transformers") -> dict[str, Any]:
     """Execute Stage 4 (Clinical Chrono-Nutrition Compiler via Local GPU LLM)."""
     validated_dossier = p14.validate_dossier(dossier)
-    compiler_cfg = p14.CompilerConfig(backend=backend)
+    backend = os.getenv("BIONUTRIGPT_STAGE4_BACKEND", backend)
+    compiler_cfg = p14.CompilerConfig(
+        backend=backend,
+        model_name=os.getenv("BIONUTRIGPT_STAGE4_MODEL", p14.DEFAULT_MODEL),
+    )
     report = p14.compile_patient_report(validated_dossier, config=compiler_cfg)
     if "compiled_patient_report" in report and "meal_schedule" in report["compiled_patient_report"]:
         report["compiled_patient_report"]["meal_schedule"] = _enrich_schedule_items(
@@ -359,10 +363,11 @@ def run_nutrition_chat(message: str, history: list[dict[str, str]] | None = None
     ).lower()
     lab_terms = re.compile(
         r"\b(blood\s+report|blood\s+test|lab\s+result|lab\s+report|fasting\s+glucose|"
-        r"blood\s+sugar|hba1c|a1c|ldl|hdl|triglycerides?|cholesterol|creatinine|"
+        r"blood\s+sugar|hba1c|a1c|ldl|hdl|triglycerides?|creatinine|"
         r"hemoglobin|haemoglobin|cbc|alt|ast|tsh|diagnos(?:e|is|ed)|medical\s+test)\b"
     )
-    if lab_terms.search(lab_context):
+    cholesterol_lab_value = re.search(r"\bcholesterol\b.{0,30}\b\d+(?:\.\d+)?\s*mg\s*/\s*dl\b", lab_context)
+    if lab_terms.search(lab_context) or cholesterol_lab_value:
         return {
             "answer": (
                 "I can’t interpret blood tests or diagnose a condition. The food database available to this chat "

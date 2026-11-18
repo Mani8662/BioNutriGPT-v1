@@ -13,10 +13,19 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 FOOD_DB = ROOT / "food_composition_ifct2017.json"
 TOKEN_RE = re.compile(r"[a-z0-9]+", re.I)
+STOPWORDS = {
+    "a", "an", "the", "and", "or", "of", "in", "on", "for", "to", "is", "are", "does",
+    "do", "what", "how", "much", "many", "show", "tell", "give", "me", "about", "contains",
+    "contain", "per", "serving", "unit", "basis", "food", "foods", "nutrition", "nutrient",
+    "nutrients", "protein", "carbohydrate", "carbs", "sugar", "sugars", "fiber", "fibre", "fat",
+    "saturated", "cholesterol", "calcium", "iron", "sodium", "potassium", "vitamin", "calories",
+    "calorie", "energy", "g", "mg", "kcal", "gram", "grams", "milligram", "milligrams",
+}
 NUTRIENT_LABELS = {
     "DR1TKCAL": "energy kcal", "DR1TPROT": "protein g", "DR1TCARB": "carbohydrate g",
     "DR1TSUGR": "sugars g", "DR1TFIBE": "fiber g", "DR1TTFAT": "fat g",
-    "DR1TSFAT": "saturated fat g", "DR1TCALC": "calcium mg", "DR1TIRON": "iron mg",
+    "DR1TSFAT": "saturated fat g", "DR1TCHOL": "cholesterol mg",
+    "DR1TCALC": "calcium mg", "DR1TIRON": "iron mg",
     "DR1TSODI": "sodium mg", "DR1TPOTA": "potassium mg", "DR1TVITC": "vitamin C mg",
 }
 
@@ -28,7 +37,7 @@ def _foods() -> list[dict[str, Any]]:
 
 
 def retrieve_food_facts(query: str, limit: int = 4) -> list[dict[str, Any]]:
-    terms = set(TOKEN_RE.findall(query.lower()))
+    terms = {term for term in TOKEN_RE.findall(query.lower()) if term not in STOPWORDS}
     if not terms:
         return []
     hits = []
