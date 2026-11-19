@@ -9,7 +9,10 @@ import {
   TxtParseResponse,
 } from '../types/api'
 
-const API_BASE = '/api'
+// Use the backend directly in development. This avoids Vite proxy error spam when
+// the frontend is previewed without FastAPI running. Override for deployments with
+// VITE_API_BASE, for example: VITE_API_BASE=https://api.example.com/api.
+const API_BASE = import.meta.env.VITE_API_BASE || (import.meta.env.DEV ? 'http://localhost:8000/api' : '/api')
 
 export async function checkHealth(): Promise<HealthStatus> {
   const res = await fetch(`${API_BASE}/health`)
@@ -74,11 +77,16 @@ export async function runFullPipeline(payload: {
     activity_level: payload.metadata.activity_level || 'sedentary',
     backend: payload.backend || 'transformers',
   }
-  const res = await fetch(`${API_BASE}/pipeline/full`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  })
+  let res: Response
+  try {
+    res = await fetch(`${API_BASE}/pipeline/full`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+  } catch {
+    throw new Error('The clinical backend is offline. Start FastAPI on port 8000 before running an analysis.')
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }))
     throw new Error(err.detail || 'Full pipeline execution failed')
@@ -100,10 +108,15 @@ export async function runFullPipelineFile(
   if (metadataOverrides?.is_female !== undefined) formData.append('is_female', String(metadataOverrides.is_female))
   if (metadataOverrides?.activity_level) formData.append('activity_level', metadataOverrides.activity_level)
 
-  const res = await fetch(`${API_BASE}/pipeline/upload`, {
-    method: 'POST',
-    body: formData,
-  })
+  let res: Response
+  try {
+    res = await fetch(`${API_BASE}/pipeline/upload`, {
+      method: 'POST',
+      body: formData,
+    })
+  } catch {
+    throw new Error('The clinical backend is offline. Start FastAPI on port 8000 before running an analysis.')
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }))
     throw new Error(err.detail || 'File pipeline execution failed')

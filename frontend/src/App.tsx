@@ -1,367 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import {
-  Play,
-  RotateCcw,
-  Sparkles,
-  Layers,
-  HeartPulse,
-  Sliders,
-  Utensils,
-  FileText,
-  Activity,
-  AlertCircle,
-  FileUp,
-  Cpu,
-  Zap,
-} from 'lucide-react'
-
-import { Navbar } from './components/Navbar'
-import { HardwareStatusBar } from './components/HardwareStatusBar'
-import { InputTypingForm } from './components/InputTypingForm'
-import { TxtFileUpload } from './components/TxtFileUpload'
-import { Stage1RiskCards } from './components/Stage1RiskCards'
-import { Stage2Prescription } from './components/Stage2Prescription'
-import { Stage3MealSchedule } from './components/Stage3MealSchedule'
-import { Stage4ClinicalReport } from './components/Stage4ClinicalReport'
-
-import {
-  CANONICAL_SAMPLE_FEATURES,
-  CANONICAL_SAMPLE_METADATA,
-} from './data/featureDefinitions'
+import { useMemo, useState } from 'react'
+import { Activity, ArrowRight, BrainCircuit, ClipboardCheck, FileText, Home, Layers3, LoaderCircle, Menu, Network, PanelLeftClose, RefreshCw, ShieldCheck, Sparkles, Utensils, X } from 'lucide-react'
 import { checkHealth, runFullPipeline, runFullPipelineFile } from './services/api'
-import { FullPipelineResponse, HealthStatus, PatientMetadata } from './types/api'
+import { HealthStatus, FullPipelineResponse, PatientMetadata } from './types/api'
+import { CANONICAL_SAMPLE_FEATURES, CANONICAL_SAMPLE_METADATA, FEATURE_DEFINITIONS } from './data/featureDefinitions'
 
-export const App: React.FC = () => {
-  // Input State
-  const [features, setFeatures] = useState<number[]>([...CANONICAL_SAMPLE_FEATURES])
-  const [metadata, setMetadata] = useState<PatientMetadata>({ ...CANONICAL_SAMPLE_METADATA })
+type View = 'home' | 'intake' | 'dashboard'
+type Tab = 'overview' | 'explainability' | 'counterfactual' | 'meals' | 'report' | 'evidence'
+const nav = [{ id: 'home' as View, label: 'Overview', icon: Home }, { id: 'intake' as View, label: 'Patient intake', icon: ClipboardCheck }]
+const tabs = [{ id: 'overview' as Tab, label: 'Clinical overview', icon: Activity }, { id: 'explainability' as Tab, label: 'Model explainability', icon: BrainCircuit }, { id: 'counterfactual' as Tab, label: 'Nutrient counterfactual', icon: Network }, { id: 'meals' as Tab, label: 'Indian meal synthesis', icon: Utensils }, { id: 'report' as Tab, label: 'Clinical report', icon: FileText }, { id: 'evidence' as Tab, label: 'Evidence', icon: Layers3 }]
 
-  // Mode Selection: 'typing' (Option 1) vs 'upload' (Option 2)
-  const [inputMode, setInputMode] = useState<'typing' | 'upload'>('typing')
-
-  // Execution Backend for Stage 4: Local Qwen 2.5 3B NF4 GPU
-  const stage4Backend = 'transformers' as const
-
-  // UI Flow State
-  const [activeTab, setActiveTab] = useState<'input' | 'results'>('input')
-  const [resultsSection, setResultsSection] = useState<'risk' | 'prescription' | 'mealplan' | 'report'>('risk')
-  const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
-  const [results, setResults] = useState<FullPipelineResponse | null>(null)
-
-  // Hardware Status State
-  const [health, setHealth] = useState<HealthStatus | null>(null)
-
-  // Fetch health status on mount and interval
-  useEffect(() => {
-    const fetchHealth = async () => {
-      try {
-        const h = await checkHealth()
-        setHealth(h)
-      } catch (e) {
-        console.warn('Backend server not reachable yet on :8000', e)
-      }
-    }
-    fetchHealth()
-    const timer = setInterval(fetchHealth, 10000)
-    return () => clearInterval(timer)
-  }, [])
-
-  // Input change handlers
-  const handleFeatureChange = (index: number, value: number) => {
-    setFeatures((prev) => {
-      const copy = [...prev]
-      copy[index] = value
-      return copy
-    })
-  }
-
-  const handleMetadataChange = (field: keyof PatientMetadata, value: any) => {
-    setMetadata((prev) => ({ ...prev, [field]: value }))
-  }
-
-  const handleLoadSample = () => {
-    setFeatures([...CANONICAL_SAMPLE_FEATURES])
-    setMetadata({ ...CANONICAL_SAMPLE_METADATA })
-    setError(null)
-  }
-
-  const handleReset = () => {
-    setFeatures(new Array(87).fill(0))
-    setMetadata({
-      weight_kg: 70.0,
-      height_cm: 170.0,
-      age_years: 40.0,
-      is_female: false,
-      activity_level: 'sedentary',
-    })
-    setResults(null)
-    setError(null)
-    setActiveTab('input')
-  }
-
-  const handleParsedFromTxt = (newFeatures: number[], newMeta: Partial<PatientMetadata>) => {
-    setFeatures(newFeatures)
-    setMetadata((prev) => ({
-      ...prev,
-      ...newMeta,
-    }))
-    setError(null)
-  }
-
-  // Execution: Run Full 4-Stage Pipeline
-  const handleExecutePipeline = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const response = await runFullPipeline({
-        features,
-        metadata,
-        backend: stage4Backend,
-      })
-      setResults(response)
-      setActiveTab('results')
-      setResultsSection('risk')
-    } catch (err: any) {
-      setError(err.message || 'Execution failed. Ensure FastAPI backend is running on :8000.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Execution from direct file upload
-  const handleRunFileDirectly = async (file: File) => {
-    setLoading(true)
-    setError(null)
-    try {
-      const response = await runFullPipelineFile(file, stage4Backend, metadata)
-      setResults(response)
-      setActiveTab('results')
-      setResultsSection('risk')
-    } catch (err: any) {
-      setError(err.message || 'File execution failed.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <div className="flex flex-col min-h-screen bg-slate-100 text-slate-900 font-sans">
-      {/* Top Navigation */}
-      <Navbar
-        health={health}
-        activeTab={activeTab}
-        hasResults={!!results}
-        onTabChange={setActiveTab}
-        onReset={handleReset}
-      />
-
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-        {/* Error Notification Banner */}
-        {error && (
-          <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-start space-x-3 text-rose-800 text-xs shadow-sm">
-            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <h4 className="font-bold">Pipeline Execution Error</h4>
-              <p className="mt-0.5 text-rose-700 leading-relaxed">{error}</p>
-            </div>
-            <button
-              onClick={() => setError(null)}
-              className="text-xs text-rose-500 hover:text-rose-700 font-semibold px-2 py-1"
-            >
-              Dismiss
-            </button>
-          </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* TAB 1: PATIENT INTAKE (TWO INPUT OPTIONS)                                  */}
-        {/* ========================================================================= */}
-        {activeTab === 'input' && (
-          <div className="space-y-6">
-            {/* Input Mode Selector & Pipeline Configuration Bar */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
-              {/* Left: Input Mode Toggle (Typing vs TXT File) */}
-              <div className="flex items-center space-x-2">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mr-1">
-                  Input Mode:
-                </span>
-                <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
-                  <button
-                    type="button"
-                    onClick={() => setInputMode('typing')}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
-                      inputMode === 'typing'
-                        ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    <Sliders className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Option 1: Form Typing</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setInputMode('upload')}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
-                      inputMode === 'upload'
-                        ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    <FileUp className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Option 2: TXT File Upload</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Right: Stage 4 Backend Badge & Execute Button */}
-              <div className="flex items-center space-x-3">
-                {/* Stage 4 LLM Indicator */}
-                <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs">
-                  <Cpu className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-slate-500 font-medium">Stage 4:</span>
-                  <span className="font-semibold text-slate-800">Qwen 2.5 3B NF4 (Local GPU)</span>
-                </div>
-
-                {/* Primary CTA: Run 4-Stage Clinical Pipeline */}
-                <button
-                  type="button"
-                  disabled={loading}
-                  onClick={handleExecutePipeline}
-                  className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl text-xs flex items-center space-x-2 shadow-md shadow-emerald-600/20 disabled:opacity-50 transition transform active:scale-95"
-                >
-                  {loading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      <span>Synthesizing Clinical Plan...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-4 h-4 fill-white" />
-                      <span>Execute 4-Stage Pipeline</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Input Component Selection */}
-            {inputMode === 'typing' ? (
-              <InputTypingForm
-                features={features}
-                metadata={metadata}
-                onFeatureChange={handleFeatureChange}
-                onMetadataChange={handleMetadataChange}
-                onLoadSample={handleLoadSample}
-                onReset={handleReset}
-              />
-            ) : (
-              <TxtFileUpload
-                onParsedSuccess={handleParsedFromTxt}
-                onRunFileDirectly={handleRunFileDirectly}
-              />
-            )}
-          </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* TAB 2: CLINICAL RESULTS VIEWER                                             */}
-        {/* ========================================================================= */}
-        {activeTab === 'results' && results && (
-          <div className="space-y-6">
-            {/* Results Section Sub-Navigation Tabs */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-2 shadow-sm flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center space-x-1.5 overflow-x-auto">
-                <button
-                  onClick={() => setResultsSection('risk')}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition ${
-                    resultsSection === 'risk'
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`}
-                >
-                  <HeartPulse className="w-4 h-4 text-rose-500" />
-                  <span>Stage 1: Risk Gauges</span>
-                </button>
-
-                <button
-                  onClick={() => setResultsSection('prescription')}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition ${
-                    resultsSection === 'prescription'
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`}
-                >
-                  <Sliders className="w-4 h-4 text-emerald-400" />
-                  <span>Stage 2: Nutrient Envelope</span>
-                </button>
-
-                <button
-                  disabled={!results.meal_plan}
-                  onClick={() => setResultsSection('mealplan')}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition ${
-                    !results.meal_plan
-                      ? 'text-slate-400 cursor-not-allowed opacity-50'
-                      : resultsSection === 'mealplan'
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`}
-                >
-                  <Utensils className="w-4 h-4 text-amber-500" />
-                  <span>Stage 3: Indian Meal Plan</span>
-                </button>
-
-                <button
-                  disabled={!results.clinical_report}
-                  onClick={() => setResultsSection('report')}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-2 transition ${
-                    !results.clinical_report
-                      ? 'text-slate-400 cursor-not-allowed opacity-50'
-                      : resultsSection === 'report'
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`}
-                >
-                  <FileText className="w-4 h-4 text-blue-500" />
-                  <span>Stage 4: Patient Report</span>
-                </button>
-              </div>
-
-              {/* Back to Intake Button */}
-              <button
-                onClick={() => setActiveTab('input')}
-                className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 font-semibold rounded-lg hover:bg-slate-100"
-              >
-                ← Back to Patient Intake
-              </button>
-            </div>
-
-            {/* Results Section Content */}
-            {resultsSection === 'risk' && <Stage1RiskCards screening={results.screening} />}
-
-            {resultsSection === 'prescription' && (
-              <Stage2Prescription screening={results.screening} />
-            )}
-
-            {resultsSection === 'mealplan' && results.meal_plan && (
-              <Stage3MealSchedule mealPlan={results.meal_plan} />
-            )}
-
-            {resultsSection === 'report' && results.clinical_report && (
-              <Stage4ClinicalReport report={results.clinical_report} />
-            )}
-          </div>
-        )}
-      </main>
-
-      {/* Sticky Hardware & Status Bar */}
-      <HardwareStatusBar
-        health={health}
-      />
-    </div>
-  )
+export default function App() {
+  const [view, setView] = useState<View>('home'), [tab, setTab] = useState<Tab>('overview')
+  const [features, setFeatures] = useState([...CANONICAL_SAMPLE_FEATURES]), [metadata, setMetadata] = useState<PatientMetadata>({ ...CANONICAL_SAMPLE_METADATA })
+  const [results, setResults] = useState<FullPipelineResponse | null>(null), [health, setHealth] = useState<HealthStatus | null>(null), [loading, setLoading] = useState(false), [error, setError] = useState<string | null>(null), [mobileNav, setMobileNav] = useState(false)
+  const patientLabel = useMemo(() => `${metadata.age_years} yrs · ${metadata.is_female ? 'Female' : 'Male'} · ${metadata.activity_level}`, [metadata])
+  const start = () => { setView('intake'); setError(null); setMobileNav(false) }
+  const sample = () => { setFeatures([...CANONICAL_SAMPLE_FEATURES]); setMetadata({ ...CANONICAL_SAMPLE_METADATA }); setResults(null); start() }
+  const reset = () => { setFeatures(new Array(87).fill(0)); setMetadata({ weight_kg: 70, height_cm: 170, age_years: 40, is_female: false, activity_level: 'sedentary' }); setResults(null); start() }
+  const run = async () => { setLoading(true); setError(null); try { const response = await runFullPipeline({ features, metadata, backend: 'transformers' }); setResults(response); setTab('overview'); setView('dashboard'); checkHealth().then(setHealth).catch(() => setHealth(null)) } catch (e) { setError(e instanceof Error ? e.message : 'Pipeline execution failed.') } finally { setLoading(false) } }
+  const runFile = async (file: File) => { setLoading(true); setError(null); try { const response = await runFullPipelineFile(file, 'transformers', metadata); setResults(response); setTab('overview'); setView('dashboard'); checkHealth().then(setHealth).catch(() => setHealth(null)) } catch (e) { setError(e instanceof Error ? e.message : 'File pipeline execution failed.') } finally { setLoading(false) } }
+  return <div className="app-shell"><div className="ambient ambient-one" /><div className="ambient ambient-two" /><header className="topbar"><button className="brand" onClick={() => setView('home')}><span className="brand-mark"><Sparkles size={17} /></span><span><strong>BioNutri</strong><em>GPT</em><small>clinical intelligence lab</small></span></button><nav className={`topnav ${mobileNav ? 'is-open' : ''}`}>{nav.map(({ id, label, icon: Icon }) => <button key={id} className={view === id ? 'nav-link active' : 'nav-link'} onClick={() => { setView(id); setMobileNav(false) }}><Icon size={15} /> {label}</button>)}{results && <button className={view === 'dashboard' ? 'nav-link active' : 'nav-link'} onClick={() => { setView('dashboard'); setMobileNav(false) }}><Activity size={15} /> Active case</button>}</nav><div className="topbar-actions"><SystemBadge health={health} /><button className="icon-button mobile-menu" onClick={() => setMobileNav(!mobileNav)}>{mobileNav ? <X size={18} /> : <Menu size={18} />}</button></div></header>{error && <div className="error-banner"><ShieldCheck size={17} /><span>{error}</span><button onClick={() => setError(null)}><X size={15} /></button></div>}<main className="page-wrap">{view === 'home' && <HomePage onStart={start} onSample={sample} health={health} />}{view === 'intake' && <IntakePage features={features} metadata={metadata} loading={loading} onFeatureChange={(i: number, v: number) => setFeatures(p => p.map((x, n) => n === i ? v : x))} onMetadataChange={(k: keyof PatientMetadata, v: any) => setMetadata(p => ({ ...p, [k]: v }))} onRun={run} onFile={runFile} onSample={sample} onReset={reset} />}{view === 'dashboard' && results && <Dashboard results={results} features={features} metadata={metadata} patientLabel={patientLabel} tab={tab} onTab={setTab} onNewCase={start} />}</main><footer className="status-footer"><span><i className={`status-dot ${health?.status === 'ready' ? 'ready' : ''}`} /> FastAPI clinical pipeline · :8000</span><span>Educational decision support · not a diagnosis</span>{health?.cuda_available && <span>GPU online · {health.cuda_device}</span>}</footer></div>
 }
 
-export default App
+function SystemBadge({ health }: { health: HealthStatus | null }) { return <div className="system-badge"><i className={`status-dot ${health?.status === 'ready' ? 'ready' : ''}`} /> {health?.status === 'ready' ? 'System ready' : 'Frontend preview'}</div> }
+function HomePage({ onStart, onSample, health }: { onStart: () => void; onSample: () => void; health: HealthStatus | null }) { return <section className="home-page page-enter"><div className="hero-grid"><div className="hero-copy"><div className="eyebrow"><span className="pulse-line" /> AI RESEARCH LAB · CARDIOMETABOLIC NUTRITION</div><h1>Turn complex health signals into a <span>clearer care conversation.</span></h1><p className="hero-lead">BioNutriGPT connects disease-risk screening, explainable biomarkers, nutrient counterfactuals, and culturally relevant Indian meal synthesis in one clinical workspace.</p><div className="hero-actions"><button className="primary-button" onClick={onStart}>Open clinical workspace <ArrowRight size={17} /></button><button className="secondary-button" onClick={onSample}><Sparkles size={16} /> Explore sample patient</button></div><div className="hero-note"><ShieldCheck size={15} /> Every result is labeled with its source, stage, and clinical limitation.</div></div><div className="hero-visual"><div className="orbital orbital-a" /><div className="orbital orbital-b" /><div className="lab-card main-signal-card"><div className="card-kicker">LIVE PIPELINE MAP</div><div className="signal-title"><span className="signal-icon"><BrainCircuit size={20} /></span><div><strong>Clinical signal synthesis</strong><span>Transformer → MILP → report</span></div></div><div className="signal-graph"><span /><span /><span /><span /><span /><span /><span /></div><div className="signal-footer"><span><i className="legend-dot green" /> observed inputs</span><span><i className="legend-dot blue" /> model focus</span></div></div><div className="floating-card floating-risk"><span className="mini-label">RISK VECTOR</span><strong>03</strong><small>conditions screened</small></div><div className="floating-card floating-food"><Utensils size={17} /><span><strong>Indian meal synthesis</strong><small>serving-aware · solver-backed</small></span></div></div></div><div className="feature-strip">{[['01', 'Screen', 'Diabetes, obesity and CVD estimates'], ['02', 'Explain', 'Biomarker and modality drivers'], ['03', 'Optimize', '39-nutrient counterfactual envelope'], ['04', 'Synthesize', 'Indian meal plan and clinical report']].map(([n, t, b]) => <div className="feature-item" key={n}><span>{n}</span><div><strong>{t}</strong><p>{b}</p></div></div>)}</div><div className="home-lower"><div><div className="section-kicker">DESIGNED FOR CLINICAL REVIEW</div><h2>A research-grade view of the whole pipeline.</h2></div><div className="home-health"><i className="status-dot ready" /> {health?.status === 'ready' ? 'Backend connected' : 'Backend can be started locally'}<small>FastAPI + local model runtime</small></div></div></section> }
+
+function IntakePage({ features, metadata, loading, onFeatureChange, onMetadataChange, onRun, onFile, onSample, onReset }: any) { const [query, setQuery] = useState(''), [open, setOpen] = useState('Serum Biomarkers'); const categories = Array.from(new Set(FEATURE_DEFINITIONS.map(f => f.category))); const filtered = FEATURE_DEFINITIONS.filter(f => `${f.label} ${f.name} ${f.category}`.toLowerCase().includes(query.toLowerCase())); return <section className="workspace-page page-enter"><div className="page-heading"><div><div className="section-kicker">NEW PATIENT ASSESSMENT</div><h1>Build a clinical signal profile.</h1><p>Enter patient metadata and the 87-feature model vector, or upload a validated TXT/CSV vector.</p></div><div className="heading-actions"><button className="secondary-button" onClick={onSample}><Sparkles size={15} /> Load sample</button><button className="ghost-button" onClick={onReset}><RefreshCw size={15} /> Reset</button></div></div><div className="intake-layout"><div className="panel profile-panel"><PanelHeader eyebrow="PATIENT CONTEXT" title="Profile inputs" subtitle="Used for Stage 2 metabolic calculations." icon={<ClipboardCheck size={17} />} /><div className="profile-grid">{[['weight_kg', 'Weight', 'kg'], ['height_cm', 'Height', 'cm'], ['age_years', 'Age', 'years']].map(([key, label, unit]) => <label className="field" key={key}><span>{label}</span><div><input type="number" value={metadata[key]} onChange={e => onMetadataChange(key, Number(e.target.value))} /><small>{unit}</small></div></label>)}<label className="field"><span>Biological sex</span><select value={metadata.is_female ? 'female' : 'male'} onChange={e => onMetadataChange('is_female', e.target.value === 'female')}><option value="male">Male</option><option value="female">Female</option></select></label><label className="field full"><span>Activity level</span><select value={metadata.activity_level} onChange={e => onMetadataChange('activity_level', e.target.value)}><option value="sedentary">Sedentary</option><option value="light">Light</option><option value="moderate">Moderate</option><option value="active">Active</option></select></label></div><div className="input-source"><div><strong>TXT / CSV vector</strong><small>Upload a file with 87 numeric features.</small></div><label className="upload-button"><input type="file" accept=".txt,.csv" onChange={e => e.target.files?.[0] && onFile(e.target.files[0])} /> Browse file <ArrowRight size={14} /></label></div><div className="run-box"><div><i className="status-dot ready" /><strong>Ready for four-stage analysis</strong><small>Transformer diagnostics · counterfactual engine · MILP meal synthesis · report compiler</small></div><button className="primary-button" onClick={onRun} disabled={loading}>{loading ? <><LoaderCircle size={17} className="spin" /> Synthesizing...</> : <>Run pipeline <ArrowRight size={17} /></>}</button></div></div><div className="panel biomarker-panel"><PanelHeader eyebrow="MODEL INPUT VECTOR" title="Biomarker matrix" subtitle={`${features.length} fields · values remain local until submission`} icon={<Activity size={17} />} /><div className="search-field"><Activity size={15} /><input placeholder="Search biomarkers, diet, lifestyle..." value={query} onChange={e => setQuery(e.target.value)} /></div><div className="feature-list">{categories.map(category => { const items = filtered.filter(f => f.category === category); if (!items.length) return null; const isOpen = query.length > 0 || open === category; return <div className="feature-group" key={category}><button className="feature-group-head" onClick={() => setOpen(isOpen ? '' : category)}><span>{category}</span><small>{items.length} fields</small><span>{isOpen ? '−' : '+'}</span></button>{isOpen && <div className="feature-grid">{items.map(field => { const index = FEATURE_DEFINITIONS.findIndex(item => item.name === field.name); return <label className="mini-field" key={field.name}><span title={field.description}>{field.label}<small>{field.unit}</small></span><input type="number" step={field.step} value={features[index] ?? ''} onChange={e => onFeatureChange(index, Number(e.target.value))} /></label> })}</div>}</div> })}</div></div></div></section> }
+
+function Dashboard({ results, features, metadata, patientLabel, tab, onTab, onNewCase }: { results: FullPipelineResponse; features: number[]; metadata: PatientMetadata; patientLabel: string; tab: Tab; onTab: (t: Tab) => void; onNewCase: () => void }) { return <section className="dashboard-page page-enter"><div className="dashboard-header"><div><div className="section-kicker">ACTIVE CLINICAL CASE</div><h1>Patient intelligence workspace</h1><p>{patientLabel} · {results.screening.certified_for_stage3 ? 'Stage 3 certified' : 'Stage 3 not certified'}</p></div><button className="secondary-button" onClick={onNewCase}><PanelLeftClose size={15} /> New assessment</button></div><div className="patient-ribbon"><div className="patient-avatar">{metadata.is_female ? 'F' : 'M'}</div><div><strong>Current patient profile</strong><span>{metadata.weight_kg} kg · {metadata.height_cm} cm · {features.length} model inputs</span></div><div className="ribbon-metric"><small>PIPELINE</small><strong>{Math.round(results.pipeline_latency.total_pipeline_ms)} ms</strong></div><div className="ribbon-metric"><small>MODEL STATUS</small><strong><i className="status-dot ready" /> complete</strong></div></div><div className="dashboard-tabs">{tabs.map(({ id, label, icon: Icon }) => <button key={id} className={tab === id ? 'dashboard-tab active' : 'dashboard-tab'} onClick={() => onTab(id)}><Icon size={15} /> {label}</button>)}</div>{tab === 'overview' && <Overview results={results} onTab={onTab} />}{tab === 'explainability' && <Explainability results={results} />}{tab === 'counterfactual' && <Counterfactual results={results} />}{tab === 'meals' && <Meals results={results} />}{tab === 'report' && <Report results={results} />}{tab === 'evidence' && <Evidence results={results} />}</section> }
+
+function Overview({ results, onTab }: { results: FullPipelineResponse; onTab: (t: Tab) => void }) { const { screening } = results; return <div className="dashboard-content"><div className="risk-grid">{[['diabetes', 'Type 2 diabetes', 'rose'], ['obesity', 'Clinical obesity', 'amber'], ['cvd', 'Cardiovascular disease', 'blue']].map(([key, label, tone]) => { const probability = screening.probabilities[key as keyof typeof screening.probabilities] ?? 0; const classification = screening.classifications[key as keyof typeof screening.classifications]; return <div className={`risk-card ${tone}`} key={key}><div className="card-topline"><span>{label}</span><span className="risk-code">{key === 'cvd' ? 'CVD' : key.toUpperCase()}</span></div><div className="risk-value">{(probability * 100).toFixed(1)}<small>%</small></div><div className="risk-track"><span style={{ width: `${Math.max(4, Math.min(100, probability * 100))}%` }} /></div><div className="risk-meta"><strong>{classification?.status ?? 'Not classified'}</strong><span>threshold {((classification?.threshold ?? 0) * 100).toFixed(0)}%</span></div></div> })}</div><div className="overview-grid"><div className="panel"><PanelHeader eyebrow="MODEL READING" title="What shaped this estimate" subtitle="Attention is model focus, not proof of causation." icon={<BrainCircuit size={17} />} /><div className="driver-preview">{Object.entries(screening.top_feature_drivers || {}).map(([modality, drivers]) => <div className="driver-row" key={modality}><span>{modality}</span><div>{(drivers as any[]).slice(0, 2).map(d => <div className="driver-bar" key={d.feature}><label>{d.feature}<b>{Number(d.weight_pct).toFixed(1)}%</b></label><i><em style={{ width: `${Math.min(100, Number(d.weight_pct) * 4)}%` }} /></i></div>)}</div></div>)}</div><button className="text-button" onClick={() => onTab('explainability')}>Open explainability lab <ArrowRight size={14} /></button></div><div className="panel readiness-panel"><PanelHeader eyebrow="PIPELINE READINESS" title="From signal to plan" subtitle="Actual outputs returned by the backend." icon={<Activity size={17} />} /><PipelineStep number="01" title="Risk diagnostics" detail={`${screening.latency_ms.stage1_ms} ms`} complete /><PipelineStep number="02" title="Nutrient counterfactual" detail={`${screening.latency_ms.stage2_ms} ms`} complete /><PipelineStep number="03" title="Indian meal synthesis" detail={results.meal_plan ? `${results.meal_plan.latency_ms} ms` : 'Not available'} complete={!!results.meal_plan} /><PipelineStep number="04" title="Clinical report" detail={results.clinical_report ? 'Compiled' : 'Not available'} complete={!!results.clinical_report} /></div></div></div> }
+
+function Explainability({ results }: { results: FullPipelineResponse }) { const { screening, clinical_report } = results; return <div className="dashboard-content"><div className="page-heading compact"><div><div className="section-kicker">EXPLAINABLE AI LAB</div><h2>Inspect the model’s attention map.</h2><p>Feature drivers are comparative model focus. They do not establish causation.</p></div></div><div className="explain-grid"><div className="panel"><PanelHeader eyebrow="STAGE 1 DRIVER ATTRIBUTION" title="Salient input modalities" subtitle="Ranked weights returned by the Transformer diagnostics stage." icon={<BrainCircuit size={17} />} />{Object.entries(screening.top_feature_drivers || {}).map(([modality, drivers]) => <div className="modality-block" key={modality}><div className="modality-title"><span>{modality}</span><small>{(drivers as any[]).length} drivers</small></div>{(drivers as any[]).map(d => <div className="explain-row" key={d.feature}><div><strong>{d.feature}</strong><small>attention weight</small></div><div className="explain-meter"><span style={{ width: `${Math.min(100, Number(d.weight_pct) * 4)}%` }} /></div><b>{Number(d.weight_pct).toFixed(2)}%</b></div>)}</div>)}</div><div className="panel narrative-panel"><PanelHeader eyebrow="STAGE 4 NARRATIVE" title="Plain-language interpretation" subtitle="Generated from the clinical compiler output." icon={<FileText size={17} />} />{clinical_report?.compiled_patient_report?.biomarker_driver_explanations?.length ? clinical_report.compiled_patient_report.biomarker_driver_explanations.map((item, i) => <div className="narrative-note" key={`${item.modality}-${i}`}><span>{item.modality}</span><p>{item.plain_language_explanation}</p></div>) : <EmptyState title="No narrative returned" body="The compiler did not return biomarker explanations for this case." />}</div></div></div> }
+
+function Counterfactual({ results }: { results: FullPipelineResponse }) { const s: any = results.screening; const dossier: any = s.dossier || {}; const p: any = dossier.stage2_counterfactual_prescription || {}; const energy = s.energy_prescription; const targets = p.target_nutrients || p.nutrient_constraint_envelope || s.stage2_prescription || {}; const entries = Object.entries(targets).filter(([, v]) => typeof v === 'number').slice(0, 12); return <div className="dashboard-content"><div className="page-heading compact"><div><div className="section-kicker">STAGE 2 · COUNTERFACTUAL ENGINE</div><h2>See the recommended nutrient envelope.</h2><p>The engine proposes constrained targets; it does not claim guaranteed treatment effects.</p></div><StatusPill label={s.certified_for_stage3 ? 'Certified for Stage 3' : 'Review required'} good={s.certified_for_stage3} /></div><div className="energy-grid">{[['Target energy', energy.target_calories, 'kcal'], ['BMR', energy.bmr_kcal, 'kcal'], ['TDEE', energy.tdee_kcal, 'kcal'], ['Deficit', energy.deficit_kcal, 'kcal']].map(([label, value, unit]) => <div className="metric-card" key={label as string}><small>{label}</small><strong>{typeof value === 'number' ? value.toLocaleString() : '—'} <em>{unit}</em></strong></div>)}</div><div className="panel"><PanelHeader eyebrow="TARGET NUTRIENTS" title="Constraint envelope" subtitle={`${entries.length} returned numeric targets shown`} icon={<Network size={17} />} /><div className="nutrient-table"><div className="nutrient-head"><span>Nutrient code</span><span>Target</span><span>Visual scale</span></div>{entries.map(([name, value]) => <div className="nutrient-row" key={name}><strong>{name}</strong><span>{Number(value).toFixed(2)}</span><i><em style={{ width: '62%' }} /></i></div>)}</div></div></div> }
+
+function Meals({ results }: { results: FullPipelineResponse }) { const plan = results.meal_plan; if (!plan) return <div className="dashboard-content"><EmptyState title="Meal synthesis unavailable" body="The backend did not return a meal plan for this case." /></div>; return <div className="dashboard-content"><div className="page-heading compact"><div><div className="section-kicker">STAGE 3 · MILP OPTIMIZATION</div><h2>Indian meal synthesis.</h2><p>Serving-aware dishes selected from the validated food catalog and solver output.</p></div><StatusPill label={String(plan.solver_metadata.status || 'Solver returned')} good /></div><div className="solver-strip"><span><strong>{plan.solver_metadata.active_dishes}</strong> active dishes</span><span><strong>{plan.solver_metadata.num_constraints}</strong> constraints</span><span><strong>{plan.latency_ms}</strong> ms solve time</span><span><strong>{plan.delivered_nutrition.length}</strong> nutrients tracked</span></div><div className="meal-grid">{plan.meal_schedule.map(slot => <div className="meal-card" key={`${slot.meal}-${slot.time}`}><div className="meal-time">{slot.time}<span>{slot.meal}</span></div>{slot.items.length ? slot.items.map(item => <div className="dish-row" key={item.food_id}><div className="dish-icon"><Utensils size={15} /></div><div><strong>{item.name}</strong><small>{item.quantity} × {item.serving_unit}</small>{item.clinical_rationale && <p>{item.clinical_rationale}</p>}</div></div>) : <div className="empty-meal">No planned dish returned for this slot.</div>}<p className="meal-guidance">{slot.guidance}</p></div>)}</div></div> }
+
+function Report({ results }: { results: FullPipelineResponse }) { const report = results.clinical_report; if (!report) return <div className="dashboard-content"><EmptyState title="Clinical report unavailable" body="The compiler did not return a report for this case." /></div>; const narrative = report.compiled_patient_report; return <div className="dashboard-content report-layout"><div className="report-paper"><div className="report-top"><div><div className="section-kicker">CLINICAL COMMUNICATION DRAFT</div><h2>Personalized nutrition report</h2></div><StatusPill label={report.compiler_metadata.backend_used} good /></div><p className="report-lead">{narrative.health_narrative}</p><div className="report-section"><h3>Biomarker interpretation</h3>{narrative.biomarker_driver_explanations?.map(item => <div className="report-note" key={item.modality}><span>{item.modality}</span><p>{item.plain_language_explanation}</p></div>)}</div><div className="report-section"><h3>Clinical guidance</h3><div className="guidance-grid">{Object.entries(narrative.lifestyle_hydration_guidance || {}).map(([key, value]) => <div key={key}><small>{key.split('_').join(' ')}</small><p>{String(value)}</p></div>)}</div></div><div className="disclaimer"><ShieldCheck size={16} /><span>{report.clinical_disclaimer}</span></div></div></div> }
+function Evidence({ results }: { results: FullPipelineResponse }) { const evidence = (results.clinical_report as any)?.evidence || (results.screening.dossier as any)?.evidence; return <div className="dashboard-content"><div className="page-heading compact"><div><div className="section-kicker">RETRIEVAL-AUGMENTED REVIEW</div><h2>Evidence and citations.</h2><p>Evidence is shown only when the backend returns source records.</p></div></div>{evidence?.sources?.length ? <div className="evidence-grid">{evidence.sources.map((s: any) => <div className="panel evidence-card" key={s.id || s.title}><span>{s.source || 'Source record'}</span><h3>{s.title}</h3><p>{s.excerpt || s.claim}</p>{s.url && <a href={s.url} target="_blank" rel="noreferrer">Open source <ArrowRight size={14} /></a>}</div>)}</div> : <EmptyState title="No retrieval evidence returned" body="This response contains model and optimizer outputs, but no RAG citation records. Nothing has been invented for this panel." />}</div> }
+function PanelHeader({ eyebrow, title, subtitle, icon }: any) { return <div className="panel-header"><span className="panel-icon">{icon}</span><div><div className="section-kicker">{eyebrow}</div><h3>{title}</h3><p>{subtitle}</p></div></div> }
+function PipelineStep({ number, title, detail, complete }: { number: string; title: string; detail: string; complete: boolean }) { return <div className={`pipeline-step ${complete ? 'complete' : ''}`}><span>{number}</span><div><strong>{title}</strong><small>{detail}</small></div><i>{complete ? '✓' : '—'}</i></div> }
+function StatusPill({ label, good }: { label: string; good: boolean }) { return <span className={`status-pill ${good ? 'good' : 'warn'}`}><i className="status-dot" /> {label}</span> }
+function EmptyState({ title, body }: { title: string; body: string }) { return <div className="empty-state"><Layers3 size={22} /><h3>{title}</h3><p>{body}</p></div> }
