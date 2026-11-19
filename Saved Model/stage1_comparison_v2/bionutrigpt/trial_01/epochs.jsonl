@@ -3,6 +3,3 @@
 {"epoch": 3, "training_loss": 0.41521907959504284, "validation_selection_auroc": 0.8297197648443487}
 {"epoch": 4, "training_loss": 0.4115902263447563, "validation_selection_auroc": 0.8319447833216119}
 {"epoch": 5, "training_loss": 0.4097715497891889, "validation_selection_auroc": 0.8299733049412804}
-{"epoch": 6, "training_loss": 0.4075983776818426, "validation_selection_auroc": 0.8290943806543781}
-{"epoch": 7, "training_loss": 0.40476263128640005, "validation_selection_auroc": 0.8299980948783163}
-{"epoch": 8, "training_loss": 0.403714456557663, "validation_selection_auroc": 0.8269387858228663}

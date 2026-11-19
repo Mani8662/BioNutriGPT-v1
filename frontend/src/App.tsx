@@ -1,459 +1,1464 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Play,
-  Sliders,
+  Leaf,
+  LayoutDashboard,
+  UserRound,
+  HeartPulse,
+  SlidersHorizontal,
   Utensils,
+  MessageCircle,
   FileText,
-  AlertCircle,
-  FileUp,
   ChevronDown,
-  ChevronUp,
-  Sparkles,
-  Settings2,
-} from 'lucide-react'
-
-import { Navbar } from './components/Navbar'
-import { HardwareStatusBar } from './components/HardwareStatusBar'
-import { InputTypingForm } from './components/InputTypingForm'
-import { TxtFileUpload } from './components/TxtFileUpload'
-import { Stage1RiskCards } from './components/Stage1RiskCards'
-import { Stage2Prescription } from './components/Stage2Prescription'
-import { MealPlanIntakeChat } from './components/MealPlanIntakeChat'
-import { Stage3MealSchedule } from './components/Stage3MealSchedule'
-import { Stage4ClinicalReport } from './components/Stage4ClinicalReport'
-import { Stage4PlanChat } from './components/Stage4PlanChat'
-
+  Check,
+  Plus,
+  Menu,
+  X,
+  Send,
+  History,
+  Download,
+  RefreshCw,
+  ShieldCheck,
+  Sun,
+  Droplets,
+  CheckCircle2,
+  HelpCircle,
+  LogOut,
+  Flame,
+  CalendarDays,
+} from "lucide-react";
+import { api } from "./api";
+import { Button, Field, Select, Empty, Busy } from "./ui";
+import Profile from "./Profile";
+import { MealPlan, Report } from "./PlanViews";
 import {
+  FEATURE_DEFINITIONS,
   CANONICAL_SAMPLE_FEATURES,
   CANONICAL_SAMPLE_METADATA,
-} from './data/featureDefinitions'
-import {
-  checkHealth,
-  compilePlan,
-  screenPatient,
-  uploadTxtFile,
-} from './services/api'
-import {
-  ChatAcceptResponse,
-  ClinicalReport,
-  HealthStatus,
-  MealPlanResult,
+} from "./data/featureDefinitions";
+import { downloadFile, splitList, validateProfile } from "./utils";
+import type {
   PatientMetadata,
   ScreeningResult,
-} from './types/api'
+  MealPlanResult,
+  ClinicalReport,
+  MealPlanPreferences,
+  ChatResponse,
+  PlanSessionRecord,
+} from "./types/api";
 
-export const App: React.FC = () => {
-  // Input State
-  const [features, setFeatures] = useState<number[]>([...CANONICAL_SAMPLE_FEATURES])
-  const [metadata, setMetadata] = useState<PatientMetadata>({ ...CANONICAL_SAMPLE_METADATA })
-  const [inputMode, setInputMode] = useState<'typing' | 'upload'>('typing')
-
-  // Progressive Workflow State
-  const [activeTab, setActiveTab] = useState<'input' | 'results'>('input')
-  const [loadingScreening, setLoadingScreening] = useState<boolean>(false)
-  const [loadingReport, setLoadingReport] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const [screening, setScreening] = useState<ScreeningResult | null>(null)
-  const [showStage2Details, setShowStage2Details] = useState<boolean>(false)
-  const [showIntakeChat, setShowIntakeChat] = useState<boolean>(false)
-  const [mealPlan, setMealPlan] = useState<MealPlanResult | null>(null)
-  const [clinicalReport, setClinicalReport] = useState<ClinicalReport | null>(null)
-  const [chatSessionKey, setChatSessionKey] = useState<number>(0)
-
-  const mealPlanSectionRef = useRef<HTMLDivElement>(null)
-  const preferencesRef = useRef<HTMLDivElement>(null)
-
-  // Hardware Status State
-  const [health, setHealth] = useState<HealthStatus | null>(null)
-
-  useEffect(() => {
-    const fetchHealth = async () => {
+const pages = [
+  { id: "overview", name: "Overview", icon: LayoutDashboard },
+  { id: "profile", name: "My profile", icon: UserRound },
+  { id: "insights", name: "Health insights", icon: HeartPulse },
+  { id: "preferences", name: "Food preferences", icon: SlidersHorizontal },
+  { id: "meals", name: "My meal plan", icon: Utensils },
+  { id: "assistant", name: "Plan assistant", icon: MessageCircle },
+  { id: "reports", name: "Reports", icon: FileText },
+] as const;
+type Page = (typeof pages)[number]["id"];
+const blankMeta: PatientMetadata = {
+  weight_kg: NaN,
+  height_cm: NaN,
+  age_years: NaN,
+  is_female: false,
+  activity_level: "sedentary",
+};
+const initialPrefs: MealPlanPreferences = {
+  dietary_preference: "veg_nonveg_combo",
+  allergies: [],
+  excluded_food_ids: [],
+  disliked_terms: [],
+  max_active_dishes: null,
+};
+const validPage = (v: string): v is Page => pages.some((p) => p.id === v);
+export default function App() {
+  const [page, setPage] = useState<Page>(() => {
+      const p = location.hash.slice(1);
+      return validPage(p) ? p : "overview";
+    }),
+    [mobile, setMobile] = useState(false),
+    [account, setAccount] = useState(false),
+    [help, setHelp] = useState(false);
+  const [values, setValues] = useState<string[]>(
+      Array(FEATURE_DEFINITIONS.length).fill(""),
+    ),
+    [meta, setMeta] = useState<PatientMetadata>({ ...blankMeta }),
+    [sample, setSample] = useState(false),
+    [reviewed, setReviewed] = useState(false);
+  const [screening, setScreening] = useState<ScreeningResult | null>(null),
+    [plan, setPlan] = useState<MealPlanResult | null>(null),
+    [report, setReport] = useState<ClinicalReport | null>(null),
+    [prefs, setPrefs] = useState<MealPlanPreferences>({ ...initialPrefs }),
+    [allergies, setAllergies] = useState(""),
+    [dislikes, setDislikes] = useState(""),
+    [prefReview, setPrefReview] = useState(false);
+  const [session, setSession] = useState<string | null>(null),
+    [history, setHistory] = useState<PlanSessionRecord | null>(null),
+    [showHistory, setShowHistory] = useState(false),
+    [turns, setTurns] = useState<
+      Array<{
+        question: string;
+        response: ChatResponse;
+        applied?: boolean;
+        revision: number;
+      }>
+    >([]),
+    [question, setQuestion] = useState(""),
+    [flagged, setFlagged] = useState(false);
+  const [busy, setBusy] = useState(""),
+    [error, setError] = useState(""),
+    [toast, setToast] = useState(""),
+    [connected, setConnected] = useState<boolean | null>(null),
+    [water, setWater] = useState(() => {
       try {
-        const h = await checkHealth()
-        setHealth(h)
-      } catch (e) {
-        console.warn('Backend server not reachable yet on :8000', e)
+        return Math.max(
+          0,
+          Math.min(
+            20,
+            Number(
+              localStorage.getItem(
+                "bionutri-water-" + new Date().toDateString(),
+              ),
+            ) || 0,
+          ),
+        );
+      } catch {
+        return 0;
       }
-    }
-    fetchHealth()
-    const timer = setInterval(fetchHealth, 10000)
-    return () => clearInterval(timer)
-  }, [])
-
-  // Input handlers
-  const handleFeatureChange = (index: number, value: number) => {
-    setFeatures(prev => {
-      const copy = [...prev]
-      copy[index] = value
-      return copy
-    })
+    });
+  const lock = useRef(false),
+    revision = useRef(0),
+    main = useRef<HTMLElement>(null),
+    dialog = useRef<HTMLDialogElement>(null),
+    endOfChat = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const fn = () => {
+      const p = location.hash.slice(1);
+      if (validPage(p)) setPage(p);
+    };
+    window.addEventListener("hashchange", fn);
+    api
+      .health()
+      .then((h) => setConnected(h.pipeline_loaded))
+      .catch(() => setConnected(false));
+    return () => window.removeEventListener("hashchange", fn);
+  }, []);
+  useEffect(() => {
+    document.title = `${pages.find((p) => p.id === page)?.name} | BioNutriGPT`;
+    setMobile(false);
+    setAccount(false);
+    main.current?.focus();
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, [page]);
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(""), 4500);
+    return () => clearTimeout(t);
+  }, [toast]);
+  useEffect(() => {
+    if (help) dialog.current?.showModal();
+    else dialog.current?.close();
+  }, [help]);
+  useEffect(() => {
+    endOfChat.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, [turns]);
+  function go(p: Page) {
+    location.hash = p;
+    setPage(p);
+    setError("");
   }
-
-  const handleMetadataChange = (field: keyof PatientMetadata, value: any) => {
-    setMetadata(prev => ({ ...prev, [field]: value }))
-  }
-
-  const handleLoadSample = () => {
-    setFeatures([...CANONICAL_SAMPLE_FEATURES])
-    setMetadata({ ...CANONICAL_SAMPLE_METADATA })
-    setError(null)
-  }
-
-  const handleReset = () => {
-    setFeatures(new Array(87).fill(0))
-    setMetadata({
-      weight_kg: 70.0,
-      height_cm: 170.0,
-      age_years: 40.0,
-      is_female: false,
-      activity_level: 'sedentary',
-    })
-    setScreening(null)
-    setMealPlan(null)
-    setClinicalReport(null)
-    setShowIntakeChat(false)
-    setShowStage2Details(false)
-    setChatSessionKey(prev => prev + 1)
-    setError(null)
-    setActiveTab('input')
-  }
-
-  const handleParsedFromTxt = (newFeatures: number[], newMeta: Partial<PatientMetadata>) => {
-    setFeatures(newFeatures)
-    setMetadata(prev => ({ ...prev, ...newMeta }))
-    setError(null)
-  }
-
-  // Step 1: Run Disease Screening (Stages 1 + 2) -> Show disease scores first
-  const handleRunScreening = async (overrideFeatures?: number[], overrideMeta?: Partial<PatientMetadata>) => {
-    setLoadingScreening(true)
-    setError(null)
+  async function act(label: string, fn: () => Promise<void>) {
+    if (lock.current) return;
+    lock.current = true;
+    setBusy(label);
+    setError("");
     try {
-      const scr = await screenPatient({
-        features: overrideFeatures ?? features,
-        metadata: overrideMeta ?? metadata,
-      })
-      setScreening(scr)
-      setMealPlan(null)
-      setClinicalReport(null)
-      setShowIntakeChat(false)
-      setShowStage2Details(false)
-      setChatSessionKey(prev => prev + 1)
-      setActiveTab('results')
-    } catch (err: any) {
-      setError(err.message || 'Screening failed. Ensure FastAPI backend is running on :8000.')
+      await fn();
+    } catch (e) {
+      setError(
+        e instanceof Error
+          ? e.message
+          : "Something went wrong. Please try again.",
+      );
     } finally {
-      setLoadingScreening(false)
+      lock.current = false;
+      setBusy("");
     }
   }
-
-  // File upload direct execution -> parse file then immediately run screening
-  const handleRunFileDirectly = async (file: File) => {
-    setLoadingScreening(true)
-    setError(null)
+  function invalidate() {
+    revision.current++;
+    setReviewed(false);
+    setScreening(null);
+    setPlan(null);
+    setReport(null);
+    setSession(null);
+    setHistory(null);
+    setShowHistory(false);
+    setTurns([]);
+    setQuestion("");
+    setFlagged(false);
+  }
+  function updateMeta(m: PatientMetadata) {
+    invalidate();
+    setMeta(m);
+    setValues((old) =>
+      old.map((v, i) =>
+        FEATURE_DEFINITIONS[i].name === "RIDAGEYR"
+          ? Number.isNaN(m.age_years)
+            ? ""
+            : String(m.age_years)
+          : FEATURE_DEFINITIONS[i].name === "SEX_FEMALE"
+            ? String(Number(m.is_female))
+            : v,
+      ),
+    );
+  }
+  function updateValue(i: number, v: string) {
+    invalidate();
+    setValues((old) => old.map((x, j) => (i === j ? v : x)));
+    const key = FEATURE_DEFINITIONS[i].name;
+    if (key === "RIDAGEYR")
+      setMeta((old) => ({ ...old, age_years: v === "" ? NaN : Number(v) }));
+    if (key === "SEX_FEMALE" && v !== "")
+      setMeta((old) => ({ ...old, is_female: v === "1" }));
+  }
+  function example() {
+    if (
+      screening &&
+      !window.confirm("Replace the current profile and clear its results?")
+    )
+      return;
+    invalidate();
+    setValues(CANONICAL_SAMPLE_FEATURES.map(String));
+    setMeta({ ...CANONICAL_SAMPLE_METADATA });
+    setSample(true);
+    setToast("Example profile loaded. Review the values before continuing.");
+  }
+  function importText(text: string) {
+    act("Reading your profile…", async () => {
+      const p = await api.parse(text);
+      if (
+        !p.is_valid ||
+        p.features.length !== FEATURE_DEFINITIONS.length ||
+        p.features.some((v) => !Number.isFinite(v))
+      )
+        throw new Error(
+          "This file is not a complete supported profile. Check the file and try again.",
+        );
+      invalidate();
+      setValues(p.features.map(String));
+      const age = FEATURE_DEFINITIONS.findIndex((f) => f.name === "RIDAGEYR"),
+        sex = FEATURE_DEFINITIONS.findIndex((f) => f.name === "SEX_FEMALE");
+      setMeta({
+        ...blankMeta,
+        ...p.metadata,
+        age_years: p.metadata.age_years ?? p.features[age],
+        is_female: p.metadata.is_female ?? Boolean(p.features[sex]),
+      });
+      setSample(false);
+      setToast(
+        "Profile imported. Review your details and measurements before continuing.",
+      );
+    });
+  }
+  function screen() {
+    const message = validateProfile(values, meta);
+    if (message) {
+      setError(message);
+      return;
+    }
+    if (!reviewed) {
+      setError("Please confirm that you have reviewed your profile.");
+      return;
+    }
+    act("Preparing your health insights…", async () => {
+      const s = await api.screen(values.map(Number), meta);
+      revision.current++;
+      setScreening(s);
+      setPlan(null);
+      setReport(null);
+      setSession(null);
+      setHistory(null);
+      setTurns([]);
+      setFlagged(false);
+      setConnected(true);
+      go("insights");
+    });
+  }
+  function changedPrefs() {
+    setPrefReview(false);
+  }
+  function generate() {
+    if (!screening || !screening.certified_for_stage3) {
+      setError("Complete your health assessment before creating a meal plan.");
+      return;
+    }
+    if (!prefReview) {
+      setError("Please review and confirm your food preferences.");
+      return;
+    }
+    act("Putting your meal plan together…", async () => {
+      const next = {
+        ...prefs,
+        allergies: splitList(allergies),
+        disliked_terms: splitList(dislikes),
+      };
+      const p = await api.plan(screening.dossier, next);
+      setPrefs(next);
+      revision.current++;
+      setPlan(p);
+      setReport(null);
+      setSession(null);
+      setHistory(null);
+      setTurns([]);
+      setFlagged(false);
+      go("meals");
+      if (p.accepted) setToast("Your meal plan is ready.");
+    });
+  }
+  async function ensureSession() {
+    if (session) return session;
+    if (!plan?.accepted) throw new Error("Create a meal plan first.");
+    const s = await api.session(plan.dossier);
+    setSession(s.session_id);
+    return s.session_id;
+  }
+  function send(text: string) {
+    if (!text.trim() || !plan?.accepted) return;
+    act("Your assistant is reviewing your question…", async () => {
+      const sid = await ensureSession();
+      const r = await api.chat(text.trim(), plan.dossier, sid);
+      setFlagged((prev) => prev || !!r.plan_flagged_unsuitable);
+      setTurns((t) => [
+        ...t,
+        { question: text.trim(), response: r, revision: revision.current },
+      ]);
+      setQuestion("");
+      if (r.intent === "rollback" && r.plan_version) {
+        const restored = await api.rollback(sid, r.plan_version);
+        applyPlan(restored.meal_plan, sid);
+        setToast("The previous version has been restored.");
+      }
+      setHistory(null);
+    });
+  }
+  function applyPlan(p: MealPlanResult, sid?: string | null) {
+    revision.current++;
+    setPlan(p);
+    setReport(null);
+    setFlagged(
+      (p.dossier?.stage3_discrete_meal_synthesis
+        ?.flagged_unsuitable_for_allergies?.length || 0) > 0,
+    );
+    if (sid) setSession(sid);
+    setHistory(null);
+  }
+  function accept(index: number) {
+    const turn = turns[index];
+    if (
+      !plan ||
+      !turn.response.proposed_meal_plan ||
+      turn.revision !== revision.current
+    )
+      return;
+    act("Updating your meal plan…", async () => {
+      const r = await api.accept(
+        plan.dossier,
+        turn.response.proposed_meal_plan!,
+        session,
+      );
+      applyPlan(r.meal_plan, r.session_id);
+      setTurns((t) =>
+        t.map((x, i) => (i === index ? { ...x, applied: true } : x)),
+      );
+      setToast(
+        "Your meal plan has been updated. Your report can now be regenerated.",
+      );
+    });
+  }
+  function loadHistory() {
+    act("Loading your plan history…", async () => {
+      const sid = await ensureSession();
+      setHistory(await api.history(sid));
+      setShowHistory(true);
+    });
+  }
+  function restore(v: number) {
+    if (
+      !session ||
+      !window.confirm(
+        `Restore plan version ${v}? Your current report will be cleared.`,
+      )
+    )
+      return;
+    act("Restoring your meal plan…", async () => {
+      const r = await api.rollback(session, v);
+      applyPlan(r.meal_plan, r.session_id);
+      setHistory(await api.history(session));
+      setToast(`Version ${v} restored.`);
+    });
+  }
+  function makeReport() {
+    if (!plan?.accepted) return;
+    act("Preparing your personal report…", async () => {
+      setReport(await api.report(plan.dossier));
+      setToast("Your report is ready to download or print.");
+    });
+  }
+  function reset() {
+    if (
+      busy ||
+      !window.confirm(
+        "Clear this profile, plan, and report from this browser session? Saved server history will not be deleted.",
+      )
+    )
+      return;
+    invalidate();
+    setValues(Array(FEATURE_DEFINITIONS.length).fill(""));
+    setMeta({ ...blankMeta });
+    setSample(false);
+    setPrefs({ ...initialPrefs });
+    setAllergies("");
+    setDislikes("");
+    setPrefReview(false);
+    go("overview");
+    setToast("Workspace cleared. You can start a new profile.");
+  }
+  function waterChange(n: number) {
+    const v = Math.max(0, Math.min(20, water + n));
+    setWater(v);
     try {
-      const parsed = await uploadTxtFile(file)
-      const mergedMeta = { ...metadata, ...parsed.metadata }
-      setFeatures(parsed.features)
-      setMetadata(mergedMeta)
-      await handleRunScreening(parsed.features, mergedMeta)
-    } catch (err: any) {
-      setError(err.message || 'File screening failed.')
-      setLoadingScreening(false)
-    }
+      localStorage.setItem(
+        "bionutri-water-" + new Date().toDateString(),
+        String(v),
+      );
+    } catch {}
   }
-
-  // Step 2: Open conversational preference intake chat on the same page
-  const handleOpenIntakeChat = () => {
-    setShowIntakeChat(true)
-    setTimeout(() => {
-      preferencesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 50)
-  }
-
-  // Step 3: Intake chat understood preferences and Stage 3 generated the meal plan
-  const handlePlanGeneratedByIntake = (plan: MealPlanResult) => {
-    setMealPlan(plan)
-    setClinicalReport(null)
-    setChatSessionKey(prev => prev + 1)
-    setTimeout(() => {
-      mealPlanSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 80)
-  }
-
-  // Step 4: Chatbot updated / rolled back meal plan -> Immediately refresh plan above
-  const handlePlanUpdatedByChat = (accepted: ChatAcceptResponse) => {
-    setMealPlan(accepted.meal_plan)
-    setClinicalReport(null)
-  }
-
-  // Optional: Compile Stage 4 Qwen printable report on demand
-  const handleGenerateReport = async () => {
-    if (!mealPlan?.dossier) return
-    setLoadingReport(true)
-    setError(null)
-    try {
-      const report = await compilePlan(mealPlan.dossier)
-      setClinicalReport(report)
-    } catch (err: any) {
-      setError(err.message || 'Could not generate Stage 4 printable report.')
-    } finally {
-      setLoadingReport(false)
-    }
-  }
-
+  const title = pages.find((p) => p.id === page)!.name;
+  const subtitle: Record<Page, string> = {
+    overview: "A little clarity. A healthier everyday.",
+    profile: "Your details, one simple section at a time.",
+    insights: "Understand your starting point before taking the next step.",
+    preferences: "Make room for the foods and routines you enjoy.",
+    meals: "A daily plan that brings your preferences together.",
+    assistant:
+      "Questions, food swaps, and small adjustments. All in one conversation.",
+    reports: "Your nutrition story, ready to read and share.",
+  };
+  const nextPage: Page = !screening
+    ? "profile"
+    : !plan?.accepted
+      ? "preferences"
+      : "meals";
   return (
-    <div className="flex flex-col min-h-screen bg-slate-100 text-slate-900 font-sans">
-      {/* Top Navigation */}
-      <Navbar
-        health={health}
-        activeTab={activeTab}
-        hasResults={!!screening}
-        onTabChange={setActiveTab}
-        onReset={handleReset}
-      />
-
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-        {/* Global Error Notification Banner */}
-        {error && (
-          <div className="p-4 bg-rose-50 border border-rose-200 rounded-2xl flex items-start space-x-3 text-rose-800 text-xs shadow-sm">
-            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <h4 className="font-bold">Execution Error</h4>
-              <p className="mt-0.5 text-rose-700 leading-relaxed">{error}</p>
-            </div>
+    <div className="app">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
+      {mobile && (
+        <button
+          className="nav-overlay"
+          aria-label="Close navigation"
+          onClick={() => setMobile(false)}
+        />
+      )}
+      <aside className={`sidebar ${mobile ? "open" : ""}`}>
+        <button className="brand" onClick={() => go("overview")}>
+          <span>
+            <Leaf size={23} />
+          </span>
+          BioNutri<b>GPT</b>
+        </button>
+        <span className="nav-caption">YOUR PERSONAL SPACE</span>
+        <nav aria-label="Main navigation">
+          {pages.map((p) => (
             <button
-              onClick={() => setError(null)}
-              className="text-xs text-rose-500 hover:text-rose-700 font-semibold px-2 py-1"
+              key={p.id}
+              className={page === p.id ? "active" : ""}
+              aria-current={page === p.id ? "page" : undefined}
+              onClick={() => go(p.id)}
             >
-              Dismiss
+              <p.icon size={19} />
+              {p.name}
+              {p.id === "meals" && plan?.accepted && (
+                <Check size={14} className="nav-check" />
+              )}
             </button>
+          ))}
+        </nav>
+        <div className="sidebar-support">
+          <span className="support-icon">
+            <Leaf size={24} />
+          </span>
+          <h3>
+            Better habits.
+            <br />
+            Your own pace.
+          </h3>
+          <p>You don’t have to change everything at once.</p>
+          <button onClick={() => go(nextPage)}>Continue my journey</button>
+        </div>
+        <button className="help-link" onClick={() => setHelp(true)}>
+          <HelpCircle size={18} />
+          Help & getting started
+        </button>
+        <div className="sidebar-foot">
+          <span className="avatar">Y</span>
+          <div>
+            <strong>Your workspace</strong>
+            <small>Personal nutrition</small>
           </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* TAB 1: PATIENT INTAKE                                                     */}
-        {/* ========================================================================= */}
-        {activeTab === 'input' && (
-          <div className="space-y-6">
-            <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center space-x-2">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider mr-1">
-                  Input Mode:
-                </span>
-                <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
-                  <button
-                    type="button"
-                    onClick={() => setInputMode('typing')}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
-                      inputMode === 'typing'
-                        ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    <Sliders className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Option 1: Form Typing</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setInputMode('upload')}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
-                      inputMode === 'upload'
-                        ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    <FileUp className="w-3.5 h-3.5 text-blue-600" />
-                    <span>Option 2: TXT File Upload</span>
-                  </button>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                disabled={loadingScreening}
-                onClick={() => handleRunScreening()}
-                className="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl text-xs flex items-center space-x-2 shadow-md shadow-emerald-600/20 disabled:opacity-50 transition transform active:scale-95"
-              >
-                {loadingScreening ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Calculating Disease Risk Scores…</span>
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-4 h-4 fill-white" />
-                    <span>Get Disease Risk Scores</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {inputMode === 'typing' ? (
-              <InputTypingForm
-                features={features}
-                metadata={metadata}
-                onFeatureChange={handleFeatureChange}
-                onMetadataChange={handleMetadataChange}
-                onLoadSample={handleLoadSample}
-                onReset={handleReset}
-              />
-            ) : (
-              <TxtFileUpload
-                onParsedSuccess={handleParsedFromTxt}
-                onRunFileDirectly={handleRunFileDirectly}
-              />
-            )}
+        </div>
+      </aside>
+      <div className="main-shell">
+        <header className="topbar">
+          <div className="breadcrumbs">
+            <button
+              className="icon-button mobile-toggle"
+              aria-label="Open navigation"
+              onClick={() => setMobile(true)}
+            >
+              <Menu />
+            </button>
+            <span>My workspace</span>
+            <span className="slash">/</span>
+            <strong>{title}</strong>
           </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* TAB 2: UNIFIED SINGLE-PAGE RESULTS FLOW                                   */}
-        {/*   1) Disease Risk Scores                                                  */}
-        {/*   2) "Generate Meal Plan" -> Preferences Questionnaire                    */}
-        {/*   3) Generated Meal Plan                                                  */}
-        {/*   4) Chatbot Below Meal Plan (Auto-Reconfigures Plan on Removal)          */}
-        {/* ========================================================================= */}
-        {activeTab === 'results' && screening && (
-          <div className="space-y-6">
-            {/* Top Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h1 className="text-lg font-bold text-slate-900">
-                  Cardiometabolic Disease Screening Scores
-                </h1>
-                <p className="text-xs text-slate-500">
-                  Review your screening scores below, then click Generate Meal Plan to personalize and build your daily plan.
-                </p>
-              </div>
+          <div className="header-right">
+            <span className="date-label">
+              <CalendarDays size={15} />
+              {new Date().toLocaleDateString(undefined, {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </span>
+            <div className="account-menu">
               <button
-                type="button"
-                onClick={() => setActiveTab('input')}
-                className="px-3.5 py-2 text-xs text-slate-700 hover:text-slate-900 font-semibold rounded-xl bg-white border border-slate-200 hover:bg-slate-50 shadow-2xs"
+                className="account-trigger"
+                aria-expanded={account}
+                aria-label="Workspace menu"
+                onClick={() => setAccount(!account)}
               >
-                ← Back to Patient Intake
+                <span className="avatar">Y</span>
+                <ChevronDown size={15} />
               </button>
-            </div>
-
-            {/* STEP 1: DISEASE SCREENING SCORES */}
-            <Stage1RiskCards screening={screening} />
-
-            {/* Compact Collapsible Stage 2 Nutrient Targets & Constraints */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setShowStage2Details(prev => !prev)}
-                className="w-full px-5 py-3.5 flex items-center justify-between text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
-              >
-                <span className="flex items-center space-x-2">
-                  <Sliders className="w-4 h-4 text-emerald-600" />
-                  <span>
-                    Stage 2 Nutrient Targets &amp; Explicit Rules (
-                    {Math.round(screening.energy_prescription?.target_calories ?? 0)} kcal/day ·{' '}
-                    {screening.certified_for_stage3 ? 'Checks Passed' : 'Checks Incomplete'})
-                  </span>
-                </span>
-                {showStage2Details ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              </button>
-              {showStage2Details && (
-                <div className="p-5 pt-2 border-t border-slate-100">
-                  <Stage2Prescription screening={screening} />
+              {account && (
+                <div className="dropdown">
+                  <button onClick={() => go("profile")}>
+                    <UserRound size={16} />
+                    My profile
+                  </button>
+                  <button
+                    onClick={() => {
+                      setHelp(true);
+                      setAccount(false);
+                    }}
+                  >
+                    <HelpCircle size={16} />
+                    Help
+                  </button>
+                  <button
+                    disabled={!!busy}
+                    onClick={() => {
+                      reset();
+                      setAccount(false);
+                    }}
+                  >
+                    <LogOut size={16} />
+                    Start a new profile
+                  </button>
                 </div>
               )}
             </div>
-
-            {/* STEP 2: GENERATE MEAL PLAN TRIGGER & CONVERSATIONAL FREE-TEXT INTAKE */}
-            <div ref={preferencesRef} className="space-y-4">
-              {!showIntakeChat && !mealPlan && (
-                <div className="bg-white rounded-2xl border border-emerald-200 p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
-                      <Utensils className="w-5 h-5" />
+          </div>
+        </header>
+        <main id="main" ref={main} tabIndex={-1} className="content">
+          <div className="page-heading">
+            <div>
+              <span className="eyebrow">
+                {page === "overview"
+                  ? "YOUR WELLNESS, SIMPLIFIED"
+                  : "PERSONAL NUTRITION"}
+              </span>
+              <h1>
+                {page === "overview"
+                  ? "Make space for a healthier you."
+                  : title}
+              </h1>
+              <p>{subtitle[page]}</p>
+            </div>
+            {page === "overview" && (
+              <Button variant="secondary" onClick={() => go("profile")}>
+                <UserRound size={16} />
+                {screening ? "Edit my profile" : "Set up my profile"}
+              </Button>
+            )}
+          </div>
+          {sample && (
+            <div className="sample-note">
+              <FlaskIcon />
+              Example profile in use. These results are not your personal health
+              results.
+            </div>
+          )}
+          {error && (
+            <div className="alert" role="alert">
+              <span>{error}</span>
+              <button aria-label="Dismiss error" onClick={() => setError("")}>
+                <X size={18} />
+              </button>
+            </div>
+          )}
+          {busy && <Busy text={busy} />}
+          <div className="page-body" key={page}>
+            {page === "overview" && (
+              <>
+                <section className="hero">
+                  <div className="hero-copy">
+                    <span className="hero-label">
+                      <Sun size={15} />A FRESH START, EVERY DAY
+                    </span>
+                    <h2>
+                      Good food.
+                      <br />
+                      <span>A plan that feels like you.</span>
+                    </h2>
+                    <p>
+                      Bring your health, food preferences, and everyday routine
+                      into one thoughtful plan.
+                    </p>
+                    <Button onClick={() => go(nextPage)}>
+                      {screening
+                        ? plan?.accepted
+                          ? "View my meal plan"
+                          : "Choose my food preferences"
+                        : "Start my personal plan"}
+                      <Plus size={17} />
+                    </Button>
+                    <div className="hero-proof">
+                      <span>
+                        <Check size={14} />
+                        Your preferences
+                      </span>
+                      <span>
+                        <Check size={14} />
+                        Familiar foods
+                      </span>
+                      <span>
+                        <Check size={14} />
+                        Clear next steps
+                      </span>
                     </div>
+                  </div>
+                  <div className="hero-visual" aria-hidden="true">
+                    <div className="orbital o1" />
+                    <div className="orbital o2" />
+                    <div className="plate">
+                      <div className="plate-inner">
+                        <div className="salad-leaf l1" />
+                        <div className="salad-leaf l2" />
+                        <div className="salad-leaf l3" />
+                        <div className="salad-leaf l4" />
+                        <div className="salad-leaf l5" />
+                        <div className="grain g1" />
+                        <div className="grain g2" />
+                        <div className="grain g3" />
+                        <div className="tomato t1" />
+                        <div className="tomato t2" />
+                        <div className="tomato t3" />
+                        <div className="cucumber c1" />
+                        <div className="cucumber c2" />
+                        <div className="cucumber c3" />
+                      </div>
+                    </div>
+                    <div className="floating-note">
+                      <span>
+                        <Leaf size={20} />
+                      </span>
+                      <div>
+                        A little balance.<strong>A better everyday.</strong>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <div className="section-heading">
+                  <div>
+                    <h2>Your journey, made simple.</h2>
+                    <p>One step at a time. Everything in its place.</p>
+                  </div>
+                  <span className="pill">
+                    {screening ? (plan?.accepted ? 3 : 1) : 0} of 3 steps
+                    complete
+                  </span>
+                </div>
+                <div className="journey-grid">
+                  {[
+                    {
+                      p: "profile" as Page,
+                      icon: UserRound,
+                      title: "Get to know you",
+                      text: "Your health profile and everyday habits.",
+                      done: !!screening,
+                      button: screening ? "Review profile" : "Complete profile",
+                    },
+                    {
+                      p: "preferences" as Page,
+                      icon: SlidersHorizontal,
+                      title: "Make it personal",
+                      text: "Your food choices, allergies, and preferences.",
+                      done: !!plan?.accepted,
+                      button: "Choose preferences",
+                    },
+                    {
+                      p: "meals" as Page,
+                      icon: Utensils,
+                      title: "Find your rhythm",
+                      text: "Meals, portions, and a plan for your day.",
+                      done: !!plan?.accepted,
+                      button: plan?.accepted
+                        ? "Open meal plan"
+                        : "Explore next steps",
+                    },
+                  ].map((s) => (
+                    <article className="card journey-card" key={s.p}>
+                      <div className="journey-card-top">
+                        <span className="icon-tile">
+                          <s.icon size={22} />
+                        </span>
+                        {s.done ? (
+                          <span className="done-label">
+                            <CheckCircle2 size={15} />
+                            Complete
+                          </span>
+                        ) : (
+                          <span className="muted mini">Ready when you are</span>
+                        )}
+                      </div>
+                      <h3>{s.title}</h3>
+                      <p>{s.text}</p>
+                      <button className="text-link" onClick={() => go(s.p)}>
+                        {s.button}
+                      </button>
+                    </article>
+                  ))}
+                </div>
+                <div className="overview-bottom">
+                  <section className="card water-card">
                     <div>
-                      <h2 className="text-base font-bold text-slate-900">Ready for a personalized meal plan?</h2>
-                      <p className="text-xs text-slate-600 mt-0.5">
-                        Click below and the assistant will ask you about pure vegetarian / veg+non-veg combo / purely non-veg preferences, allergies, and dishes to remove.
+                      <span className="eyebrow">A SMALL DAILY HABIT</span>
+                      <h3>Make time for a water break.</h3>
+                      <p className="muted">
+                        Track what you drink, one glass at a time.
+                      </p>
+                      <div className="water-controls">
+                        <Button
+                          variant="secondary"
+                          disabled={!water}
+                          onClick={() => waterChange(-1)}
+                        >
+                          Undo
+                        </Button>
+                        <Button
+                          disabled={water >= 20}
+                          onClick={() => waterChange(1)}
+                        >
+                          <Plus size={16} />
+                          Add a glass
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="water-meter">
+                      <Droplets size={25} />
+                      <strong>
+                        {(water * 0.25).toFixed(2)}
+                        <small>L</small>
+                      </strong>
+                      <span>{water} × 250 ml today</span>
+                    </div>
+                  </section>
+                  <section className="card personal-note">
+                    <span className="icon-tile">
+                      <ShieldCheck size={22} />
+                    </span>
+                    <h3>Your health deserves context.</h3>
+                    <p>
+                      Use your insights as a starting point for a conversation
+                      with your care provider.
+                    </p>
+                    <button className="text-link" onClick={() => setHelp(true)}>
+                      How this workspace works
+                    </button>
+                  </section>
+                </div>
+              </>
+            )}
+            {page === "profile" && (
+              <Profile
+                values={values}
+                meta={meta}
+                setMeta={updateMeta}
+                setValue={updateValue}
+                loadSample={example}
+                importText={importText}
+                run={screen}
+                busy={!!busy}
+                sample={sample}
+                reviewed={reviewed}
+                setReviewed={setReviewed}
+              />
+            )}
+            {page === "insights" &&
+              (screening ? (
+                <>
+                  <div className="note">
+                    <ShieldCheck size={19} />
+                    These are screening estimates, not a diagnosis. Review them
+                    with your care provider.
+                  </div>
+                  <div className="risk-grid">
+                    {(
+                      [
+                        {
+                          key: "diabetes",
+                          label: "Diabetes",
+                          icon: HeartPulse,
+                        },
+                        {
+                          key: "obesity",
+                          label: "Weight-related health",
+                          icon: UserRound,
+                        },
+                        { key: "cvd", label: "Heart health", icon: HeartPulse },
+                      ] as const
+                    ).map((r) => (
+                      <article className="card risk-card" key={r.key}>
+                        <span className="icon-tile">
+                          <r.icon size={22} />
+                        </span>
+                        <h3>{r.label}</h3>
+                        <div className="risk-number">
+                          {(screening.probabilities[r.key] * 100).toFixed(1)}
+                          <span>%</span>
+                        </div>
+                        <span
+                          className={`risk-label ${screening.classifications[r.key].positive ? "attention" : ""}`}
+                        >
+                          {screening.classifications[r.key].positive
+                            ? "Discuss with your care provider"
+                            : "Below screening threshold"}
+                        </span>
+                        <details>
+                          <summary>What does this mean?</summary>
+                          <p>
+                            This is the estimated likelihood returned for this
+                            profile. The screening threshold is{" "}
+                            {(
+                              screening.classifications[r.key].threshold * 100
+                            ).toFixed(1)}
+                            %. This number alone cannot establish or rule out a
+                            condition.
+                          </p>
+                        </details>
+                      </article>
+                    ))}
+                  </div>
+                  <section className="card energy-summary">
+                    <div>
+                      <span className="eyebrow">
+                        YOUR NUTRITION STARTING POINT
+                      </span>
+                      <h2>A daily target to plan around.</h2>
+                      <p className="muted">
+                        A starting point based on your profile. Your needs may
+                        change over time.
                       </p>
                     </div>
-                  </div>
-                  <button
-                    type="button"
-                    disabled={!screening.certified_for_stage3}
-                    onClick={handleOpenIntakeChat}
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center space-x-2 shadow-md shadow-emerald-600/20 disabled:opacity-50 transition"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    <span>Generate Meal Plan</span>
-                  </button>
-                </div>
-              )}
-
-              {showIntakeChat && (
-                <MealPlanIntakeChat
-                  dossier={screening.dossier}
-                  onPlanGenerated={handlePlanGeneratedByIntake}
-                  onClose={mealPlan ? () => setShowIntakeChat(false) : undefined}
-                />
-              )}
-            </div>
-
-            {/* STEP 3: GENERATED MEAL PLAN (ON THE SAME PAGE) */}
-            {mealPlan && (
-              <div ref={mealPlanSectionRef} className="space-y-4">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h2 className="text-base font-bold text-slate-900 flex items-center space-x-2">
-                    <Utensils className="w-4 h-4 text-emerald-600" />
-                    <span>Your Generated Meal Plan</span>
-                  </h2>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={handleOpenIntakeChat}
-                      className="px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-xs font-semibold text-slate-700 flex items-center space-x-1.5"
+                    <div>
+                      <Flame size={22} />
+                      <strong>
+                        {Math.round(
+                          screening.energy_prescription.target_calories,
+                        ).toLocaleString()}
+                      </strong>
+                      <span>kcal / day</span>
+                    </div>
+                  </section>
+                  {!screening.certified_for_stage3 && (
+                    <div className="alert">
+                      Your assessment needs review before a meal plan can be
+                      created. Please review the profile with your care
+                      provider.
+                    </div>
+                  )}
+                  <div className="page-actions">
+                    <Button variant="secondary" onClick={() => go("profile")}>
+                      Review my profile
+                    </Button>
+                    <Button
+                      disabled={!screening.certified_for_stage3}
+                      onClick={() => go("preferences")}
                     >
-                      <Settings2 className="w-3.5 h-3.5" />
-                      <span>Change Preferences via Chat</span>
-                    </button>
-                    {mealPlan.accepted && (
-                      <button
-                        type="button"
-                        disabled={loadingReport}
-                        onClick={handleGenerateReport}
-                        className="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center space-x-1.5 disabled:opacity-50"
-                      >
-                        <FileText className="w-3.5 h-3.5" />
-                        <span>{loadingReport ? 'Generating Printable Report…' : 'Generate Printable Qwen Report'}</span>
-                      </button>
-                    )}
+                      Choose my food preferences
+                    </Button>
                   </div>
-                </div>
-
-                <Stage3MealSchedule mealPlan={mealPlan} />
-
-                {/* STEP 4: CHATBOT DIRECTLY BELOW THE MEAL PLAN */}
-                {mealPlan.accepted && mealPlan.dossier && (
-                  <Stage4PlanChat
-                    key={chatSessionKey}
-                    dossier={mealPlan.dossier}
-                    onAccept={handlePlanUpdatedByChat}
-                  />
-                )}
-
-                {/* Optional Printable Stage 4 Qwen Report */}
-                {clinicalReport && <Stage4ClinicalReport report={clinicalReport} />}
+                </>
+              ) : (
+                <Empty
+                  icon={HeartPulse}
+                  title="Let’s start with your profile."
+                  action={
+                    <Button onClick={() => go("profile")}>
+                      Complete my profile
+                    </Button>
+                  }
+                >
+                  Your health insights will appear after you review your details
+                  and complete an assessment.
+                </Empty>
+              ))}
+            {page === "preferences" && (
+              <div className="preferences-layout">
+                <section className="card">
+                  <div className="card-title">
+                    <div>
+                      <span className="eyebrow">
+                        A PLAN THAT FITS YOUR LIFE
+                      </span>
+                      <h2>What feels right on your plate?</h2>
+                    </div>
+                    <SlidersHorizontal size={24} />
+                  </div>
+                  <p className="muted">
+                    Choose what you enjoy and tell us what needs to stay off the
+                    menu.
+                  </p>
+                  <fieldset disabled={!!busy}>
+                    <div className="preferences-fields">
+                      <Select
+                        label="How do you prefer to eat?"
+                        value={prefs.dietary_preference}
+                        onChange={(e) => {
+                          changedPrefs();
+                          setPrefs({
+                            ...prefs,
+                            dietary_preference: e.target
+                              .value as MealPlanPreferences["dietary_preference"],
+                          });
+                        }}
+                      >
+                        <option value="pure_vegetarian">Vegetarian</option>
+                        <option value="veg_nonveg_combo">
+                          Vegetarian & non-vegetarian
+                        </option>
+                        <option value="pure_non_vegetarian">
+                          Non-vegetarian
+                        </option>
+                      </Select>
+                      <Select
+                        label="How much variety would you like?"
+                        value={prefs.max_active_dishes ?? ""}
+                        onChange={(e) => {
+                          changedPrefs();
+                          setPrefs({
+                            ...prefs,
+                            max_active_dishes: e.target.value
+                              ? Number(e.target.value)
+                              : null,
+                          });
+                        }}
+                      >
+                        <option value="">Choose for me</option>
+                        <option value="4">
+                          Keep it simple · up to 4 dishes
+                        </option>
+                        <option value="5">
+                          A little variety · up to 5 dishes
+                        </option>
+                        <option value="6">
+                          Balanced variety · up to 6 dishes
+                        </option>
+                        <option value="7">More variety · up to 7 dishes</option>
+                        <option value="8">
+                          Plenty of choice · up to 8 dishes
+                        </option>
+                      </Select>
+                      <Field
+                        label="Allergies & intolerances"
+                        placeholder="e.g. peanuts, milk, shellfish"
+                        value={allergies}
+                        maxLength={500}
+                        onChange={(e) => {
+                          changedPrefs();
+                          setAllergies(e.target.value);
+                        }}
+                        hint="Separate each item with a comma. Leave blank only if you have none."
+                      />
+                      <Field
+                        label="Foods you prefer to avoid"
+                        placeholder="e.g. cabbage, okra"
+                        value={dislikes}
+                        maxLength={500}
+                        onChange={(e) => {
+                          changedPrefs();
+                          setDislikes(e.target.value);
+                        }}
+                        hint="Separate dishes or ingredients with commas."
+                      />
+                      <details className="preference-help">
+                        <summary>How are my preferences used?</summary>
+                        <p>
+                          Your preferences are sent with your current assessment
+                          when you create a plan. Changing this form does not
+                          alter your existing plan until you create a new one.
+                          Allergy data may be incomplete; review the returned
+                          plan and any warnings with your care provider.
+                        </p>
+                      </details>
+                      <label className="check-label">
+                        <input
+                          type="checkbox"
+                          checked={prefReview}
+                          onChange={(e) => setPrefReview(e.target.checked)}
+                        />
+                        <span>
+                          I have reviewed my diet choice, allergies, and foods
+                          to avoid.
+                        </span>
+                      </label>
+                    </div>
+                    <div className="button-row">
+                      <Button
+                        disabled={
+                          !screening?.certified_for_stage3 || !prefReview
+                        }
+                        onClick={generate}
+                      >
+                        {plan?.accepted
+                          ? "Create updated meal plan"
+                          : "Create my meal plan"}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          setPrefs({ ...initialPrefs });
+                          setAllergies("");
+                          setDislikes("");
+                          setPrefReview(false);
+                          setToast(
+                            "Preferences reset. Review them before creating a plan.",
+                          );
+                        }}
+                      >
+                        Reset preferences
+                      </Button>
+                    </div>
+                  </fieldset>
+                </section>
+                <aside className="preferences-side">
+                  <div className="card subtle">
+                    <Leaf size={25} />
+                    <h3>
+                      Familiar food.
+                      <br />
+                      Thoughtfully chosen.
+                    </h3>
+                    <p>
+                      We’ll use these choices to build a daily plan around the
+                      foods you can enjoy.
+                    </p>
+                  </div>
+                  <div className="card">
+                    <h3>
+                      {screening
+                        ? "Your profile is ready."
+                        : "Complete your profile first."}
+                    </h3>
+                    <p className="muted">
+                      {screening
+                        ? "You can review your health insights before creating your plan."
+                        : "You can choose preferences now. A health assessment is needed to generate your meals."}
+                    </p>
+                    <Button
+                      variant="secondary"
+                      onClick={() => go(screening ? "insights" : "profile")}
+                    >
+                      {screening ? "View health insights" : "Go to my profile"}
+                    </Button>
+                  </div>
+                </aside>
               </div>
             )}
+            {page === "meals" &&
+              (plan?.accepted ? (
+                <MealPlan
+                  key={revision.current}
+                  plan={plan}
+                  onEdit={() => go("preferences")}
+                  onChat={() => go("assistant")}
+                />
+              ) : (
+                <Empty
+                  icon={Utensils}
+                  title={
+                    plan
+                      ? "Let’s adjust your plan."
+                      : "Your next meal starts here."
+                  }
+                  action={
+                    <Button
+                      onClick={() => go(screening ? "preferences" : "profile")}
+                    >
+                      {screening
+                        ? "Review preferences"
+                        : "Start with my profile"}
+                    </Button>
+                  }
+                >
+                  {plan
+                    ? "We couldn’t create a plan that met the required nutrition checks. Review your preferences with your care provider and try again."
+                    : "Complete your profile and choose your food preferences to create a personal daily menu."}
+                </Empty>
+              ))}
+            {page === "assistant" &&
+              (plan?.accepted ? (
+                <div className="assistant-layout">
+                  <section className="card chat-panel">
+                    <div className="card-title">
+                      <div className="assistant-identity">
+                        <span className="icon-tile">
+                          <MessageCircle size={23} />
+                        </span>
+                        <div>
+                          <h2>Your plan assistant</h2>
+                          <p className="muted">
+                            A little help with your everyday choices.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    {flagged && (
+                      <div className="alert">
+                        Your plan needs review for a reported allergy or
+                        intolerance. Please review it before use.
+                      </div>
+                    )}
+                    <div className="chat-messages" aria-live="polite">
+                      {!turns.length && (
+                        <div className="chat-welcome">
+                          <span className="icon-tile">
+                            <Leaf size={30} />
+                          </span>
+                          <h3>Let’s make your plan work for you.</h3>
+                          <p>
+                            Ask about a portion, explore a food swap, or
+                            understand what’s in your plan.
+                          </p>
+                          <div className="suggestion-grid">
+                            {[
+                              "Explain my meal portions",
+                              "What foods provide protein?",
+                              "Can I replace rice in my plan?",
+                            ].map((q) => (
+                              <button
+                                disabled={!!busy}
+                                key={q}
+                                onClick={() => send(q)}
+                              >
+                                {q}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {turns.map((t, i) => (
+                        <div key={i} className="chat-turn">
+                          <div className="user-message">{t.question}</div>
+                          <div className="assistant-message">
+                            <span className="message-label">
+                              <Leaf size={14} />
+                              YOUR ASSISTANT
+                            </span>
+                            <p>{t.response.answer}</p>
+                            {t.response.proposed_meal_plan && (
+                              <div className="proposal">
+                                <h4>Suggested plan update</h4>
+                                <p>
+                                  Review the proposed food quantities before
+                                  applying this change.
+                                </p>
+                                <details>
+                                  <summary>View proposed foods</summary>
+                                  <ul>
+                                    {t.response.proposed_meal_plan.solved_food_basket.map(
+                                      (f, j) => (
+                                        <li key={j}>
+                                          {f.name} · {f.quantity}{" "}
+                                          {f.serving_unit}
+                                        </li>
+                                      ),
+                                    )}
+                                  </ul>
+                                </details>
+                                <Button
+                                  disabled={
+                                    !!busy ||
+                                    t.applied ||
+                                    t.revision !== revision.current
+                                  }
+                                  onClick={() => accept(i)}
+                                >
+                                  {t.applied
+                                    ? "Applied to my plan"
+                                    : t.revision !== revision.current
+                                      ? "Replaced by a newer plan"
+                                      : "Apply this change"}
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                      <div ref={endOfChat} />
+                    </div>
+                    <form
+                      className="chat-composer"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        send(question);
+                      }}
+                    >
+                      <label className="sr-only" htmlFor="chat-input">
+                        Message your plan assistant
+                      </label>
+                      <textarea
+                        id="chat-input"
+                        placeholder="Ask about your plan or request a change…"
+                        rows={2}
+                        maxLength={1000}
+                        value={question}
+                        disabled={!!busy}
+                        onChange={(e) => setQuestion(e.target.value)}
+                      />
+                      <button
+                        className="send-button"
+                        aria-label="Send message"
+                        disabled={!!busy || !question.trim()}
+                      >
+                        <Send size={19} />
+                      </button>
+                    </form>
+                    <p className="chat-footnote">
+                      Proposed changes are only applied when you accept them.
+                    </p>
+                  </section>
+                  <aside className="assistant-side">
+                    <section className="card">
+                      <History size={23} />
+                      <h3>A little room to change your mind.</h3>
+                      <p>
+                        Review saved plan versions and restore an earlier one.
+                      </p>
+                      <Button
+                        variant="secondary"
+                        disabled={!!busy}
+                        onClick={loadHistory}
+                      >
+                        <History size={16} />
+                        View plan history
+                      </Button>
+                      {showHistory && history && (
+                        <div className="history-list">
+                          {history.versions.map((v) => (
+                            <div key={v.version}>
+                              <div>
+                                <strong>Version {v.version}</strong>
+                                <small>
+                                  {new Date(v.created_at).toLocaleString()}
+                                </small>
+                              </div>
+                              <Button
+                                variant="ghost"
+                                disabled={
+                                  !!busy ||
+                                  v.version === history.current_version
+                                }
+                                onClick={() => restore(v.version)}
+                              >
+                                {v.version === history.current_version
+                                  ? "Current"
+                                  : "Restore"}
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </section>
+                    <section className="card subtle">
+                      <h3>Ready to see your changes?</h3>
+                      <p>
+                        Your meal plan always reflects the latest accepted
+                        version.
+                      </p>
+                      <Button variant="secondary" onClick={() => go("meals")}>
+                        Open my meal plan
+                      </Button>
+                    </section>
+                  </aside>
+                </div>
+              ) : (
+                <Empty
+                  icon={MessageCircle}
+                  title="Your assistant needs a plan to start."
+                  action={
+                    <Button
+                      onClick={() => go(screening ? "preferences" : "profile")}
+                    >
+                      Create my plan
+                    </Button>
+                  }
+                >
+                  Once your meal plan is ready, ask questions and request
+                  changes here.
+                </Empty>
+              ))}
+            {page === "reports" &&
+              (report ? (
+                <Report report={report} />
+              ) : (
+                <Empty
+                  icon={FileText}
+                  title={
+                    plan?.accepted
+                      ? "Bring your insights together."
+                      : "Your nutrition story starts here."
+                  }
+                  action={
+                    <Button
+                      disabled={!!busy}
+                      onClick={() =>
+                        plan?.accepted
+                          ? makeReport()
+                          : go(screening ? "preferences" : "profile")
+                      }
+                    >
+                      {plan?.accepted ? "Create my report" : "Create my plan"}
+                    </Button>
+                  }
+                >
+                  {plan?.accepted
+                    ? "Create a clear summary of your health insights, meals, and everyday guidance. Download it or print it for your next appointment."
+                    : "Your personal report will become available after your meal plan is ready."}
+                </Empty>
+              ))}
           </div>
-        )}
-      </main>
-
-      {/* Sticky Hardware & Status Bar */}
-      <HardwareStatusBar health={health} />
+          <footer>
+            <span>
+              <Leaf size={14} />
+              Thoughtful nutrition. Everyday living.
+            </span>
+            <span>Personal guidance · Review with your care provider</span>
+          </footer>
+        </main>
+      </div>
+      {toast && (
+        <div className="toast" role="status">
+          <CheckCircle2 size={19} />
+          {toast}
+          <button
+            aria-label="Dismiss notification"
+            onClick={() => setToast("")}
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
+      <dialog
+        ref={dialog}
+        className="help-dialog"
+        onCancel={() => setHelp(false)}
+        onClick={(e) => {
+          if (e.target === dialog.current) setHelp(false);
+        }}
+      >
+        <div className="dialog-heading">
+          <span className="icon-tile">
+            <HelpCircle size={24} />
+          </span>
+          <button
+            className="icon-button"
+            aria-label="Close help"
+            onClick={() => setHelp(false)}
+          >
+            <X />
+          </button>
+        </div>
+        <h2>A simpler way to get started.</h2>
+        <ol>
+          <li>
+            <strong>Complete your profile.</strong> Import a prepared TXT file
+            or fill the grouped sections.
+          </li>
+          <li>
+            <strong>Review your insights.</strong> Then choose your diet,
+            allergies, and preferences.
+          </li>
+          <li>
+            <strong>Create your meal plan.</strong> Ask for changes, download a
+            shopping list, or create a report.
+          </li>
+        </ol>
+        <div className="connection-box">
+          <strong>
+            {connected === null
+              ? "Checking service…"
+              : connected
+                ? "Nutrition service connected"
+                : "Nutrition service is unavailable"}
+          </strong>
+          <p>
+            {connected
+              ? "You can run assessments and create plans."
+              : "Start the supplied nutrition service to use assessments, meal generation and the assistant. Your form remains available."}
+          </p>
+          <Button
+            variant="secondary"
+            disabled={!!busy}
+            onClick={() =>
+              act("Checking connection…", async () => {
+                try {
+                  const h = await api.health();
+                  setConnected(h.pipeline_loaded);
+                  setToast(
+                    h.pipeline_loaded
+                      ? "Connection is ready."
+                      : "The service is still preparing.",
+                  );
+                } catch {
+                  setConnected(false);
+                  setToast("The service is still unavailable.");
+                }
+              })
+            }
+          >
+            <RefreshCw size={16} />
+            Check connection
+          </Button>
+        </div>
+        <p className="help">
+          Health data remains in this page’s memory. Reloading clears the
+          current workspace. Accepted plan history is saved by the connected
+          service. Water entries are saved locally on this device.
+        </p>
+        <Button onClick={() => setHelp(false)}>Got it</Button>
+      </dialog>
     </div>
-  )
+  );
 }
-
-export default App
+function FlaskIcon() {
+  return (
+    <span className="sample-symbol" aria-hidden="true">
+      i
+    </span>
+  );
+}
