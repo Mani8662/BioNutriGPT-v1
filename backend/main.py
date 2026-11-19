@@ -66,6 +66,7 @@ def nutrition_chat(payload: NutritionChatRequest) -> NutritionChatResponse:
 async def run_document_pipeline(
     file: UploadFile = File(...),
     backend: Literal["transformers", "ollama"] | None = Form(None),
+    answers: str | None = Form(None),
 ) -> DocumentPipelineResponse:
     """Extract explicit feature values, run the ML pipeline when the vector is complete, then compile with the LLM."""
     try:
@@ -123,13 +124,9 @@ async def run_document_pipeline(
         notices.append("Only the supported portion of the uploaded document was read.")
     if extracted["rejected_values"]:
         notices.append("Some extracted values were outside the model’s allowed ranges and were excluded.")
-    if missing_features:
-        notices.append(
-            f"The predictor requires all 87 trained input features. The document parser found {len(extracted_values)}; "
-            f"the model was not run because {len(missing_features)} are absent. No sample defaults were substituted."
-        )
-        if os.getenv("BIONUTRIGPT_DOCUMENT_EXTRACTOR", "local").lower() != "llm":
-            notices.append("Fast local extraction only accepts clear feature labels, values, and units. Enter the remaining model inputs in the form or upload the complete 87-value patient vector.")
+    questions = _document_questions(missing_features, extracted["metadata"])
+    if answers is None and questions:
+        notices.append("Answer the questions about the patient’s lifestyle and demographics. Other missing fields will use the model’s saved training-set imputation values.")
         return DocumentPipelineResponse(
             status="needs_more_input",
             extracted_values=extracted_values,
@@ -138,7 +135,17 @@ async def run_document_pipeline(
             rejected_values=extracted["rejected_values"],
             truncated=truncated,
             notices=notices,
+            questions=questions,
         )
+
+    try:
+        supplied_answers = json.loads(answers or "{}")
+        if not isinstance(supplied_answers, dict):
+            raise ValueError("Answers must be a JSON object.")
+        _apply_document_answers(extracted_by_name, extracted["metadata"], questions, supplied_answers)
+        _impute_document_features(extracted_by_name)
+    except (ValueError, TypeError, KeyError) as exc:
+        raise HTTPException(status_code=422, detail=f"Please answer all required questions with valid values: {exc}") from exc
 
     feature_vector = [extracted_by_name[field["name"]] for field in ps.FEATURE_DEFINITIONS]
     metadata_overrides = {
@@ -163,8 +170,85 @@ async def run_document_pipeline(
         rejected_values=extracted["rejected_values"],
         truncated=truncated,
         notices=notices,
+        questions=[],
         model_output=model_output,
     )
+
+
+def _document_questions(missing: list[dict[str, str]], metadata: dict[str, Any]) -> list[dict[str, Any]]:
+    questions: list[dict[str, Any]] = []
+    for field in missing:
+        if field["category"].startswith(("Lifestyle", "Demographics")):
+            definition = next(item for item in ps.FEATURE_DEFINITIONS if item["name"] == field["name"])
+            questions.append({"key": field["name"], "label": definition["label"], "unit": definition["unit"],
+                              "min": definition["min_val"], "max": definition["max_val"], "kind": "number"})
+    for key, label, unit, low, high in [
+        ("weight_kg", "Patient weight", "kg", 1, 500),
+        ("height_cm", "Patient height", "cm", 30, 280),
+        ("activity_level", "Typical activity level", "", None, None),
+    ]:
+        if metadata.get(key) is None:
+            question = {"key": key, "label": label, "unit": unit,
+                        "kind": "select" if key == "activity_level" else "number"}
+            if key == "activity_level": question["options"] = ["sedentary", "light", "moderate", "active"]
+            else: question.update({"min": low, "max": high})
+            questions.append(question)
+    return questions
+
+
+def _apply_document_answers(features: dict[str, float], metadata: dict[str, Any], questions: list[dict[str, Any]], answers: dict[str, Any]) -> None:
+    for question in questions:
+        key = question["key"]
+        if key not in answers or answers[key] in (None, ""):
+            raise ValueError(f"{question['label']} is required")
+        value = answers[key]
+        if question["kind"] == "select":
+            if value not in question["options"]: raise ValueError(f"Invalid answer for {question['label']}")
+            metadata[key] = value
+        else:
+            number = float(value)
+            if not math.isfinite(number) or not question["min"] <= number <= question["max"]:
+                raise ValueError(f"{question['label']} must be between {question['min']} and {question['max']}")
+            if key in {"weight_kg", "height_cm"}: metadata[key] = number
+            else: features[key] = number
+    if "RIDAGEYR" in features: metadata["age_years"] = features["RIDAGEYR"]
+    if "SEX_FEMALE" in features: metadata["is_female"] = bool(features["SEX_FEMALE"] >= 0.5)
+
+
+def _impute_document_features(features: dict[str, float]) -> None:
+    artifacts = ps.p12.s2._load_preprocessing_artifacts(ps.p12.DEFAULT_PREPROCESSOR)
+    allowed = {field["name"] for field in ps.FEATURE_DEFINITIONS}
+    for name, value in artifacts.get("continuous_medians", {}).items():
+        if name in allowed: features.setdefault(name, float(value))
+    for name, value in artifacts.get("binary_modes", {}).items():
+        if name in allowed: features.setdefault(name, 0.0 if float(value) == 2.0 else float(value))
+    for field in ps.FEATURE_DEFINITIONS:
+        name = field["name"]
+        if name in features: continue
+        if name.endswith("_MISS"):
+            features[name] = 1.0
+        elif name.startswith(("RACE_", "MARITAL_", "SMOKE_")):
+            features[name] = 0.0
+    derived = {
+        "CHOL_HDL_RATIO": ("LBXTC", "LBDHDD", 1.0),
+        "NON_HDL_TO_HDL_RATIO": ("NON_HDL_CHOL", "LBDHDD", 1.0),
+        "PROT_PCT_KCAL": ("DR1TPROT", "DR1TKCAL", 4.0),
+        "CARB_PCT_KCAL": ("DR1TCARB", "DR1TKCAL", 4.0),
+        "FAT_PCT_KCAL": ("DR1TTFAT", "DR1TKCAL", 9.0),
+        "FIBER_PER_1000_KCAL": ("DR1TFIBE", "DR1TKCAL", 1000.0),
+        "SUGAR_TO_FIBER_RATIO": ("DR1TSUGR", "DR1TFIBE", 1.0),
+        "SODIUM_POTASSIUM_RATIO": ("DR1TSODI", "DR1TPOTA", 1.0),
+    }
+    for name, (numerator, denominator, multiplier) in derived.items():
+        if name not in features:
+            divisor = features[denominator]
+            features[name] = features[numerator] * multiplier / divisor if divisor else 0.0
+    if "SAT_TO_UNSAT_FAT_RATIO" not in features:
+        unsaturated = features.get("DR1TMFAT", 0.0) + features.get("DR1TPFAT", 0.0)
+        features["SAT_TO_UNSAT_FAT_RATIO"] = features.get("DR1TSFAT", 0.0) / unsaturated if unsaturated else 0.0
+    absent = [field["name"] for field in ps.FEATURE_DEFINITIONS if field["name"] not in features]
+    if absent:
+        raise ValueError("Training preprocessing data has no imputation value for: " + ", ".join(absent))
 
 # Configure CORS for local development and testing
 app.add_middleware(

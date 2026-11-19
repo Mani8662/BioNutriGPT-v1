@@ -202,6 +202,7 @@ class DocumentPipelineResponse(BaseModel):
     rejected_values: list[dict[str, Any]]
     truncated: bool = False
     notices: list[str] = Field(default_factory=list)
+    questions: list[dict[str, Any]] = Field(default_factory=list)
     model_output: FullPipelineResponse | None = None
 
 

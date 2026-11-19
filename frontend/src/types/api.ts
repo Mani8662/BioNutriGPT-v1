@@ -41,6 +41,7 @@ export interface DocumentPipelineResponse {
   rejected_values: Array<{ name: string; value: unknown; reason: string }>
   truncated: boolean
   notices: string[]
+  questions: Array<{ key: string; label: string; unit: string; kind: 'number' | 'select'; min?: number; max?: number; options?: string[] }>
   model_output: FullPipelineResponse | null
 }
 

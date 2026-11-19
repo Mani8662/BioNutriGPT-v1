@@ -12,9 +12,10 @@ import {
 
 const API_BASE = '/api'
 
-export async function uploadDocumentForPipeline(file: File): Promise<DocumentPipelineResponse> {
+export async function uploadDocumentForPipeline(file: File, answers?: Record<string, string>): Promise<DocumentPipelineResponse> {
   const formData = new FormData()
   formData.append('file', file)
+  if (answers) formData.append('answers', JSON.stringify(answers))
   const res = await fetch(`${API_BASE}/pipeline/document`, { method: 'POST', body: formData })
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }))

@@ -36,15 +36,17 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
   const [documentResult, setDocumentResult] = useState<DocumentPipelineResponse | null>(null)
   const [documentLoading, setDocumentLoading] = useState(false)
   const [documentError, setDocumentError] = useState<string | null>(null)
+  const [documentAnswers, setDocumentAnswers] = useState<Record<string, string>>({})
 
-  const processDocument = async () => {
+  const processDocument = async (answers?: Record<string, string>) => {
     if (!selectedDocument || documentLoading) return
     setDocumentLoading(true)
     setDocumentError(null)
     setDocumentResult(null)
     try {
-      const result = await uploadDocumentForPipeline(selectedDocument)
+      const result = await uploadDocumentForPipeline(selectedDocument, answers)
       setDocumentResult(result)
+      if (result.status === 'needs_more_input') setDocumentAnswers({})
       if (result.model_output) onPipelineComplete(result)
     } catch (err) {
       setDocumentError(err instanceof Error ? err.message : 'Could not read this file')
@@ -172,13 +174,14 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
                 setSelectedDocument(file)
                 setDocumentResult(null)
                 setDocumentError(null)
+                setDocumentAnswers({})
               }}
             />
             <button type="button" onClick={() => documentInputRef.current?.click()} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">
               Choose a document
             </button>
             <span className="max-w-full truncate text-xs text-slate-600">{selectedDocument?.name ?? 'No file selected'}</span>
-            <button type="button" onClick={processDocument} disabled={!selectedDocument || documentLoading} className="rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
+            <button type="button" onClick={() => void processDocument()} disabled={!selectedDocument || documentLoading} className="rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
               {documentLoading ? 'Extracting values…' : 'Extract values and run analysis'}
             </button>
           </div>
@@ -188,8 +191,15 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
             <div className="space-y-3" aria-live="polite">
               {documentResult.status === 'needs_more_input' && (
                 <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-xs text-amber-950">
-                  <p className="font-semibold">The model was not run because the document is incomplete.</p>
-                  <p className="mt-1">This predictor requires all 87 trained values. Missing fields are never filled with demo defaults.</p>
+                  <p className="font-semibold">Answer a few questions to continue.</p>
+                  <p className="mt-1">Missing lifestyle and demographic values are collected below. Other absent features use the model’s saved training-set imputation values.</p>
+                  {!!documentResult.questions.length && <form className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2" onSubmit={(event) => { event.preventDefault(); void processDocument(documentAnswers) }}>
+                    {documentResult.questions.map((question) => <label key={question.key} className="block font-semibold">{question.label}{question.unit ? ` (${question.unit})` : ''}
+                      {question.kind === 'select' ? <select required value={documentAnswers[question.key] ?? ''} onChange={(event) => setDocumentAnswers((prev) => ({ ...prev, [question.key]: event.target.value }))} className="mt-1 block w-full rounded border border-amber-300 bg-white px-2 py-2 font-normal"><option value="">Choose…</option>{question.options?.map((option) => <option key={option} value={option}>{option}</option>)}</select> : <input required type="number" min={question.min} max={question.max} step="any" value={documentAnswers[question.key] ?? ''} onChange={(event) => setDocumentAnswers((prev) => ({ ...prev, [question.key]: event.target.value }))} className="mt-1 block w-full rounded border border-amber-300 bg-white px-2 py-2 font-normal" />}
+                    </label>)}
+                    <button type="submit" disabled={documentLoading} className="rounded-lg bg-emerald-700 px-4 py-2 font-semibold text-white disabled:opacity-50 sm:col-span-2">{documentLoading ? 'Running prediction…' : 'Submit answers and run prediction'}</button>
+                  </form>}
+                  <p className="mt-2">{documentResult.missing_features.length} document features were not found.</p>
                   <details className="mt-2">
                     <summary className="cursor-pointer font-semibold">View {documentResult.missing_features.length} missing model inputs</summary>
                     <ul className="mt-2 grid grid-cols-1 gap-1 sm:grid-cols-2">
