@@ -4,7 +4,7 @@
     "category": "dal_pulse",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -1217,7 +1217,7 @@
     "category": "dal_pulse",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -2775,7 +2775,7 @@
     "category": "dal_pulse",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -4333,7 +4333,7 @@
     "category": "dal_pulse",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -5891,7 +5891,7 @@
     "category": "dal_pulse",
     "serving_weight_g": 180.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 180 g portion",
     "nutrients_per_serving": {
@@ -7620,7 +7620,7 @@
     "category": "dal_pulse",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -9553,7 +9553,7 @@
     "category": "dal_pulse",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -11441,7 +11441,7 @@
     "category": "cereal_grain",
     "serving_weight_g": 35.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 35 g portion",
     "nutrients_per_serving": {
@@ -12106,7 +12106,7 @@
     "category": "cereal_grain",
     "serving_weight_g": 100.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -12394,7 +12394,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+    "name": "Brown rice, cooked (Bhur? chawal)",
     "data_source": "USDA SR Legacy 169704; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 169704,
@@ -12408,14 +12408,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Whole Grain Rice ? B vitamins, magnesium & slow-release energy"
   },
   {
     "food_id": "recipe_steamed_rice",
     "category": "cereal_grain",
     "serving_weight_g": 100.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -12919,7 +12920,7 @@
     "category": "cereal_grain",
     "serving_weight_g": 180.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 180 g portion",
     "nutrients_per_serving": {
@@ -14320,7 +14321,7 @@
     "category": "cereal_grain",
     "serving_weight_g": 200.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 200 g portion",
     "nutrients_per_serving": {
@@ -15768,7 +15769,7 @@
     "category": "cereal_grain",
     "serving_weight_g": 120.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 120 g portion",
     "nutrients_per_serving": {
@@ -16452,7 +16453,7 @@
     "category": "cereal_grain",
     "serving_weight_g": 100.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -17349,7 +17350,7 @@
     "category": "cereal_grain",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -18382,7 +18383,7 @@
     "category": "vegetable_sabzi",
     "serving_weight_g": 120.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 120 g portion",
     "nutrients_per_serving": {
@@ -19458,7 +19459,7 @@
     "category": "vegetable_sabzi",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -20901,7 +20902,7 @@
     "category": "vegetable_sabzi",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -22344,7 +22345,7 @@
     "category": "vegetable_sabzi",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -23787,7 +23788,7 @@
     "category": "vegetable_sabzi",
     "serving_weight_g": 140.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 140 g portion",
     "nutrients_per_serving": {
@@ -24735,7 +24736,7 @@
     "category": "dairy",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -25023,7 +25024,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Yogurt, plain, skim milk",
+    "name": "Skim-milk curd / dahi (plain)",
     "data_source": "USDA SR Legacy 170887; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 170887,
@@ -25040,14 +25041,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Probiotic Curd ? gut microbiome & calcium with minimal fat"
   },
   {
     "food_id": "recipe_lowfat_curd",
     "category": "dairy",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -25335,7 +25337,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Yogurt, plain, low fat",
+    "name": "Low-fat curd / dahi (plain)",
     "data_source": "USDA SR Legacy 170886; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 170886,
@@ -25352,14 +25354,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Probiotic Curd ? protein, B12 & gut health"
   },
   {
     "food_id": "recipe_palak_paneer",
     "category": "vegetable_sabzi",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -26521,7 +26524,7 @@
     "category": "fruit",
     "serving_weight_g": 100.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -26809,7 +26812,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Guavas, common, raw",
+    "name": "Fresh guava, raw (Amrood)",
     "data_source": "USDA SR Legacy 173044; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 173044,
@@ -26823,14 +26826,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Vitamin C Fruit ? lycopene, fibre & immune support"
   },
   {
     "food_id": "recipe_fresh_papaya",
     "category": "fruit",
     "serving_weight_g": 140.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 140 g portion",
     "nutrients_per_serving": {
@@ -27118,7 +27122,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Papayas, raw",
+    "name": "Fresh papaya, ripe raw (Papita)",
     "data_source": "USDA SR Legacy 169926; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 169926,
@@ -27132,14 +27136,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Digestive Fruit ? papain enzyme, beta-carotene & vitamin C"
   },
   {
     "food_id": "recipe_fresh_apple",
     "category": "fruit",
     "serving_weight_g": 150.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -27427,7 +27432,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+    "name": "Fresh apple, raw with skin (Seb)",
     "data_source": "USDA SR Legacy 171688; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 171688,
@@ -27441,14 +27446,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Fibre-Rich Fruit ? quercetin & pectin for gut & heart health"
   },
   {
     "food_id": "recipe_fresh_orange",
     "category": "fruit",
     "serving_weight_g": 130.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 130 g portion",
     "nutrients_per_serving": {
@@ -27736,7 +27742,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Oranges, raw, all commercial varieties",
+    "name": "Fresh orange, raw (Santra/Narangi)",
     "data_source": "USDA SR Legacy 169097; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 169097,
@@ -27750,14 +27756,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Vitamin C Fruit ? folate & hesperidin for immunity & vessels"
   },
   {
     "food_id": "recipe_fresh_banana",
     "category": "fruit",
     "serving_weight_g": 100.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -28045,7 +28052,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Bananas, raw",
+    "name": "Fresh banana, raw (Kela)",
     "data_source": "USDA SR Legacy 173944; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 173944,
@@ -28059,14 +28066,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Potassium Fruit ? quick energy, B6 & magnesium"
   },
   {
     "food_id": "recipe_pomegranate_arils",
     "category": "fruit",
     "serving_weight_g": 85.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 85 g portion",
     "nutrients_per_serving": {
@@ -28354,7 +28362,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Pomegranates, raw",
+    "name": "Fresh pomegranate arils (Anar dana)",
     "data_source": "USDA SR Legacy 169134; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 169134,
@@ -28368,16 +28376,17 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Antioxidant Fruit ? punicalagins & polyphenols for heart health"
   },
   {
     "food_id": "recipe_skim_milk",
     "category": "dairy",
     "serving_weight_g": 250.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
-    "serving_unit": "1 standardized 250 g portion",
+    "serving_unit": "1 standardized 250 mL portion",
     "nutrients_per_serving": {
       "DR1TKCAL": 85.0,
       "DR1TPROT": 8.425,
@@ -28663,7 +28672,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Milk, nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)",
+    "name": "Skim milk / toned milk (plain)",
     "data_source": "USDA SR Legacy 171269; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 171269,
@@ -28680,14 +28689,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Calcium-Rich Milk ? vitamin D-fortified, low saturated fat"
   },
   {
     "food_id": "recipe_almonds_raw",
     "category": "fruit",
     "serving_weight_g": 28.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 28 g portion",
     "nutrients_per_serving": {
@@ -28975,7 +28985,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Nuts, almonds",
+    "name": "Almonds, raw / soaked (Badam)",
     "data_source": "USDA SR Legacy 170567; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 170567,
@@ -28992,16 +29002,17 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Nut Snack ? vitamin E, heart-healthy fats & magnesium"
   },
   {
     "food_id": "recipe_lowfat_milk_1pct",
     "category": "dairy",
     "serving_weight_g": 250.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
-    "serving_unit": "1 standardized 250 g portion",
+    "serving_unit": "1 standardized 250 mL portion",
     "nutrients_per_serving": {
       "DR1TKCAL": 105.0,
       "DR1TPROT": 8.425,
@@ -29287,7 +29298,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Milk, lowfat, fluid, 1% milkfat, with added vitamin A and vitamin D",
+    "name": "Low-fat milk 1% fat (plain)",
     "data_source": "USDA SR Legacy 170872; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 170872,
@@ -29304,14 +29315,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Calcium-Rich Milk ? B12 & protein with low saturated fat"
   },
   {
     "food_id": "recipe_greek_yogurt_nonfat",
     "category": "dairy",
     "serving_weight_g": 200.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 200 g portion",
     "nutrients_per_serving": {
@@ -29599,7 +29611,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Yogurt, Greek, plain, nonfat (Includes foods for USDA's Food Distribution Program)",
+    "name": "Nonfat Greek yogurt / hung curd (plain)",
     "data_source": "USDA SR Legacy 170894; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 170894,
@@ -29616,14 +29628,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "High-Protein Curd ? concentrated protein & calcium, probiotic"
   },
   {
     "food_id": "recipe_carrots_cooked",
     "category": "vegetable_sabzi",
     "serving_weight_g": 120.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 120 g portion",
     "nutrients_per_serving": {
@@ -29911,7 +29924,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Carrots, cooked, boiled, drained, without salt",
+    "name": "Carrots, cooked / gajar sabzi",
     "data_source": "USDA SR Legacy 170394; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 170394,
@@ -29925,14 +29938,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Beta-Carotene Sabzi ? vitamin A precursor & dietary fibre"
   },
   {
     "food_id": "recipe_sweet_potato_cooked",
     "category": "vegetable_sabzi",
     "serving_weight_g": 150.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -30220,7 +30234,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Sweet potato, cooked, boiled, without skin",
+    "name": "Sweet potato, boiled (Shakarkand)",
     "data_source": "USDA SR Legacy 168484; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 168484,
@@ -30234,14 +30248,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Complex Carb Sabzi ? beta-carotene, B6 & potassium"
   },
   {
     "food_id": "recipe_spinach_cooked",
     "category": "vegetable_sabzi",
     "serving_weight_g": 120.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 120 g portion",
     "nutrients_per_serving": {
@@ -30529,7 +30544,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Spinach, cooked, boiled, drained, without salt",
+    "name": "Spinach, cooked, boiled (Palak sabzi)",
     "data_source": "USDA SR Legacy 168463; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 168463,
@@ -30543,14 +30558,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Nutrient-Dense Greens ? Folate, lutein & cellular antioxidant defense"
   },
   {
     "food_id": "recipe_broccoli_cooked",
     "category": "vegetable_sabzi",
     "serving_weight_g": 120.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 120 g portion",
     "nutrients_per_serving": {
@@ -30838,7 +30854,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Broccoli, cooked, boiled, drained, without salt",
+    "name": "Broccoli, cooked / broccoli sabzi",
     "data_source": "USDA SR Legacy 169967; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 169967,
@@ -30852,14 +30868,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Cruciferous Sabzi ? sulforaphane, vitamin K & folate"
   },
   {
     "food_id": "recipe_oats_cooked",
     "category": "cereal_grain",
     "serving_weight_g": 200.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 200 g portion",
     "nutrients_per_serving": {
@@ -31147,7 +31164,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Cereals, oats, regular and quick, unenriched, cooked with water (includes boiling and microwaving), without salt",
+    "name": "Rolled oats porridge, cooked (Dalia oats)",
     "data_source": "USDA SR Legacy 173905; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 173905,
@@ -31161,14 +31178,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Beta-Glucan Oats ? soluble fibre for cholesterol management"
   },
   {
     "food_id": "recipe_sunflower_seeds",
     "category": "fruit",
     "serving_weight_g": 28.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 28 g portion",
     "nutrients_per_serving": {
@@ -31456,7 +31474,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Seeds, sunflower seed kernels, dry roasted, without salt",
+    "name": "Sunflower seeds, dry roasted (Surajmukhi)",
     "data_source": "USDA SR Legacy 170563; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 170563,
@@ -31470,14 +31488,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Seed Snack ? vitamin E, selenium & linoleic acid"
   },
   {
     "food_id": "recipe_pumpkin_seeds",
     "category": "fruit",
     "serving_weight_g": 28.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 28 g portion",
     "nutrients_per_serving": {
@@ -31765,7 +31784,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Seeds, pumpkin and squash seed kernels, roasted, without salt",
+    "name": "Pumpkin seeds, roasted (Kaddu ke beej)",
     "data_source": "USDA SR Legacy 170557; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 170557,
@@ -31779,14 +31798,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Seed Snack ? zinc, magnesium & plant omega-3"
   },
   {
     "food_id": "recipe_chickpeas_boiled",
     "category": "dal_pulse",
     "serving_weight_g": 150.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -32074,7 +32094,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
+    "name": "Boiled chickpeas / kala chana (plain)",
     "data_source": "USDA SR Legacy 173757; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 173757,
@@ -32088,14 +32108,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Protein-Rich Pulse ? resistant starch & iron for glycaemic control"
   },
   {
     "food_id": "recipe_firm_tofu_calcium",
     "category": "dal_pulse",
     "serving_weight_g": 150.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 150 g portion",
     "nutrients_per_serving": {
@@ -32383,7 +32404,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Tofu, firm, prepared with calcium sulfate and magnesium chloride (nigari)",
+    "name": "Firm tofu, calcium-set (Soya paneer)",
     "data_source": "USDA SR Legacy 172448; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 172448,
@@ -32399,14 +32420,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Dairy-Free Protein ? calcium-set, complete amino acids & isoflavones"
   },
   {
     "food_id": "recipe_kale_cooked",
     "category": "vegetable_sabzi",
     "serving_weight_g": 130.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "pure_vegetarian",
     "serving_unit": "1 standardized 130 g portion",
     "nutrients_per_serving": {
@@ -32694,7 +32716,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Kale, cooked, boiled, drained, without salt",
+    "name": "Kale, cooked / haritaki sabzi",
     "data_source": "USDA SR Legacy 169238; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 169238,
@@ -32708,14 +32730,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Calcium-Rich Greens ? vitamin K, iron & glucosinolates"
   },
   {
     "food_id": "recipe_boiled_egg",
     "category": "non_veg_protein",
     "serving_weight_g": 100.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "non_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -33003,7 +33026,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Egg, whole, cooked, hard-boiled",
+    "name": "Boiled egg, whole (Anda uble)",
     "data_source": "USDA SR Legacy 173424; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 173424,
@@ -33019,14 +33042,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Complete Protein ? choline, B12 & selenium"
   },
   {
     "food_id": "recipe_grilled_chicken_breast",
     "category": "non_veg_protein",
     "serving_weight_g": 120.0,
     "selection_cost": 1.0,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "non_vegetarian",
     "serving_unit": "1 standardized 120 g portion",
     "nutrients_per_serving": {
@@ -33314,7 +33338,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Chicken, broilers or fryers, breast, meat only, cooked, roasted",
+    "name": "Grilled chicken breast (Murgh tikka style)",
     "data_source": "USDA SR Legacy 171477; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 171477,
@@ -33328,14 +33352,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Lean Poultry ? high-quality protein with low saturated fat"
   },
   {
     "food_id": "recipe_baked_salmon",
     "category": "non_veg_protein",
     "serving_weight_g": 120.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "non_vegetarian",
     "serving_unit": "1 standardized 120 g portion",
     "nutrients_per_serving": {
@@ -33623,7 +33648,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Fish, salmon, Atlantic, farmed, cooked, dry heat",
+    "name": "Baked salmon fillet (Farmed Atlantic)",
     "data_source": "USDA SR Legacy 175168; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 175168,
@@ -33639,14 +33664,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Omega-3 Fish ? EPA/DHA, vitamin D & selenium"
   },
   {
     "food_id": "recipe_light_tuna",
     "category": "non_veg_protein",
     "serving_weight_g": 100.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "non_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -33934,7 +33960,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Fish, tuna, light, canned in water, drained solids (Includes foods for USDA's Food Distribution Program)",
+    "name": "Canned light tuna in water (Tuna fish)",
     "data_source": "USDA SR Legacy 173709; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 173709,
@@ -33950,14 +33976,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Lean Seafood ? B12, niacin & low-fat protein"
   },
   {
     "food_id": "recipe_sardines_bone",
     "category": "non_veg_protein",
     "serving_weight_g": 100.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "non_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -34245,7 +34272,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Fish, sardine, Atlantic, canned in oil, drained solids with bone",
+    "name": "Sardines canned in oil, with bone",
     "data_source": "USDA SR Legacy 175139; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 175139,
@@ -34261,14 +34288,15 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Bone-In Fish ? highest dietary calcium, omega-3 & B12"
   },
   {
     "food_id": "recipe_pink_salmon_canned",
     "category": "non_veg_protein",
     "serving_weight_g": 100.0,
     "selection_cost": 1.05,
-    "catalog_version": "sourced-cooked-v5-veg-nonveg",
+    "catalog_version": "sourced-cooked-v6-veg-nonveg",
     "dietary_type": "non_vegetarian",
     "serving_unit": "1 standardized 100 g portion",
     "nutrients_per_serving": {
@@ -34556,7 +34584,7 @@
         "preparation_basis": "as described in source"
       }
     ],
-    "name": "Fish, salmon, pink, canned, total can contents",
+    "name": "Canned pink salmon (Salmon fish)",
     "data_source": "USDA SR Legacy 173690; single ready-to-eat food proxy",
     "recipe_source": {
       "fdc_id": 173690,
@@ -34572,6 +34600,7 @@
       "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
       "unknown_allergens_possible": true,
       "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
-    }
+    },
+    "description": "Omega-3 Fish ? vitamin D, calcium (from bones) & B12"
   }
 ]
