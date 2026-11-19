@@ -18,6 +18,29 @@ export interface PatientMetadata {
   activity_level: 'sedentary' | 'light' | 'moderate' | 'active'
 }
 
+export interface AccountUser {
+  id: string
+  email: string
+  created_at: string
+  role: 'user' | 'admin'
+}
+
+export interface AdminSummary {
+  total_accounts: number
+  admin_accounts: number
+  total_assessments: number
+  assessments_last_7_days: number
+  daily_assessments: Array<{ date: string; count: number }>
+  recent_activity: Array<{ created_at: string; source: RiskHistoryEntry['source'] }>
+}
+
+export interface RiskHistoryEntry {
+  id: string
+  created_at: string
+  source: 'form' | 'document' | 'file'
+  probabilities: RiskProbabilities
+}
+
 export interface TxtParseResponse {
   features: number[]
   metadata: Partial<PatientMetadata>
@@ -35,6 +58,7 @@ export interface ExtractedModelValue {
 
 export interface DocumentPipelineResponse {
   status: 'needs_more_input' | 'completed'
+  intake_id?: string | null
   extracted_values: ExtractedModelValue[]
   extracted_metadata: Record<string, unknown>
   missing_features: Array<{ name: string; label: string; category: string; unit: string }>
@@ -278,6 +302,7 @@ export interface FoodCatalogItem {
 
 export interface IntakeChatState {
   dietary_mode?: 'pure_vegetarian' | 'veg_nonveg_combo' | 'pure_non_vegetarian' | null
+  meals_per_day?: number | null
   allergies_answered?: boolean
   allergies?: string[]
   dislikes_answered?: boolean

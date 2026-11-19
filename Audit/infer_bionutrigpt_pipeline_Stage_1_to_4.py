@@ -64,6 +64,17 @@ MEAL_SLOTS = [
     ("Dinner", "19:30"),
 ]
 
+def meal_slots_for_count(meals_per_day: int | None) -> list[tuple[str, str]]:
+    """Return the supported day schedule while preserving the requested meal count."""
+    count = int(meals_per_day or 5)
+    if count == 3:
+        return [MEAL_SLOTS[0], MEAL_SLOTS[2], MEAL_SLOTS[4]]
+    if count == 4:
+        return [MEAL_SLOTS[0], MEAL_SLOTS[2], MEAL_SLOTS[3], MEAL_SLOTS[4]]
+    if count == 2:
+        return [MEAL_SLOTS[0], MEAL_SLOTS[4]]
+    return list(MEAL_SLOTS)
+
 DISEASE_LABELS = {
     "diabetes": "Type 2 Diabetes",
     "obesity": "Clinical Obesity",
@@ -167,7 +178,9 @@ def _default_meal_guidance(meal_name: str, items: Sequence[Mapping[str, Any]]) -
     return "Finish the remaining assigned portions at dinner; avoid adding extra dishes."
 
 
-def build_deterministic_schedule(basket: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
+def build_deterministic_schedule(
+    basket: Sequence[Mapping[str, Any]], meals_per_day: int | None = 5,
+) -> list[dict[str, Any]]:
     """Allocate every immutable serving to a meal using a clinical Indian plate model.
 
     Guarantees:
@@ -177,7 +190,8 @@ def build_deterministic_schedule(basket: Sequence[Mapping[str, Any]]) -> list[di
       - Lunch and Dinner both receive balanced staple grains (roti/rice), dal/pulse, and sabzi.
       - Evening snack receives secondary dairy, fruit, or light item.
     """
-    meal_items: dict[str, dict[str, dict[str, Any]]] = {name: {} for name, _ in MEAL_SLOTS}
+    meal_slots = meal_slots_for_count(meals_per_day)
+    meal_items: dict[str, dict[str, dict[str, Any]]] = {name: {} for name, _ in meal_slots}
 
     def add_to_meal(slot: str, food: Mapping[str, Any]) -> None:
         food_id = str(food["food_id"])
@@ -208,7 +222,10 @@ def build_deterministic_schedule(basket: Sequence[Mapping[str, Any]]) -> list[di
             servings_by_cat[cat].append(food)
 
     # 1. Distribute Fruits: 1st -> Mid-Morning Snack, 2nd -> Evening Snack, others -> Breakfast
-    fruit_slots = ["Mid-Morning Snack", "Evening Snack", "Breakfast"]
+    fruit_slots = [name for name in (["Mid-Morning Snack", "Evening Snack", "Breakfast"]
+                   if meals_per_day != 3 else ["Breakfast", "Lunch", "Dinner"]) if name in meal_items]
+    if not fruit_slots:
+        fruit_slots = list(meal_items)
     for i, item in enumerate(servings_by_cat["fruit"]):
         slot = fruit_slots[min(i, len(fruit_slots) - 1)]
         add_to_meal(slot, item)
@@ -224,33 +241,36 @@ def build_deterministic_schedule(basket: Sequence[Mapping[str, Any]]) -> list[di
     if not bfast_cereals and len(staple_cereals) >= 3:
         add_to_meal("Breakfast", staple_cereals.pop(0))
 
-    cereal_slots = ["Lunch", "Dinner"]
+    cereal_slots = [name for name in ["Lunch", "Dinner"] if name in meal_items] or list(meal_items)
     for i, item in enumerate(staple_cereals):
         add_to_meal(cereal_slots[i % 2], item)
 
     # 3. Distribute Dals / Pulses: alternate between Lunch and Dinner
-    dal_slots = ["Lunch", "Dinner"]
+    dal_slots = [name for name in ["Lunch", "Dinner"] if name in meal_items] or list(meal_items)
     for i, item in enumerate(servings_by_cat["dal_pulse"]):
         add_to_meal(dal_slots[i % 2], item)
 
     # 4. Distribute Sabzis (Vegetables): alternate between Lunch and Dinner
-    veg_slots = ["Lunch", "Dinner"]
+    veg_slots = [name for name in ["Lunch", "Dinner"] if name in meal_items] or list(meal_items)
     for i, item in enumerate(servings_by_cat["vegetable_sabzi"]):
         add_to_meal(veg_slots[i % 2], item)
 
     # 5. Distribute Dairy: 1st -> Breakfast, 2nd -> Evening Snack, 3rd -> Dinner, 4th -> Lunch
-    dairy_slots = ["Breakfast", "Evening Snack", "Dinner", "Lunch"]
+    dairy_slots = [name for name in (["Breakfast", "Evening Snack", "Dinner", "Lunch"]
+                   if meals_per_day != 3 else ["Breakfast", "Lunch", "Dinner"]) if name in meal_items]
+    if not dairy_slots:
+        dairy_slots = list(meal_items)
     for i, item in enumerate(servings_by_cat["dairy"]):
         slot = dairy_slots[min(i, len(dairy_slots) - 1)]
         add_to_meal(slot, item)
 
     # 6. Distribute Oils / Fats / Others: alternate between Lunch and Dinner
-    other_slots = ["Lunch", "Dinner", "Breakfast"]
+    other_slots = [name for name in ["Lunch", "Dinner", "Breakfast"] if name in meal_items] or list(meal_items)
     for i, item in enumerate(servings_by_cat["oil_fat"] + servings_by_cat["other"]):
         add_to_meal(other_slots[i % len(other_slots)], item)
 
     schedule: list[dict[str, Any]] = []
-    for meal_name, meal_time in MEAL_SLOTS:
+    for meal_name, meal_time in meal_slots:
         items = list(meal_items[meal_name].values())
         schedule.append({
             "meal": meal_name,
@@ -268,11 +288,13 @@ def _expected_serving_totals(basket: Sequence[Mapping[str, Any]]) -> dict[str, i
 def _validate_and_canonicalize_schedule(
     proposed: Any,
     basket: Sequence[Mapping[str, Any]],
+    meals_per_day: int | None = 5,
 ) -> list[dict[str, Any]]:
     """Validate model allocation and replace all model-supplied dish metadata."""
     if not isinstance(proposed, list):
         raise Stage4Error("LLM meal_schedule must be a list.")
-    required_names = [name for name, _ in MEAL_SLOTS]
+    meal_slots = meal_slots_for_count(meals_per_day)
+    required_names = [name for name, _ in meal_slots]
     by_meal: dict[str, list[dict[str, Any]]] = {name: [] for name in required_names}
     seen_meals: set[str] = set()
     source_by_id = {str(row["food_id"]): row for row in basket}
@@ -331,7 +353,7 @@ def _validate_and_canonicalize_schedule(
         raise Stage4Error(f"LLM meal schedule does not preserve exact Stage 3 servings: {mismatches}.")
 
     canonical: list[dict[str, Any]] = []
-    for meal_name, default_time in MEAL_SLOTS:
+    for meal_name, default_time in meal_slots:
         raw_meal = next(m for m in proposed if str(m.get("meal", m.get("name", ""))).strip() == meal_name)
         time_value = str(raw_meal.get("time", default_time)).strip() or default_time
         if not re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", time_value):
@@ -418,6 +440,8 @@ def extract_json_object(raw_text: str) -> dict[str, Any]:
 
 
 def build_compiler_prompt(dossier: ValidatedDossier) -> str:
+    meals_per_day = (dossier.stage3.get("preferences_applied") or {}).get("meals_per_day", 5)
+    required_slots = meal_slots_for_count(meals_per_day)
     basket_summary = [
         {
             "food_id": row["food_id"],
@@ -433,20 +457,20 @@ def build_compiler_prompt(dossier: ValidatedDossier) -> str:
             "Translate the validated BioNutriGPT mathematical dossier into a patient-friendly clinical and "
             "chrono-nutrition report conforming to the requested JSON schema. You have ZERO authority to recalculate "
             "or invent nutrition numbers (calories, grams, milligrams). You MUST allocate every single basket item "
-            "into the five meal slots without dropping or adding servings."
+            f"into exactly {len(required_slots)} meal slots without dropping or adding servings."
         ),
         "patient_metadata": dossier.patient_metadata,
         "stage1_diagnostic_assessment": dossier.stage1,
         "stage2_energy_target_kcal": dossier.stage2.get("energy_prescription", {}).get("target_calories"),
         "stage3_immutable_food_basket": basket_summary,
-        "required_meal_slots": [name for name, _ in MEAL_SLOTS],
+        "required_meal_slots": [name for name, _ in required_slots],
     }
     system_instruction = (
         "You are the BioNutriGPT Stage 4 Clinical Chrono-Nutrition Compiler. "
         "Translate the input mathematical dossier into clear, empathetic, and medically accurate patient communication. "
         "Strict clinical safety rules:\n"
         "1. Do NOT mention any numerical calorie, macronutrient, or micronutrient amounts in prose.\n"
-        "2. The meal_schedule must contain exactly the 5 slots: Breakfast, Mid-Morning Snack, Lunch, Evening Snack, Dinner.\n"
+        f"2. The meal_schedule must contain exactly these {len(required_slots)} slots: {', '.join(name for name, _ in required_slots)}.\n"
         "3. Every food in stage3_immutable_food_basket must appear in the schedule with its exact quantity preserved.\n"
         "4. Output MUST conform to this exact JSON schema:\n"
         "{\n"
@@ -596,7 +620,8 @@ def _canonicalize_report(generated: Mapping[str, Any], dossier: ValidatedDossier
             if isinstance(v, str) and v.strip():
                 drivers.append({"modality": str(k)[:80], "plain_language_explanation": v.strip()[:1500]})
 
-    schedule = _validate_and_canonicalize_schedule(generated.get("meal_schedule"), dossier.basket)
+    meals_per_day = (dossier.stage3.get("preferences_applied") or {}).get("meals_per_day", 5)
+    schedule = _validate_and_canonicalize_schedule(generated.get("meal_schedule"), dossier.basket, meals_per_day)
 
     directives_value = generated.get("culinary_directives")
     directives: list[str] = []
@@ -703,7 +728,8 @@ def compile_patient_report(
     except Exception as sched_err:
         LOGGER.info("Repairing LLM meal schedule with deterministic scheduler: %s", sched_err)
         repaired = dict(generated)
-        repaired["meal_schedule"] = build_deterministic_schedule(dossier.basket)
+        meals_per_day = (dossier.stage3.get("preferences_applied") or {}).get("meals_per_day", 5)
+        repaired["meal_schedule"] = build_deterministic_schedule(dossier.basket, meals_per_day)
         compiled = _canonicalize_report(repaired, dossier)
         schedule_repaired = True
 

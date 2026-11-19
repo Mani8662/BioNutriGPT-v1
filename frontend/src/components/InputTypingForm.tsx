@@ -89,12 +89,9 @@ export const InputTypingForm: React.FC<InputTypingFormProps> = ({
           <div className="flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
             <h2 className="text-lg font-bold text-slate-900 tracking-tight">
-              Option 1: Individual Biomarker & Dietary Typing
+              Enter patient information
             </h2>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Manually enter or adjust any of the 87 patient inputs organized by clinical category.
-          </p>
         </div>
 
         <div className="flex items-center space-x-2">

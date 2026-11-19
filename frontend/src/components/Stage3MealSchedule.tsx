@@ -44,6 +44,7 @@ export const Stage3MealSchedule: React.FC<Stage3MealScheduleProps> = ({ mealPlan
   const flaggedAllergies: string[] = stage3Raw.flagged_unsuitable_for_allergies || []
   const prefsApplied = stage3Raw.preferences_applied
   const missingActive: string[] = mealPlan.failure?.details?.unknown_active_nutrients || []
+  const failedNutrients: string[] = mealPlan.failure?.details?.failed_nutrients || []
 
   if (!mealPlan.accepted) {
     return (
@@ -54,7 +55,29 @@ export const Stage3MealSchedule: React.FC<Stage3MealScheduleProps> = ({ mealPlan
         {missingActive.length > 0 && (
           <p className="text-sm">Missing active nutrient data: {missingActive.join(', ')}</p>
         )}
+        {failedNutrients.length > 0 && (
+          <p className="text-sm">Nutrient-envelope checks not met: {failedNutrients.join(', ')}</p>
+        )}
         <p className="text-sm">No rejected basket or meal schedule has been accepted. Stage 4 compilation is blocked until a plan passes.</p>
+        {meal_schedule.length > 0 && (
+          <section className="mt-4 rounded-xl border border-amber-300 bg-white/80 p-4" aria-label="Unverified meal plan preview">
+            <h3 className="font-bold">Draft meal schedule — not verified</h3>
+            <p className="mt-1 text-xs">This is the optimizer’s candidate for review. It failed the listed checks and must not be treated as a personalized recommendation.</p>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              {meal_schedule.map((slot, index) => (
+                <div key={`${slot.meal}-${index}`} className="rounded-lg border border-slate-200 p-3">
+                  <h4 className="font-semibold">{slot.meal} <span className="font-normal text-slate-500">· {slot.time}</span></h4>
+                  <ul className="mt-2 space-y-1 text-sm">
+                    {slot.items.map((item, itemIndex) => (
+                      <li key={`${item.food_id}-${itemIndex}`}>{item.quantity} × {item.name} <span className="text-slate-500">({item.serving_unit})</span></li>
+                    ))}
+                  </ul>
+                  {slot.guidance && <p className="mt-2 text-xs text-slate-600">{slot.guidance}</p>}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     )
   }

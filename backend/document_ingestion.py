@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import subprocess
 import tempfile
+import re
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 
@@ -40,7 +42,7 @@ def extract_document_text(filename: str, content: bytes) -> tuple[str, bool]:
         with tempfile.TemporaryDirectory(prefix="bionutrigpt-upload-") as temp_dir:
             pdf_path = Path(temp_dir) / "upload.pdf"
             pdf_path.write_bytes(content)
-            text, pages_truncated = _ocr_pdf(pdf_path, Path(temp_dir) / "page")
+            text, pages_truncated = _extract_pdf_text_or_ocr(pdf_path, Path(temp_dir) / "page")
     else:
         raise DocumentExtractionError("Choose a .txt, .csv, .pdf, .png, .jpg, or .jpeg file.")
 
@@ -66,6 +68,25 @@ def _ocr_image(image_path: Path) -> str:
     return result.stdout
 
 
+def _extract_pdf_text_or_ocr(pdf_path: Path, output_prefix: Path) -> tuple[str, bool]:
+    """Use fast embedded-text extraction for digital PDFs, OCR for scans."""
+    try:
+        info = subprocess.run(
+            ["pdfinfo", str(pdf_path)], check=False, capture_output=True, text=True, timeout=8,
+        )
+        page_match = re.search(r"^Pages:\s+(\d+)", info.stdout, re.M)
+        page_count = int(page_match.group(1)) if info.returncode == 0 and page_match else None
+        extracted = subprocess.run(
+            ["pdftotext", "-f", "1", "-l", str(MAX_PDF_PAGES), "-layout", "-enc", "UTF-8", str(pdf_path), "-"],
+            check=False, capture_output=True, text=True, timeout=12,
+        )
+        if extracted.returncode == 0 and extracted.stdout.strip():
+            return extracted.stdout, bool(page_count and page_count > MAX_PDF_PAGES)
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+    return _ocr_pdf(pdf_path, output_prefix)
+
+
 def _ocr_pdf(pdf_path: Path, output_prefix: Path) -> tuple[str, bool]:
     try:
         subprocess.run(
@@ -81,5 +102,10 @@ def _ocr_pdf(pdf_path: Path, output_prefix: Path) -> tuple[str, bool]:
     if not pages:
         raise DocumentExtractionError("No readable pages were found in this PDF.")
     pages_truncated = len(pages) > MAX_PDF_PAGES
-    text = "\n\n".join(_ocr_image(page) for page in pages[:MAX_PDF_PAGES])
+    selected_pages = pages[:MAX_PDF_PAGES]
+    # OCR independent pages together so multi-page reports do not wait for
+    # each Tesseract process to finish serially. Keep output in page order.
+    with ThreadPoolExecutor(max_workers=min(4, len(selected_pages))) as executor:
+        page_text = list(executor.map(_ocr_image, selected_pages))
+    text = "\n\n".join(page_text)
     return text, pages_truncated

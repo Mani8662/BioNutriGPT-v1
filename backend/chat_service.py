@@ -253,9 +253,15 @@ def _fingerprint(stage2: dict[str, Any], stage3: dict[str, Any]) -> str:
     return hashlib.sha256(json.dumps(content, sort_keys=True, default=str).encode()).hexdigest()
 
 
+def _meal_count(stage3: Mapping[str, Any]) -> int:
+    value = (stage3.get("preferences_applied") or {}).get("meals_per_day", 5)
+    return int(value) if value in {2, 3, 4, 5} else 5
+
+
 def _extract_locked_foods(
     message: str,
     basket: list[dict[str, Any]],
+    meals_per_day: int = 5,
 ) -> tuple[dict[str, int], list[str]]:
     """Extract foods or meal slots the user wants to keep unchanged (e.g., 'keep my lunch')."""
     locked: dict[str, int] = {}
@@ -266,7 +272,7 @@ def _extract_locked_foods(
         return locked, notes
 
     keep_clause = keep_match.group(1)
-    schedule = ps.p14.build_deterministic_schedule(basket)
+    schedule = ps.p14.build_deterministic_schedule(basket, meals_per_day)
     basket_qty = {str(item["food_id"]): int(item["quantity"]) for item in basket}
 
     slot_keywords = {
@@ -312,11 +318,11 @@ def _detect_allergen(message: str) -> str | None:
 # Permitted Backend Tools (Explicit Tool Layer)
 # ---------------------------------------------------------------------------
 def tool_get_plan(dossier: dict[str, Any], session_record: dict[str, Any] | None = None) -> dict[str, Any]:
-    """Tool 1: Retrieve current accepted basket, 5-slot schedule, version, and allergen status."""
+    """Tool 1: Retrieve the accepted basket, requested schedule, version, and allergen status."""
     _, stage3, catalog = _context(dossier)
     basket = stage3["solved_food_basket"]
     lookup = {f.food_id: f for f in catalog}
-    schedule = ps.p14.build_deterministic_schedule(basket)
+    schedule = ps.p14.build_deterministic_schedule(basket, _meal_count(stage3))
     schedule = ps._enrich_schedule_items(schedule, basket)
     total_weight_g = round(sum(int(item["quantity"]) * lookup[item["food_id"]].serving_weight_g for item in basket), 1)
     known_allergens = sorted({
@@ -770,7 +776,7 @@ def accept(
         updated["stage3_discrete_meal_synthesis"] = stage3_new
         updated["stage3_meal_plan"] = stage3_new
 
-    schedule = ps.p14.build_deterministic_schedule(output.solved_food_basket)
+    schedule = ps.p14.build_deterministic_schedule(output.solved_food_basket, _meal_count(stage3))
     schedule = ps._enrich_schedule_items(schedule, output.solved_food_basket)
     return {
         "session_id": session_id,
@@ -801,7 +807,7 @@ def rollback(
     record, target = plan_store.rollback_version(session_id, target_version, store_dir=store_dir)
     updated_dossier = plan_store.build_dossier_from_session(record)
     stage3 = updated_dossier["stage3_discrete_meal_synthesis"]
-    schedule = ps.p14.build_deterministic_schedule(stage3["solved_food_basket"])
+    schedule = ps.p14.build_deterministic_schedule(stage3["solved_food_basket"], _meal_count(stage3))
     schedule = ps._enrich_schedule_items(schedule, stage3["solved_food_basket"])
     return {
         "session_id": session_id,
@@ -1038,7 +1044,7 @@ def answer(
     fewer_dishes = bool(re.search(r"\b(fewer|less|reduce|simplify)\s+(?:the\s+)?(?:number\s+of\s+)?dish(?:es)?\b", normalized))
     if dish_cap_match or fewer_dishes:
         target_cap = int(dish_cap_match.group(1)) if dish_cap_match else max(ps.s3.MIN_ACTIVE_DISHES, len(basket) - 1)
-        locked, lock_notes = _extract_locked_foods(question, basket)
+        locked, lock_notes = _extract_locked_foods(question, basket, _meal_count(stage3))
         proposal, diff, conflict = tool_propose_revision(
             stage2, stage3, catalog,
             {"max_active_dishes": target_cap, "locked_food_quantities": locked},
@@ -1076,7 +1082,7 @@ def answer(
                 ["stage3.solved_food_basket"],
                 ["tool_get_plan"],
             )
-        locked, lock_notes = _extract_locked_foods(question, basket)
+        locked, lock_notes = _extract_locked_foods(question, basket, _meal_count(stage3))
         fid = str(food["food_id"])
         reason = f"Exclude {food['name']}" + (f" while keeping {', '.join(lock_notes)}" if lock_notes else "")
         proposal, diff, conflict = tool_propose_revision(
@@ -1111,7 +1117,7 @@ def answer(
         catalog_dicts = [{"food_id": f.food_id, "name": f.name} for f in catalog]
         wanted = _match_food(question, catalog_dicts)
         if wanted is not None:
-            locked, lock_notes = _extract_locked_foods(question, basket)
+            locked, lock_notes = _extract_locked_foods(question, basket, _meal_count(stage3))
             # If user explicitly says "include" or "add" a food not yet in basket, lock at least 1 serving
             req_locks = dict(locked)
             if re.search(r"\b(include|add)\b", normalized) and wanted["food_id"] not in {x["food_id"] for x in basket}:
@@ -1247,12 +1253,14 @@ def _extract_intake_with_qwen(message: str, state: dict[str, Any], catalog_names
             "Schema:\n"
             "{\n"
             '  "dietary_mode": "pure_vegetarian" | "veg_nonveg_combo" | "pure_non_vegetarian" | null,\n'
+            '  "meals_per_day": integer from 2 to 5 or null,\n'
             '  "allergies": [string],\n'
             '  "no_allergies_stated": boolean,\n'
             '  "disliked_foods": [string],\n'
             '  "no_dislikes_stated": boolean\n'
             "}\n"
             "Rules:\n"
+            "- Extract the requested number of meals per day when stated (e.g. 'only 3 meals per day' => 3).\n"
             "- 'pure_vegetarian' if user wants pure veg / vegetarian only / no meat / veg.\n"
             "- 'veg_nonveg_combo' if user wants both veg and non-veg / combo / mix / flexible.\n"
             "- 'pure_non_vegetarian' if user wants purely non-veg / pure non-vegetarian / non-veg only / mostly meat & fish.\n"
@@ -1277,8 +1285,17 @@ def _extract_intake_with_qwen(message: str, state: dict[str, Any], catalog_names
 def _extract_intake_deterministic(message: str, state: dict[str, Any], catalog: list[Any]) -> dict[str, Any]:
     """Deterministic NLU extraction & verification of free-text dietary mode, allergies, and dislikes."""
     lower = message.casefold().strip()
+    count_words = {"two": 2, "three": 3, "four": 4, "five": 5}
+    meal_count_match = re.search(
+        r"\b(?:only\s+)?(2|3|4|5|two|three|four|five)\s+meals?\b(?:\s+(?:per|a|each)\s+day|\s+daily)?",
+        lower,
+    )
     out: dict[str, Any] = {
         "dietary_mode": None,
+        "meals_per_day": (
+            int(meal_count_match.group(1)) if meal_count_match and meal_count_match.group(1).isdigit()
+            else count_words[meal_count_match.group(1)] if meal_count_match else None
+        ),
         "allergies": [],
         "no_allergies_stated": False,
         "disliked_foods": [],
@@ -1374,6 +1391,7 @@ def converse_intake_preferences(
     catalog = ps.s3.load_food_database()
     state: dict[str, Any] = {
         "dietary_mode": (current_state or {}).get("dietary_mode"),
+        "meals_per_day": (current_state or {}).get("meals_per_day"),
         "allergies_answered": bool((current_state or {}).get("allergies_answered", False)),
         "allergies": list((current_state or {}).get("allergies", [])),
         "dislikes_answered": bool((current_state or {}).get("dislikes_answered", False)),
@@ -1389,6 +1407,57 @@ def converse_intake_preferences(
 
     det_parsed = _extract_intake_deterministic(message, state, catalog)
 
+    # A meal-count-only request changes the serving schedule, not the food
+    # basket. Reuse the already accepted basket and its checks so users can
+    # change from five slots to three meals without re-answering diet safety
+    # questions or accidentally changing their food preferences.
+    existing_stage3 = (
+        dossier.get("stage3_discrete_meal_synthesis")
+        or dossier.get("stage3_meal_plan")
+        or {}
+    )
+    schedule_only_request = (
+        det_parsed.get("meals_per_day") is not None
+        and det_parsed.get("dietary_mode") is None
+        and not det_parsed.get("allergies")
+        and not det_parsed.get("no_allergies_stated")
+        and not det_parsed.get("disliked_foods")
+        and not det_parsed.get("no_dislikes_stated")
+    )
+    if schedule_only_request and existing_stage3.get("accepted") is True:
+        updated_dossier = copy.deepcopy(dossier)
+        stage3 = copy.deepcopy(existing_stage3)
+        preferences = dict(stage3.get("preferences_applied") or {})
+        meals_per_day = int(det_parsed["meals_per_day"])
+        preferences["meals_per_day"] = meals_per_day
+        stage3["preferences_applied"] = preferences
+        revision = dict(stage3.get("revision") or {})
+        revision["meals_per_day"] = meals_per_day
+        stage3["revision"] = revision
+        updated_dossier["stage3_discrete_meal_synthesis"] = stage3
+        updated_dossier["stage3_meal_plan"] = stage3
+        schedule = ps.p14.build_deterministic_schedule(stage3["solved_food_basket"], meals_per_day)
+        schedule = ps._enrich_schedule_items(schedule, stage3["solved_food_basket"])
+        state["meals_per_day"] = meals_per_day
+        state["dietary_mode"] = preferences.get("dietary_mode") or state["dietary_mode"]
+        return {
+            "assistant_reply": f"Updated your accepted plan to {meals_per_day} meals per day. The foods and portions stayed the same.",
+            "state": state,
+            "ready_to_generate": True,
+            "llm_used": llm_used,
+            "meal_plan": {
+                "accepted": True,
+                "failure": None,
+                "clinical_verification": stage3.get("clinical_verification", {}),
+                "solved_food_basket": stage3["solved_food_basket"],
+                "meal_schedule": schedule,
+                "delivered_nutrition": stage3.get("delivered_nutrition", []),
+                "solver_metadata": stage3.get("solver_metadata", {}),
+                "latency_ms": 0.0,
+                "dossier": updated_dossier,
+            },
+        }
+
     # Merge LLM extraction + deterministic verification safely
     valid_modes = {"pure_vegetarian", "veg_nonveg_combo", "pure_non_vegetarian"}
     # Deterministic takes precedence when user explicitly writes unambiguous mode keywords
@@ -1397,6 +1466,10 @@ def converse_intake_preferences(
         chosen_mode = str(llm_parsed["dietary_mode"])
     if chosen_mode:
         state["dietary_mode"] = chosen_mode
+    if det_parsed.get("meals_per_day") is not None:
+        state["meals_per_day"] = det_parsed["meals_per_day"]
+    elif llm_parsed and llm_parsed.get("meals_per_day") in {2, 3, 4, 5}:
+        state["meals_per_day"] = int(llm_parsed["meals_per_day"])
 
     # Allergies
     merged_allergies = list(state["allergies"])
@@ -1454,6 +1527,8 @@ def converse_intake_preferences(
         ack_parts = []
         if state["dietary_mode"]:
             ack_parts.append(f"Diet style: **{mode_labels[state['dietary_mode']]}**")
+        if state.get("meals_per_day"):
+            ack_parts.append(f"Meals per day: **{state['meals_per_day']}**")
         if state["allergies"]:
             ack_parts.append(f"Allergies: **{', '.join(state['allergies'])}**")
         elif state["allergies_answered"]:
@@ -1478,6 +1553,7 @@ def converse_intake_preferences(
     plan = ps.run_optimization(
         copy.deepcopy(dossier),
         dietary_preference=state["dietary_mode"],
+        meals_per_day=state.get("meals_per_day", 5),
         allergies=state["allergies"],
         excluded_food_ids=state["excluded_food_ids"],
         disliked_terms=state["disliked_terms"],

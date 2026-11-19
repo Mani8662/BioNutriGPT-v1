@@ -1,0 +1,18 @@
+**
+!backend/
+!backend/**
+backend/data/
+backend/.env
+backend/last_raw_llm_response.txt
+!Audit/
+!Audit/infer_bionutrigpt_pipeline_Stage_1_and_2.py
+!Audit/infer_bionutrigpt_pipeline_Stage_1_to_4.py
+!Audit/stage2_counterfactual_engine.py
+!Audit/stage3_milp_solver.py
+!Audit/train_bionutrigpt_stage1.py
+!Audit/food_composition_ifct2017.csv
+!Audit/Saved Model/
+!Audit/Saved Model/bionutrigpt_stage1_best.pt
+!Data/
+!Data/preprocessing_artifacts.joblib
+!food_composition_ifct2017.json

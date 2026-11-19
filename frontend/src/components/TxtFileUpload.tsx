@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react'
 import {
   UploadCloud,
-  FileText,
   CheckCircle2,
   AlertCircle,
   Copy,
@@ -24,27 +23,28 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
   onPipelineComplete,
 }) => {
   const [dragActive, setDragActive] = useState(false)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [uploadKind, setUploadKind] = useState<'document' | 'vector'>('document')
+  const [selectedUpload, setSelectedUpload] = useState<File | null>(null)
   const [parseResult, setParseResult] = useState<TxtParseResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [rawTextPaste, setRawTextPaste] = useState('')
   const [copied, setCopied] = useState(false)
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const documentInputRef = useRef<HTMLInputElement>(null)
-  const [selectedDocument, setSelectedDocument] = useState<File | null>(null)
+  const uploadInputRef = useRef<HTMLInputElement>(null)
   const [documentResult, setDocumentResult] = useState<DocumentPipelineResponse | null>(null)
   const [documentLoading, setDocumentLoading] = useState(false)
   const [documentError, setDocumentError] = useState<string | null>(null)
   const [documentAnswers, setDocumentAnswers] = useState<Record<string, string>>({})
 
   const processDocument = async (answers?: Record<string, string>) => {
-    if (!selectedDocument || documentLoading) return
+    if (!selectedUpload || documentLoading) return
     setDocumentLoading(true)
     setDocumentError(null)
     setDocumentResult(null)
     try {
-      const result = await uploadDocumentForPipeline(selectedDocument, answers)
+      const intakeId = answers ? documentResult?.intake_id ?? undefined : undefined
+      const file = intakeId ? null : selectedUpload
+      const result = await uploadDocumentForPipeline(file, answers, intakeId)
       setDocumentResult(result)
       if (result.status === 'needs_more_input') setDocumentAnswers({})
       if (result.model_output) onPipelineComplete(result)
@@ -74,7 +74,7 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
       return
     }
 
-    setSelectedFile(file)
+    setSelectedUpload(file)
     setError(null)
     setLoading(true)
 
@@ -95,14 +95,32 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
     e.stopPropagation()
     setDragActive(false)
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      processFile(e.dataTransfer.files[0])
+      setSelectedUpload(e.dataTransfer.files[0])
+      setSelectedDocumentState(null)
+      setError(null)
+      setDocumentError(null)
     }
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      processFile(e.target.files[0])
+      setSelectedUpload(e.target.files[0])
+      setSelectedDocumentState(null)
+      setError(null)
+      setDocumentError(null)
     }
+  }
+
+  const setSelectedDocumentState = (file: File | null) => {
+    setDocumentResult(null)
+    setDocumentAnswers({})
+    if (file) setSelectedUpload(file)
+  }
+
+  const handleUpload = () => {
+    if (!selectedUpload) return
+    if (uploadKind === 'vector') void processFile(selectedUpload)
+    else void processDocument()
   }
 
   const handleParsePaste = async () => {
@@ -112,7 +130,7 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
     try {
       const result = await parseRawText(rawTextPaste)
       setParseResult(result)
-      setSelectedFile(null)
+      setSelectedUpload(null)
       onParsedSuccess(result.features, result.metadata)
     } catch (err: any) {
       setError(err.message || 'Failed to parse text')
@@ -139,53 +157,41 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
           <div className="flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
             <h2 className="text-lg font-bold text-slate-900 tracking-tight">
-              TXT / CSV Patient Vector Upload or Paste
+              Upload a file
             </h2>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Upload or paste an 87-feature whitespace- or comma-separated TXT/CSV file matching the canonical patient record.
+            Add a health document or patient data file to continue.
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={copySampleToClipboard}
-          className="px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition"
-        >
-          {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-          <span>{copied ? 'Sample Copied & Pasted!' : 'Load Sample TXT Format'}</span>
-        </button>
       </div>
 
-      <div className="p-6 space-y-6">
-        <section className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-4 space-y-3">
-          <div>
-            <h3 className="text-sm font-bold text-slate-900">Analyze a health or nutrition document</h3>
-            <p className="mt-1 text-xs text-slate-600">The LLM extracts only values shown in the file. Complete inputs are sent to the project predictor; its output then goes to the report LLM for analysis and a meal plan.</p>
+      <div className="p-5 space-y-5 sm:p-6">
+        <section className="space-y-4">
+          <div className="flex flex-wrap gap-2" role="group" aria-label="File type">
+            <button type="button" onClick={() => { setUploadKind('document'); setSelectedUpload(null) }} className={`rounded-lg px-3 py-2 text-sm font-semibold ${uploadKind === 'document' ? 'bg-emerald-800 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>Health document</button>
+            <button type="button" onClick={() => { setUploadKind('vector'); setSelectedUpload(null) }} className={`rounded-lg px-3 py-2 text-sm font-semibold ${uploadKind === 'vector' ? 'bg-emerald-800 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>Patient data (.txt / .csv)</button>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <input
-              ref={documentInputRef}
-              type="file"
-              accept=".pdf,.png,.jpg,.jpeg,.txt,.csv,application/pdf,image/png,image/jpeg,text/plain,text/csv"
-              className="sr-only"
-              onChange={(event) => {
-                const file = event.target.files?.[0] ?? null
-                setSelectedDocument(file)
-                setDocumentResult(null)
-                setDocumentError(null)
-                setDocumentAnswers({})
-              }}
-            />
-            <button type="button" onClick={() => documentInputRef.current?.click()} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50">
-              Choose a document
-            </button>
-            <span className="max-w-full truncate text-xs text-slate-600">{selectedDocument?.name ?? 'No file selected'}</span>
-            <button type="button" onClick={() => void processDocument()} disabled={!selectedDocument || documentLoading} className="rounded-lg bg-emerald-700 px-4 py-2 text-xs font-semibold text-white disabled:opacity-50">
-              {documentLoading ? 'Extracting values…' : 'Extract values and run analysis'}
+          <input ref={uploadInputRef} type="file" accept={uploadKind === 'vector' ? '.txt,.csv,text/plain,text/csv' : '.pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg'} className="sr-only" onChange={handleFileChange} />
+          <div
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+            onClick={() => uploadInputRef.current?.click()}
+            className={`flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 text-center transition ${dragActive ? 'border-emerald-500 bg-emerald-50' : 'border-slate-300 bg-slate-50 hover:border-emerald-400 hover:bg-emerald-50/40'}`}
+          >
+            <UploadCloud className="mb-2 h-8 w-8 text-emerald-700" />
+            <p className="text-sm font-semibold text-slate-800">{selectedUpload ? selectedUpload.name : 'Choose a file or drop it here'}</p>
+            <p className="mt-1 text-xs text-slate-500">{uploadKind === 'vector' ? 'TXT or CSV patient data file' : 'PDF or image of a health or nutrition document'}</p>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-xs text-slate-500">Maximum size 8 MB. Avoid files with personal identifiers.</p>
+            <button type="button" onClick={handleUpload} disabled={!selectedUpload || loading || documentLoading} className="rounded-lg bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-50">
+              {loading || documentLoading ? 'Uploading…' : 'Upload'}
             </button>
           </div>
-          <p className="text-[11px] text-slate-500">Files up to 8 MB; PDFs read up to 6 pages. Image reading uses English OCR. Avoid files with personal identifiers.</p>
           {documentError && <p role="alert" className="rounded-lg bg-rose-50 p-3 text-xs text-rose-700">{documentError}</p>}
           {documentResult && (
             <div className="space-y-3" aria-live="polite">
@@ -210,7 +216,7 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
               )}
               {documentResult.extracted_values.length > 0 && (
                 <details className="rounded-lg border border-slate-200 bg-white p-3" open={documentResult.status === 'needs_more_input'}>
-                  <summary className="cursor-pointer text-xs font-semibold text-slate-700">Review {documentResult.extracted_values.length} values extracted by the LLM</summary>
+                    <summary className="cursor-pointer text-xs font-semibold text-slate-700">Review {documentResult.extracted_values.length} extracted values</summary>
                   <div className="mt-2 overflow-x-auto">
                     <table className="w-full text-left text-xs">
                       <thead className="text-slate-500"><tr><th className="py-1 pr-3">Measurement</th><th className="py-1 pr-3">Value</th><th className="py-1">Unit</th></tr></thead>
@@ -226,57 +232,9 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
           )}
         </section>
 
-        {/* Drag and Drop Zone */}
-        <div
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
-          onDragOver={handleDrag}
-          onDrop={handleDrop}
-          onClick={() => fileInputRef.current?.click()}
-          className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
-            dragActive
-              ? 'border-emerald-500 bg-emerald-50/50 scale-[0.99]'
-              : selectedFile
-              ? 'border-blue-400 bg-blue-50/30'
-              : 'border-slate-300 hover:border-slate-400 bg-slate-50/50 hover:bg-slate-50'
-          }`}
-        >
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".txt,.csv"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-
-          <div className="flex flex-col items-center justify-center space-y-3">
-            <div
-              className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-md transition-transform ${
-                selectedFile
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-slate-600 border border-slate-200'
-              }`}
-            >
-              {selectedFile ? <FileText className="w-7 h-7" /> : <UploadCloud className="w-7 h-7 text-blue-600" />}
-            </div>
-
-            <div>
-              <p className="text-sm font-semibold text-slate-800">
-                {selectedFile ? (
-                  <span>Selected: <span className="font-mono text-blue-600">{selectedFile.name}</span></span>
-                ) : (
-                  <span>Drop your <span className="text-blue-600 font-mono">.txt</span> patient vector here, or <span className="text-blue-600 underline">browse</span></span>
-                )}
-              </p>
-              <p className="text-xs text-slate-500 mt-1">
-                Supports single-line or multi-line files with 87 space-delimited floats and optional metadata comment lines.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Alternative: Raw Text Paste Box */}
-        <div>
+        <details className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+          <summary className="cursor-pointer text-sm font-semibold text-slate-700">Paste patient data instead</summary>
+          <div className="mt-3">
           <div className="flex items-center justify-between mb-2">
             <label className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center space-x-1.5">
               <span>Or Paste Raw Text Directly</span>
@@ -300,6 +258,10 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
               className="w-full font-mono text-xs text-slate-800 bg-slate-50/50 border border-slate-200 rounded-xl p-3.5 focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none transition leading-relaxed"
             />
           </div>
+          <button type="button" onClick={copySampleToClipboard} className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100">
+            {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
+            {copied ? 'Sample copied' : 'Use sample data'}
+          </button>
           <div className="mt-2 flex justify-end">
             <button
               type="button"
@@ -311,7 +273,8 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
-        </div>
+          </div>
+        </details>
 
         {/* Parsing Error Alert */}
         {error && (

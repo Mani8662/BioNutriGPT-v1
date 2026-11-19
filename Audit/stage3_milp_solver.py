@@ -4,8 +4,8 @@
 The engine translates the continuous nutrient envelope emitted by BioNutriGPT
 Stage 2 into a discrete basket of Indian cooked dishes. It uses SciPy's
 ``scipy.optimize.milp`` (HiGHS), integer serving counts, binary food-selection
-variables, and two-sided L1 goal-programming slacks so conflicting nutrient
-targets do not make the model artificially infeasible.
+variables, and strict Stage 2 nutrient bounds. It does not relax nutrient
+requirements to make an infeasible basket appear acceptable.
 
 Food-data provenance
 --------------------
@@ -36,7 +36,7 @@ from scipy.sparse import coo_matrix
 PROJECT_DIR = Path(__file__).resolve().parent
 DEFAULT_INPUT = PROJECT_DIR / "stage2_counterfactual_prescription.json"
 DEFAULT_OUTPUT = PROJECT_DIR / "stage3_indian_meal_plan.json"
-DEFAULT_TIME_LIMIT_SEC = 0.50
+DEFAULT_TIME_LIMIT_SEC = 2.0
 MAX_TIME_LIMIT_SEC = 2.0
 MAX_SERVINGS_PER_DISH = 3
 MIN_ACTIVE_DISHES = 4
@@ -523,7 +523,9 @@ def _make_sparse_constraints(
         "cereal_grain": (3.0, 5.0),    # At least 3 servings (e.g. breakfast + lunch + dinner staple)
         "dal_pulse": (2.0, 3.0),       # 2 to 3 servings (lunch & dinner protein)
         "vegetable_sabzi": (2.0, 4.0), # 2 to 4 servings (balanced vegetables)
-        "dairy": (1.0, 2.0),           # 1 to 2 servings (e.g. breakfast/snack)
+        # Do not cap dairy at two servings: this catalog reports at most 0.5 mcg
+        # B12 per serving, while Stage 2 can require a minimum of 2.4 mcg/day.
+        "dairy": (1.0, 8.0),
     }
     for category, (low_q, high_q) in serving_limits.items():
         indices = [i for i, food in enumerate(foods) if food.category == category]
@@ -681,10 +683,9 @@ def solve_meal_plan(
     food_db: list[FoodItem],
     time_limit_sec: float = DEFAULT_TIME_LIMIT_SEC,
 ) -> Stage3Output:
-    """Solve the discrete serving optimization with a hard <=50 ms HiGHS limit.
+    """Solve the discrete serving optimization with a bounded HiGHS time limit.
 
-    The supplied time limit is capped at 0.05 seconds to enforce the requested
-    anti-freeze budget. If HiGHS returns no incumbent before that deadline, a
+    The supplied time limit is capped at MAX_TIME_LIMIT_SEC. If HiGHS returns no incumbent before that deadline, a
     deterministic calorie-oriented recovery basket is returned and explicitly
     marked as a heuristic fallback (never as an optimal MILP solution).
     """
@@ -697,6 +698,15 @@ def solve_meal_plan(
         raise ValueError("Effective solver time limit must be positive.")
 
     c, integrality, bounds, constraints, model_info = _make_sparse_constraints(food_db, stage, gamma=0.10)
+    # Stage 2 bounds are requirements, not soft preferences. Keep slack
+    # variables in the model layout for reporting compatibility, but fix them
+    # to zero so an out-of-range basket cannot be selected as a plan.
+    indices = model_info["indices"]
+    nutrient_count = len(NUTRIENT_CODES)
+    strict_upper = bounds.ub.copy()
+    strict_upper[indices["e_plus"]:indices["e_plus"] + nutrient_count] = 0.0
+    strict_upper[indices["e_minus"]:indices["e_minus"] + nutrient_count] = 0.0
+    bounds = Bounds(bounds.lb, strict_upper)
     started = time.perf_counter()
     try:
         result = milp(
@@ -725,28 +735,13 @@ def solve_meal_plan(
             0, MAX_SERVINGS_PER_DISH,
         )
 
-    # A very short time limit can return a weak incumbent. Compare it with a
-    # deterministic feasible-structure recovery candidate under the *same*
-    # normalized goal-programming objective and retain the lower-penalty basket.
-    # This never changes the solver limit and never mislabels the fallback as optimal.
+    # The recovery candidate is for preview only. It must never replace a
+    # solver incumbent satisfying the strict nutrient envelope.
     q_heuristic = _heuristic_incumbent(food_db, stage.energy_prescription["target_calories"])
     F = model_info["food_matrix"]
     target_kcal = stage.energy_prescription["target_calories"]
 
-    def candidate_objective(candidate_q: np.ndarray) -> float:
-        candidate_nutrients = F @ candidate_q.astype(np.float64)
-        penalty = 0.0
-        for k, code in enumerate(NUTRIENT_CODES):
-            low, high = stage.lower_bounds[code], stage.upper_bounds[code]
-            violation = max(low - candidate_nutrients[k], 0.0) + max(candidate_nutrients[k] - high, 0.0)
-            penalty += violation * model_info["slack_weights"][code]
-        penalty += abs(candidate_nutrients[NUTRIENT_INDEX["DR1TKCAL"]] - target_kcal) * model_info["calorie_deviation_weight"]
-        penalty += 0.10 * sum(food.selection_cost for food, qi in zip(food_db, candidate_q) if qi > 0)
-        return float(penalty)
-
-    heuristic_score = candidate_objective(q_heuristic)
-    solver_score = candidate_objective(q_solver) if q_solver is not None else math.inf
-    heuristic_selected = bool(q_solver is None or heuristic_score + 1e-9 < solver_score)
+    heuristic_selected = q_solver is None
     q = q_heuristic if heuristic_selected else q_solver
     assert q is not None
 
@@ -791,7 +786,7 @@ def solve_meal_plan(
         "solve_time_ms": round(solve_ms, 3),
         "time_limit_sec": effective_time_limit,
         "requested_time_limit_sec": float(time_limit_sec),
-        "time_limit_capped_at_50ms": bool(float(time_limit_sec) > MAX_TIME_LIMIT_SEC),
+        "time_limit_capped_at_max": bool(float(time_limit_sec) > MAX_TIME_LIMIT_SEC),
         "mip_gap": mip_gap,
         "optimality_proven": bool(not heuristic_selected and getattr(result, "status", None) == 0),
         "solver_incumbent_available": bool(solver_incumbent_available),
@@ -1019,7 +1014,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--food-db", help="Optional IFCT/RecipeDB CSV, Parquet, or JSON food database.")
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT), help=f"Output JSON path (default: {DEFAULT_OUTPUT}).")
     parser.add_argument("--time-limit", type=float, default=DEFAULT_TIME_LIMIT_SEC,
-                        help="HiGHS time limit in seconds; hard-capped at 0.05 seconds.")
+                        help=f"HiGHS time limit in seconds; hard-capped at {MAX_TIME_LIMIT_SEC:g} seconds.")
     parser.add_argument("--quiet", action="store_true", help="Suppress terminal meal-plan report.")
     args = parser.parse_args(argv)
 

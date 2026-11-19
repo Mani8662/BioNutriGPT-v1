@@ -11,12 +11,16 @@ Exposes RESTful endpoints for:
 from __future__ import annotations
 
 import logging
+import json
 import math
 import os
+import threading
+import time
 import traceback
+import uuid
 from typing import Any, Literal
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile, status
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Query, Request, Response, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from starlette.concurrency import run_in_threadpool
@@ -28,6 +32,8 @@ from schemas import (
     ChatResponse,
     ChatRollbackRequest,
     ClinicalReport,
+    AccountCredentials,
+    AccountUser,
     DossierPayload,
     DocumentPipelineResponse,
     FeatureFieldInfo,
@@ -43,16 +49,51 @@ from schemas import (
     MealPlanResult,
     PatientInput,
     RawTextInput,
+    RiskHistoryCreate,
+    RiskHistoryRecord,
     ScreeningResult,
     SessionCreateRequest,
     TxtParseResponse,
 )
 import pipeline_service as ps
+import account_store
 import chat_service
 import plan_store
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 LOGGER = logging.getLogger("BioNutriGPT.API")
+_DOCUMENT_INTAKE_TTL_SEC = 15 * 60
+_DOCUMENT_INTAKES: dict[str, tuple[float, dict[str, Any], bool]] = {}
+_DOCUMENT_INTAKES_LOCK = threading.Lock()
+
+
+def _store_document_intake(extracted: dict[str, Any], truncated: bool) -> str:
+    now = time.monotonic()
+    intake_id = uuid.uuid4().hex
+    with _DOCUMENT_INTAKES_LOCK:
+        expired = [key for key, (expires, _, _) in _DOCUMENT_INTAKES.items() if expires <= now]
+        for key in expired:
+            _DOCUMENT_INTAKES.pop(key, None)
+        while len(_DOCUMENT_INTAKES) >= 128:
+            oldest = min(_DOCUMENT_INTAKES, key=lambda key: _DOCUMENT_INTAKES[key][0])
+            _DOCUMENT_INTAKES.pop(oldest, None)
+        _DOCUMENT_INTAKES[intake_id] = (now + _DOCUMENT_INTAKE_TTL_SEC, extracted, truncated)
+    return intake_id
+
+
+def _get_document_intake(intake_id: str) -> tuple[dict[str, Any], bool]:
+    with _DOCUMENT_INTAKES_LOCK:
+        cached = _DOCUMENT_INTAKES.get(intake_id)
+        if cached is None or cached[0] <= time.monotonic():
+            _DOCUMENT_INTAKES.pop(intake_id, None)
+            raise HTTPException(status_code=422, detail="This upload session expired. Please upload the document again.")
+        return cached[1], cached[2]
+
+
+def _delete_document_intake(intake_id: str | None) -> None:
+    if intake_id:
+        with _DOCUMENT_INTAKES_LOCK:
+            _DOCUMENT_INTAKES.pop(intake_id, None)
 
 app = FastAPI(
     title="BioNutriGPT Clinical Decision Support API",
@@ -61,7 +102,7 @@ app = FastAPI(
 )
 
 
-@app.post("/api/chat", response_model=NutritionChatResponse, tags=["Nutrition Chat"])
+@app.post("/api/nutrition-chat", response_model=NutritionChatResponse, tags=["Nutrition Chat"])
 def nutrition_chat(payload: NutritionChatRequest) -> NutritionChatResponse:
     """Retrieve local food nutrient facts and explain them with the local LLM."""
     try:
@@ -73,44 +114,52 @@ def nutrition_chat(payload: NutritionChatRequest) -> NutritionChatResponse:
 
 @app.post("/api/pipeline/document", response_model=DocumentPipelineResponse, tags=["Complete Pipeline"])
 async def run_document_pipeline(
-    file: UploadFile = File(...),
+    file: UploadFile | None = File(None),
     backend: Literal["transformers", "ollama"] | None = Form(None),
     answers: str | None = Form(None),
+    intake_id: str | None = Form(None),
 ) -> DocumentPipelineResponse:
     """Extract explicit feature values, run the ML pipeline when the vector is complete, then compile with the LLM."""
-    try:
-        content = await file.read(8 * 1024 * 1024 + 1)
-        extracted_text, truncated = extract_document_text(file.filename or "", content)
-        extracted = None
-        if (file.filename or "").lower().endswith((".txt", ".csv")):
-            try:
-                values, parsed_metadata = ps.parse_raw_text(extracted_text)
-                parsed_features: dict[str, float] = {}
-                rejected_values: list[dict[str, Any]] = []
-                for field, value in zip(ps.FEATURE_DEFINITIONS, values):
-                    if math.isfinite(value) and field["min_val"] <= value <= field["max_val"]:
-                        parsed_features[field["name"]] = value
-                    else:
-                        rejected_values.append({
-                            "name": field["name"],
-                            "value": value,
-                            "reason": "outside model input range",
-                        })
-                extracted = {
-                    "features": parsed_features,
-                    "metadata": parsed_metadata,
-                    "rejected_values": rejected_values,
-                }
-            except ValueError:
-                # Unstructured TXT/CSV content is passed to the LLM extractor below.
-                pass
-        if extracted is None:
-            extracted = await run_in_threadpool(ps.extract_pipeline_features, extracted_text)
-    except DocumentExtractionError as exc:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)) from exc
-    except Exception as exc:
-        LOGGER.exception("Uploaded document extraction failed")
-        raise HTTPException(status_code=503, detail="The local LLM could not extract values from this document.") from exc
+    if intake_id:
+        extracted, truncated = _get_document_intake(intake_id)
+    else:
+        if file is None:
+            raise HTTPException(status_code=422, detail="Choose a document to upload.")
+        try:
+            content = await file.read(8 * 1024 * 1024 + 1)
+            extracted_text, truncated = await run_in_threadpool(
+                extract_document_text, file.filename or "", content
+            )
+            extracted = None
+            if (file.filename or "").lower().endswith((".txt", ".csv")):
+                try:
+                    values, parsed_metadata = ps.parse_raw_text(extracted_text)
+                    parsed_features: dict[str, float] = {}
+                    rejected_values: list[dict[str, Any]] = []
+                    for field, value in zip(ps.FEATURE_DEFINITIONS, values):
+                        if math.isfinite(value) and field["min_val"] <= value <= field["max_val"]:
+                            parsed_features[field["name"]] = value
+                        else:
+                            rejected_values.append({
+                                "name": field["name"],
+                                "value": value,
+                                "reason": "outside model input range",
+                            })
+                    extracted = {
+                        "features": parsed_features,
+                        "metadata": parsed_metadata,
+                        "rejected_values": rejected_values,
+                    }
+                except ValueError:
+                    # Unstructured TXT/CSV content is passed to the extractor below.
+                    pass
+            if extracted is None:
+                extracted = await run_in_threadpool(ps.extract_pipeline_features, extracted_text)
+        except DocumentExtractionError as exc:
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)) from exc
+        except Exception as exc:
+            LOGGER.exception("Uploaded document extraction failed")
+            raise HTTPException(status_code=503, detail="The local LLM could not extract values from this document.") from exc
 
     extracted_by_name = extracted["features"]
     missing_features = [
@@ -136,8 +185,10 @@ async def run_document_pipeline(
     questions = _document_questions(missing_features, extracted["metadata"])
     if answers is None and questions:
         notices.append("Answer the questions about the patient’s lifestyle and demographics. Other missing fields will use the model’s saved training-set imputation values.")
+        active_intake_id = intake_id or _store_document_intake(extracted, truncated)
         return DocumentPipelineResponse(
             status="needs_more_input",
+            intake_id=active_intake_id,
             extracted_values=extracted_values,
             extracted_metadata=extracted["metadata"],
             missing_features=missing_features,
@@ -155,6 +206,8 @@ async def run_document_pipeline(
         _impute_document_features(extracted_by_name)
     except (ValueError, TypeError, KeyError) as exc:
         raise HTTPException(status_code=422, detail=f"Please answer all required questions with valid values: {exc}") from exc
+
+    _delete_document_intake(intake_id)
 
     feature_vector = [extracted_by_name[field["name"]] for field in ps.FEATURE_DEFINITIONS]
     metadata_overrides = {
@@ -279,10 +332,17 @@ def _impute_document_features(features: dict[str, float]) -> None:
     if absent:
         raise ValueError("Training preprocessing data has no imputation value for: " + ", ".join(absent))
 
-# Configure CORS for local development and testing
+def _configured_cors_origins() -> list[str]:
+    configured = os.getenv("CORS_ORIGINS")
+    if configured:
+        return [origin.strip().rstrip("/") for origin in configured.split(",") if origin.strip()]
+    return ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"]
+
+
+# Use an explicit origin allowlist because account cookies require credentials.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_configured_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -297,6 +357,101 @@ app.add_middleware(
 def get_health() -> HealthStatus:
     """Return system readiness, CUDA status, and VRAM utilization."""
     return HealthStatus(**ps.get_hardware_status())
+
+
+def _set_account_cookie(response: Response, token: str) -> None:
+    secure = os.getenv("BIONUTRIGPT_COOKIE_SECURE", "false").lower() in {"1", "true", "yes"}
+    same_site = os.getenv("BIONUTRIGPT_COOKIE_SAMESITE", "lax").lower()
+    if same_site not in {"lax", "strict", "none"}:
+        same_site = "lax"
+    if same_site == "none" and not secure:
+        secure = True
+    response.set_cookie(
+        "bionutrigpt_session", token, max_age=account_store.SESSION_TTL_SECONDS,
+        httponly=True, secure=secure, samesite=same_site, path="/",
+    )
+
+
+def _authenticated_account(request: Request) -> dict[str, str]:
+    account = account_store.authenticate(request.cookies.get("bionutrigpt_session"))
+    if account is None:
+        raise HTTPException(status_code=401, detail="Sign in to access your account data.")
+    return account
+
+
+@app.post("/api/auth/register", response_model=AccountUser, status_code=status.HTTP_201_CREATED, tags=["Accounts"])
+def register_account(payload: AccountCredentials, response: Response) -> dict[str, str]:
+    try:
+        account, token = account_store.register(payload.email, payload.password)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    _set_account_cookie(response, token)
+    return account
+
+
+@app.post("/api/auth/login", response_model=AccountUser, tags=["Accounts"])
+def login_account(payload: AccountCredentials, response: Response) -> dict[str, str]:
+    try:
+        account, token = account_store.login(payload.email, payload.password)
+    except ValueError as exc:
+        raise HTTPException(status_code=401, detail=str(exc)) from exc
+    _set_account_cookie(response, token)
+    return account
+
+
+@app.get("/api/auth/me", response_model=AccountUser, tags=["Accounts"])
+def get_current_account(account: dict[str, str] = Depends(_authenticated_account)) -> dict[str, str]:
+    return account
+
+
+@app.post("/api/auth/logout", tags=["Accounts"])
+def logout_account(request: Request, response: Response) -> dict[str, bool]:
+    account_store.revoke(request.cookies.get("bionutrigpt_session"))
+    secure = os.getenv("BIONUTRIGPT_COOKIE_SECURE", "false").lower() in {"1", "true", "yes"}
+    same_site = os.getenv("BIONUTRIGPT_COOKIE_SAMESITE", "lax").lower()
+    if same_site not in {"lax", "strict", "none"}:
+        same_site = "lax"
+    response.delete_cookie(
+        "bionutrigpt_session", path="/", httponly=True,
+        secure=secure or same_site == "none", samesite=same_site,
+    )
+    return {"ok": True}
+
+
+@app.get("/api/history", response_model=list[RiskHistoryRecord], tags=["Risk History"])
+def get_risk_history(
+    limit: int = Query(250, ge=1, le=1000),
+    account: dict[str, str] = Depends(_authenticated_account),
+) -> list[dict[str, Any]]:
+    return account_store.list_risk_assessments(account["id"], limit)
+
+
+@app.post("/api/history", response_model=RiskHistoryRecord, status_code=status.HTTP_201_CREATED, tags=["Risk History"])
+def save_risk_history(
+    payload: RiskHistoryCreate,
+    account: dict[str, str] = Depends(_authenticated_account),
+) -> dict[str, Any]:
+    return account_store.add_risk_assessment(
+        account["id"], payload.source,
+        {"diabetes": payload.diabetes, "obesity": payload.obesity, "cvd": payload.cvd},
+    )
+
+
+@app.delete("/api/history/{assessment_id}", tags=["Risk History"])
+def remove_risk_history_entry(
+    assessment_id: str,
+    account: dict[str, str] = Depends(_authenticated_account),
+) -> dict[str, bool]:
+    if not account_store.delete_risk_assessment(account["id"], assessment_id):
+        raise HTTPException(status_code=404, detail="Risk history entry not found.")
+    return {"ok": True}
+
+
+@app.get("/api/admin/summary", tags=["Administration"])
+def get_admin_summary(account: dict[str, str] = Depends(_authenticated_account)) -> dict[str, Any]:
+    if account.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Administrator access is required.")
+    return account_store.get_admin_summary()
 
 
 @app.get("/api/features", response_model=list[FeatureFieldInfo], tags=["Metadata"])
@@ -506,7 +661,10 @@ def run_meal_optimization_stage(payload: DossierPayload) -> MealPlanResult:
 def run_clinical_compiler(payload: DossierPayload) -> ClinicalReport:
     """Run Stage 4 using real on-device Local GPU LLM (Qwen 2.5 3B NF4)."""
     try:
-        res = ps.run_compilation(payload.dossier, backend="transformers")
+        res = ps.run_compilation(
+            payload.dossier,
+            backend=os.getenv("BIONUTRIGPT_STAGE4_BACKEND", "ollama"),
+        )
         return ClinicalReport(**res)
     except ps.p14.Stage4Error as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
@@ -587,7 +745,7 @@ async def run_full_pipeline_file(
         if activity_level is not None:
             meta_overrides["activity_level"] = activity_level
 
-        res = ps.run_full_pipeline(values, meta_overrides, backend=backend)
+        res = await run_in_threadpool(ps.run_full_pipeline, values, meta_overrides, backend)
         return FullPipelineResponse(**res)
     except Exception as exc:
         LOGGER.error("Pipeline file upload error: %s\n%s", exc, traceback.format_exc())

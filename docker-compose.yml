@@ -1,0 +1,67 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - ollama-models:/root/.ollama
+
+  ollama-model-pull:
+    image: ollama/ollama:latest
+    restart: "no"
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5-coder:3b}
+    entrypoint: ["/bin/sh", "-c"]
+    command: >-
+      until ollama list >/dev/null 2>&1; do sleep 2; done;
+      ollama pull "$OLLAMA_MODEL"
+    depends_on:
+      - ollama
+    volumes:
+      - ollama-models:/root/.ollama
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      BIONUTRIGPT_DATA_DIR: /app/backend/data
+      BIONUTRIGPT_OLLAMA_URL: http://ollama:11434/api/generate
+      BIONUTRIGPT_CHAT_BACKEND: ollama
+      BIONUTRIGPT_CHAT_MODEL: ${OLLAMA_MODEL:-qwen2.5-coder:3b}
+      BIONUTRIGPT_STAGE4_BACKEND: ollama
+      BIONUTRIGPT_STAGE4_MODEL: ${OLLAMA_MODEL:-qwen2.5-coder:3b}
+      BIONUTRIGPT_AUTH_SECRET: ${BIONUTRIGPT_AUTH_SECRET:-}
+      BIONUTRIGPT_ADMIN_EMAILS: ${BIONUTRIGPT_ADMIN_EMAILS:-}
+      BIONUTRIGPT_COOKIE_SECURE: ${BIONUTRIGPT_COOKIE_SECURE:-false}
+      BIONUTRIGPT_COOKIE_SAMESITE: ${BIONUTRIGPT_COOKIE_SAMESITE:-lax}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080}
+    volumes:
+      - account-data:/app/backend/data
+      - plan-sessions:/app/Saved Model/plan_sessions
+    depends_on:
+      ollama-model-pull:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4)"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  account-data:
+  plan-sessions:
+  ollama-models:

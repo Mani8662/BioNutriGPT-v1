@@ -20,7 +20,7 @@ export const NutritionChat: React.FC<{ onClose: () => void }> = ({ onClose }) =>
     setLoading(true)
     setError('')
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch('/api/nutrition-chat', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: question, history: turns.slice(-6) }),
       })

@@ -46,6 +46,32 @@ class RawTextInput(BaseModel):
     text: str = Field(..., description="Raw text from a .txt file or paste box")
 
 
+class AccountCredentials(BaseModel):
+    email: str = Field(..., min_length=3, max_length=254)
+    password: str = Field(..., min_length=1, max_length=128)
+
+
+class AccountUser(BaseModel):
+    id: str
+    email: str
+    created_at: str
+    role: Literal["user", "admin"] = "user"
+
+
+class RiskHistoryCreate(BaseModel):
+    source: Literal["form", "document", "file"] = "form"
+    diabetes: float = Field(..., ge=0, le=1)
+    obesity: float = Field(..., ge=0, le=1)
+    cvd: float = Field(..., ge=0, le=1)
+
+
+class RiskHistoryRecord(BaseModel):
+    id: str
+    created_at: str
+    source: Literal["form", "document", "file"]
+    probabilities: dict[str, float]
+
+
 class DossierPayload(BaseModel):
     """Unified JSON dossier produced by Stages 1+2 (and optionally Stage 3), with optional meal preferences."""
     dossier: dict[str, Any]
@@ -293,6 +319,7 @@ class ExtractedModelValue(BaseModel):
 
 class DocumentPipelineResponse(BaseModel):
     status: Literal["needs_more_input", "completed"]
+    intake_id: str | None = None
     extracted_values: list[ExtractedModelValue] = Field(default_factory=list)
     extracted_metadata: dict[str, Any] = Field(default_factory=dict)
     missing_features: list[dict[str, str]] = Field(default_factory=list)

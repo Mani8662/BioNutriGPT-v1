@@ -4,5 +4,13 @@ __pycache__/
 *.py[cod]
 .env
 backend/.env
+backend/data/
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+frontend/.env.local
 frontend/node_modules/
 frontend/dist/
+.venv312/
+Saved Model/plan_sessions/
+Audit/stage2_counterfactual_prescription.json
