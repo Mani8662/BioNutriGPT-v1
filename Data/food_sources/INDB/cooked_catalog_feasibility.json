@@ -114,7 +114,7 @@
           "DR1TFF",
           "DR1TCAFF"
         ],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_plain_dosa",
@@ -135,11 +135,11 @@
           "DR1TCAFF",
           "DR1TALCO"
         ],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_skim_curd",
-        "name": "Yogurt, plain, skim milk",
+        "name": "Skim-milk curd / dahi (plain)",
         "category": "dairy",
         "quantity": 2,
         "serving_unit": "1 standardized 150 g portion",
@@ -147,7 +147,7 @@
         "serving_weight_g": 150.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_palak_paneer",
@@ -170,11 +170,11 @@
           "DR1TVB12",
           "DR1TCAFF"
         ],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_kale_cooked",
-        "name": "Kale, cooked, boiled, drained, without salt",
+        "name": "Kale, cooked / haritaki sabzi",
         "category": "vegetable_sabzi",
         "quantity": 2,
         "serving_unit": "1 standardized 130 g portion",
@@ -182,11 +182,11 @@
         "serving_weight_g": 130.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_grilled_chicken_breast",
-        "name": "Chicken, broilers or fryers, breast, meat only, cooked, roasted",
+        "name": "Grilled chicken breast (Murgh tikka style)",
         "category": "non_veg_protein",
         "quantity": 1,
         "serving_unit": "1 standardized 120 g portion",
@@ -194,7 +194,7 @@
         "serving_weight_g": 120.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       }
     ],
     "delivered_nutrition": [
@@ -1590,12 +1590,32 @@
     "failure": null,
     "solved_food_basket": [
       {
+        "food_id": "recipe_rajma_curry",
+        "name": "Kidney bean curry (Rajmah curry)",
+        "category": "dal_pulse",
+        "quantity": 1,
+        "serving_unit": "1 standardized 150 g portion",
+        "total_weight_g": 150.0,
+        "serving_weight_g": 150.0,
+        "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
+        "unknown_nutrients": [
+          "DR1TSUGR",
+          "DR1TACAR",
+          "DR1TBCAR",
+          "DR1TLYCO",
+          "DR1TLZ",
+          "DR1TFF",
+          "DR1TCAFF"
+        ],
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
+      },
+      {
         "food_id": "recipe_dal_palak",
         "name": "Arhar with spinach (Arhar dal aur palak)",
         "category": "dal_pulse",
-        "quantity": 3,
+        "quantity": 2,
         "serving_unit": "1 standardized 150 g portion",
-        "total_weight_g": 450.0,
+        "total_weight_g": 300.0,
         "serving_weight_g": 150.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [
@@ -1608,11 +1628,11 @@
           "DR1TCAFF",
           "DR1TALCO"
         ],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_brown_rice_cooked",
-        "name": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+        "name": "Brown rice, cooked (Bhure chawal)",
         "category": "cereal_grain",
         "quantity": 3,
         "serving_unit": "1 standardized 100 g portion",
@@ -1620,15 +1640,15 @@
         "serving_weight_g": 100.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_plain_dosa",
         "name": "Plain dosa",
         "category": "cereal_grain",
-        "quantity": 2,
+        "quantity": 1,
         "serving_unit": "1 standardized 100 g portion",
-        "total_weight_g": 200.0,
+        "total_weight_g": 100.0,
         "serving_weight_g": 100.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [
@@ -1641,35 +1661,15 @@
           "DR1TCAFF",
           "DR1TALCO"
         ],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
-      },
-      {
-        "food_id": "recipe_bhindi_masala",
-        "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
-        "category": "vegetable_sabzi",
-        "quantity": 1,
-        "serving_unit": "1 standardized 120 g portion",
-        "total_weight_g": 120.0,
-        "serving_weight_g": 120.0,
-        "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
-        "unknown_nutrients": [
-          "DR1TSUGR",
-          "DR1TACAR",
-          "DR1TBCAR",
-          "DR1TLYCO",
-          "DR1TLZ",
-          "DR1TFF",
-          "DR1TCAFF"
-        ],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_cabbage_peas",
         "name": "Cabbage and peas (Pattagobhi aur matar)",
         "category": "vegetable_sabzi",
-        "quantity": 2,
+        "quantity": 1,
         "serving_unit": "1 standardized 150 g portion",
-        "total_weight_g": 300.0,
+        "total_weight_g": 150.0,
         "serving_weight_g": 150.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [
@@ -1681,43 +1681,55 @@
           "DR1TFF",
           "DR1TCAFF"
         ],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_skim_milk",
-        "name": "Milk, nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)",
+        "name": "Skim milk / toned milk (plain)",
         "category": "dairy",
         "quantity": 2,
-        "serving_unit": "1 standardized 250 g portion",
+        "serving_unit": "1 standardized 250 mL portion",
         "total_weight_g": 500.0,
         "serving_weight_g": 250.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       },
       {
         "food_id": "recipe_almonds_raw",
-        "name": "Nuts, almonds",
+        "name": "Almonds, raw / soaked (Badam)",
         "category": "fruit",
-        "quantity": 1,
+        "quantity": 3,
         "serving_unit": "1 standardized 28 g portion",
-        "total_weight_g": 28.0,
+        "total_weight_g": 84.0,
         "serving_weight_g": 28.0,
         "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
         "unknown_nutrients": [],
-        "catalog_version": "sourced-cooked-v5-veg-nonveg"
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
+      },
+      {
+        "food_id": "recipe_carrots_cooked",
+        "name": "Carrots, cooked / gajar sabzi",
+        "category": "vegetable_sabzi",
+        "quantity": 2,
+        "serving_unit": "1 standardized 120 g portion",
+        "total_weight_g": 240.0,
+        "serving_weight_g": 120.0,
+        "data_source": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\food_composition_cooked_sourced.json",
+        "unknown_nutrients": [],
+        "catalog_version": "sourced-cooked-v6-veg-nonveg"
       }
     ],
     "delivered_nutrition": [
       {
         "nutrient": "DR1TKCAL",
-        "delivered": 2025.317112,
+        "delivered": 1960.190082,
         "target": 1962.0,
         "min_bound": 1863.9000244140625,
         "max_bound": 2060.10009765625,
         "baseline": 1990.0,
-        "absolute_error": 63.317112,
-        "percentage_error": 3.2272,
+        "absolute_error": 1.809918,
+        "percentage_error": 0.0922,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TKCAL",
@@ -1744,13 +1756,13 @@
       },
       {
         "nutrient": "DR1TPROT",
-        "delivered": 72.808911,
+        "delivered": 74.935631,
         "target": 90.70196533203125,
         "min_bound": 59.20000076293945,
         "max_bound": 148.0,
         "baseline": 90.0,
-        "absolute_error": 17.893054,
-        "percentage_error": 19.7273,
+        "absolute_error": 15.766334,
+        "percentage_error": 17.3826,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TPROT",
@@ -1777,13 +1789,13 @@
       },
       {
         "nutrient": "DR1TCARB",
-        "delivered": 281.288251,
+        "delivered": 251.667366,
         "target": 250.67433166503906,
         "min_bound": 130.0,
         "max_bound": 294.29998779296875,
         "baseline": 250.0,
-        "absolute_error": 30.613919,
-        "percentage_error": 12.2126,
+        "absolute_error": 0.993034,
+        "percentage_error": 0.3961,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TCARB",
@@ -1810,13 +1822,13 @@
       },
       {
         "nutrient": "DR1TSUGR",
-        "delivered": 27.388,
+        "delivered": 38.104,
         "target": 42.69025421142578,
         "min_bound": 0.0,
         "max_bound": 294.29998779296875,
         "baseline": 42.0,
-        "absolute_error": 15.302254,
-        "percentage_error": 35.8448,
+        "absolute_error": 4.586254,
+        "percentage_error": 10.7431,
         "within_bounds": false,
         "rule_provenance": {
           "nutrient": "DR1TSUGR",
@@ -1843,13 +1855,13 @@
       },
       {
         "nutrient": "DR1TFIBE",
-        "delivered": 40.826715,
+        "delivered": 46.33135,
         "target": 30.622409968510205,
         "min_bound": 28.0,
         "max_bound": 60.0,
         "baseline": 30.0,
-        "absolute_error": 10.204305,
-        "percentage_error": 33.323,
+        "absolute_error": 15.70894,
+        "percentage_error": 51.2988,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TFIBE",
@@ -1876,13 +1888,13 @@
       },
       {
         "nutrient": "DR1TTFAT",
-        "delivered": 65.614206,
+        "delivered": 75.009322,
         "target": 69.3517837524414,
         "min_bound": 43.599998474121094,
         "max_bound": 76.30000305175781,
         "baseline": 70.0,
-        "absolute_error": 3.737577,
-        "percentage_error": 5.3893,
+        "absolute_error": 5.657538,
+        "percentage_error": 8.1577,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TTFAT",
@@ -1909,13 +1921,13 @@
       },
       {
         "nutrient": "DR1TSFAT",
-        "delivered": 21.358874,
+        "delivered": 15.463767,
         "target": 17.848859786987305,
         "min_bound": 0.0,
         "max_bound": 21.799999237060547,
         "baseline": 18.0,
-        "absolute_error": 3.510015,
-        "percentage_error": 19.6652,
+        "absolute_error": 2.385093,
+        "percentage_error": 13.3627,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TSFAT",
@@ -1942,13 +1954,13 @@
       },
       {
         "nutrient": "DR1TMFAT",
-        "delivered": 21.141612,
+        "delivered": 34.300147,
         "target": 28.655637741088867,
         "min_bound": 0.0,
         "max_bound": 76.30000305175781,
         "baseline": 28.0,
-        "absolute_error": 7.514026,
-        "percentage_error": 26.2218,
+        "absolute_error": 5.644509,
+        "percentage_error": 19.6977,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TMFAT",
@@ -1975,13 +1987,13 @@
       },
       {
         "nutrient": "DR1TPFAT",
-        "delivered": 18.69797,
+        "delivered": 20.72662,
         "target": 17.55786895751953,
         "min_bound": 10.899999618530273,
         "max_bound": 21.799999237060547,
         "baseline": 17.0,
-        "absolute_error": 1.140101,
-        "percentage_error": 6.4934,
+        "absolute_error": 3.168751,
+        "percentage_error": 18.0475,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TPFAT",
@@ -2008,13 +2020,13 @@
       },
       {
         "nutrient": "DR1TCHOL",
-        "delivered": 77.247854,
+        "delivered": 48.198685,
         "target": 219.64906311035156,
         "min_bound": 0.0,
         "max_bound": 300.0,
         "baseline": 220.0,
-        "absolute_error": 142.401209,
-        "percentage_error": 64.8312,
+        "absolute_error": 171.450378,
+        "percentage_error": 78.0565,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TCHOL",
@@ -2041,13 +2053,13 @@
       },
       {
         "nutrient": "DR1TATOC",
-        "delivered": 18.466128,
+        "delivered": 31.654418,
         "target": 15.0,
         "min_bound": 15.0,
         "max_bound": 1000000.0,
         "baseline": 10.5,
-        "absolute_error": 3.466128,
-        "percentage_error": 23.1075,
+        "absolute_error": 16.654418,
+        "percentage_error": 111.0295,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TATOC",
@@ -2074,13 +2086,13 @@
       },
       {
         "nutrient": "DR1TRET",
-        "delivered": 522.318645,
+        "delivered": 428.982903,
         "target": 349.9052429199219,
         "min_bound": 0.0,
         "max_bound": 3000.0,
         "baseline": 350.0,
-        "absolute_error": 172.413402,
-        "percentage_error": 49.2743,
+        "absolute_error": 79.07766,
+        "percentage_error": 22.5997,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TRET",
@@ -2107,13 +2119,13 @@
       },
       {
         "nutrient": "DR1TVARA",
-        "delivered": 906.156405,
+        "delivered": 2742.659956,
         "target": 900.0,
         "min_bound": 900.0,
         "max_bound": 1000000.0,
         "baseline": 900.0,
-        "absolute_error": 6.156405,
-        "percentage_error": 0.684,
+        "absolute_error": 1842.659956,
+        "percentage_error": 204.74,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TVARA",
@@ -2140,13 +2152,13 @@
       },
       {
         "nutrient": "DR1TACAR",
-        "delivered": 0.0,
+        "delivered": 9062.4,
         "target": 500.00164794921875,
         "min_bound": 0.0,
         "max_bound": 1000000.0,
         "baseline": 500.0,
-        "absolute_error": 500.001648,
-        "percentage_error": 100.0,
+        "absolute_error": 8562.398352,
+        "percentage_error": 1712.474,
         "within_bounds": false,
         "rule_provenance": {
           "nutrient": "DR1TACAR",
@@ -2173,13 +2185,13 @@
       },
       {
         "nutrient": "DR1TBCAR",
-        "delivered": 0.28,
+        "delivered": 19997.64,
         "target": 3200.000244140625,
         "min_bound": 0.0,
         "max_bound": 1000000.0,
         "baseline": 3200.0,
-        "absolute_error": 3199.720244,
-        "percentage_error": 99.9913,
+        "absolute_error": 16797.639756,
+        "percentage_error": 524.9262,
         "within_bounds": false,
         "rule_provenance": {
           "nutrient": "DR1TBCAR",
@@ -2239,13 +2251,13 @@
       },
       {
         "nutrient": "DR1TLZ",
-        "delivered": 0.28,
+        "delivered": 1649.64,
         "target": 1800.0048828125,
         "min_bound": 0.0,
         "max_bound": 1000000.0,
         "baseline": 1800.0,
-        "absolute_error": 1799.724883,
-        "percentage_error": 99.9844,
+        "absolute_error": 150.364883,
+        "percentage_error": 8.3536,
         "within_bounds": false,
         "rule_provenance": {
           "nutrient": "DR1TLZ",
@@ -2272,13 +2284,13 @@
       },
       {
         "nutrient": "DR1TVB1",
-        "delivered": 1.760281,
+        "delivered": 1.744262,
         "target": 2.1909608840942383,
         "min_bound": 1.2000000476837158,
         "max_bound": 1000000.0,
         "baseline": 1.399999976158142,
-        "absolute_error": 0.43068,
-        "percentage_error": 19.6571,
+        "absolute_error": 0.446699,
+        "percentage_error": 20.3883,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TVB1",
@@ -2305,13 +2317,13 @@
       },
       {
         "nutrient": "DR1TVB2",
-        "delivered": 1.879874,
+        "delivered": 2.487982,
         "target": 2.8694167137145996,
         "min_bound": 1.2999999523162842,
         "max_bound": 1000000.0,
         "baseline": 1.600000023841858,
-        "absolute_error": 0.989543,
-        "percentage_error": 34.4859,
+        "absolute_error": 0.381435,
+        "percentage_error": 13.2931,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TVB2",
@@ -2338,13 +2350,13 @@
       },
       {
         "nutrient": "DR1TNIAC",
-        "delivered": 16.878769,
+        "delivered": 17.935016,
         "target": 17.289119720458984,
         "min_bound": 16.0,
         "max_bound": 1000000.0,
         "baseline": 18.0,
-        "absolute_error": 0.410351,
-        "percentage_error": 2.3735,
+        "absolute_error": 0.645897,
+        "percentage_error": 3.7359,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TNIAC",
@@ -2371,13 +2383,13 @@
       },
       {
         "nutrient": "DR1TVB6",
-        "delivered": 1.919956,
+        "delivered": 1.804318,
         "target": 2.5475335121154785,
         "min_bound": 1.2999999523162842,
         "max_bound": 100.0,
         "baseline": 1.7999999523162842,
-        "absolute_error": 0.627578,
-        "percentage_error": 24.6347,
+        "absolute_error": 0.743216,
+        "percentage_error": 29.1739,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TVB6",
@@ -2404,13 +2416,13 @@
       },
       {
         "nutrient": "DR1TFOLA",
-        "delivered": 431.74645,
+        "delivered": 435.654309,
         "target": 500.0207824707031,
         "min_bound": 0.0,
         "max_bound": 1000000.0,
         "baseline": 500.0,
-        "absolute_error": 68.274333,
-        "percentage_error": 13.6543,
+        "absolute_error": 64.366474,
+        "percentage_error": 12.8728,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TFOLA",
@@ -2470,13 +2482,13 @@
       },
       {
         "nutrient": "DR1TFF",
-        "delivered": 64.32,
+        "delivered": 122.56,
         "target": 400.0,
         "min_bound": 0.0,
         "max_bound": 1000000.0,
         "baseline": 380.0,
-        "absolute_error": 335.68,
-        "percentage_error": 83.92,
+        "absolute_error": 277.44,
+        "percentage_error": 69.36,
         "within_bounds": false,
         "rule_provenance": {
           "nutrient": "DR1TFF",
@@ -2503,13 +2515,13 @@
       },
       {
         "nutrient": "DR1TFDFE",
-        "delivered": 626.692445,
+        "delivered": 585.456471,
         "target": 583.9765625,
         "min_bound": 400.0,
         "max_bound": 1000000.0,
         "baseline": 584.0,
-        "absolute_error": 42.715883,
-        "percentage_error": 7.3147,
+        "absolute_error": 1.479909,
+        "percentage_error": 0.2534,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TFDFE",
@@ -2536,13 +2548,13 @@
       },
       {
         "nutrient": "DR1TVB12",
-        "delivered": 2.53288,
+        "delivered": 2.516626,
         "target": 3.310508966445923,
         "min_bound": 2.4000000953674316,
         "max_bound": 1000000.0,
         "baseline": 4.199999809265137,
-        "absolute_error": 0.777629,
-        "percentage_error": 23.4897,
+        "absolute_error": 0.793883,
+        "percentage_error": 23.9807,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TVB12",
@@ -2569,13 +2581,13 @@
       },
       {
         "nutrient": "DR1TVC",
-        "delivered": 140.912898,
+        "delivered": 92.532581,
         "target": 99.92643737792969,
         "min_bound": 90.0,
         "max_bound": 2000.0,
         "baseline": 100.0,
-        "absolute_error": 40.98646,
-        "percentage_error": 41.0166,
+        "absolute_error": 7.393856,
+        "percentage_error": 7.3993,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TVC",
@@ -2602,13 +2614,13 @@
       },
       {
         "nutrient": "DR1TVK",
-        "delivered": 487.858272,
+        "delivered": 327.864472,
         "target": 120.38790130615234,
         "min_bound": 120.0,
         "max_bound": 1000000.0,
         "baseline": 120.0,
-        "absolute_error": 367.470371,
-        "percentage_error": 305.2386,
+        "absolute_error": 207.47657,
+        "percentage_error": 172.3401,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TVK",
@@ -2635,13 +2647,13 @@
       },
       {
         "nutrient": "DR1TCALC",
-        "delivered": 1049.120544,
+        "delivered": 1141.793378,
         "target": 1000.0,
         "min_bound": 1000.0,
         "max_bound": 2500.0,
         "baseline": 950.0,
-        "absolute_error": 49.120544,
-        "percentage_error": 4.9121,
+        "absolute_error": 141.793378,
+        "percentage_error": 14.1793,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TCALC",
@@ -2668,13 +2680,13 @@
       },
       {
         "nutrient": "DR1TPHOS",
-        "delivered": 1632.09665,
+        "delivered": 1811.2646,
         "target": 1400.0340576171875,
         "min_bound": 700.0,
         "max_bound": 4000.0,
         "baseline": 1400.0,
-        "absolute_error": 232.062592,
-        "percentage_error": 16.5755,
+        "absolute_error": 411.230542,
+        "percentage_error": 29.3729,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TPHOS",
@@ -2701,13 +2713,13 @@
       },
       {
         "nutrient": "DR1TMAGN",
-        "delivered": 614.420226,
+        "delivered": 680.40457,
         "target": 400.0,
         "min_bound": 420.0,
         "max_bound": 1000000.0,
         "baseline": 380.0,
-        "absolute_error": 214.420226,
-        "percentage_error": 53.6051,
+        "absolute_error": 280.40457,
+        "percentage_error": 70.1011,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TMAGN",
@@ -2734,13 +2746,13 @@
       },
       {
         "nutrient": "DR1TIRON",
-        "delivered": 14.252213,
+        "delivered": 14.999791,
         "target": 14.629695892333984,
         "min_bound": 8.0,
         "max_bound": 45.0,
         "baseline": 14.0,
-        "absolute_error": 0.377483,
-        "percentage_error": 2.5802,
+        "absolute_error": 0.370096,
+        "percentage_error": 2.5298,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TIRON",
@@ -2767,13 +2779,13 @@
       },
       {
         "nutrient": "DR1TZINC",
-        "delivered": 11.134896,
+        "delivered": 11.623821,
         "target": 11.0,
         "min_bound": 11.0,
         "max_bound": 40.0,
         "baseline": 11.0,
-        "absolute_error": 0.134896,
-        "percentage_error": 1.2263,
+        "absolute_error": 0.623821,
+        "percentage_error": 5.6711,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TZINC",
@@ -2800,13 +2812,13 @@
       },
       {
         "nutrient": "DR1TCOPP",
-        "delivered": 2.303814,
+        "delivered": 2.508737,
         "target": 0.9769087433815002,
         "min_bound": 0.8999999761581421,
         "max_bound": 10.0,
         "baseline": 1.2000000476837158,
-        "absolute_error": 1.326905,
-        "percentage_error": 135.827,
+        "absolute_error": 1.531828,
+        "percentage_error": 156.8036,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TCOPP",
@@ -2833,13 +2845,13 @@
       },
       {
         "nutrient": "DR1TSODI",
-        "delivered": 1875.624124,
+        "delivered": 1747.423163,
         "target": 1899.9886474609375,
         "min_bound": 500.0,
         "max_bound": 2300.0,
         "baseline": 1900.0,
-        "absolute_error": 24.364524,
-        "percentage_error": 1.2824,
+        "absolute_error": 152.565484,
+        "percentage_error": 8.0298,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TSODI",
@@ -2866,13 +2878,13 @@
       },
       {
         "nutrient": "DR1TPOTA",
-        "delivered": 3903.415565,
+        "delivered": 4291.051245,
         "target": 3500.008056640625,
         "min_bound": 2600.0,
         "max_bound": 4700.0,
         "baseline": 3500.0,
-        "absolute_error": 403.407508,
-        "percentage_error": 11.5259,
+        "absolute_error": 791.043189,
+        "percentage_error": 22.6012,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TPOTA",
@@ -2899,13 +2911,13 @@
       },
       {
         "nutrient": "DR1TSELE",
-        "delivered": 56.28425,
+        "delivered": 58.259946,
         "target": 89.53591918945312,
         "min_bound": 55.0,
         "max_bound": 400.0,
         "baseline": 90.0,
-        "absolute_error": 33.25167,
-        "percentage_error": 37.1378,
+        "absolute_error": 31.275973,
+        "percentage_error": 34.9312,
         "within_bounds": true,
         "rule_provenance": {
           "nutrient": "DR1TSELE",
@@ -3000,17 +3012,17 @@
     "clinical_verification": {
       "calories": {
         "passed": true,
-        "delivered_kcal": 2025.317,
+        "delivered_kcal": 1960.19,
         "target_kcal": 1962.0,
-        "absolute_error_pct": 3.2272,
+        "absolute_error_pct": 0.0922,
         "acceptance_threshold_pct": 5.0
       },
       "macronutrient_split": {
         "passed": true,
         "percent_of_kcal": {
-          "protein_pct_kcal": 14.38,
-          "carb_pct_kcal": 55.554,
-          "fat_pct_kcal": 29.157
+          "protein_pct_kcal": 15.292,
+          "carb_pct_kcal": 51.356,
+          "fat_pct_kcal": 34.44
         },
         "screening_ranges_pct": {
           "protein_pct_kcal": [
@@ -3034,16 +3046,16 @@
       },
       "sodium_to_potassium_ratio": {
         "passed": true,
-        "delivered_ratio": 0.48039,
+        "delivered_ratio": 0.40713,
         "baseline_ratio": 0.5427,
-        "sodium_mg": 1875.624,
-        "potassium_mg": 3903.416
+        "sodium_mg": 1747.423,
+        "potassium_mg": 4291.051
       },
       "fiber_adequacy": {
         "passed": true,
-        "delivered_fiber_g": 40.827,
+        "delivered_fiber_g": 46.331,
         "stage2_minimum_g": 28.0,
-        "fiber_g_per_1000_kcal": 20.158,
+        "fiber_g_per_1000_kcal": 23.636,
         "minimum_g_per_1000_kcal": 14.0
       },
       "nutrient_envelope": {
@@ -3098,9 +3110,9 @@
     },
     "solver_metadata": {
       "backend": "scipy.optimize.milp / HiGHS",
-      "time_limit_sec": 0.5,
-      "requested_time_limit_sec": 0.5,
-      "solve_time_ms": 511.213,
+      "time_limit_sec": 1.5,
+      "requested_time_limit_sec": 1.5,
+      "solve_time_ms": 1510.737,
       "candidate_validation": [
         {
           "origin": "solver",
@@ -3156,15 +3168,15 @@
       "constraint_count": 122,
       "status": "accepted_solver_plan",
       "optimality_proven": false,
-      "mip_gap": 0.8917057289659555,
+      "mip_gap": 0.36387566243386427,
       "heuristic_fallback_used": false,
       "heuristic_candidate_selected": false,
-      "active_dish_count": 7,
-      "total_servings": 14,
-      "calorie_error_pct": 3.2272,
+      "active_dish_count": 8,
+      "total_servings": 15,
+      "calorie_error_pct": 0.0922,
       "target_calories": 1962.0,
-      "delivered_calories": 2025.317,
-      "total_slack_penalty": 5.540757760797435,
+      "delivered_calories": 1960.19,
+      "total_slack_penalty": 0.9433729403901077,
       "active_nutrient_slack": 0.0
     }
   },
