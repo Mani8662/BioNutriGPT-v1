@@ -27,6 +27,7 @@ LOGGER = logging.getLogger("BioNutriGPT.Service")
 # Dynamically locate canonical Models/Less Data directory regardless of where backend is placed
 CURRENT_DIR = Path(__file__).resolve().parent
 candidates = [
+    CURRENT_DIR.parent / "Audit",                       # canonical model sources in BioNutriGPT-v1
     CURRENT_DIR.parent,                                 # e.g., Models/Less Data/backend -> Models/Less Data
     CURRENT_DIR.parent / "Models" / "Less Data",        # e.g., repo_root/backend -> repo_root/Models/Less Data
     CURRENT_DIR.parent.parent / "Models" / "Less Data", # e.g., nested subfolder
@@ -714,9 +715,9 @@ def get_food_catalog() -> list[dict[str, Any]]:
     if _FOOD_CATALOG_CACHE is not None:
         return _FOOD_CATALOG_CACHE
 
-    db = s3.load_food_database()
+    foods = s3.load_food_database()
     items: list[dict[str, Any]] = []
-    for food in db.foods.values():
+    for food in foods:
         items.append({
             "food_id": food.food_id,
             "name": food.name,

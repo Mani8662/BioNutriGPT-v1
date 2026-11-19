@@ -54,7 +54,14 @@ _MODEL_CACHE: dict[tuple[str, str], nn.Module] = {}
 # ---------------------------------------------------------------------------
 PROJECT_DIR = Path(__file__).resolve().parent
 DEFAULT_CHECKPOINT = PROJECT_DIR / "Saved Model" / "bionutrigpt_stage1_best.pt"
-DEFAULT_PREPROCESSOR = PROJECT_DIR / "Data" / "preprocessing_artifacts.joblib"
+_PREPROCESSOR_CANDIDATES = (
+    PROJECT_DIR / "Data" / "preprocessing_artifacts.joblib",
+    PROJECT_DIR.parent / "Data" / "preprocessing_artifacts.joblib",
+)
+DEFAULT_PREPROCESSOR = next(
+    (path for path in _PREPROCESSOR_CANDIDATES if path.is_file()),
+    _PREPROCESSOR_CANDIDATES[0],
+)
 DEFAULT_OUTPUT = PROJECT_DIR / "stage2_counterfactual_prescription.json"
 DEFAULT_PATIENT = PROJECT_DIR / "sample_patient_single_line.txt"
 

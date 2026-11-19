@@ -40,7 +40,14 @@ import train_bionutrigpt_stage1 as s1  # noqa: E402
 import stage2_counterfactual_engine as s2  # noqa: E402
 
 DEFAULT_CHECKPOINT = PROJECT_DIR / "Saved Model" / "bionutrigpt_stage1_best.pt"
-DEFAULT_PREPROCESSOR = PROJECT_DIR / "Data" / "preprocessing_artifacts.joblib"
+_PREPROCESSOR_CANDIDATES = (
+    PROJECT_DIR / "Data" / "preprocessing_artifacts.joblib",
+    PROJECT_DIR.parent / "Data" / "preprocessing_artifacts.joblib",
+)
+DEFAULT_PREPROCESSOR = next(
+    (path for path in _PREPROCESSOR_CANDIDATES if path.is_file()),
+    _PREPROCESSOR_CANDIDATES[0],
+)
 DEFAULT_PATIENT = PROJECT_DIR / "sample_patient_single_line.txt"
 DEFAULT_OUTPUT = PROJECT_DIR / "bionutrigpt_pipeline_dossier.json"
 
