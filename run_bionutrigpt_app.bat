@@ -7,14 +7,11 @@ echo  Starting FastAPI Backend (Port 8000) and Vite React Frontend (Port 5173)..
 echo ===================================================================
 
 set "APP_DIR=%~dp0"
-if not exist "%APP_DIR%backend" (
-    set "APP_DIR=%~dp0Models\Less Data\"
-)
 
-start "BioNutriGPT Backend (FastAPI)" cmd /k "cd /d "%APP_DIR%backend" && python main.py"
+start "BioNutriGPT Backend (FastAPI)" cmd /k "cd /d "%APP_DIR%\backend" && python main.py"
 timeout /t 3 /nobreak >nul
 
-start "BioNutriGPT Frontend (React + Vite)" cmd /k "cd /d "%APP_DIR%frontend" && npm.cmd run dev"
+start "BioNutriGPT Frontend (React + Vite)" cmd /k "cd /d "%APP_DIR%\frontend" && npm.cmd run dev"
 timeout /t 2 /nobreak >nul
 
 echo.
