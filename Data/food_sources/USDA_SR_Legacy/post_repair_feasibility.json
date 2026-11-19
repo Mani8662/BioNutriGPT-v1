@@ -1,0 +1,57 @@
+{
+  "strict_lp_status": 0,
+  "strict_milp_status": 0,
+  "integer_incumbent": true,
+  "clinical_adequacy_proven": false,
+  "note": "B12 unknown contributions excluded from known subtotals; source and recipe gaps remain.",
+  "basket": [
+    {
+      "food_id": "ifct_d077",
+      "quantity": 2,
+      "unknown_nutrients": [
+        "DR1TVB12"
+      ]
+    },
+    {
+      "food_id": "ifct_e006",
+      "quantity": 3,
+      "unknown_nutrients": [
+        "DR1TVB12"
+      ]
+    },
+    {
+      "food_id": "ifct_n005",
+      "quantity": 1,
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_chana_masala",
+      "quantity": 2,
+      "unknown_nutrients": [
+        "DR1TVB12"
+      ]
+    },
+    {
+      "food_id": "recipe_vegetable_poha",
+      "quantity": 3,
+      "unknown_nutrients": [
+        "DR1TVB12"
+      ]
+    },
+    {
+      "food_id": "recipe_palak_sabzi",
+      "quantity": 2,
+      "unknown_nutrients": [
+        "DR1TVB12"
+      ]
+    },
+    {
+      "food_id": "recipe_lowfat_paneer_bhurji",
+      "quantity": 2,
+      "unknown_nutrients": [
+        "DR1TVB12"
+      ]
+    }
+  ],
+  "b12_known_subtotal_ug": 24.87
+}

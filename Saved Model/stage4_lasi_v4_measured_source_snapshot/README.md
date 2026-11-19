@@ -1,0 +1,1 @@
+Measured source files with pre/post run hashes. See the sibling stage4_lasi_v4_run_provenance.json for environment and input hashes. Food composition and LASI participant-level inputs are referenced, not copied into this source snapshot. This is a measured subset of source files, not a complete standalone software release.

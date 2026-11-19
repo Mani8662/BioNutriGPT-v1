@@ -24,20 +24,21 @@ import json
 import math
 import sys
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Optional, Sequence
 
 import numpy as np
 from scipy.optimize import Bounds, LinearConstraint, milp
 from scipy.sparse import coo_matrix
+from scipy.sparse import vstack
 
 
 PROJECT_DIR = Path(__file__).resolve().parent
 DEFAULT_INPUT = PROJECT_DIR / "stage2_counterfactual_prescription.json"
 DEFAULT_OUTPUT = PROJECT_DIR / "stage3_indian_meal_plan.json"
-DEFAULT_TIME_LIMIT_SEC = 0.50
-MAX_TIME_LIMIT_SEC = 2.0
+DEFAULT_TIME_LIMIT_SEC = 1.50
+MAX_TIME_LIMIT_SEC = 3.0
 MAX_SERVINGS_PER_DISH = 3
 MIN_ACTIVE_DISHES = 4
 MAX_ACTIVE_DISHES = 8
@@ -57,13 +58,15 @@ NUTRIENT_CODES: tuple[str, ...] = (
 NUTRIENT_INDEX = {name: i for i, name in enumerate(NUTRIENT_CODES)}
 
 VALID_CATEGORIES = {
-    "dal_pulse", "cereal_grain", "vegetable_sabzi", "dairy", "fruit", "oil_fat"
+    "dal_pulse", "cereal_grain", "vegetable_sabzi", "dairy", "fruit", "oil_fat", "non_veg_protein"
 }
 CATEGORY_ALIASES = {
     "dal": "dal_pulse", "pulse": "dal_pulse", "pulses": "dal_pulse",
     "grain": "cereal_grain", "cereal": "cereal_grain", "bread": "cereal_grain",
     "vegetable": "vegetable_sabzi", "sabzi": "vegetable_sabzi", "veg": "vegetable_sabzi",
     "curd": "dairy", "milk": "dairy", "fruit": "fruit", "oil": "oil_fat",
+    "non_veg": "non_veg_protein", "nonveg": "non_veg_protein", "meat": "non_veg_protein",
+    "fish": "non_veg_protein", "egg": "non_veg_protein", "poultry": "non_veg_protein",
 }
 
 
@@ -79,6 +82,11 @@ class FoodItem:
     nutrients_per_serving: Mapping[str, float]
     selection_cost: float = 1.0
     data_source: str = "external"
+    unknown_nutrients: tuple[str, ...] = ()
+    catalog_version: str = "legacy"
+    allergen_info: Mapping[str, Any] = field(default_factory=dict)
+    ingredient_codes: tuple[str, ...] = ()
+    dietary_type: str = "pure_vegetarian"
 
     def __post_init__(self) -> None:
         category = CATEGORY_ALIASES.get(self.category.strip().lower(), self.category.strip().lower())
@@ -116,6 +124,7 @@ class Stage3Input:
     lower_bounds: Mapping[str, float]
     upper_bounds: Mapping[str, float]
     baselines: Mapping[str, float]
+    rule_metadata: Mapping[str, Mapping[str, Any]] = field(default_factory=dict)
 
 
 @dataclass
@@ -126,9 +135,13 @@ class Stage3Output:
     delivered_nutrition: list[dict[str, Any]]
     clinical_verification: dict[str, Any]
     solver_metadata: dict[str, Any]
+    accepted: bool = False
+    failure: Optional[dict[str, Any]] = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
+            "accepted": self.accepted,
+            "failure": self.failure,
             "solved_food_basket": self.solved_food_basket,
             "delivered_nutrition": self.delivered_nutrition,
             "clinical_verification": self.clinical_verification,
@@ -179,9 +192,11 @@ def _fallback_food(
         nutrients["DR1TSODI"] = sodium
     if potassium is not None:
         nutrients["DR1TPOTA"] = potassium
+    nutrients["DR1TVB12"] = 0.0  # Known subtotal only; unknown flag below is authoritative.
     return FoodItem(
         food_id, name, category, unit, grams, nutrients,
         selection_cost=cost, data_source="synthetic_fallback_estimate",
+        unknown_nutrients=("DR1TVB12",),
     )
 
 
@@ -307,6 +322,7 @@ def _parse_stage2_input(stage2_input: Mapping[str, Any]) -> Stage3Input:
         patient_metadata=dict(metadata),
         energy_prescription={k: float(energy[k]) for k in ("BMR", "TDEE", "target_calories")},
         targets=targets, lower_bounds=lower, upper_bounds=upper, baselines=baselines,
+        rule_metadata={str(row['nutrient']): dict(row.get('rule_provenance', {})) for row in records},
     )
 
 
@@ -332,15 +348,27 @@ def _food_from_mapping(row: Mapping[str, Any], source: str) -> FoodItem:
             selection_cost_value = 1.0
     except (TypeError, ValueError):
         selection_cost_value = 1.0
+    unknown = tuple(code for code in NUTRIENT_CODES
+                    if nutrient_raw.get(code) is None
+                    or (isinstance(nutrient_raw.get(code), float) and math.isnan(nutrient_raw[code])))
+    ing_codes = tuple(sorted({str(ing.get("food_code", "")).strip() for ing in row.get("ingredients", []) if isinstance(ing, Mapping) and ing.get("food_code")}))
+    allergen_info = dict(row.get("allergen_info", {})) if isinstance(row.get("allergen_info"), Mapping) else {}
     return FoodItem(
         food_id=str(row["food_id"]),
         name=str(row["name"]),
         category=str(row["category"]),
         serving_unit=str(row["serving_unit"]),
         serving_weight_g=float(row["serving_weight_g"]),
-        nutrients_per_serving={code: float(nutrient_raw[code]) for code in NUTRIENT_CODES},
+        # Unknown contributions have a zero *known subtotal* for optimization.
+        # They remain explicit and block adequacy verification downstream.
+        nutrients_per_serving={code: 0.0 if code in unknown else float(nutrient_raw[code]) for code in NUTRIENT_CODES},
         selection_cost=selection_cost_value,
         data_source=source,
+        unknown_nutrients=unknown,
+        catalog_version=str(row.get("catalog_version", "legacy")),
+        allergen_info=allergen_info,
+        ingredient_codes=ing_codes,
+        dietary_type=str(row.get("dietary_type", "non_vegetarian" if str(row.get("category", "")).strip().lower() == "non_veg_protein" else "pure_vegetarian")),
     )
 
 
@@ -354,6 +382,7 @@ def load_food_database(path: Optional[str] = None) -> list[FoodItem]:
     candidate: Optional[Path] = Path(path).expanduser() if path else None
     if candidate is None:
         for possible in (
+            PROJECT_DIR / "food_composition_cooked_sourced.json",
             PROJECT_DIR / "food_composition_ifct2017.csv",
             PROJECT_DIR / "recipe_db_foods.parquet",
             PROJECT_DIR / "food_composition_ifct2017.parquet",
@@ -389,16 +418,78 @@ def load_food_database(path: Optional[str] = None) -> list[FoodItem]:
     return foods
 
 
-def _validate_catalog_categories(food_db: Sequence[FoodItem]) -> None:
+def _validate_catalog_categories(
+    food_db: Sequence[FoodItem],
+    dietary_mode: str = "pure_vegetarian",
+    allow_zero_dairy: bool = False,
+) -> None:
     ids = [food.food_id for food in food_db]
     if len(ids) < 5:
         raise ValueError("Food database needs at least five foods to satisfy category rules.")
     if len(ids) != len(set(ids)):
         raise ValueError("Food database food_id values must be unique.")
     categories = {food.category for food in food_db}
-    required = {"dal_pulse", "cereal_grain", "vegetable_sabzi", "dairy"}
+    cat_limits, _ = _category_rules_for_mode(dietary_mode, allow_zero_dairy=allow_zero_dairy)
+    required = {cat for cat, (low, _) in cat_limits.items() if low > 0}
     if not required.issubset(categories):
         raise ValueError(f"Food database is missing required categories: {sorted(required - categories)}")
+
+
+def _category_rules_for_mode(
+    dietary_mode: str,
+    allow_zero_dairy: bool = False,
+) -> tuple[dict[str, tuple[int, float]], dict[str, tuple[float, float]]]:
+    """Return (category_variety_limits, category_serving_limits) for the chosen dietary mode."""
+    dairy_cat_min = 0 if allow_zero_dairy else 1
+    dairy_serv_min = 0.0 if allow_zero_dairy else 1.0
+    if dietary_mode == "pure_non_vegetarian":
+        return (
+            {
+                "non_veg_protein": (1, 3),
+                "cereal_grain": (1, 3),
+                "vegetable_sabzi": (2, np.inf),
+                "dal_pulse": (0, 2),
+                "dairy": (0, np.inf),
+            },
+            {
+                "non_veg_protein": (2.0, 4.0),
+                "cereal_grain": (3.0, 5.0),
+                "vegetable_sabzi": (2.0, 4.0),
+                "dal_pulse": (0.0, 3.0),
+                "dairy": (0.0, 2.0),
+            },
+        )
+    if dietary_mode == "veg_nonveg_combo":
+        return (
+            {
+                "non_veg_protein": (1, 2),
+                "dal_pulse": (1, 2),
+                "cereal_grain": (1, 3),
+                "vegetable_sabzi": (2, np.inf),
+                "dairy": (dairy_cat_min, np.inf),
+            },
+            {
+                "non_veg_protein": (1.0, 3.0),
+                "dal_pulse": (1.0, 3.0),
+                "cereal_grain": (3.0, 5.0),
+                "vegetable_sabzi": (2.0, 4.0),
+                "dairy": (dairy_serv_min, 2.0),
+            },
+        )
+    return (
+        {
+            "dal_pulse": (1, 2),
+            "cereal_grain": (1, 3),
+            "vegetable_sabzi": (2, np.inf),
+            "dairy": (dairy_cat_min, np.inf),
+        },
+        {
+            "cereal_grain": (3.0, 5.0),
+            "dal_pulse": (2.0, 3.0),
+            "vegetable_sabzi": (2.0, 4.0),
+            "dairy": (dairy_serv_min, 2.0),
+        },
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -427,6 +518,8 @@ def _nutrient_priority(name: str) -> float:
 
 def _make_sparse_constraints(
     foods: Sequence[FoodItem], stage: Stage3Input, *, gamma: float,
+    dietary_mode: str = "pure_vegetarian",
+    allow_zero_dairy: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, Bounds, LinearConstraint, dict[str, Any]]:
     m, n = len(foods), len(NUTRIENT_CODES)
     # Variable layout: [q_0..q_M-1, z_0..z_M-1, e+_0..e+_38,
@@ -464,6 +557,8 @@ def _make_sparse_constraints(
         width = stage.upper_bounds[code] - stage.lower_bounds[code]
         scale = max(width, abs(stage.targets[code]) * 0.10, 1.0)
         weight = _nutrient_priority(code) / scale
+        if stage.rule_metadata.get(code, {}).get('planning_role') in {'report_only', 'exposure_reporting'}:
+            weight = 0.0
         c[ep0 + k] = weight
         c[em0 + k] = weight
         slack_weights[code] = weight
@@ -490,6 +585,8 @@ def _make_sparse_constraints(
 
     # Nutrient envelope: L_k <= F_k q + e^-_k - e^+_k <= U_k.
     for k, code in enumerate(NUTRIENT_CODES):
+        if stage.rule_metadata.get(code, {}).get('planning_role') in {'report_only', 'exposure_reporting'}:
+            continue
         entries = {q0 + i: F[k, i] for i in range(m) if F[k, i] != 0}
         entries[ep0 + k] = -1.0
         entries[em0 + k] = 1.0
@@ -503,28 +600,16 @@ def _make_sparse_constraints(
     # Overall active dish diversity.
     add_row({z0 + i: 1.0 for i in range(m)}, MIN_ACTIVE_DISHES, MAX_ACTIVE_DISHES)
 
-    # Category variety constraints.
-    category_limits = {
-        "dal_pulse": (1, 2),
-        "cereal_grain": (1, 3),
-        "vegetable_sabzi": (2, np.inf),
-        "dairy": (1, np.inf),
-    }
+    # Category variety & plate composition constraints by dietary_mode.
+    category_limits, serving_limits = _category_rules_for_mode(dietary_mode, allow_zero_dairy=allow_zero_dairy)
     for category, (low, high) in category_limits.items():
         indices = [i for i, food in enumerate(foods) if food.category == category]
         if not indices:
-            raise ValueError(f"No foods available for required category {category!r}.")
+            if low > 0:
+                raise ValueError(f"No foods available for required category {category!r}.")
+            continue
         add_row({z0 + i: 1.0 for i in indices}, low, high)
 
-    # Realistic Indian plate composition constraints on total servings (sum of q_i):
-    # Guarantees sufficient staple grains across all main meals (breakfast, lunch, dinner),
-    # ensures protein across lunch & dinner, and prevents vegetable/dairy over-concentration.
-    serving_limits = {
-        "cereal_grain": (3.0, 5.0),    # At least 3 servings (e.g. breakfast + lunch + dinner staple)
-        "dal_pulse": (2.0, 3.0),       # 2 to 3 servings (lunch & dinner protein)
-        "vegetable_sabzi": (2.0, 4.0), # 2 to 4 servings (balanced vegetables)
-        "dairy": (1.0, 2.0),           # 1 to 2 servings (e.g. breakfast/snack)
-    }
     for category, (low_q, high_q) in serving_limits.items():
         indices = [i for i, food in enumerate(foods) if food.category == category]
         if indices:
@@ -638,6 +723,8 @@ def _build_output_from_quantities(
             "total_weight_g": round(quantity * food.serving_weight_g, 2),
             "serving_weight_g": float(food.serving_weight_g),
             "data_source": food.data_source,
+            "unknown_nutrients": list(food.unknown_nutrients),
+            "catalog_version": food.catalog_version,
         })
 
     nutrition_records: list[dict[str, Any]] = []
@@ -655,7 +742,12 @@ def _build_output_from_quantities(
             "baseline": stage.baselines[code],
             "absolute_error": round(abs(value - target), 6),
             "percentage_error": None if percentage_error is None else round(percentage_error, 4),
-            "within_bounds": bool(low - 1e-6 <= value <= high + 1e-6),
+            "within_bounds": bool(low - 1e-6 <= value <= high + 1e-6
+                                  and not any(qi > 0 and code in food.unknown_nutrients for food, qi in zip(foods, q))),
+            "rule_provenance": dict(stage.rule_metadata.get(code, {})),
+            "constraint_applied": stage.rule_metadata.get(code, {}).get('planning_role') not in {'report_only', 'exposure_reporting'},
+            "unknown_food_count": sum(1 for food, qi in zip(foods, q) if qi > 0 and code in food.unknown_nutrients),
+            "value_status": "known_subtotal" if any(qi > 0 and code in food.unknown_nutrients for food, qi in zip(foods, q)) else "complete",
         })
 
     output = Stage3Output(
@@ -669,148 +761,365 @@ def _build_output_from_quantities(
         "energy_prescription": dict(stage.energy_prescription),
         "nutrient_constraint_envelope": [
             {"nutrient": code, "baseline": stage.baselines[code], "target": stage.targets[code],
-             "min_bound": stage.lower_bounds[code], "max_bound": stage.upper_bounds[code]}
+             "min_bound": stage.lower_bounds[code], "max_bound": stage.upper_bounds[code],
+             "rule_provenance": dict(stage.rule_metadata.get(code, {}))}
             for code in NUTRIENT_CODES
         ],
     })
     return output
 
 
+def compute_plan_diff(
+    previous_basket: Sequence[Mapping[str, Any]],
+    new_basket: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    """Compute a deterministic item-level diff between two meal baskets."""
+    prev_map = {str(item["food_id"]): item for item in previous_basket}
+    new_map = {str(item["food_id"]): item for item in new_basket}
+    added, removed, changed, unchanged = [], [], [], []
+    serving_delta = 0
+    for fid in sorted(set(prev_map) | set(new_map)):
+        if fid not in prev_map:
+            qty = int(new_map[fid]["quantity"])
+            added.append({"food_id": fid, "name": new_map[fid].get("name", fid), "quantity": qty})
+            serving_delta += qty
+        elif fid not in new_map:
+            qty = int(prev_map[fid]["quantity"])
+            removed.append({"food_id": fid, "name": prev_map[fid].get("name", fid), "quantity": qty})
+            serving_delta += qty
+        else:
+            pq, nq = int(prev_map[fid]["quantity"]), int(new_map[fid]["quantity"])
+            if pq != nq:
+                changed.append({"food_id": fid, "name": new_map[fid].get("name", fid),
+                                "previous_quantity": pq, "new_quantity": nq})
+                serving_delta += abs(nq - pq)
+            else:
+                unchanged.append({"food_id": fid, "name": new_map[fid].get("name", fid), "quantity": nq})
+    return {
+        "added": added,
+        "removed": removed,
+        "quantity_changed": changed,
+        "unchanged": unchanged,
+        "total_serving_delta": serving_delta,
+    }
+
+
+def validate_candidate(output: Stage3Output, food_db: Sequence[FoodItem], stage2_input: dict,
+                       excluded_ids: Sequence[str] = (),
+                       locked_quantities: Mapping[str, int] | None = None,
+                       max_active_dishes: int | None = None,
+                       dietary_mode: str = "pure_vegetarian") -> dict[str, Any]:
+    """Recalculate from IDs/quantities, then validate structure, locks, and active rules."""
+    stage = _parse_stage2_input(stage2_input)
+    lookup = {food.food_id: i for i, food in enumerate(food_db)}
+    q = np.zeros(len(food_db), dtype=np.int64)
+    errors: list[str] = []
+    basket = output.solved_food_basket
+    for row in basket:
+        fid, quantity = row.get("food_id"), row.get("quantity")
+        if fid not in lookup:
+            errors.append(f"Unknown food ID: {fid}")
+            continue
+        if fid in excluded_ids:
+            errors.append(f"Excluded food selected: {fid}")
+        if type(quantity) is not int or not 1 <= quantity <= MAX_SERVINGS_PER_DISH:
+            errors.append(f"Invalid serving count for {fid}")
+            continue
+        if q[lookup[fid]]:
+            errors.append(f"Duplicate food: {fid}")
+        q[lookup[fid]] += quantity
+    dish_cap = MAX_ACTIVE_DISHES if max_active_dishes is None else min(MAX_ACTIVE_DISHES, int(max_active_dishes))
+    if not MIN_ACTIVE_DISHES <= len(basket) <= dish_cap:
+        errors.append(f"Active food count outside {MIN_ACTIVE_DISHES}–{dish_cap}")
+    if locked_quantities:
+        for lfid, lqty in locked_quantities.items():
+            if lfid not in lookup:
+                errors.append(f"Locked food missing from catalog: {lfid}")
+            elif int(q[lookup[lfid]]) != int(lqty):
+                errors.append(f"Locked food changed: {lfid} (expected {lqty}, got {int(q[lookup[lfid]])})")
+    counts, active = {}, {}
+    for food, quantity in zip(food_db, q):
+        if quantity:
+            if dietary_mode == "pure_vegetarian" and food.dietary_type == "non_vegetarian":
+                errors.append(f"Non-vegetarian food selected in pure_vegetarian mode: {food.food_id}")
+            counts[food.category] = counts.get(food.category, 0) + int(quantity)
+            active[food.category] = active.get(food.category, 0) + 1
+    cat_limits, serv_limits = _category_rules_for_mode(
+        dietary_mode,
+        allow_zero_dairy=not any(f.category == "dairy" and f.food_id not in excluded_ids for f in food_db) and bool(excluded_ids),
+    )
+    for category, (low, high) in serv_limits.items():
+        if not low <= counts.get(category, 0) <= high:
+            errors.append(f"Serving rule failed: {category}")
+    for category, (low, high) in cat_limits.items():
+        if not low <= active.get(category, 0) <= high:
+            errors.append(f"Food variety rule failed: {category}")
+    recomputed = _build_output_from_quantities(q, food_db, stage, {})
+    actual = {row["nutrient"]: row for row in recomputed.delivered_nutrition}
+    supplied = {row.get("nutrient"): row for row in output.delivered_nutrition}
+    for code in NUTRIENT_CODES:
+        value = supplied.get(code, {}).get("delivered")
+        if value is None or not math.isfinite(float(value)) or abs(float(value) - actual[code]["delivered"]) > 1e-4:
+            errors.append(f"Nutrient accounting mismatch: {code}")
+    required = [code for code in NUTRIENT_CODES
+                if stage.rule_metadata.get(code, {}).get("planning_role") not in {"report_only", "exposure_reporting"}]
+    unknown = [code for code in required if actual[code]["unknown_food_count"]]
+    failed = [code for code in required if not actual[code]["unknown_food_count"] and not actual[code]["within_bounds"]]
+    post = recomputed.clinical_verification
+    failed_checks = [key for key in ("calories", "macronutrient_split", "sodium_to_potassium_ratio", "fiber_adequacy")
+                     if not post[key]["passed"]]
+    return {
+        "accepted": not errors and not unknown and not failed and not failed_checks,
+        "structural_errors": errors, "unknown_active_nutrients": unknown,
+        "failed_active_nutrients": failed, "failed_post_checks": failed_checks,
+        "active_nutrient_count": len(required),
+        "complete_39_field_data": not any(row["unknown_food_count"] for row in actual.values()),
+        "clinical_validation_established": False,
+        "scope": "Acceptance means active arithmetic/portion checks passed, not clinical certification.",
+    }
+
+
+def _failure_output(code: str, message: str, *, metadata: dict, details: dict) -> Stage3Output:
+    """A failed search never exposes a rejected basket as a meal plan."""
+    return Stage3Output([], [], {
+        "all_active_checks_passed": False, "all_clinical_checks_passed": False,
+        "clinical_validation_established": False, "failure_details": details,
+    }, {**metadata, "status": code, "optimality_proven": False,
+        "heuristic_fallback_used": False}, accepted=False,
+        failure={"code": code, "message": message, "details": details})
+
+
 def solve_meal_plan(
     stage2_input: dict,
     food_db: list[FoodItem],
     time_limit_sec: float = DEFAULT_TIME_LIMIT_SEC,
+    revision_spec: Mapping[str, Any] | None = None,
 ) -> Stage3Output:
-    """Solve the discrete serving optimization with a hard <=50 ms HiGHS limit.
+    """Return a fully checked active-rule plan or an explicit empty failure.
 
-    The supplied time limit is capped at 0.05 seconds to enforce the requested
-    anti-freeze budget. If HiGHS returns no incumbent before that deadline, a
-    deterministic calorie-oriented recovery basket is returned and explicitly
-    marked as a heuristic fallback (never as an optimal MILP solution).
+    Unknown contributions cannot satisfy an active nutrient rule. Only foods
+    covering all active fields enter the search. Report-only and beverage-exposure
+    fields remain visible. Optional ``revision_spec`` enables controlled revisions:
+    excluded foods/ingredients, preferred foods, locked food quantities, maximum
+    active dishes, and minimal-change penalties relative to a previous plan.
     """
     stage = _parse_stage2_input(stage2_input)
-    _validate_catalog_categories(food_db)
     if not math.isfinite(float(time_limit_sec)) or time_limit_sec <= 0:
         raise ValueError("time_limit_sec must be positive and finite.")
-    effective_time_limit = min(float(time_limit_sec), MAX_TIME_LIMIT_SEC)
-    if effective_time_limit <= 0:
-        raise ValueError("Effective solver time limit must be positive.")
+    effective = min(float(time_limit_sec), MAX_TIME_LIMIT_SEC)
+    rev = dict(revision_spec or {})
+    excluded_ids: set[str] = {str(x) for x in rev.get("excluded_food_ids", [])}
+    excluded_ing_codes: set[str] = {str(x) for x in rev.get("excluded_ingredient_codes", [])}
+    preferred_ids: set[str] = {str(x) for x in rev.get("preferred_food_ids", [])}
+    locked_quantities: dict[str, int] = {str(k): int(v) for k, v in (rev.get("locked_food_quantities") or {}).items()}
+    max_dishes_req = rev.get("max_active_dishes")
+    max_dishes_cap = None if max_dishes_req is None else max(MIN_ACTIVE_DISHES, min(MAX_ACTIVE_DISHES, int(max_dishes_req)))
+    prev_quantities: dict[str, int] = {str(k): int(v) for k, v in (rev.get("previous_quantities") or {}).items()}
+    change_penalty = float(rev.get("change_penalty", 0.35))
+    raw_mode = str(rev.get("dietary_mode") or "pure_vegetarian").strip().lower()
+    dietary_mode = raw_mode if raw_mode in {"pure_vegetarian", "veg_nonveg_combo", "pure_non_vegetarian"} else "pure_vegetarian"
 
-    c, integrality, bounds, constraints, model_info = _make_sparse_constraints(food_db, stage, gamma=0.10)
+    base_meta = {"backend": "scipy.optimize.milp / HiGHS",
+                 "time_limit_sec": effective, "requested_time_limit_sec": float(time_limit_sec),
+                 "solve_time_ms": 0.0, "candidate_validation": [],
+                 "revision_controls": {
+                     "dietary_mode": dietary_mode,
+                     "excluded_food_ids": sorted(excluded_ids),
+                     "excluded_ingredient_codes": sorted(excluded_ing_codes),
+                     "preferred_food_ids": sorted(preferred_ids),
+                     "locked_food_quantities": locked_quantities,
+                     "max_active_dishes": max_dishes_cap,
+                     "change_penalty": change_penalty if prev_quantities else 0.0,
+                 }}
+    # Conflict check: cannot both exclude and lock the same food
+    conflict_lock = excluded_ids.intersection(locked_quantities)
+    if conflict_lock:
+        return _failure_output("conflicting_revision_constraints",
+            f"Requested revision both excludes and locks: {sorted(conflict_lock)}.",
+            metadata=base_meta, details={"conflicting_food_ids": sorted(conflict_lock)})
+
+    required = {code for code in NUTRIENT_CODES
+                if stage.rule_metadata.get(code, {}).get("planning_role") not in {"report_only", "exposure_reporting"}}
+    effective_excluded = set(excluded_ids)
+    if dietary_mode == "pure_vegetarian":
+        for food in food_db:
+            if food.dietary_type == "non_vegetarian":
+                effective_excluded.add(food.food_id)
+    if excluded_ing_codes:
+        for food in food_db:
+            if excluded_ing_codes.intersection(food.ingredient_codes):
+                effective_excluded.add(food.food_id)
+
+    eligible = [
+        food for food in food_db
+        if food.food_id not in effective_excluded and not required.intersection(food.unknown_nutrients)
+    ]
+    eligible_ids = {f.food_id for f in eligible}
+    missing_locked = sorted(set(locked_quantities) - eligible_ids)
+    if missing_locked:
+        return _failure_output("locked_food_unavailable",
+            f"Locked food(s) are excluded or lack complete active data: {missing_locked}.",
+            metadata=base_meta, details={"missing_locked_food_ids": missing_locked})
+
+    # Allow zero dairy ONLY when dairy foods exist with complete data in the catalog but were explicitly excluded by user/allergy
+    dairy_complete_in_db = [f for f in food_db if f.category == "dairy" and not required.intersection(f.unknown_nutrients)]
+    allow_zero_dairy = bool(dairy_complete_in_db) and all(f.food_id in effective_excluded for f in dairy_complete_in_db)
+
+    cat_limits, _ = _category_rules_for_mode(dietary_mode, allow_zero_dairy=allow_zero_dairy)
+    required_cats = {cat for cat, (low, _) in cat_limits.items() if low > 0}
+    missing_categories = sorted(required_cats - {food.category for food in eligible})
+    if len(eligible) < MIN_ACTIVE_DISHES or missing_categories:
+        return _failure_output("insufficient_nutrient_data",
+            "The catalog lacks sufficiently documented foods for all required meal categories. No plan was accepted.",
+            metadata=base_meta, details={
+                "missing_categories_with_complete_active_data": missing_categories,
+                "eligible_food_count": len(eligible), "candidate_food_count": len(food_db),
+                "unknown_active_nutrients": sorted({code for food in food_db for code in food.unknown_nutrients if code in required}),
+                "unknown_catalog_nutrients": sorted({code for food in food_db for code in food.unknown_nutrients}),
+                "excluded_incomplete_food_ids": [f.food_id for f in food_db if f not in eligible],
+            })
+    _validate_catalog_categories(eligible, dietary_mode=dietary_mode, allow_zero_dairy=allow_zero_dairy)
+    c, integrality, bounds, constraints, info = _make_sparse_constraints(
+        eligible, stage, gamma=0.10, dietary_mode=dietary_mode, allow_zero_dairy=allow_zero_dairy
+    )
+    # Active intervals are acceptance requirements. Do not spend the search on
+    # candidates with knowingly nonzero slack, then call them successful.
+    lower = bounds.lb.copy()
+    upper = bounds.ub.copy()
+    m = len(eligible)
+    q0 = info["indices"]["q"]
+    z0 = info["indices"]["z"]
+    for k, code in enumerate(NUTRIENT_CODES):
+        if code in required:
+            upper[info["indices"]["e_plus"] + k] = 0.0
+            upper[info["indices"]["e_minus"] + k] = 0.0
+
+    # Apply locked food quantities and user preferences
+    for i, food in enumerate(eligible):
+        if food.food_id in locked_quantities:
+            lqty = int(locked_quantities[food.food_id])
+            lower[q0 + i] = float(lqty)
+            upper[q0 + i] = float(lqty)
+            lower[z0 + i] = 1.0 if lqty > 0 else 0.0
+            upper[z0 + i] = 1.0 if lqty > 0 else 0.0
+        if food.food_id in preferred_ids:
+            c[z0 + i] = max(0.0, c[z0 + i] - 0.08)
+
+    F = info["food_matrix"]
+    kcal = F[NUTRIENT_INDEX["DR1TKCAL"]]
+    extra_rows, extra_lower, extra_upper = [], [], []
+    for code, factor, low, high in (("DR1TPROT", 4, .10, .35),
+                                    ("DR1TCARB", 4, .45, .65),
+                                    ("DR1TTFAT", 9, .20, .35)):
+        nutrient = F[NUTRIENT_INDEX[code]] * factor
+        extra_rows.extend((low * kcal - nutrient, nutrient - high * kcal))
+        extra_lower.extend((-np.inf, -np.inf))
+        extra_upper.extend((0.0, 0.0))
+    ratio = stage.baselines["DR1TSODI"] / (stage.baselines["DR1TPOTA"] + 1.0)
+    extra_rows.append(F[NUTRIENT_INDEX["DR1TSODI"]] - ratio * F[NUTRIENT_INDEX["DR1TPOTA"]])
+    extra_lower.append(-np.inf)
+    extra_upper.append(ratio)
+    extra_rows.append(.014 * kcal - F[NUTRIENT_INDEX["DR1TFIBE"]])
+    extra_lower.append(-np.inf)
+    extra_upper.append(0.0)
+
+    nbase = len(c)
+    extra = np.zeros((len(extra_rows), nbase))
+    extra[:, :m] = extra_rows
+
+    # Optional max_active_dishes cap
+    if max_dishes_cap is not None:
+        cap_row = np.zeros((1, nbase))
+        cap_row[0, z0:z0 + m] = 1.0
+        extra = np.vstack((extra, cap_row))
+        extra_lower.append(float(MIN_ACTIVE_DISHES))
+        extra_upper.append(float(max_dishes_cap))
+
+    A = vstack((constraints.A, coo_matrix(extra)), format="csr")
+    c_lb = np.r_[constraints.lb, np.asarray(extra_lower, dtype=float)]
+    c_ub = np.r_[constraints.ub, np.asarray(extra_upper, dtype=float)]
+
+    # Optional minimal-change L1 penalty relative to previous_quantities:
+    # q_i - delta_plus_i + delta_minus_i = prev_q_i, minimizing change_penalty * sum(delta_plus + delta_minus)
+    if prev_quantities and change_penalty > 0:
+        n_delta = 2 * m
+        c = np.r_[c, np.full(n_delta, change_penalty, dtype=float)]
+        integrality = np.r_[integrality, np.zeros(n_delta, dtype=np.int8)]
+        lower = np.r_[lower, np.zeros(n_delta, dtype=float)]
+        upper = np.r_[upper, np.full(n_delta, np.inf, dtype=float)]
+        pad_existing = coo_matrix((A.shape[0], n_delta))
+        A_expanded = coo_matrix(np.hstack((A.toarray(), np.zeros((A.shape[0], n_delta)))))
+        d_rows = np.zeros((m, nbase + n_delta), dtype=float)
+        d_rhs = np.zeros(m, dtype=float)
+        for i, food in enumerate(eligible):
+            d_rows[i, q0 + i] = 1.0
+            d_rows[i, nbase + i] = -1.0       # delta_plus
+            d_rows[i, nbase + m + i] = 1.0    # delta_minus
+            d_rhs[i] = float(prev_quantities.get(food.food_id, 0))
+        A = vstack((A_expanded, coo_matrix(d_rows)), format="csr")
+        c_lb = np.r_[c_lb, d_rhs]
+        c_ub = np.r_[c_ub, d_rhs]
+
+    constraints = LinearConstraint(A, c_lb, c_ub)
     started = time.perf_counter()
     try:
-        result = milp(
-            c=c,
-            integrality=integrality,
-            bounds=bounds,
-            constraints=constraints,
-            options={
-                "time_limit": effective_time_limit,
-                "mip_rel_gap": 0.01,
-                "presolve": True,
-                "disp": False,
-            },
-        )
+        result = milp(c=c, integrality=integrality, bounds=Bounds(lower, upper),
+                      constraints=constraints, options={"time_limit": effective,
+                      "mip_rel_gap": .01, "presolve": True, "disp": False})
     except Exception as exc:
-        raise RuntimeError(f"SciPy/HiGHS MILP invocation failed: {exc}") from exc
-    solve_ms = (time.perf_counter() - started) * 1000.0
-
-    solver_incumbent_available = result.x is not None
-    q_solver: Optional[np.ndarray] = None
-    if solver_incumbent_available:
-        x = np.asarray(result.x, dtype=np.float64)
-        q_start = model_info["indices"]["q"]
-        q_solver = np.clip(
-            np.rint(x[q_start:q_start + len(food_db)]).astype(np.int32),
-            0, MAX_SERVINGS_PER_DISH,
+        return _failure_output("solver_error", "The optimizer could not complete the search.",
+                               metadata=base_meta, details={"error": str(exc)})
+    base_meta.update(solve_time_ms=round((time.perf_counter() - started) * 1000, 3),
+                     solver_status_code=int(result.status), status_message=str(result.message),
+                     solver_incumbent_available=result.x is not None,
+                     variable_count=len(c), constraint_count=A.shape[0])
+    candidates = []
+    if result.x is not None:
+        values = np.asarray(result.x[:m])
+        if np.isfinite(values).all() and np.max(np.abs(values - np.rint(values))) <= 1e-5:
+            candidates.append(("solver", np.rint(values).astype(np.int64)))
+    if not locked_quantities and max_dishes_cap is None:
+        candidates.append(("heuristic", _heuristic_incumbent(eligible, stage.energy_prescription["target_calories"])))
+    valid = []
+    for origin, q in candidates:
+        candidate = _build_output_from_quantities(q, eligible, stage, {})
+        validation = validate_candidate(
+            candidate, food_db, stage2_input,
+            excluded_ids=sorted(effective_excluded),
+            locked_quantities=locked_quantities or None,
+            max_active_dishes=max_dishes_cap,
+            dietary_mode=dietary_mode,
         )
-
-    # A very short time limit can return a weak incumbent. Compare it with a
-    # deterministic feasible-structure recovery candidate under the *same*
-    # normalized goal-programming objective and retain the lower-penalty basket.
-    # This never changes the solver limit and never mislabels the fallback as optimal.
-    q_heuristic = _heuristic_incumbent(food_db, stage.energy_prescription["target_calories"])
-    F = model_info["food_matrix"]
-    target_kcal = stage.energy_prescription["target_calories"]
-
-    def candidate_objective(candidate_q: np.ndarray) -> float:
-        candidate_nutrients = F @ candidate_q.astype(np.float64)
-        penalty = 0.0
-        for k, code in enumerate(NUTRIENT_CODES):
-            low, high = stage.lower_bounds[code], stage.upper_bounds[code]
-            violation = max(low - candidate_nutrients[k], 0.0) + max(candidate_nutrients[k] - high, 0.0)
-            penalty += violation * model_info["slack_weights"][code]
-        penalty += abs(candidate_nutrients[NUTRIENT_INDEX["DR1TKCAL"]] - target_kcal) * model_info["calorie_deviation_weight"]
-        penalty += 0.10 * sum(food.selection_cost for food, qi in zip(food_db, candidate_q) if qi > 0)
-        return float(penalty)
-
-    heuristic_score = candidate_objective(q_heuristic)
-    solver_score = candidate_objective(q_solver) if q_solver is not None else math.inf
-    heuristic_selected = bool(q_solver is None or heuristic_score + 1e-9 < solver_score)
-    q = q_heuristic if heuristic_selected else q_solver
-    assert q is not None
-
-    # Recompute true nutrient slack and objective terms from the selected integer basket.
-    delivered_vector = F @ q.astype(np.float64)
-    nutrient_slack_penalty = 0.0
-    slack_breakdown: dict[str, float] = {}
-    for k, code in enumerate(NUTRIENT_CODES):
-        low, high = stage.lower_bounds[code], stage.upper_bounds[code]
-        violation = max(low - delivered_vector[k], 0.0) + max(delivered_vector[k] - high, 0.0)
-        penalty = violation * model_info["slack_weights"][code]
-        nutrient_slack_penalty += penalty
-        if violation > 1e-9:
-            slack_breakdown[code] = round(float(penalty), 6)
-
-    delivered_kcal = float(delivered_vector[NUTRIENT_INDEX["DR1TKCAL"]])
-    calorie_abs_error = abs(delivered_kcal - target_kcal)
-    calorie_deviation_penalty = calorie_abs_error * model_info["calorie_deviation_weight"]
-    diversity_penalty = 0.10 * sum(food.selection_cost for food, qi in zip(food_db, q) if qi > 0)
-    total_penalty = nutrient_slack_penalty + calorie_deviation_penalty + diversity_penalty
-
-    status_code = int(getattr(result, "status", 4))
-    if heuristic_selected:
-        solver_status = (
-            "heuristic_fallback_no_incumbent" if not solver_incumbent_available
-            else "heuristic_candidate_selected_after_time_limit"
-        )
-    elif status_code == 0:
-        solver_status = "optimal"
-    elif status_code == 1:
-        solver_status = "time_limit_with_incumbent"
-    else:
-        solver_status = f"solver_status_{status_code}_with_incumbent"
-    status_message = str(getattr(result, "message", ""))
-    gap_value = getattr(result, "mip_gap", None)
-    mip_gap = None if gap_value is None or not math.isfinite(float(gap_value)) else float(gap_value)
-
-    solver_meta = {
-        "backend": "scipy.optimize.milp / HiGHS",
-        "status": solver_status,
-        "status_message": status_message,
-        "solve_time_ms": round(solve_ms, 3),
-        "time_limit_sec": effective_time_limit,
-        "requested_time_limit_sec": float(time_limit_sec),
-        "time_limit_capped_at_50ms": bool(float(time_limit_sec) > MAX_TIME_LIMIT_SEC),
-        "mip_gap": mip_gap,
-        "optimality_proven": bool(not heuristic_selected and getattr(result, "status", None) == 0),
-        "solver_incumbent_available": bool(solver_incumbent_available),
-        "heuristic_candidate_selected": bool(heuristic_selected),
-        "heuristic_fallback_used": bool(heuristic_selected),
-        "variable_count": model_info["variable_count"],
-        "constraint_count": model_info["constraint_count"],
-        "active_dish_count": int(np.count_nonzero(q)),
-        "total_servings": int(q.sum()),
-        "delivered_calories": round(delivered_kcal, 3),
-        "target_calories": round(target_kcal, 3),
-        "calorie_error_pct": round(calorie_abs_error / target_kcal * 100.0, 4),
-        "total_slack_penalty": round(float(total_penalty), 6),
-        "nutrient_slack_penalty": round(float(nutrient_slack_penalty), 6),
-        "calorie_deviation_penalty": round(float(calorie_deviation_penalty), 6),
-        "diversity_penalty": round(float(diversity_penalty), 6),
-        "nutrient_slack_penalty_by_code": slack_breakdown,
-    }
-    return _build_output_from_quantities(q, food_db, stage, solver_meta)
+        base_meta["candidate_validation"].append({"origin": origin, **validation})
+        if validation["accepted"]:
+            delivered = F @ q.astype(float)
+            score = abs(delivered[NUTRIENT_INDEX["DR1TKCAL"]] - stage.energy_prescription["target_calories"]) * info["calorie_deviation_weight"]
+            score += .10 * sum(food.selection_cost for food, quantity in zip(eligible, q) if quantity > 0)
+            if prev_quantities and change_penalty > 0:
+                score += change_penalty * sum(abs(int(q[i]) - int(prev_quantities.get(eligible[i].food_id, 0))) for i in range(m))
+            valid.append((score, origin, candidate, validation))
+    if not valid:
+        code = "infeasible_active_rules" if result.status == 2 else "timeout_no_valid_plan" if result.status == 1 else "no_valid_candidate"
+        return _failure_output(code,
+            "No candidate passed all active nutrient, portion and post-check rules. No plan was accepted.",
+            metadata=base_meta, details={"solver_message": str(result.message),
+                                        "candidate_validation": base_meta["candidate_validation"]})
+    score, origin, output, validation = min(valid, key=lambda row: row[0])
+    gap = getattr(result, "mip_gap", None)
+    output.solver_metadata = {**base_meta, "status": "accepted_solver_plan" if origin == "solver" else "accepted_validated_heuristic",
+        "optimality_proven": bool(origin == "solver" and result.status == 0),
+        "mip_gap": None if gap is None or not math.isfinite(float(gap)) else float(gap),
+        "heuristic_fallback_used": origin == "heuristic", "heuristic_candidate_selected": origin == "heuristic",
+        "active_dish_count": len(output.solved_food_basket),
+        "total_servings": sum(row["quantity"] for row in output.solved_food_basket),
+        "calorie_error_pct": output.clinical_verification['calories']['absolute_error_pct'],
+        "target_calories": stage.energy_prescription['target_calories'],
+        "delivered_calories": output.clinical_verification['calories']['delivered_kcal'],
+        "total_slack_penalty": float(score), "active_nutrient_slack": 0.0}
+    output.accepted = True
+    output.clinical_verification["all_active_checks_passed"] = True
+    output.clinical_verification["acceptance_validation"] = validation
+    return output
 
 
 # ---------------------------------------------------------------------------
@@ -864,6 +1173,7 @@ def verify_basket_safety(output: Stage3Output, stage2_input: dict) -> dict:
 
     envelope_checks = {
         row["nutrient"]: bool(
+            not row.get("unknown_food_count", 0) and
             stage.lower_bounds[row["nutrient"]] - 1e-6
             <= delivered[row["nutrient"]]
             <= stage.upper_bounds[row["nutrient"]] + 1e-6
@@ -906,6 +1216,9 @@ def verify_basket_safety(output: Stage3Output, stage2_input: dict) -> dict:
             "nutrients_within_bounds": int(envelope_pass_count),
             "nutrient_count": len(NUTRIENT_CODES),
             "failed_nutrients": [code for code, passed in envelope_checks.items() if not passed],
+            "unknown_nutrients": [row["nutrient"] for row in output.delivered_nutrition if row.get("unknown_food_count", 0)],
+            "report_only_nutrients": [code for code in NUTRIENT_CODES if stage.rule_metadata.get(code, {}).get('planning_role') == 'report_only'],
+            "verification_scope": "Arithmetic checks only. Report-only fields have no adequacy target; numerical search caps are not ULs. Unknowns still prevent complete nutrient verification.",
         },
         "all_clinical_checks_passed": bool(
             calories_pass and macro_pass and sodium_potassium_pass and fiber_pass and envelope_pass
@@ -933,6 +1246,10 @@ def _json_safe(value: Any) -> Any:
 
 
 def print_meal_plan(output: Stage3Output) -> None:
+    if not output.accepted:
+        print('Stage 3: no accepted meal plan')
+        print(json.dumps(output.failure, indent=2, ensure_ascii=False))
+        return
     """Print a compact terminal summary of the daily basket and checks."""
     print("\n" + "=" * 92)
     print("BioNutriGPT Stage 3 | Discrete Indian Meal Synthesis")

@@ -382,7 +382,7 @@ export const TxtFileUpload: React.FC<TxtFileUploadProps> = ({
             <span>TXT File Format Guide</span>
           </div>
           <p className="text-[11px] leading-relaxed">
-            • Line 1 contains exactly 87 space- or comma-delimited numeric floats representing the standardized NHANES cross-sectional feature set (HDL, Total Cholesterol, Calories, Protein, Carbs, Vitamins, Minerals, Activity METs, and Demographics).
+            • Line 1 must contain <strong>exactly 87</strong> space- or comma-delimited numeric floats matching schema <code className="bg-slate-200 px-1 py-0.5 rounded font-mono text-[10px]">nhanes-87-v2</code> (HbA1c excluded). Ambiguous 88-value legacy vectors are explicitly rejected to prevent silent feature misalignment.
           </p>
           <p className="text-[11px] leading-relaxed">
             • Optional comment lines starting with <code className="bg-slate-200 px-1 py-0.5 rounded font-mono text-[10px]"># CLINICAL_METADATA: weight_kg=... height_cm=... activity_level=...</code> can be included to pass vital parameters automatically.

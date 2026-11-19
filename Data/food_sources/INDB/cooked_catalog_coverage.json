@@ -1,0 +1,684 @@
+{
+  "repository": "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/tree/fbdb62bec519c6e2468582a799fb47e194b42558",
+  "sha256": {
+    "INDB.do": "1d341668c5b146457c8d5e0e159987acae644ca828a3d14c00c446c6b9187a62",
+    "INDB.xlsx": "65f91911de09ebdb4b80c4a3dc3ff372a35420e05444239d8df8a42e8b5b9ecf",
+    "recipes.xlsx": "5cc0e914c2660b165f25b539e12e7cfba092379a76504d8f068c0f23f7b64aff",
+    "recipes_names.xlsx": "765edc5bae7a725570303d46a7efe03964df03861226f7e344baa03a74afd4bb",
+    "recipes_servingsize.xlsx": "779a1ecccd07dcf82537c2888bbd58b35f925107894d9f4d26f125da958e125e",
+    "recipe_links.xlsx": "5844339861b126bd01bf8d18806899135e2e267e3af173cf035f81c36ba367f2",
+    "UK_fct.xlsx": "729b3e5b8fe48a0b3fc4e69a9d8a0a53f4f31315cf07603dff431d85a2c9f37f",
+    "Units.xlsx": "d5b67731b5453584f8c77a5ee1a7613476872b82375b6a1c952dcd7fb36cda34",
+    "USDA_nrf.xlsx": "be0637b23b5375ce6aa6d56250929cab4f03dd0cef96f8c53450b508b3f76511",
+    "US_fct.xlsx": "29748f1dfa5d72686b3175648a0cec1b7d0646a592b6ed57a9f7cfa490259149"
+  },
+  "requested_dishes": 64,
+  "included": 49,
+  "excluded": 15,
+  "dishes": [
+    {
+      "food_id": "recipe_toor_dal_tadka",
+      "original_name": "Toor Dal Tadka",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_moong_dal_tadka",
+      "original_name": "Moong Dal Tadka",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Washed moong dal (Dhuli moong ki dal)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_masoor_dal",
+      "original_name": "Masoor Dal Curry",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Whole masoor (Masoor ki dal)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_chana_masala",
+      "original_name": "Chana Masala",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Chickpeas curry (Safed channa curry)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_rajma_curry",
+      "original_name": "Rajma Curry",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Kidney bean curry (Rajmah curry)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_sprouted_moong_usal",
+      "original_name": "Sprouted Moong Usal",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_sambar_vegetable",
+      "original_name": "South Indian Sambar",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Sambar",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ]
+    },
+    {
+      "food_id": "recipe_dal_palak",
+      "original_name": "Dal Palak (Spinach Dal)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Arhar with spinach (Arhar dal aur palak)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ]
+    },
+    {
+      "food_id": "recipe_panchmel_dal",
+      "original_name": "Rajasthani Panchmel Dal",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Panchmel dal",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TATOC",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ]
+    },
+    {
+      "food_id": "recipe_whole_wheat_phulka",
+      "original_name": "Whole-Wheat Phulka",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Chapati/Roti",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF"
+      ]
+    },
+    {
+      "food_id": "recipe_jowar_roti",
+      "original_name": "Jowar Roti",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_bajra_roti",
+      "original_name": "Bajra Roti",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_ragi_roti",
+      "original_name": "Ragi Roti",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_missi_roti",
+      "original_name": "Missi Roti (Wheat + Besan)",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_brown_rice_cooked",
+      "original_name": "Cooked Brown Rice",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_steamed_rice",
+      "original_name": "Steamed White Rice",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Boiled rice (Uble chawal)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_veg_pulao",
+      "original_name": "Vegetable Pulao",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Mixed vegetable pulao",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TATOC",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ]
+    },
+    {
+      "food_id": "recipe_moong_dal_khichdi",
+      "original_name": "Moong Dal Khichdi",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Plain khitchdi (Plain khichri/khichdi)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_steamed_idli",
+      "original_name": "Steamed Idli (2 pcs)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Idli",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ]
+    },
+    {
+      "food_id": "recipe_plain_dosa",
+      "original_name": "Plain Dosa",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Plain dosa",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ]
+    },
+    {
+      "food_id": "recipe_vegetable_oats_upma",
+      "original_name": "Vegetable Oats Upma",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_vegetable_poha",
+      "original_name": "Vegetable Poha",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Vegetable poha",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TRET",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TVB12",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ]
+    },
+    {
+      "food_id": "recipe_palak_sabzi",
+      "original_name": "Palak Sabzi",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_bhindi_masala",
+      "original_name": "Bhindi Masala",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_mixed_veg_sabzi",
+      "original_name": "Mixed Vegetable Sabzi",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_lauki_tomato",
+      "original_name": "Lauki Tomato Sabzi",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_aloo_gobi",
+      "original_name": "Aloo Gobi",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Potato cauliflower (Aloo gobhi)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_baingan_bharta",
+      "original_name": "Baingan Bharta",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Brinjal bhartha (Baingan ka bhartha)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_cabbage_peas",
+      "original_name": "Cabbage Peas Sabzi",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Cabbage and peas (Pattagobhi aur matar)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_karela_masala",
+      "original_name": "Karela Masala (Bitter Gourd)",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_methi_aloo",
+      "original_name": "Methi Aloo",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Potato fenugreek (Aloo methi)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ]
+    },
+    {
+      "food_id": "recipe_cucumber_salad",
+      "original_name": "Kachumber Cucumber Salad",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_skim_curd",
+      "original_name": "Skim-Milk Curd (Dahi)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Yogurt, plain, skim milk",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_lowfat_curd",
+      "original_name": "Low-Fat Curd",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Yogurt, plain, low fat",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_lowfat_paneer_bhurji",
+      "original_name": "Low-Fat Paneer Bhurji",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_palak_paneer",
+      "original_name": "Palak Paneer",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Spinach paneer (Palak paneer)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TVB12",
+        "DR1TCAFF"
+      ]
+    },
+    {
+      "food_id": "recipe_chaas_buttermilk",
+      "original_name": "Spiced Buttermilk (Chaas)",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_soya_chunk_curry",
+      "original_name": "Soya Chunk Curry",
+      "status": "unmatched",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected"
+    },
+    {
+      "food_id": "recipe_fresh_guava",
+      "original_name": "Fresh Indian Guava",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Guavas, common, raw",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_fresh_papaya",
+      "original_name": "Fresh Ripe Papaya",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Papayas, raw",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_fresh_apple",
+      "original_name": "Apple with Skin",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_fresh_orange",
+      "original_name": "Fresh Nagpur Orange",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Oranges, raw, all commercial varieties",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_fresh_banana",
+      "original_name": "Small Robusta Banana",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Bananas, raw",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_pomegranate_arils",
+      "original_name": "Fresh Pomegranate Arils",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Pomegranates, raw",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_skim_milk",
+      "original_name": "Skim Milk (1 glass)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Milk, nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_almonds_raw",
+      "original_name": "Raw Almonds (1 handful)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Nuts, almonds",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_lowfat_milk_1pct",
+      "original_name": "Low-Fat Milk 1% (1 glass)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Milk, lowfat, fluid, 1% milkfat, with added vitamin A and vitamin D",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_greek_yogurt_nonfat",
+      "original_name": "Plain Nonfat Greek Yogurt (1 bowl)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Yogurt, Greek, plain, nonfat (Includes foods for USDA's Food Distribution Program)",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_carrots_cooked",
+      "original_name": "Boiled Carrots (1 bowl)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Carrots, cooked, boiled, drained, without salt",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_sweet_potato_cooked",
+      "original_name": "Boiled Sweet Potato (1 medium)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Sweet potato, cooked, boiled, without skin",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_spinach_cooked",
+      "original_name": "Cooked Spinach (1 bowl)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Spinach, cooked, boiled, drained, without salt",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_broccoli_cooked",
+      "original_name": "Steamed Broccoli (1 bowl)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Broccoli, cooked, boiled, drained, without salt",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_oats_cooked",
+      "original_name": "Cooked Oatmeal (1 bowl)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Cereals, oats, regular and quick, unenriched, cooked with water (includes boiling and microwaving), without salt",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_sunflower_seeds",
+      "original_name": "Roasted Sunflower Seeds (1 handful)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Seeds, sunflower seed kernels, dry roasted, without salt",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_pumpkin_seeds",
+      "original_name": "Roasted Pumpkin Seeds (1 handful)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Seeds, pumpkin and squash seed kernels, roasted, without salt",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_chickpeas_boiled",
+      "original_name": "Boiled Chickpeas / Chana (1 bowl)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_firm_tofu_calcium",
+      "original_name": "Calcium-Set Firm Tofu (150 g)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Tofu, firm, prepared with calcium sulfate and magnesium chloride (nigari)",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_kale_cooked",
+      "original_name": "Boiled Kale (1 bowl)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Kale, cooked, boiled, drained, without salt",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_boiled_egg",
+      "original_name": "Hard-Boiled Eggs (2 eggs)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Egg, whole, cooked, hard-boiled",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_grilled_chicken_breast",
+      "original_name": "Roasted Chicken Breast (120 g)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Chicken, broilers or fryers, breast, meat only, cooked, roasted",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_baked_salmon",
+      "original_name": "Baked Atlantic Salmon (120 g)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Fish, salmon, Atlantic, farmed, cooked, dry heat",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_light_tuna",
+      "original_name": "Light Tuna in Water (100 g)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Fish, tuna, light, canned in water, drained solids (Includes foods for USDA's Food Distribution Program)",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_sardines_bone",
+      "original_name": "Atlantic Sardines with Bone (100 g)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Fish, sardine, Atlantic, canned in oil, drained solids with bone",
+      "unknown_nutrients": []
+    },
+    {
+      "food_id": "recipe_pink_salmon_canned",
+      "original_name": "Pink Salmon Canned with Bone (100 g)",
+      "status": "included",
+      "reason": "No sufficiently comparable source recipe with documented quantities selected",
+      "name": "Fish, salmon, pink, canned, total can contents",
+      "unknown_nutrients": []
+    }
+  ]
+}

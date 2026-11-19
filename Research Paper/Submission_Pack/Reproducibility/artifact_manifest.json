@@ -1,0 +1,74 @@
+{
+  "configured_git_remote_not_verified_release": "https://github.com/Mani8662/BioNutriGPT-v1.git",
+  "base_git_head_not_clean_release": "6d36f1b5225ed3a318b1f96b577bf92275f20354",
+  "source_snapshot": "Curated local file snapshot; do not claim this equals HEAD.",
+  "external_artifacts_not_bundled": {
+    "food_composition_cooked_sourced.json": {
+      "sha256": "785b38d076c3c217565abac9f21572775dfd89654d0b1e9ffbead04aa6fce478",
+      "bytes": 1235564
+    },
+    "Saved Model/bionutrigpt_stage1_best.pt": {
+      "sha256": "ccb47ba51760335cc56974705ed2e66ca9a45780bc272fb53cd5288b420250ae",
+      "bytes": 5214837
+    },
+    "Data/preprocessing_artifacts.joblib": {
+      "sha256": "04c69228edbf0ac4fb50c7e65f73e2c017b9eb56288f05cb3da091a0562278c4",
+      "bytes": 6137
+    },
+    "Data/lasi_w1_indian_cohort_100.json": {
+      "sha256": "c7f8806a5a5e52fafb9c377d70cb1e735db3bf29038c2da923b03f38d8648bbb",
+      "bytes": 53357
+    },
+    "Saved Model/stage4_lasi_conversational_benchmark_v4_report.json": {
+      "sha256": "815a266ff56f5848107888d5059b7c720d0bb4cd1fd8c26046aa39969c86d5a1",
+      "bytes": 2428787
+    },
+    "Saved Model/stage4_lasi_v4_frozen_scenarios.json": {
+      "sha256": "6d6377d0266d2094b2a63be2bd342771053509f8b5992c247fa2e8391a8a6961",
+      "bytes": 2211007
+    }
+  },
+  "excluded": "Patient records, plan_sessions, source food workbooks, full NHANES tables, model weights and assigned-count 100-case summaries are not bundled.",
+  "source_files": {
+    "train_bionutrigpt_stage1.py": "72849a1ee4bb178d10c94f2a8531f8e1461bcf11c76e15e7c455bb3664c619ef",
+    "stage2_counterfactual_engine.py": "37cadd62afd338ed6a2e86deb4a7a28556173d52e17a07a26933c96c90305aa8",
+    "nutrient_rule_policy.py": "98cd05b20980d78961dcce156fb03903e9675f9fe18bf415f6658cc9256fb04d",
+    "stage3_milp_solver.py": "5099d28963c07cb417a30da3e4244ef2fcecea22ac60ab894efc93369fad8fe4",
+    "infer_bionutrigpt_pipeline_Stage_1_and_2.py": "68a83cc0da648cc35134e0d143a653ec9b74264dcee7b5eed3518fcaa5c497fe",
+    "infer_bionutrigpt_pipeline_Stage_1_to_4.py": "ffca9669b7607f4c12d6b3cd3cc498c92a915eca70e3d2086dcb62e5aa532917",
+    "stage4_clinical_compiler.py": "c16e20b4c01816ac30f61d8f2945f85207dd22db5e5b014e5930af5097e3fe47",
+    "verify_stage3_production.py": "c87a9e6fb95f496e10d8c5abde63d40e9e2391df9c84c26e88f262acd0ee6a49",
+    "verify_stage4_chat_repairs.py": "5980dfe93fd2b5f6ed547f9e62c85df7ec955ff8bb905c3f9fba220d4a746458",
+    "prepare_research_evidence.py": "55a41688a5d896dd2efb3ad15203d7b3162f3d653394464bf609805228373981",
+    "benchmark_matched_meal_planners.py": "582ad7e5ac4a2d4da2bf26ab5822c058ac93e3ae7224dbacca2b05012c5b41e8",
+    "benchmark_stage4_conversational_revisions.py": "176fdec3ec582bbb0ad10b606d25c1e57f8c48153513f67e0e0ff9ab8db5626e",
+    "benchmark_optimizer_comparison.py": "2ed9849d101598c7ea726c0d99799c6b1e7c7d3aae3ced90cb399520fae68f72",
+    "audit_stage2_rules.py": "6de2566d883b57a4a6bad1f68e912d6762105e01bbcfc1ea30659b02abaa7710",
+    "build_indian_food_database.py": "18efd6b2170cca885e9d6c6454db13cdd13ef81362cb16db842ccd85ca665d4c",
+    "repair_b12_data.py": "9b9740ad949d7d43d80e9209158a86c5f796e838b46371a8b85c715201b772c2",
+    "extract_lasi_indian_cohort.py": "062bbd8a5bdfe722aec82e1f8aba58a63d3523dbda7e3b3c0f0cf58cccbf062c",
+    "benchmark_lasi_stage3_indian_cohort.py": "12ee1073fdfacfd1328aa53adedf73002da0363dd9a747b48398e78810e80a5c",
+    "benchmark_stage4_lasi_conversational.py": "05080999839671e681736c9254ef6dbd688ba57d8ba4c1a5667b87dafe835a20",
+    "analyse_lasi_evaluation.py": "54799ac853730c8b5c4baaf7474c3504c005a0342fdc512cc2079b43c94e191b",
+    "benchmark_stage4_lasi_conversational_v3.py": "c00d0169131fdf0d9f3936df1f09729339f611afd02cef88faef6d903daa3b16",
+    "benchmark_stage4_lasi_conversational_v4.py": "a1aa1398a5e541eaac11b6fc79456ead0426e826a6184ba5ef0aca03f247a9ae",
+    "stage4_benchmark_analysis.py": "d675ac3455da0d5023f7e22822eebeae97b66658f4aa88eb7c91dd5662f3c688",
+    "stage4_benchmark_protocol.py": "659841e1b417d1de63be38cbdd7354b2ee5a2b1421e65c1ecf413d43ed8f6511",
+    "prepare_stage4_v4_runner.py": "d5104ccd601bc753ef5ce8c0449220f7e77704b4001147c5d3cdc38b2af44497",
+    "verify_stage4_benchmark_corrections.py": "48c3473eed3a8d7d8687675f02dd14fd68b8116fe9b5d46aaf204d6204174371",
+    "verify_stage4_v4_results.py": "ed21f903769888980f405c4ff6aa530d491f4335919a1b413b15026691ad0c20",
+    "analyse_stage4_v3_corrections.py": "7069e2ee908d2a282cfa2280085afc894317646e1b29ad16a19a9b1efd86414f",
+    "build_sourced_cooked_catalog.py": "da4bb5cf1ccd6e2b121eff95e79c326756dd841c76de4f7acb9c0cfd9ddb6373",
+    "enrich_recipe_active_gaps.py": "d99a30ef2c178989a1d948d69b9b3e12a26ab2b5b8e56c8ebaead3a8b62dd913",
+    "backend/chat_service.py": "e6c536ee448ed23c77f72839c7cbe28ea8d2eeaa4cb6e2fdd825c2e8268e3174",
+    "backend/plan_store.py": "4de682b95df5cc6c3496e979380c5c85b8df601ac2f3b779037fbe73e1423704",
+    "backend/pipeline_service.py": "420b7b2949ed4b0c34035046dcbc5826121f6111f9b5b59a0ef68adea282f6cf",
+    "backend/schemas.py": "c3236003c0aeaa238dd85f7a44bf25c057df512f0a897dd5cfb0b184e069aaef",
+    "backend/main.py": "5b82dc744199bc1d07159cbe5368ee918a4d4add8545ea9c0406499173b54f2b",
+    "backend/requirements.txt": "88acc8822f54f9a57a34ba3e42c12fc6ba50fa5ecc62c67c7c68979f77e6f92c",
+    "Data/download_nhanes_2017_2020.py": "ca72dc0534c648e95f1e8a333515bcde6132a4739e957d63834b6ee3deedc6c5",
+    "Data/merge_raw_datasets.py": "dcde4558aca65647fecbb03653e6af553177a723f2495898367d98e3dca606fd",
+    "Data/preprocess_for_training.py": "351c3f1011141c7b7da234df8c311abb786f352f98f5ac1414921d398b5706a6",
+    "Data/preprocess_raw_genuinely.py": "5f9f3e28e56e76e85bf22449b3aa75856ccc8a3b93d996ee0a9e1221f80f41dd"
+  }
+}

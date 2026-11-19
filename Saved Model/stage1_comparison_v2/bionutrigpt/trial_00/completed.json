@@ -1,0 +1,104 @@
+{
+  "configuration": {
+    "lr": 0.0001,
+    "weight_decay": 0.0001
+  },
+  "seed": 42,
+  "selection_score": 0.8303638916968739,
+  "training_seconds_including_validation_and_checkpointing": 141.41351899999995,
+  "epochs": [
+    {
+      "epoch": 1,
+      "training_loss": 0.4670445763445245,
+      "validation_selection_auroc": 0.8082369722244636
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.42526534788210857,
+      "validation_selection_auroc": 0.8210402745829588
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.4164553819019385,
+      "validation_selection_auroc": 0.8249770760877047
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.4124375741707865,
+      "validation_selection_auroc": 0.8293222295241989
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.4099438376146985,
+      "validation_selection_auroc": 0.8298950094804685
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.4082536482664203,
+      "validation_selection_auroc": 0.8265519874630878
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.4052475936542365,
+      "validation_selection_auroc": 0.8278518424825261
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.40522973286875524,
+      "validation_selection_auroc": 0.8285040679427285
+    },
+    {
+      "epoch": 9,
+      "training_loss": 0.40341454401402355,
+      "validation_selection_auroc": 0.8287804477151288
+    },
+    {
+      "epoch": 10,
+      "training_loss": 0.40076818739759634,
+      "validation_selection_auroc": 0.8303638916968739
+    },
+    {
+      "epoch": 11,
+      "training_loss": 0.3996520397563481,
+      "validation_selection_auroc": 0.8251887791260073
+    },
+    {
+      "epoch": 12,
+      "training_loss": 0.3996588949749593,
+      "validation_selection_auroc": 0.8263110723370164
+    },
+    {
+      "epoch": 13,
+      "training_loss": 0.3991471066501164,
+      "validation_selection_auroc": 0.827477913952035
+    },
+    {
+      "epoch": 14,
+      "training_loss": 0.3958711764354374,
+      "validation_selection_auroc": 0.830329532117105
+    },
+    {
+      "epoch": 15,
+      "training_loss": 0.39415238895570937,
+      "validation_selection_auroc": 0.8288525859727148
+    },
+    {
+      "epoch": 16,
+      "training_loss": 0.39267960640965544,
+      "validation_selection_auroc": 0.828349890867893
+    },
+    {
+      "epoch": 17,
+      "training_loss": 0.3914249765918116,
+      "validation_selection_auroc": 0.8282751913333675
+    }
+  ],
+  "peak_process_rss_bytes": 1688702976,
+  "cuda_peak_allocated_bytes": 185152512,
+  "cuda_memory_scope": "PyTorch allocator only; CatBoost allocation is not measured",
+  "parameter_count": 1295623,
+  "artifact_hashes": {
+    "model.pt": "4d73c6905c40fdc6e71624150cc25660c19f9d60d2ae3b618c9f6c8031c98177",
+    "validation_probabilities.npy": "a6565e3d02a74b53b085c79826add904707cb8b3f6caef2a50816af8135d1d61"
+  }
+}

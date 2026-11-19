@@ -1,0 +1,11 @@
+{
+  "selected_trial": 0,
+  "criterion": "Highest validation mean AUROC across diabetes and CVD; ties choose earliest predefined configuration. Obesity is reported separately as secondary.",
+  "validation_scores": [
+    0.830529207694388,
+    0.8305265055202057,
+    0.8304450986990148,
+    0.8286858562915413
+  ],
+  "selected_before_calibration_and_temporal_prediction": true
+}

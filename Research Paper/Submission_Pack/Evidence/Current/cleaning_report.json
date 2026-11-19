@@ -1,0 +1,242 @@
+{
+  "source_dataset": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\Data\\BioNutriGPT_merged_raw_2005_2020.csv",
+  "raw_shape": [
+    45980,
+    848
+  ],
+  "total_clean_shape": [
+    30740,
+    69
+  ],
+  "clean_feature_count": 64,
+  "clean_column_names": [
+    "SEQN",
+    "NHANES_CYCLE",
+    "TARGET_DIABETES",
+    "TARGET_OBESITY",
+    "TARGET_CVD",
+    "LBXGH",
+    "LBDHDD",
+    "LBXTC",
+    "NON_HDL_CHOL",
+    "RIDAGEYR",
+    "INDFMPIR",
+    "RIAGENDR",
+    "DMDEDUC2",
+    "RIDRETH1",
+    "MARITAL_STATUS",
+    "DR1TKCAL",
+    "DR1TPROT",
+    "DR1TCARB",
+    "DR1TSUGR",
+    "DR1TFIBE",
+    "DR1TTFAT",
+    "DR1TSFAT",
+    "DR1TMFAT",
+    "DR1TPFAT",
+    "DR1TCHOL",
+    "DR1TATOC",
+    "DR1TRET",
+    "DR1TVARA",
+    "DR1TACAR",
+    "DR1TBCAR",
+    "DR1TLYCO",
+    "DR1TLZ",
+    "DR1TVB1",
+    "DR1TVB2",
+    "DR1TNIAC",
+    "DR1TVB6",
+    "DR1TFOLA",
+    "DR1TFA",
+    "DR1TFF",
+    "DR1TFDFE",
+    "DR1TVB12",
+    "DR1TVC",
+    "DR1TVK",
+    "DR1TCALC",
+    "DR1TPHOS",
+    "DR1TMAGN",
+    "DR1TIRON",
+    "DR1TZINC",
+    "DR1TCOPP",
+    "DR1TSODI",
+    "DR1TPOTA",
+    "DR1TSELE",
+    "DR1TCAFF",
+    "DR1TALCO",
+    "SLQ050",
+    "PAQ605",
+    "PAQ620",
+    "PAQ635",
+    "PAQ650",
+    "PAQ665",
+    "SMOKING_STATUS",
+    "SLEEP_HOURS",
+    "PAD680",
+    "PA_VIG_WORK_MIN_WK",
+    "PA_MOD_WORK_MIN_WK",
+    "PA_WALK_BIKE_MIN_WK",
+    "PA_VIG_REC_MIN_WK",
+    "PA_MOD_REC_MIN_WK",
+    "PA_TOTAL_MET_MIN_WK"
+  ],
+  "float_zero_artifacts_fixed": 41769,
+  "nhanes_sentinels_converted_to_nan": {
+    "DMDEDUC2": 25,
+    "SLQ050": 6,
+    "SMQ020": 15,
+    "SMQ040": 1,
+    "PAQ605": 7,
+    "PAQ620": 11,
+    "PAQ635": 3,
+    "PAQ650": 2,
+    "PAQ665": 7,
+    "DMDMARTL": 6,
+    "DMDMARTZ": 7,
+    "SLD010H": 15,
+    "PAQ610": 6,
+    "PAQ625": 15,
+    "PAQ640": 8,
+    "PAQ655": 1,
+    "PAQ670": 7,
+    "PAD615": 12,
+    "PAD630": 26,
+    "PAD645": 17,
+    "PAD660": 2,
+    "PAD675": 4,
+    "PAD680": 118
+  },
+  "filtering_steps": [
+    {
+      "stage": "deduplicate_seqn",
+      "rows_before": 45980,
+      "rows_after": 45980,
+      "rows_dropped": 0,
+      "reason": "Remove duplicate SEQN rows"
+    },
+    {
+      "stage": "filter_cycles_2007_2020",
+      "rows_before": 45980,
+      "rows_after": 40417,
+      "rows_dropped": 5563,
+      "reason": "Drop 2005-2006 cycle (lacks WHO GPAQ PAQ605-PAD680; 100% blank exercise)"
+    },
+    {
+      "stage": "require_complete_targets",
+      "rows_before": 40417,
+      "rows_after": 35502,
+      "rows_dropped": 4915,
+      "reason": "Require observed binary {0, 1} labels for Diabetes, Obesity, and CVD"
+    },
+    {
+      "stage": "require_measured_non_fasting_labs",
+      "rows_before": 35502,
+      "rows_after": 33263,
+      "rows_dropped": 2239,
+      "reason": "Require real measured HbA1c (LBXGH), HDL (LBDHDD), and Total Cholesterol (LBXTC)"
+    },
+    {
+      "stage": "require_reliable_nutrition",
+      "rows_before": 33263,
+      "rows_after": 31023,
+      "rows_dropped": 2240,
+      "reason": "Require DR1DRSTZ == 1 reliable dietary recall and all 39 DR1T nutrients"
+    },
+    {
+      "stage": "filter_clinical_and_dietary_outliers",
+      "rows_before": 31023,
+      "rows_after": 30740,
+      "rows_dropped": 283,
+      "reason": "Drop implausible recalls (DR1TKCAL <500 or >8000 kcal) & lab extremes"
+    }
+  ],
+  "train_2007_2016": {
+    "shape": [
+      23694,
+      69
+    ],
+    "cycle_counts": {
+      "2009-2010": 5264,
+      "2007-2008": 4908,
+      "2013-2014": 4620,
+      "2015-2016": 4584,
+      "2011-2012": 4318
+    },
+    "remaining_nulls": {
+      "INDFMPIR": 1970,
+      "DMDEDUC2": 16,
+      "MARITAL_STATUS": 6,
+      "SLQ050": 5,
+      "PAQ605": 3,
+      "PAQ620": 7,
+      "PAQ635": 1,
+      "PAQ650": 2,
+      "PAQ665": 5,
+      "SMOKING_STATUS": 11,
+      "SLEEP_HOURS": 47,
+      "PAD680": 109,
+      "PA_VIG_WORK_MIN_WK": 42,
+      "PA_MOD_WORK_MIN_WK": 58,
+      "PA_WALK_BIKE_MIN_WK": 33,
+      "PA_VIG_REC_MIN_WK": 14,
+      "PA_MOD_REC_MIN_WK": 26,
+      "PA_TOTAL_MET_MIN_WK": 100
+    },
+    "target_prevalence": {
+      "TARGET_DIABETES": {
+        "positives": 3022,
+        "prevalence_pct": 12.75
+      },
+      "TARGET_OBESITY": {
+        "positives": 8932,
+        "prevalence_pct": 37.7
+      },
+      "TARGET_CVD": {
+        "positives": 2205,
+        "prevalence_pct": 9.31
+      }
+    }
+  },
+  "test_2017_2020": {
+    "shape": [
+      7046,
+      69
+    ],
+    "cycle_counts": {
+      "2017-2020": 7046
+    },
+    "remaining_nulls": {
+      "INDFMPIR": 859,
+      "DMDEDUC2": 8,
+      "MARITAL_STATUS": 6,
+      "SLQ050": 1,
+      "PAQ605": 3,
+      "PAQ620": 3,
+      "PAQ635": 2,
+      "PAQ665": 2,
+      "SMOKING_STATUS": 4,
+      "SLEEP_HOURS": 56,
+      "PAD680": 47,
+      "PA_VIG_WORK_MIN_WK": 18,
+      "PA_MOD_WORK_MIN_WK": 30,
+      "PA_WALK_BIKE_MIN_WK": 14,
+      "PA_VIG_REC_MIN_WK": 3,
+      "PA_MOD_REC_MIN_WK": 10,
+      "PA_TOTAL_MET_MIN_WK": 50
+    },
+    "target_prevalence": {
+      "TARGET_DIABETES": {
+        "positives": 1409,
+        "prevalence_pct": 20.0
+      },
+      "TARGET_OBESITY": {
+        "positives": 3075,
+        "prevalence_pct": 43.64
+      },
+      "TARGET_CVD": {
+        "positives": 845,
+        "prevalence_pct": 11.99
+      }
+    }
+  }
+}

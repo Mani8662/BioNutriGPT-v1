@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="516.6pt" height="402.48pt" viewBox="0 0 516.6 402.48" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-18T21:44:22.772054</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 402.48 
+L 516.6 402.48 
+L 516.6 -0 
+L 0 -0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 117.684 102.2796 
+L 419.004 102.2796 
+Q 426.537 102.2796 426.537 96.4584 
+L 426.537 38.2464 
+Q 426.537 32.4252 419.004 32.4252 
+L 117.684 32.4252 
+Q 110.151 32.4252 110.151 38.2464 
+L 110.151 96.4584 
+Q 110.151 102.2796 117.684 102.2796 
+z
+" clip-path="url(#p9ce3fd89a4)" style="fill: #eef4f7; stroke: #647b8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 117.684 181.836 
+L 419.004 181.836 
+Q 426.537 181.836 426.537 176.0148 
+L 426.537 117.8028 
+Q 426.537 111.9816 419.004 111.9816 
+L 117.684 111.9816 
+Q 110.151 111.9816 110.151 117.8028 
+L 110.151 176.0148 
+Q 110.151 181.836 117.684 181.836 
+z
+" clip-path="url(#p9ce3fd89a4)" style="fill: #eef4f7; stroke: #647b8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 117.684 261.3924 
+L 419.004 261.3924 
+Q 426.537 261.3924 426.537 255.5712 
+L 426.537 197.3592 
+Q 426.537 191.538 419.004 191.538 
+L 117.684 191.538 
+Q 110.151 191.538 110.151 197.3592 
+L 110.151 255.5712 
+Q 110.151 261.3924 117.684 261.3924 
+z
+" clip-path="url(#p9ce3fd89a4)" style="fill: #eef4f7; stroke: #647b8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 117.684 340.9488 
+L 419.004 340.9488 
+Q 426.537 340.9488 426.537 335.1276 
+L 426.537 276.9156 
+Q 426.537 271.0944 419.004 271.0944 
+L 117.684 271.0944 
+Q 110.151 271.0944 110.151 276.9156 
+L 110.151 335.1276 
+Q 110.151 340.9488 117.684 340.9488 
+z
+" clip-path="url(#p9ce3fd89a4)" style="fill: #eef4f7; stroke: #647b8a; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(214.543688 53.887712)">Stage 1   Screening</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(177.218453 71.453337)">87 features · tabular Transformer</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(150.475562 86.887712)">Prevalent outcomes in the NHANES setting</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 268.344 98.456832 
+Q 268.344 107.130873 268.344 114.127862 
+" style="fill: none; stroke: #425e6c; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 270.544 109.727862 
+L 268.344 114.127862 
+L 266.144 109.727862 
+" style="fill: none; stroke: #425e6c; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(202.995406 133.444112)">Stage 2   Planning rules</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(195.62025 151.009737)">Versioned nutrient bounds</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(139.724781 166.444112)">30 active fields · 9 reporting or exposure fields</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 268.344 178.013232 
+Q 268.344 186.687273 268.344 193.684262 
+" style="fill: none; stroke: #425e6c; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 270.544 189.284262 
+L 268.344 193.684262 
+L 266.144 189.284262 
+" style="fill: none; stroke: #425e6c; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(192.963922 213.000512)">Stage 3   Meal optimization</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(189.442203 229.500512)">Whole standardized portions</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(151.741422 246.000512)">Independent validation before acceptance</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 268.344 257.569632 
+Q 268.344 266.243673 268.344 273.240662 
+" style="fill: none; stroke: #425e6c; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 270.544 268.840662 
+L 268.344 273.240662 
+L 266.144 268.840662 
+" style="fill: none; stroke: #425e6c; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(173.640016 292.556912)">Stage 4   Controlled plan assistant</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(162.569547 310.122537)">Grounded answers · checked revisions</text>
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(160.717594 325.556912)">Persistent preferences · version history</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 432.323026 305.038609 
+Q 365.95986 267.212053 430.871438 230.215918 
+" style="fill: none; stroke: #28796d; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 425.959361 230.483303 
+L 430.871438 230.215918 
+L 428.1381 234.306011 
+" style="fill: none; stroke: #28796d; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #205c53" transform="translate(465.42275 261.86988)">Revise</text>
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #205c53" transform="translate(456.143844 273.872614)">and check</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: middle" x="268.344" y="25.938544" transform="rotate(-0 268.344 25.938544)">BioNutriGPT workflow</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="268.344" y="383.6376" transform="rotate(-0 268.344 383.6376)">Observed patient inputs remain separate from proposed and accepted meals.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p9ce3fd89a4">
+   <rect x="7.2" y="7.2" width="502.2" height="388.08"/>
+  </clipPath>
+ </defs>
+</svg>

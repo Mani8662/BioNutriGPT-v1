@@ -1,0 +1,198 @@
+{
+  "model": "mlp",
+  "selected_trial": 0,
+  "selected_configuration": {
+    "hidden": [
+      256,
+      128
+    ],
+    "dropout": 0.1,
+    "lr": 0.0003,
+    "weight_decay": 0.0001
+  },
+  "calibration": [
+    {
+      "outcome": "TARGET_DIABETES",
+      "intercept": 0.061987196086128564,
+      "logit_slope": 0.8781886613094677
+    },
+    {
+      "outcome": "TARGET_OBESITY",
+      "intercept": 0.06212874289185599,
+      "logit_slope": 0.9275294174812708
+    },
+    {
+      "outcome": "TARGET_CVD",
+      "intercept": 0.09428919392302972,
+      "logit_slope": 0.9207215471854735
+    }
+  ],
+  "metrics": [
+    {
+      "model": "mlp",
+      "variant": "raw",
+      "outcome": "TARGET_DIABETES",
+      "n": 7004,
+      "positive": 1301,
+      "auroc": 0.7996452101278196,
+      "average_precision": 0.4748053373777252,
+      "brier": 0.1247150535075525,
+      "log_loss": 0.39728297488617487,
+      "calibration_intercept": 0.09602507600010665,
+      "calibration_slope": 0.8302305952332842,
+      "calibration_diagnostic_convergence_warning": false,
+      "threshold": 0.5,
+      "threshold_scope": "fixed descriptive threshold; not clinically validated",
+      "sensitivity": 0.22136817832436587,
+      "specificity": 0.9689637033140452,
+      "ppv": 0.6193548387096774,
+      "npv": 0.8450833460773819
+    },
+    {
+      "model": "mlp",
+      "variant": "raw",
+      "outcome": "TARGET_OBESITY",
+      "n": 7004,
+      "positive": 3057,
+      "auroc": 0.7518880979322109,
+      "average_precision": 0.6867496377941633,
+      "brier": 0.2055422800418972,
+      "log_loss": 0.5968174081941727,
+      "calibration_intercept": 0.3735595205621972,
+      "calibration_slope": 1.0096503830392765,
+      "calibration_diagnostic_convergence_warning": false,
+      "threshold": 0.5,
+      "threshold_scope": "fixed descriptive threshold; not clinically validated",
+      "sensitivity": 0.4360484134772653,
+      "specificity": 0.8601469470483912,
+      "ppv": 0.7071618037135279,
+      "npv": 0.6632154717718305
+    },
+    {
+      "model": "mlp",
+      "variant": "raw",
+      "outcome": "TARGET_CVD",
+      "n": 7004,
+      "positive": 845,
+      "auroc": 0.8275204131924131,
+      "average_precision": 0.3815534767597756,
+      "brier": 0.0884400611125919,
+      "log_loss": 0.2929597456165017,
+      "calibration_intercept": 0.06066376099175609,
+      "calibration_slope": 0.8831991874524922,
+      "calibration_diagnostic_convergence_warning": false,
+      "threshold": 0.5,
+      "threshold_scope": "fixed descriptive threshold; not clinically validated",
+      "sensitivity": 0.08284023668639054,
+      "specificity": 0.9896087027114792,
+      "ppv": 0.5223880597014925,
+      "npv": 0.8871906841339156
+    },
+    {
+      "model": "mlp",
+      "variant": "calibrated",
+      "outcome": "TARGET_DIABETES",
+      "n": 7004,
+      "positive": 1301,
+      "auroc": 0.7996452101278196,
+      "average_precision": 0.4748053373777252,
+      "brier": 0.12318874550774932,
+      "log_loss": 0.3892200582654368,
+      "calibration_intercept": 0.03742301379277266,
+      "calibration_slope": 0.945389790725968,
+      "calibration_diagnostic_convergence_warning": false,
+      "threshold": 0.5,
+      "threshold_scope": "fixed descriptive threshold; not clinically validated",
+      "sensitivity": 0.24519600307455802,
+      "specificity": 0.9652814308258811,
+      "ppv": 0.6170212765957447,
+      "npv": 0.8486203175581933
+    },
+    {
+      "model": "mlp",
+      "variant": "calibrated",
+      "outcome": "TARGET_OBESITY",
+      "n": 7004,
+      "positive": 3057,
+      "auroc": 0.7518880979322109,
+      "average_precision": 0.6867496377941633,
+      "brier": 0.20320976308150818,
+      "log_loss": 0.5910495815506404,
+      "calibration_intercept": 0.3059300664773694,
+      "calibration_slope": 1.088537317523048,
+      "calibration_diagnostic_convergence_warning": false,
+      "threshold": 0.5,
+      "threshold_scope": "fixed descriptive threshold; not clinically validated",
+      "sensitivity": 0.4661432777232581,
+      "specificity": 0.8454522422092728,
+      "ppv": 0.7002457002457002,
+      "npv": 0.6715636949084323
+    },
+    {
+      "model": "mlp",
+      "variant": "calibrated",
+      "outcome": "TARGET_CVD",
+      "n": 7004,
+      "positive": 845,
+      "auroc": 0.8275204131924131,
+      "average_precision": 0.3815534767597756,
+      "brier": 0.08786464106844982,
+      "log_loss": 0.28958986140753024,
+      "calibration_intercept": -0.02978284537995982,
+      "calibration_slope": 0.9592467881536121,
+      "calibration_diagnostic_convergence_warning": false,
+      "threshold": 0.5,
+      "threshold_scope": "fixed descriptive threshold; not clinically validated",
+      "sensitivity": 0.11597633136094675,
+      "specificity": 0.9852248741678844,
+      "ppv": 0.5185185185185185,
+      "npv": 0.8903888481291269
+    }
+  ],
+  "latency": [
+    {
+      "batch_size": 1,
+      "median_ms": 0.6732999999599087,
+      "p95_ms": 0.7365749999451054,
+      "inference_device": "cuda",
+      "repeats": 20
+    },
+    {
+      "batch_size": 128,
+      "median_ms": 0.9129000000029919,
+      "p95_ms": 1.1130550000416406,
+      "inference_device": "cuda",
+      "repeats": 20
+    }
+  ],
+  "training_seconds_all_configurations": 59.51623069999994,
+  "training_device": "cuda",
+  "limits": [
+    "Single seed; modest four-configuration search",
+    "Unweighted selected-sample analysis",
+    "No confidence intervals or paired superiority inference yet",
+    "Already-inspected historical temporal period",
+    "No deployment update"
+  ],
+  "data_version": "stage1-foundation-v2",
+  "n": {
+    "training": 16894,
+    "validation": 3621,
+    "calibration": 3621,
+    "temporal": 7004
+  },
+  "artifact_hashes": {
+    "validation_predictions_LOCAL.csv": "d4e0686da4d03010fd73df88bdbd15ffe0b7784299a89da662a1a96665a61f5c",
+    "calibration_predictions_LOCAL.csv": "e32a05b4e55bb1246f0a685377cd0150d3d278f6d0154ad53f970bad2d0570c0",
+    "temporal_predictions_LOCAL.csv": "f40f441fcf3693c009b0570357b24d6f2f124e731e99a49f3595a34291ca9a48",
+    "run_binding.json": "5cc352a9475a8f0d284699b909a8e4e2ab67e7871e8d8fd229d3ba6f69e764de",
+    "selection.json": "ae0ab614ad7d6568d36f1bd8246d39a399b26ded24a5e962d9360daede21e0d3",
+    "calibrators.joblib": "87b7e27b3a4e5a0b29a0fb05752b430d7fece7b5df0d7c0aa5d685b8a6ebe586",
+    "temporal_metrics.csv": "6287753768c8ac7ae5c1d288163da052854f6f85b05b48be36fcd1215eb96b54",
+    "calibration_curve.csv": "83e01fa8494ebdd315e62af6179fa3826083b3ee0aab75d8ba8ea0d2444fe4be",
+    "trial_00/completed.json": "1a1a9c8505bacfe679a7e8a1d6f6c485b767e89a297efb99d2e0d9eb3e7bddcb",
+    "trial_01/completed.json": "2ace5866e853be857ef915a6966cad175b09819dbcbcc46a8ea09c7d28ca4514",
+    "trial_02/completed.json": "271c1f4e62e08b45659e036ed9c1f3bc5e548930e448e22f7ef36c80b22a4628",
+    "trial_03/completed.json": "481dc39a284427cec28a17f7356a045cba5ad1fa9843115f4659699f80592ef7"
+  }
+}

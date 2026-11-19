@@ -1,0 +1,499 @@
+{
+  "sources_sha256": {
+    "usda_sr_legacy_zip": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+    "ifct2017_compositions_csv": "678c9285b01290ad5cc318a560fa5634618ebd413dd9fe3164d5539125c4aeef",
+    "uk_cofid_2021_xlsx": "436e9445ef2adb2a75f3d7edd51302de3adad25385f9795fc94ba58bd030e97d"
+  },
+  "target_active_nutrients": [
+    "DR1TVB12",
+    "DR1TATOC",
+    "DR1TRET",
+    "DR1TVARA",
+    "DR1TFA",
+    "DR1TFDFE",
+    "DR1TCAFF",
+    "DR1TALCO"
+  ],
+  "method_note": "Summed per-ingredient documented values scaled to grams_per_standardized_portion / 100 without cooking retention adjustments. Any recipe with >=1 unmapped/missing ingredient for a nutrient keeps null (unknown) for that nutrient.",
+  "filled_counts_by_nutrient": {
+    "DR1TVB12": 18,
+    "DR1TATOC": 18,
+    "DR1TRET": 19,
+    "DR1TVARA": 20,
+    "DR1TFA": 15,
+    "DR1TFDFE": 15,
+    "DR1TCAFF": 1,
+    "DR1TALCO": 12
+  },
+  "recipes_complete_all_8": [
+    "recipe_whole_wheat_phulka"
+  ],
+  "recipe_details": [
+    {
+      "food_id": "recipe_moong_dal_tadka",
+      "name": "Washed moong dal (Dhuli moong ki dal)",
+      "category": "dal_pulse",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "G523 (0.2708 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_masoor_dal",
+      "name": "Whole masoor (Masoor ki dal)",
+      "category": "dal_pulse",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "G523 (0.2191 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_chana_masala",
+      "name": "Chickpeas curry (Safed channa curry)",
+      "category": "dal_pulse",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "G523 (0.6254 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_rajma_curry",
+      "name": "Kidney bean curry (Rajmah curry)",
+      "category": "dal_pulse",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "G523 (0.6254 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_sambar_vegetable",
+      "name": "Sambar",
+      "category": "dal_pulse",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TFA": [
+          "G010 (0.6997 g)",
+          "G019 (0.0875 g)"
+        ],
+        "DR1TFDFE": [
+          "G010 (0.6997 g)",
+          "G019 (0.0875 g)"
+        ],
+        "DR1TCAFF": [
+          "B003 (0.6997 g)",
+          "B021 (17.4927 g)",
+          "D046 (10.4956 g)",
+          "G010 (0.6997 g)",
+          "G019 (0.0875 g)",
+          "G024 (0.6997 g)",
+          "G026 (0.1749 g)"
+        ],
+        "DR1TALCO": [
+          "B003 (0.6997 g)",
+          "B021 (17.4927 g)",
+          "G010 (0.6997 g)",
+          "G019 (0.0875 g)",
+          "G026 (0.1749 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_dal_palak",
+      "name": "Arhar with spinach (Arhar dal aur palak)",
+      "category": "dal_pulse",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "B021 (11.1579 g)",
+          "G523 (0.093 g)",
+          "G523 (0.093 g)"
+        ],
+        "DR1TALCO": [
+          "B021 (11.1579 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_panchmel_dal",
+      "name": "Panchmel dal",
+      "category": "dal_pulse",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TRET",
+        "DR1TVARA"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TATOC": [
+          "G512 (0.1496 g)"
+        ],
+        "DR1TFA": [
+          "C020 (0.0623 g)"
+        ],
+        "DR1TFDFE": [
+          "C020 (0.0623 g)"
+        ],
+        "DR1TCAFF": [
+          "B003 (5.4535 g)",
+          "B021 (5.4535 g)",
+          "C020 (0.0623 g)",
+          "G021 (0.0623 g)",
+          "G024 (0.2493 g)",
+          "G512 (0.1496 g)",
+          "G523 (0.0623 g)"
+        ],
+        "DR1TALCO": [
+          "B003 (5.4535 g)",
+          "B021 (5.4535 g)",
+          "C020 (0.0623 g)",
+          "G021 (0.0623 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_whole_wheat_phulka",
+      "name": "Chapati/Roti",
+      "category": "cereal_grain",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {}
+    },
+    {
+      "food_id": "recipe_steamed_rice",
+      "name": "Boiled rice (Uble chawal)",
+      "category": "cereal_grain",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "A014 (33.3333 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_veg_pulao",
+      "name": "Mixed vegetable pulao",
+      "category": "cereal_grain",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TATOC": [
+          "G512 (0.1642 g)"
+        ],
+        "DR1TCAFF": [
+          "A014 (32.8467 g)",
+          "G021 (0.2053 g)",
+          "G512 (0.1642 g)"
+        ],
+        "DR1TALCO": [
+          "G021 (0.2053 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_moong_dal_khichdi",
+      "name": "Plain khitchdi (Plain khichri/khichdi)",
+      "category": "cereal_grain",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "A014 (20.9059 g)",
+          "G523 (0.0871 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_steamed_idli",
+      "name": "Idli",
+      "category": "cereal_grain",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "A014 (35.9102 g)",
+          "B003 (11.9701 g)"
+        ],
+        "DR1TALCO": [
+          "B003 (11.9701 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_plain_dosa",
+      "name": "Plain dosa",
+      "category": "cereal_grain",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "A014 (34.6021 g)",
+          "A014 (34.6021 g)",
+          "B003 (20.7612 g)",
+          "G026 (0.346 g)"
+        ],
+        "DR1TALCO": [
+          "B003 (20.7612 g)",
+          "G026 (0.346 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_vegetable_poha",
+      "name": "Vegetable poha",
+      "category": "cereal_grain",
+      "filled_active_gaps": [
+        "DR1TATOC",
+        "DR1TVARA"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TVB12": [
+          "A011 (30.6654 g)"
+        ],
+        "DR1TRET": [
+          "A011 (30.6654 g)"
+        ],
+        "DR1TFA": [
+          "A011 (30.6654 g)",
+          "G010 (1.5333 g)",
+          "G019 (0.3833 g)"
+        ],
+        "DR1TFDFE": [
+          "A011 (30.6654 g)",
+          "G010 (1.5333 g)",
+          "G019 (0.3833 g)"
+        ],
+        "DR1TCAFF": [
+          "A011 (30.6654 g)",
+          "B003 (3.8332 g)",
+          "G010 (1.5333 g)",
+          "G019 (0.3833 g)"
+        ],
+        "DR1TALCO": [
+          "A011 (30.6654 g)",
+          "B003 (3.8332 g)",
+          "G010 (1.5333 g)",
+          "G019 (0.3833 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_bhindi_masala",
+      "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+      "category": "vegetable_sabzi",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "G024 (0.1804 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_aloo_gobi",
+      "name": "Potato cauliflower (Aloo gobhi)",
+      "category": "vegetable_sabzi",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "G523 (0.4267 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_baingan_bharta",
+      "name": "Brinjal bhartha (Baingan ka bhartha)",
+      "category": "vegetable_sabzi",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "G523 (0.2302 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_cabbage_peas",
+      "name": "Cabbage and peas (Pattagobhi aur matar)",
+      "category": "vegetable_sabzi",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TFA",
+        "DR1TFDFE",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TCAFF": [
+          "G523 (0.4511 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_methi_aloo",
+      "name": "Potato fenugreek (Aloo methi)",
+      "category": "vegetable_sabzi",
+      "filled_active_gaps": [
+        "DR1TVB12",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TFA": [
+          "C020 (51.4076 g)"
+        ],
+        "DR1TFDFE": [
+          "C020 (51.4076 g)"
+        ],
+        "DR1TCAFF": [
+          "C020 (51.4076 g)",
+          "G523 (0.1714 g)"
+        ],
+        "DR1TALCO": [
+          "C020 (51.4076 g)"
+        ]
+      }
+    },
+    {
+      "food_id": "recipe_palak_paneer",
+      "name": "Spinach paneer (Palak paneer)",
+      "category": "vegetable_sabzi",
+      "filled_active_gaps": [
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TALCO"
+      ],
+      "remaining_unknown_active_gaps": {
+        "DR1TVB12": [
+          "L003 (20.3046 g)"
+        ],
+        "DR1TFA": [
+          "L003 (20.3046 g)"
+        ],
+        "DR1TFDFE": [
+          "L003 (20.3046 g)"
+        ],
+        "DR1TCAFF": [
+          "L003 (20.3046 g)",
+          "G523 (0.2538 g)"
+        ]
+      }
+    }
+  ]
+}

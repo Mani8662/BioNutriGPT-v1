@@ -1,0 +1,155 @@
+{
+  "clean_reproduction": {
+    "development": {
+      "same_schema_shape": true,
+      "mismatched_cells_by_column": {},
+      "matches_within_tolerance": true
+    },
+    "temporal": {
+      "same_schema_shape": true,
+      "mismatched_cells_by_column": {},
+      "matches_within_tolerance": true
+    }
+  },
+  "preprocessing_reproduction": {
+    "development": {
+      "same_schema_shape": true,
+      "mismatched_cells_by_column": {},
+      "matches_within_tolerance": true
+    },
+    "temporal": {
+      "same_schema_shape": true,
+      "mismatched_cells_by_column": {},
+      "matches_within_tolerance": true
+    }
+  },
+  "preprocessor_fit": {
+    "saved_scaler_n_samples_seen": 23694,
+    "development_n": 23694,
+    "refit_scaler_mean_max_difference": 0.0,
+    "refit_scaler_scale_max_difference": 0.0,
+    "refit_medians_match": true,
+    "refit_modes_match": true,
+    "refit_log_columns_match": true,
+    "refit_clip_bounds_match": true
+  },
+  "split_audit": {
+    "training_n": 20140,
+    "validation_n": 3554,
+    "legacy_calibration_n": 3555,
+    "legacy_calibration_overlaps_training": 2997,
+    "legacy_calibration_overlaps_validation": 558,
+    "development_temporal_id_overlap": 0,
+    "development_duplicate_ids": 0,
+    "temporal_duplicate_ids": 0,
+    "split_manifest_sha256": "82fd499f6917c1309c60c61773defbe98368a978c71edf8d57466d7d4ab3986d",
+    "checkpoint_attestation": "Training saves weights only; original membership cannot be independently attested from checkpoint."
+  },
+  "labels": [
+    {
+      "partition": "development",
+      "outcome": "TARGET_DIABETES",
+      "n": 23694,
+      "reconstructed_mismatch": 910,
+      "negative_incomplete_components": 10673,
+      "negative_missing_hba1c_or_valid_diagnosis": 0
+    },
+    {
+      "partition": "development",
+      "outcome": "TARGET_OBESITY",
+      "n": 23694,
+      "reconstructed_mismatch": 0,
+      "negative_incomplete_components": 0,
+      "negative_missing_hba1c_or_valid_diagnosis": null
+    },
+    {
+      "partition": "development",
+      "outcome": "TARGET_CVD",
+      "n": 23694,
+      "reconstructed_mismatch": 225,
+      "negative_incomplete_components": 110,
+      "negative_missing_hba1c_or_valid_diagnosis": null
+    },
+    {
+      "partition": "reconstructed_training",
+      "outcome": "TARGET_DIABETES",
+      "n": 20140,
+      "reconstructed_mismatch": 766,
+      "negative_incomplete_components": 9066,
+      "negative_missing_hba1c_or_valid_diagnosis": 0
+    },
+    {
+      "partition": "reconstructed_training",
+      "outcome": "TARGET_OBESITY",
+      "n": 20140,
+      "reconstructed_mismatch": 0,
+      "negative_incomplete_components": 0,
+      "negative_missing_hba1c_or_valid_diagnosis": null
+    },
+    {
+      "partition": "reconstructed_training",
+      "outcome": "TARGET_CVD",
+      "n": 20140,
+      "reconstructed_mismatch": 189,
+      "negative_incomplete_components": 99,
+      "negative_missing_hba1c_or_valid_diagnosis": null
+    },
+    {
+      "partition": "reconstructed_validation",
+      "outcome": "TARGET_DIABETES",
+      "n": 3554,
+      "reconstructed_mismatch": 144,
+      "negative_incomplete_components": 1607,
+      "negative_missing_hba1c_or_valid_diagnosis": 0
+    },
+    {
+      "partition": "reconstructed_validation",
+      "outcome": "TARGET_OBESITY",
+      "n": 3554,
+      "reconstructed_mismatch": 0,
+      "negative_incomplete_components": 0,
+      "negative_missing_hba1c_or_valid_diagnosis": null
+    },
+    {
+      "partition": "reconstructed_validation",
+      "outcome": "TARGET_CVD",
+      "n": 3554,
+      "reconstructed_mismatch": 36,
+      "negative_incomplete_components": 11,
+      "negative_missing_hba1c_or_valid_diagnosis": null
+    },
+    {
+      "partition": "temporal",
+      "outcome": "TARGET_DIABETES",
+      "n": 7046,
+      "reconstructed_mismatch": 0,
+      "negative_incomplete_components": 2967,
+      "negative_missing_hba1c_or_valid_diagnosis": 147
+    },
+    {
+      "partition": "temporal",
+      "outcome": "TARGET_OBESITY",
+      "n": 7046,
+      "reconstructed_mismatch": 0,
+      "negative_incomplete_components": 0,
+      "negative_missing_hba1c_or_valid_diagnosis": null
+    },
+    {
+      "partition": "temporal",
+      "outcome": "TARGET_CVD",
+      "n": 7046,
+      "reconstructed_mismatch": 0,
+      "negative_incomplete_components": 41,
+      "negative_missing_hba1c_or_valid_diagnosis": null
+    }
+  ],
+  "feature_contract": {
+    "count": 87,
+    "unique_count": 87,
+    "missing_features": [],
+    "direct_outcome_defining_predictors": [],
+    "artifact_order_equals_model_order": false,
+    "artifact_feature_set_equals_model_set": true,
+    "note": "Artifact order differs legitimately if columns are selected by name; positional conversion must use model order."
+  }
+}

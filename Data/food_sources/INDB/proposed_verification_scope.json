@@ -1,0 +1,59 @@
+{
+  "status": "proposed measurement scope; not a clinical prescribing protocol",
+  "stage1_features_removed": [],
+  "catalog_fields_covered": [
+    "DR1TKCAL",
+    "DR1TPROT",
+    "DR1TCARB",
+    "DR1TFIBE",
+    "DR1TTFAT",
+    "DR1TSFAT",
+    "DR1TMFAT",
+    "DR1TPFAT",
+    "DR1TCHOL",
+    "DR1TVARA",
+    "DR1TVB1",
+    "DR1TVB2",
+    "DR1TNIAC",
+    "DR1TVB6",
+    "DR1TFOLA",
+    "DR1TVC",
+    "DR1TVK",
+    "DR1TCALC",
+    "DR1TPHOS",
+    "DR1TMAGN",
+    "DR1TIRON",
+    "DR1TZINC",
+    "DR1TCOPP",
+    "DR1TSODI",
+    "DR1TPOTA",
+    "DR1TSELE"
+  ],
+  "priority_data_gaps": [
+    "DR1TSUGR",
+    "DR1TATOC",
+    "DR1TRET",
+    "DR1TFF",
+    "DR1TFDFE",
+    "DR1TVB12"
+  ],
+  "supporting_research_fields": [
+    "DR1TACAR",
+    "DR1TBCAR",
+    "DR1TLYCO",
+    "DR1TLZ",
+    "DR1TFA"
+  ],
+  "separate_exposure_fields": [
+    "DR1TCAFF",
+    "DR1TALCO"
+  ],
+  "acceptance_rule": "Report covered-field compliance separately. Unknown fields cannot be certified adequate or silently ignored.",
+  "rule_review_required": [
+    "Total folate vs DFE reference values",
+    "Retinol upper bound vs RAE",
+    "Total sugar vs free/added sugar limits",
+    "Individual carotenoid bounds",
+    "Age, sex, condition, supplements and exposure applicability"
+  ]
+}

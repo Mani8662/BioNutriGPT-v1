@@ -1,0 +1,30 @@
+{
+  "status": "All inference completed; final report export failed. Only printed aggregate summaries recovered, not complete per-turn records.",
+  "failure": "TypeError dict object is not callable: local paired_ablation variable shadowed imported function.",
+  "guarded_full": {
+    "passes": "76/78",
+    "validated_proposals": 29,
+    "justified_refusals": 11,
+    "timeouts": 2,
+    "mean_serving_delta": 8.38
+  },
+  "guarded_no_penalty": {
+    "passes": "76/78",
+    "validated_proposals": 29,
+    "mean_serving_delta": 17.07
+  },
+  "guarded_matched": {
+    "passes": "24/24",
+    "valid_feasible_revisions": "9/9"
+  },
+  "qwen_matched": {
+    "passes": "2/24",
+    "valid_feasible_revisions": "0/9",
+    "invalid_revision_proposals": 8,
+    "nutrient_checks": "2/3",
+    "mean_response_ms": 48498.29,
+    "mean_prompt_tokens": 16599.9,
+    "max_prompt_tokens": 17159
+  },
+  "publication_status": "Incomplete evidence: cannot stand in for the missing detailed measured report."
+}
