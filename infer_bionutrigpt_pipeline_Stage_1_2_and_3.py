@@ -35,6 +35,8 @@ def render_full_pipeline_report(
     stage3_output: s3.Stage3Output,
 ) -> str:
     """Combine Stage 1 & 2 diagnostic report with Stage 3 Indian meal synthesis."""
+    if not stage3_output.accepted:
+        return p12_report + '\n\nStage 3: no accepted meal plan\n' + json.dumps(stage3_output.failure, indent=2)
     lines = [p12_report, ""]
     lines.append("=" * 92)
     lines.append("STAGE 3 | DISCRETE INDIAN MEAL SYNTHESIS (HiGHS MILP)")

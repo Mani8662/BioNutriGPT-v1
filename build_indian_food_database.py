@@ -259,7 +259,7 @@ def parse_ifct_raw_catalog() -> list[dict[str, Any]]:
             "DR1TFA":   0.0,
             "DR1TFF":   round(raw_fola * mult, 1),
             "DR1TFDFE": round(raw_fola * mult, 1),
-            "DR1TVB12": 0.05 if cat == "dairy" else 0.0,
+            "DR1TVB12": None,  # IFCT import has no verified B12 field.
             "DR1TVC":   round(raw_vc * mult, 2),
             "DR1TVK":   round(raw_vk * mult, 2),
             "DR1TCALC": round(raw_ca * mult, 1),
@@ -425,7 +425,7 @@ def build_cooked_recipes_catalog() -> list[dict[str, Any]]:
             "DR1TFA": 0.0,
             "DR1TFF": 65.0 if r["cat"] == "dal_pulse" else 25.0,
             "DR1TFDFE": 65.0 if r["cat"] == "dal_pulse" else 25.0,
-            "DR1TVB12": 0.50 if r["cat"] == "dairy" else 0.0,
+            "DR1TVB12": None,  # Requires reviewed source or ingredient calculation.
             "DR1TVC": 18.0 if "sabzi" in r["id"] or "fruit" in r["cat"] else 3.0,
             "DR1TVK": 65.0 if "palak" in r["id"] or "sabzi" in r["id"] else 8.0,
             "DR1TCALC": ca, "DR1TPHOS": round(prot * 12.0 + 30.0, 1),
@@ -456,6 +456,9 @@ def main() -> int:
     print(f"Generated {len(recipes)} authentic Indian cooked recipes (RecipeDB schema).")
     
     combined = raw_ifct + recipes
+    from repair_b12_data import enrich
+    b12_report = enrich(combined)
+    print(f"B12 source matches: {len(b12_report['matched'])}; unknown: {len(b12_report['unknown'])}")
     print(f"Total database items: {len(combined)}")
 
     # Ensure uniqueness of food_ids
@@ -488,6 +491,7 @@ def main() -> int:
             "data_source": item["data_source"],
         }
         row.update(item["nutrients_per_serving"])
+        row["b12_provenance_json"] = json.dumps(item.get("nutrient_provenance", {}).get("DR1TVB12", {}))
         rows.append(row)
 
     df_out = pd.DataFrame(rows)

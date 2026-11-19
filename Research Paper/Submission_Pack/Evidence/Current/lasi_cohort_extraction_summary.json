@@ -1,0 +1,37 @@
+{
+  "source_dataset": "IIPS Longitudinal Ageing Study in India (LASI) Wave 1 (2017-2019)",
+  "archive_filename": "65dc53fced0231708938236.zip",
+  "archive_sha256": "2cdb47d5dc6fa617c57113082f11cb1b04d54464cda155b14b6c888ba47028f3",
+  "scope_note": "LASI Wave 1 provides real Indian adult anthropometry, demographics, physical activity, and prevalent Diabetes/Obesity/CVD status for Stage 2-4 meal planning and conversational revision benchmarking. It lacks serum lipids and 24-hour dietary nutrient recalls, so it is NOT used to claim external validation of the 87-feature Stage 1 NHANES Transformer.",
+  "merged_total_n": 66859,
+  "valid_indian_adults_n": 65368,
+  "full_cohort_stats": {
+    "states_covered": 36,
+    "age_mean_sd": [
+      57.59,
+      11.42
+    ],
+    "female_pct": 57.66,
+    "bmi_mean_sd": [
+      23.03,
+      4.66
+    ],
+    "diabetes_prevalence_pct": 12.08,
+    "obesity_who30_prevalence_pct": 7.8,
+    "obesity_indian25_prevalence_pct": 30.57,
+    "cvd_prevalence_pct": 4.64,
+    "hypertension_prevalence_pct": 27.6,
+    "stratum_counts": {
+      "healthy_reference": 51597,
+      "diabetes_only": 5956,
+      "obesity_only": 3739,
+      "multimorbid": 2131,
+      "cvd_only": 1945
+    }
+  },
+  "stratified_sample_n": 100,
+  "stratified_sample_seed": 42,
+  "stratified_sample_states": 29,
+  "stratified_sample_female_n": 48,
+  "stratified_sample_male_n": 52
+}

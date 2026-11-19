@@ -1,0 +1,181 @@
+{
+  "scope": "Post-hoc reanalysis of unchanged v3 logs. Does not repair or rerun the old Qwen prompt.",
+  "source_v3_sha256": "84811d4b0f9d198e322ea3843890a0080a8ec05889c743c7ea628c3644d75a4e",
+  "accounting": {
+    "guarded_stage4_full_l1": {
+      "revision_turns_total": 42,
+      "oracle_feasible": 30,
+      "oracle_proven_infeasible": 11,
+      "oracle_timeout_unresolved": 1,
+      "validated_swap_proposals": 29,
+      "valid_proven_infeasible_refusals": 11,
+      "timeout_no_proposal": 2,
+      "missed_feasible_due_to_timeout": 1,
+      "missed_feasible_other": 0,
+      "invalid_proposals": 0,
+      "malformed_json_no_proposal": 0,
+      "unexplained_null_on_proven_infeasible": 0,
+      "invalid_proposals_on_feasible": 0
+    },
+    "guarded_stage4_no_l1_ablation": {
+      "revision_turns_total": 42,
+      "oracle_feasible": 30,
+      "oracle_proven_infeasible": 11,
+      "oracle_timeout_unresolved": 1,
+      "validated_swap_proposals": 29,
+      "valid_proven_infeasible_refusals": 11,
+      "timeout_no_proposal": 2,
+      "missed_feasible_due_to_timeout": 1,
+      "missed_feasible_other": 0,
+      "invalid_proposals": 0,
+      "malformed_json_no_proposal": 0,
+      "unexplained_null_on_proven_infeasible": 0,
+      "invalid_proposals_on_feasible": 0
+    },
+    "guarded_stage4_matched_subset": {
+      "revision_turns_total": 12,
+      "oracle_feasible": 9,
+      "oracle_proven_infeasible": 3,
+      "oracle_timeout_unresolved": 0,
+      "validated_swap_proposals": 9,
+      "valid_proven_infeasible_refusals": 3,
+      "timeout_no_proposal": 0,
+      "missed_feasible_due_to_timeout": 0,
+      "missed_feasible_other": 0,
+      "invalid_proposals": 0,
+      "malformed_json_no_proposal": 0,
+      "unexplained_null_on_proven_infeasible": 0,
+      "invalid_proposals_on_feasible": 0
+    },
+    "prompt_only_qwen_equal_info_subset": {
+      "revision_turns_total": 12,
+      "oracle_feasible": 9,
+      "oracle_proven_infeasible": 3,
+      "oracle_timeout_unresolved": 0,
+      "validated_swap_proposals": 0,
+      "valid_proven_infeasible_refusals": 1,
+      "timeout_no_proposal": 0,
+      "missed_feasible_due_to_timeout": 0,
+      "missed_feasible_other": 7,
+      "invalid_proposals": 2,
+      "malformed_json_no_proposal": 2,
+      "unexplained_null_on_proven_infeasible": 1,
+      "invalid_proposals_on_feasible": 2
+    }
+  },
+  "uncertainty": {
+    "guarded_stage4_full_l1": {
+      "bootstrap_draws": 1000,
+      "seed": 42,
+      "resampling_unit": "participant/scenario",
+      "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+        0.9367088607594937,
+        1.0
+      ],
+      "all_turns_passed_scenarios": 34,
+      "scenario_count": 36,
+      "all_turns_passed_scenario_wilson_95ci": [
+        0.8185534279135275,
+        0.9846300133358382
+      ],
+      "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+    },
+    "guarded_stage4_no_l1_ablation": {
+      "bootstrap_draws": 1000,
+      "seed": 42,
+      "resampling_unit": "participant/scenario",
+      "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+        0.9367088607594937,
+        1.0
+      ],
+      "all_turns_passed_scenarios": 34,
+      "scenario_count": 36,
+      "all_turns_passed_scenario_wilson_95ci": [
+        0.8185534279135275,
+        0.9846300133358382
+      ],
+      "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+    },
+    "guarded_stage4_matched_subset": {
+      "bootstrap_draws": 1000,
+      "seed": 42,
+      "resampling_unit": "participant/scenario",
+      "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+        1.0,
+        1.0
+      ],
+      "all_turns_passed_scenarios": 12,
+      "scenario_count": 12,
+      "all_turns_passed_scenario_wilson_95ci": [
+        0.7575059933447592,
+        1
+      ],
+      "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+    },
+    "prompt_only_qwen_equal_info_subset": {
+      "bootstrap_draws": 1000,
+      "seed": 42,
+      "resampling_unit": "participant/scenario",
+      "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+        0.0,
+        0.2
+      ],
+      "all_turns_passed_scenarios": 0,
+      "scenario_count": 12,
+      "all_turns_passed_scenario_wilson_95ci": [
+        2.7755575615628914e-17,
+        0.24249400665524085
+      ],
+      "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+    }
+  },
+  "ablation": {
+    "trajectory_pairs": {
+      "paired_turns": 29,
+      "scenarios": 25,
+      "full_mean": 8.344827586206897,
+      "no_penalty_mean": 17.379310344827587,
+      "reduction_pct": 51.98412698412699,
+      "mean_difference_no_penalty_minus_full": 9.03448275862069,
+      "cluster_bootstrap_difference_95ci": [
+        6.161104218362283,
+        11.858035714285714
+      ],
+      "bootstrap_draws": 1000,
+      "seed": 42
+    },
+    "same_input_state_pairs": {
+      "paired_turns": 25,
+      "scenarios": 25,
+      "full_mean": 7.72,
+      "no_penalty_mean": 17.28,
+      "reduction_pct": 55.32407407407408,
+      "mean_difference_no_penalty_minus_full": 9.560000000000002,
+      "cluster_bootstrap_difference_95ci": [
+        7.28,
+        11.801
+      ],
+      "bootstrap_draws": 1000,
+      "seed": 42
+    },
+    "different_input_state_pairs": 4,
+    "scope": "Successful-pair conditional descriptive analysis. v3 same-state reconstruction uses preceding basket and frozen history; v4 compares logged full input states. Not a randomized clinical effect."
+  },
+  "matched_difference": {
+    "cluster_bootstrap_difference_95ci": [
+      0.8181818181818181,
+      1.0
+    ],
+    "bootstrap_draws": 1000,
+    "seed": 42,
+    "paired_scenarios": 12,
+    "scope": "Selected-case, scenario-paired exploratory comparison; no correction of historical prompt information."
+  },
+  "v4_inference_executed": false,
+  "historical_limitations": [
+    "Six incomplete active-nutrient records were presented as numeric zeros in the old prompt.",
+    "Old prompt post-checks differ from validator: calories 10% vs 5%, carbohydrate 35\u201365% vs 45\u201365%, fat 15\u201335% vs 20\u201335%; sodium/potassium formula and threshold also differ.",
+    "v3 model/config/source hashes were not captured at original execution; new hashes cannot establish the old run configuration.",
+    "Same-state post-hoc pairs are a selected successful subset, not a new randomized comparison."
+  ]
+}

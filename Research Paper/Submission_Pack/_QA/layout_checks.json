@@ -1,0 +1,215 @@
+[
+  {
+    "file": "Author_Completion\\Cover_Letter_DRAFT.pdf",
+    "pages": 1,
+    "page_checks": [
+      {
+        "page": 1,
+        "characters": 1726,
+        "outside_page_text_blocks": 0
+      }
+    ]
+  },
+  {
+    "file": "Author_Completion\\Declarations_AUTHOR_CONFIRMATION.pdf",
+    "pages": 2,
+    "page_checks": [
+      {
+        "page": 1,
+        "characters": 1725,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 2,
+        "characters": 622,
+        "outside_page_text_blocks": 0
+      }
+    ]
+  },
+  {
+    "file": "Author_Completion\\Title_Page_AUTHOR_COMPLETION.pdf",
+    "pages": 1,
+    "page_checks": [
+      {
+        "page": 1,
+        "characters": 1010,
+        "outside_page_text_blocks": 0
+      }
+    ]
+  },
+  {
+    "file": "Highlights_DRAFT.pdf",
+    "pages": 1,
+    "page_checks": [
+      {
+        "page": 1,
+        "characters": 419,
+        "outside_page_text_blocks": 0
+      }
+    ]
+  },
+  {
+    "file": "Main_Manuscript_DRAFT.pdf",
+    "pages": 15,
+    "page_checks": [
+      {
+        "page": 1,
+        "characters": 3081,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 2,
+        "characters": 2896,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 3,
+        "characters": 2133,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 4,
+        "characters": 1844,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 5,
+        "characters": 2918,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 6,
+        "characters": 3499,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 7,
+        "characters": 4013,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 8,
+        "characters": 3302,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 9,
+        "characters": 1467,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 10,
+        "characters": 1213,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 11,
+        "characters": 2809,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 12,
+        "characters": 2060,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 13,
+        "characters": 3457,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 14,
+        "characters": 3211,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 15,
+        "characters": 825,
+        "outside_page_text_blocks": 0
+      }
+    ]
+  },
+  {
+    "file": "Reporting\\TRIPOD_AI_Reporting_Map_DRAFT.pdf",
+    "pages": 2,
+    "page_checks": [
+      {
+        "page": 1,
+        "characters": 2598,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 2,
+        "characters": 659,
+        "outside_page_text_blocks": 0
+      }
+    ]
+  },
+  {
+    "file": "Reporting\\TRIPOD_LLM_Reporting_Map_DRAFT.pdf",
+    "pages": 1,
+    "page_checks": [
+      {
+        "page": 1,
+        "characters": 2522,
+        "outside_page_text_blocks": 0
+      }
+    ]
+  },
+  {
+    "file": "Supplementary_Material_DRAFT.pdf",
+    "pages": 10,
+    "page_checks": [
+      {
+        "page": 1,
+        "characters": 1036,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 2,
+        "characters": 803,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 3,
+        "characters": 807,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 4,
+        "characters": 1476,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 5,
+        "characters": 1950,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 6,
+        "characters": 2320,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 7,
+        "characters": 2377,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 8,
+        "characters": 2732,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 9,
+        "characters": 2777,
+        "outside_page_text_blocks": 0
+      },
+      {
+        "page": 10,
+        "characters": 1260,
+        "outside_page_text_blocks": 0
+      }
+    ]
+  }
+]

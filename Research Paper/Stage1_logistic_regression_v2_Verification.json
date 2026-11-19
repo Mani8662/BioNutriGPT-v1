@@ -1,0 +1,15 @@
+{
+  "model": "logistic_regression",
+  "status": "passed",
+  "completed_record_sha256": "e48325d2052bc71f11a8d041ce28f9caf15e4b288fae281448c8eee848061a31",
+  "checks": [
+    "All final and trial artifact hashes",
+    "Current source/data/environment binding",
+    "Frozen split membership and schema",
+    "Selection reproduced from all validation trial predictions",
+    "Participant IDs and outcome labels match all three exported partitions",
+    "Reloaded model and calibrators reproduce saved predictions",
+    "AUROC/AP/Brier/log-loss reproduced from exported temporal predictions"
+  ],
+  "scope": "No training or new model selection; confidence intervals and comparative inference remain pending."
+}

@@ -1,0 +1,1426 @@
+{
+  "catalog": "food_composition_cooked_sourced.json",
+  "catalog_sha256": "785b38d076c3c217565abac9f21572775dfd89654d0b1e9ffbead04aa6fce478",
+  "food_count": 49,
+  "field_count": 39,
+  "original_incomplete_field_count": 16,
+  "recovered_fields": [
+    "DR1TFOLA",
+    "DR1TVK"
+  ],
+  "fully_covered_count": 26,
+  "incomplete_count": 13,
+  "sources": [
+    "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DR1TOT_J.htm",
+    "https://github.com/lindsayjaacks/Indian-Nutrient-Databank-INDB-/tree/fbdb62bec519c6e2468582a799fb47e194b42558"
+  ],
+  "fields": [
+    {
+      "nutrient": "DR1TKCAL",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TPROT",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TCARB",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TSUGR",
+      "known_food_count": 29,
+      "missing_food_count": 20,
+      "missing_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Chapati/Roti",
+          "recipe_code": "ASC096"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Total sugars",
+      "unit": "g",
+      "proposed_role": "priority_gap",
+      "gap_reason": "INDB supplies free sugars, not total sugars.",
+      "next_action": "Obtain total sugars from each ingredient or a compatible prepared-food analysis; do not equate free with total sugar."
+    },
+    {
+      "nutrient": "DR1TFIBE",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TTFAT",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TSFAT",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TMFAT",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TPFAT",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TCHOL",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TATOC",
+      "known_food_count": 47,
+      "missing_food_count": 2,
+      "missing_foods": [
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Vitamin E, alpha-tocopherol",
+      "unit": "mg",
+      "proposed_role": "priority_gap",
+      "gap_reason": "Generic vitamin E does not document the alpha-tocopherol definition across source foods.",
+      "next_action": "Resolve source-specific vitamin E conventions or calculate alpha-tocopherol from compatible ingredient records."
+    },
+    {
+      "nutrient": "DR1TRET",
+      "known_food_count": 48,
+      "missing_food_count": 1,
+      "missing_foods": [
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Retinol",
+      "unit": "ug",
+      "proposed_role": "priority_gap",
+      "gap_reason": "INDB generic vitamin A is not separate retinol.",
+      "next_action": "Obtain preformed retinol separately; relevant to interpretation of vitamin A upper bounds."
+    },
+    {
+      "nutrient": "DR1TVARA",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "name": "Vitamin A, RAE",
+      "unit": "ug RAE",
+      "proposed_role": "priority_gap",
+      "gap_reason": "Generic vitamin A units are not documented RAE.",
+      "next_action": "Obtain retinol and provitamin A components with appropriate definitions; do not copy total carotenoids into RAE."
+    },
+    {
+      "nutrient": "DR1TACAR",
+      "known_food_count": 29,
+      "missing_food_count": 20,
+      "missing_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Chapati/Roti",
+          "recipe_code": "ASC096"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Alpha-carotene",
+      "unit": "ug",
+      "proposed_role": "supporting_research",
+      "gap_reason": "INDB reports total carotenoids, not this individual species.",
+      "next_action": "Use matching ingredient alpha-carotene values; otherwise leave as an unverified Stage 1 input component."
+    },
+    {
+      "nutrient": "DR1TBCAR",
+      "known_food_count": 29,
+      "missing_food_count": 20,
+      "missing_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Chapati/Roti",
+          "recipe_code": "ASC096"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Beta-carotene",
+      "unit": "ug",
+      "proposed_role": "supporting_research",
+      "gap_reason": "Total carotenoids cannot identify beta-carotene.",
+      "next_action": "Use separate beta-carotene measurements with preparation basis."
+    },
+    {
+      "nutrient": "DR1TLYCO",
+      "known_food_count": 29,
+      "missing_food_count": 20,
+      "missing_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Chapati/Roti",
+          "recipe_code": "ASC096"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Lycopene",
+      "unit": "ug",
+      "proposed_role": "supporting_research",
+      "gap_reason": "Total carotenoids cannot identify lycopene.",
+      "next_action": "Use separate lycopene measurements; do not invent an adequacy minimum."
+    },
+    {
+      "nutrient": "DR1TLZ",
+      "known_food_count": 29,
+      "missing_food_count": 20,
+      "missing_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Chapati/Roti",
+          "recipe_code": "ASC096"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Lutein plus zeaxanthin",
+      "unit": "ug",
+      "proposed_role": "supporting_research",
+      "gap_reason": "Total carotenoids cannot identify this sum.",
+      "next_action": "Use separate lutein and zeaxanthin or their documented sum."
+    },
+    {
+      "nutrient": "DR1TVB1",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TVB2",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TNIAC",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TVB6",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TFOLA",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "name": "Total folate",
+      "unit": "ug",
+      "proposed_role": "covered_measurement",
+      "source_column": "folate_ug",
+      "mapping_rationale": "Total folate matches total folate; no mapping to food folate or DFE.",
+      "definition_reference": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DR1TOT_J.htm",
+      "recovered_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Chapati/Roti",
+          "recipe_code": "ASC096"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ]
+    },
+    {
+      "nutrient": "DR1TFA",
+      "known_food_count": 44,
+      "missing_food_count": 5,
+      "missing_foods": [
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Folic acid",
+      "unit": "ug",
+      "proposed_role": "supporting_research",
+      "gap_reason": "Source folate is not separately quantified added/synthetic folic acid.",
+      "next_action": "Determine fortification and folic-acid content; absence of a fortification record is not a measured zero."
+    },
+    {
+      "nutrient": "DR1TFF",
+      "known_food_count": 29,
+      "missing_food_count": 20,
+      "missing_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Chapati/Roti",
+          "recipe_code": "ASC096"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Food folate",
+      "unit": "ug",
+      "proposed_role": "priority_gap",
+      "gap_reason": "Total folate does not separate natural food folate from folic acid.",
+      "next_action": "Obtain the two components before deriving food folate or DFE."
+    },
+    {
+      "nutrient": "DR1TFDFE",
+      "known_food_count": 44,
+      "missing_food_count": 5,
+      "missing_foods": [
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Dietary folate equivalents",
+      "unit": "ug DFE",
+      "proposed_role": "priority_gap",
+      "gap_reason": "DFE cannot be computed from total folate alone.",
+      "next_action": "Use compatible food folate and folic acid with the correct conversion basis; review DFE-based target applicability."
+    },
+    {
+      "nutrient": "DR1TVB12",
+      "known_food_count": 47,
+      "missing_food_count": 2,
+      "missing_foods": [
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Vitamin B12",
+      "unit": "ug",
+      "proposed_role": "priority_gap",
+      "gap_reason": "INDB recipe table has no B12 field.",
+      "next_action": "Map all recipe ingredients to traceable B12 records, including paneer and spices, and document yield/retention before summing."
+    },
+    {
+      "nutrient": "DR1TVC",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TVK",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "name": "Vitamin K1 (phylloquinone)",
+      "unit": "ug",
+      "proposed_role": "covered_measurement",
+      "source_column": "vitk1_ug",
+      "mapping_rationale": "NHANES defines this field as phylloquinone, matching K1.",
+      "definition_reference": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DR1TOT_J.htm",
+      "recovered_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_whole_wheat_phulka",
+          "name": "Chapati/Roti",
+          "recipe_code": "ASC096"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ]
+    },
+    {
+      "nutrient": "DR1TCALC",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TPHOS",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TMAGN",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TIRON",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TZINC",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TCOPP",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TSODI",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TPOTA",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TSELE",
+      "known_food_count": 49,
+      "missing_food_count": 0,
+      "missing_foods": [],
+      "fully_covered": true,
+      "proposed_role": "covered_measurement"
+    },
+    {
+      "nutrient": "DR1TCAFF",
+      "known_food_count": 30,
+      "missing_food_count": 19,
+      "missing_foods": [
+        {
+          "food_id": "recipe_moong_dal_tadka",
+          "name": "Washed moong dal (Dhuli moong ki dal)",
+          "recipe_code": "ASC151"
+        },
+        {
+          "food_id": "recipe_masoor_dal",
+          "name": "Whole masoor (Masoor ki dal)",
+          "recipe_code": "ASC157"
+        },
+        {
+          "food_id": "recipe_chana_masala",
+          "name": "Chickpeas curry (Safed channa curry)",
+          "recipe_code": "ASC162"
+        },
+        {
+          "food_id": "recipe_rajma_curry",
+          "name": "Kidney bean curry (Rajmah curry)",
+          "recipe_code": "ASC165"
+        },
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_steamed_rice",
+          "name": "Boiled rice (Uble chawal)",
+          "recipe_code": "ASC113"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_moong_dal_khichdi",
+          "name": "Plain khitchdi (Plain khichri/khichdi)",
+          "recipe_code": "BFP144"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "recipe_code": "BFP269"
+        },
+        {
+          "food_id": "recipe_aloo_gobi",
+          "name": "Potato cauliflower (Aloo gobhi)",
+          "recipe_code": "ASC171"
+        },
+        {
+          "food_id": "recipe_baingan_bharta",
+          "name": "Brinjal bhartha (Baingan ka bhartha)",
+          "recipe_code": "ASC177"
+        },
+        {
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "recipe_code": "ASC173"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        },
+        {
+          "food_id": "recipe_palak_paneer",
+          "name": "Spinach paneer (Palak paneer)",
+          "recipe_code": "ASC215"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Caffeine",
+      "unit": "mg",
+      "proposed_role": "exposure_reporting",
+      "gap_reason": "INDB recipe table has no caffeine field.",
+      "next_action": "Use beverage/exposure records and documented ingredients. The meal basket alone is not total daily exposure."
+    },
+    {
+      "nutrient": "DR1TALCO",
+      "known_food_count": 41,
+      "missing_food_count": 8,
+      "missing_foods": [
+        {
+          "food_id": "recipe_sambar_vegetable",
+          "name": "Sambar",
+          "recipe_code": "ASC167"
+        },
+        {
+          "food_id": "recipe_dal_palak",
+          "name": "Arhar with spinach (Arhar dal aur palak)",
+          "recipe_code": "BFP172"
+        },
+        {
+          "food_id": "recipe_panchmel_dal",
+          "name": "Panchmel dal",
+          "recipe_code": "OSR144"
+        },
+        {
+          "food_id": "recipe_veg_pulao",
+          "name": "Mixed vegetable pulao",
+          "recipe_code": "ASC115"
+        },
+        {
+          "food_id": "recipe_steamed_idli",
+          "name": "Idli",
+          "recipe_code": "ASC144"
+        },
+        {
+          "food_id": "recipe_plain_dosa",
+          "name": "Plain dosa",
+          "recipe_code": "BFP148"
+        },
+        {
+          "food_id": "recipe_vegetable_poha",
+          "name": "Vegetable poha",
+          "recipe_code": "BFP045"
+        },
+        {
+          "food_id": "recipe_methi_aloo",
+          "name": "Potato fenugreek (Aloo methi)",
+          "recipe_code": "ASC175"
+        }
+      ],
+      "fully_covered": false,
+      "name": "Alcohol",
+      "unit": "g",
+      "proposed_role": "exposure_reporting",
+      "gap_reason": "INDB recipe table has no alcohol field.",
+      "next_action": "Collect beverage/exposure information and account for cooking losses where relevant; do not infer patient intake from omitted drinks."
+    }
+  ],
+  "clinical_validation_established": false,
+  "scope_note": "26 fields have full catalog coverage across all 49 foods, not independently validated clinical targets. Stage 1 feature schema and current acceptance requirements remain in place."
+}

@@ -194,6 +194,7 @@ def build_deterministic_schedule(basket: Sequence[Mapping[str, Any]]) -> list[di
         "fruit": [],
         "dairy": [],
         "dal_pulse": [],
+        "non_veg_protein": [],
         "cereal_grain": [],
         "vegetable_sabzi": [],
         "oil_fat": [],
@@ -213,25 +214,51 @@ def build_deterministic_schedule(basket: Sequence[Mapping[str, Any]]) -> list[di
         slot = fruit_slots[min(i, len(fruit_slots) - 1)]
         add_to_meal(slot, item)
 
-    # 2. Distribute Cereals & Grains:
+    # 2. Distribute Cereals & Grains: reserve at least 2 servings for Lunch & Dinner when total >= 3
     bfast_kws = ("poha", "upma", "idli", "dosa", "oats", "cheela", "thepla", "paratha", "porridge")
-    bfast_cereals = [f for f in servings_by_cat["cereal_grain"] if any(k in str(f.get("name", "")).lower() for k in bfast_kws)]
-    staple_cereals = [f for f in servings_by_cat["cereal_grain"] if f not in bfast_cereals]
+    all_cereals = list(servings_by_cat["cereal_grain"])
+    bfast_cereals = [f for f in all_cereals if any(k in str(f.get("name", "")).lower() for k in bfast_kws)]
+    staple_cereals = [f for f in all_cereals if f not in bfast_cereals]
 
-    for item in bfast_cereals:
-        add_to_meal("Breakfast", item)
+    if len(all_cereals) >= 3:
+        # Put 1 (or 2 if total >= 4 and breakfast items exist) into Breakfast, keeping >= 2 for Lunch + Dinner
+        max_bfast = 2 if (len(all_cereals) >= 4 and len(bfast_cereals) >= 2) else 1
+        bfast_assigned: list[Mapping[str, Any]] = []
+        while len(bfast_assigned) < max_bfast and bfast_cereals:
+            bfast_assigned.append(bfast_cereals.pop(0))
+        while len(bfast_assigned) < 1 and staple_cereals:
+            bfast_assigned.append(staple_cereals.pop(0))
+        for item in bfast_assigned:
+            add_to_meal("Breakfast", item)
+        remaining_cereals = staple_cereals + bfast_cereals
+        cereal_slots = ["Lunch", "Dinner"]
+        for i, item in enumerate(remaining_cereals):
+            add_to_meal(cereal_slots[i % 2], item)
+    else:
+        for i, item in enumerate(bfast_cereals + staple_cereals):
+            add_to_meal(["Breakfast", "Lunch", "Dinner"][i % 3], item)
 
-    if not bfast_cereals and len(staple_cereals) >= 3:
-        add_to_meal("Breakfast", staple_cereals.pop(0))
+    # 3. Distribute Proteins (Dal/Pulse + Non-Veg Protein) together so BOTH Lunch & Dinner get a main protein
+    nonveg_items = list(servings_by_cat["non_veg_protein"])
+    egg_items = [f for f in nonveg_items if "egg" in str(f.get("name", "")).lower() or "egg" in str(f.get("food_id", "")).lower()]
+    meat_fish_items = [f for f in nonveg_items if f not in egg_items]
+    dal_items = list(servings_by_cat["dal_pulse"])
 
-    cereal_slots = ["Lunch", "Dinner"]
-    for i, item in enumerate(staple_cereals):
-        add_to_meal(cereal_slots[i % 2], item)
+    # At most 1 egg serving goes to Breakfast if there are still >= 2 other protein servings for Lunch & Dinner
+    if egg_items and (len(dal_items) + len(meat_fish_items) + len(egg_items) - 1) >= 2:
+        add_to_meal("Breakfast", egg_items.pop(0))
 
-    # 3. Distribute Dals / Pulses: alternate between Lunch and Dinner
-    dal_slots = ["Lunch", "Dinner"]
-    for i, item in enumerate(servings_by_cat["dal_pulse"]):
-        add_to_meal(dal_slots[i % 2], item)
+    # Interleave dal + meat/fish + remaining eggs cleanly across Lunch and Dinner
+    main_proteins: list[Mapping[str, Any]] = []
+    # Pair non-veg and dal so if there is 1 dal + 1 meat/fish, one lands in Lunch and the other in Dinner
+    for i in range(max(len(meat_fish_items), len(dal_items))):
+        if i < len(meat_fish_items):
+            main_proteins.append(meat_fish_items[i])
+        if i < len(dal_items):
+            main_proteins.append(dal_items[i])
+    main_proteins.extend(egg_items)
+    for i, item in enumerate(main_proteins):
+        add_to_meal(["Lunch", "Dinner"][i % 2], item)
 
     # 4. Distribute Sabzis (Vegetables): alternate between Lunch and Dinner
     veg_slots = ["Lunch", "Dinner"]
@@ -851,6 +878,15 @@ def validate_dossier(payload: Any) -> ValidatedDossier:
         stage3 = payload.get("stage3_meal_plan")
     if not isinstance(stage3, Mapping):
         raise Stage4Error("Dossier missing 'stage3_discrete_meal_synthesis' object.")
+    if stage3.get('accepted') is not True:
+        raise Stage4Error('Stage 4 requires an accepted Stage 3 plan; rejected or unverified candidates cannot be compiled.')
+    current_output = s3.Stage3Output(
+        solved_food_basket=list(stage3.get('solved_food_basket', [])),
+        delivered_nutrition=list(stage3.get('delivered_nutrition', [])),
+        clinical_verification={}, solver_metadata={}, accepted=True,
+    )
+    if not s3.validate_candidate(current_output, s3.load_food_database(), dict(stage2))['accepted']:
+        raise Stage4Error('Stage 3 plan does not pass current catalog and active-rule validation.')
 
     basket = stage3.get("solved_food_basket") or stage3.get("basket")
     if not isinstance(basket, list) or not basket:
@@ -1021,7 +1057,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     # Stage 4: Clinical Compiler
     t_s4 = time.perf_counter()
     stage4_report = None
-    if stage3_output is not None:
+    if stage3_output is not None and stage3_output.accepted:
         validated_dossier = load_dossier(dossier_path)
         compiler_cfg = CompilerConfig(backend=args.backend, model_name=args.model)
         stage4_report = compile_patient_report(validated_dossier, config=compiler_cfg)

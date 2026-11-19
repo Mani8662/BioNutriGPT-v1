@@ -41,6 +41,7 @@ if str(LESS_DATA_DIR) not in sys.path:
 # Import canonical upstream modules
 import infer_bionutrigpt_pipeline_Stage_1_and_2 as p12
 import infer_bionutrigpt_pipeline_Stage_1_to_4 as p14
+import nutrient_rule_policy as nrp
 import stage3_milp_solver as s3
 import train_bionutrigpt_stage1 as s1
 
@@ -227,27 +228,98 @@ def parse_raw_text(text: str) -> tuple[list[float], dict[str, Any]]:
     except ValueError as exc:
         raise ValueError(f"Failed to parse numeric value: {exc}") from exc
 
-    # Tolerate 88 features by trimming to 87
     if len(values) == 88:
-        values = values[:87]
-    elif len(values) != 87:
+        raise ValueError(
+            "Ambiguous 88-value legacy vector rejected to prevent silent feature misalignment. "
+            "Provide exactly 87 features matching schema nhanes-87-v2 (HbA1c excluded)."
+        )
+    if len(values) != 87:
         raise ValueError(f"Expected exactly 87 numeric values, but found {len(values)}.")
 
     return values, metadata
+
+
+FEATURE_NAMES_ORDERED: list[str] = [f["name"] for f in FEATURE_DEFINITIONS]
+FEATURE_DEFAULTS_BY_NAME: dict[str, float] = {f["name"]: float(f["default_val"]) for f in FEATURE_DEFINITIONS}
+FEATURE_UNITS_BY_NAME: dict[str, str] = {f["name"]: str(f["unit"]) for f in FEATURE_DEFINITIONS}
+
+
+def resolve_feature_vector(
+    features: list[float] | None = None,
+    named_features: Mapping[str, float] | None = None,
+    schema_version: str = "nhanes-87-v2",
+) -> tuple[list[float], dict[str, Any]]:
+    """Resolve explicit 87-feature vector or named feature map with missing-input audit."""
+    if features is None and not named_features:
+        raise ValueError("Provide either 'features' (87 values) or 'named_features'.")
+    if features is not None:
+        if len(features) == 88:
+            raise ValueError(
+                "Ambiguous 88-value legacy vector rejected to prevent silent feature misalignment. "
+                "Provide exactly 87 features matching schema nhanes-87-v2 (HbA1c excluded) or use named_features."
+            )
+        if len(features) != 87:
+            raise ValueError(f"Expected exactly 87 numeric features; got {len(features)}.")
+        values = [float(v) for v in features]
+        miss_flags = [
+            FEATURE_NAMES_ORDERED[i]
+            for i, name in enumerate(FEATURE_NAMES_ORDERED)
+            if name.endswith("_MISS") and values[i] >= 0.5
+        ]
+        return values, {
+            "schema_version": schema_version,
+            "input_mode": "positional_87",
+            "observed_feature_count": 87 - len(miss_flags),
+            "imputed_default_features": [],
+            "missingness_flags_set": miss_flags,
+            "units_explicitly_verified": False,
+        }
+
+    # Named feature mode: reject unknown names and record which fields fell back to defaults
+    provided = dict(named_features or {})
+    unknown_keys = sorted(set(provided) - set(FEATURE_NAMES_ORDERED))
+    if unknown_keys:
+        raise ValueError(f"Unrecognized feature name(s) for schema {schema_version}: {unknown_keys}")
+    values = []
+    imputed: list[str] = []
+    for name in FEATURE_NAMES_ORDERED:
+        if name in provided and provided[name] is not None:
+            values.append(float(provided[name]))
+        else:
+            values.append(FEATURE_DEFAULTS_BY_NAME[name])
+            if not name.endswith("_MISS"):
+                imputed.append(name)
+    miss_flags = [
+        FEATURE_NAMES_ORDERED[i]
+        for i, name in enumerate(FEATURE_NAMES_ORDERED)
+        if name.endswith("_MISS") and values[i] >= 0.5
+    ]
+    return values, {
+        "schema_version": schema_version,
+        "input_mode": "named_features",
+        "observed_feature_count": len(provided),
+        "imputed_default_features": imputed,
+        "missingness_flags_set": miss_flags,
+        "units_explicitly_verified": True,
+    }
 
 
 # ---------------------------------------------------------------------------
 # Pipeline Execution Functions
 # ---------------------------------------------------------------------------
 def run_screening(
-    features: list[float],
+    features: list[float] | None = None,
     metadata_overrides: dict[str, Any] | None = None,
+    *,
+    named_features: Mapping[str, float] | None = None,
+    schema_version: str = "nhanes-87-v2",
 ) -> dict[str, Any]:
     """Execute Stage 1 (Diagnostics) and Stage 2 (Counterfactual Optimization)."""
     with _MODEL_LOCK:
-        if len(features) == 88:
-            features = features[:87]
-        raw_vector = np.asarray(features, dtype=np.float32)
+        resolved_values, input_audit = resolve_feature_vector(
+            features=features, named_features=named_features, schema_version=schema_version
+        )
+        raw_vector = np.asarray(resolved_values, dtype=np.float32)
 
         # Build dummy CLI args namespace for resolve_patient_metadata
         overrides = metadata_overrides or {}
@@ -265,11 +337,37 @@ def run_screening(
         t0 = time.perf_counter()
         stage1_assessment, _ = p12.run_stage1_diagnostics(raw_vector)
         dt_s1_ms = (time.perf_counter() - t0) * 1000.0
+        stage1_assessment["model_metadata"] = {
+            "model_version": "BioNutriGPT-Stage1-CrossAttention-v2",
+            "schema_version": schema_version,
+            "calibration_status": "internal_nhanes_test_only_not_externally_calibrated",
+            "intended_population": (
+                "US NHANES 2013-2018 adult cohort; outputs estimate prevalent cross-sectional "
+                "status in the study setting, not clinical diagnosis or prospective disease probability."
+            ),
+            "input_audit": input_audit,
+        }
 
         # Stage 2: Counterfactual Engine
         t1 = time.perf_counter()
         stage2_dossier = p12.run_stage2_counterfactual(raw_vector, patient_metadata)
         dt_s2_ms = (time.perf_counter() - t1) * 1000.0
+
+        # Refresh explicit Stage 2 constraint specification metadata (v4 exposure-separated)
+        for row in stage2_dossier.get("nutrient_constraint_envelope", []):
+            code = row.get("nutrient")
+            if code:
+                row["rule_provenance"] = nrp.reviewed_rule_metadata(
+                    code,
+                    float(row.get("min_bound", 0.0)),
+                    float(row.get("max_bound", 0.0)),
+                )
+        stage2_dossier["constraint_spec_version"] = nrp.RULESET_VERSION
+        stage2_dossier["counterfactual_scope_note"] = (
+            "Stage 2 counterfactual model-score changes are exploratory mathematical calculations, "
+            "not guaranteed clinical risk reductions. Observed patient diet and proposed meal plans "
+            "remain separate records."
+        )
 
         unified_dossier = p12.build_unified_dossier(
             raw_vector=raw_vector,
@@ -283,7 +381,10 @@ def run_screening(
             "probabilities": stage1_assessment["probabilities"],
             "classifications": stage1_assessment["classifications"],
             "top_feature_drivers": stage1_assessment["top_feature_drivers"],
-            "stage2_prescription": stage2_dossier.get("target_nutrients", {}),
+            "stage2_prescription": {
+                row['nutrient']: row['target']
+                for row in stage2_dossier.get('nutrient_constraint_envelope', [])
+            },
             "energy_prescription": stage2_dossier.get("energy_prescription", {}),
             "certified_for_stage3": bool(stage2_dossier.get("certified_for_stage3", False)),
             "latency_ms": {
@@ -308,8 +409,17 @@ def _enrich_schedule_items(
     return schedule
 
 
-def run_optimization(dossier: dict[str, Any]) -> dict[str, Any]:
-    """Execute Stage 3 (HiGHS MILP Indian Meal Synthesis)."""
+def run_optimization(
+    dossier: dict[str, Any],
+    revision_spec: Mapping[str, Any] | None = None,
+    *,
+    dietary_preference: str = "veg_nonveg_combo",
+    allergies: list[str] | None = None,
+    excluded_food_ids: list[str] | None = None,
+    disliked_terms: list[str] | None = None,
+    max_active_dishes: int | None = None,
+) -> dict[str, Any]:
+    """Execute Stage 3 (HiGHS MILP Indian Meal Synthesis) with optional user preferences."""
     with _MODEL_LOCK:
         stage2_dossier = dossier.get("stage2_counterfactual_prescription") or dossier.get("stage2_prescription")
         if not stage2_dossier:
@@ -317,18 +427,135 @@ def run_optimization(dossier: dict[str, Any]) -> dict[str, Any]:
 
         t0 = time.perf_counter()
         food_db = s3.load_food_database()
-        stage3_output = s3.solve_meal_plan(stage2_dossier, food_db)
+
+        mode_map = {
+            "vegetarian": "pure_vegetarian",
+            "pure_vegetarian": "pure_vegetarian",
+            "veg_nonveg_combo": "veg_nonveg_combo",
+            "combo": "veg_nonveg_combo",
+            "non_vegetarian": "pure_non_vegetarian",
+            "pure_non_vegetarian": "pure_non_vegetarian",
+        }
+        dietary_mode = mode_map.get(str(dietary_preference or "veg_nonveg_combo").strip().lower(), "veg_nonveg_combo")
+        if dietary_mode != "pure_vegetarian" and not any(f.category == "non_veg_protein" for f in food_db):
+            dietary_mode = "pure_vegetarian"
+
+        # Merge explicit revision_spec with structured preference fields
+        merged_spec: dict[str, Any] = dict(revision_spec or {})
+        merged_spec.setdefault("dietary_mode", dietary_mode)
+        excl_ids: set[str] = {str(x) for x in merged_spec.get("excluded_food_ids", [])}
+        excl_ids.update(str(x) for x in (excluded_food_ids or []))
+
+        # Match free-text disliked terms against dish names and food_ids (including 'lady finger' -> 'lady's fingers')
+        clean_dislikes = [t.strip().lower() for t in (disliked_terms or []) if t and t.strip()]
+        matched_dislikes: list[str] = []
+        for term in clean_dislikes:
+            norm_term = re.sub(r"[^a-z0-9 ]", " ", term).strip()
+            toks = [t[:-1] if len(t) > 3 and t.endswith("s") else t for t in norm_term.split() if len(t) >= 3]
+            for food in food_db:
+                hay = re.sub(r"[^a-z0-9 ]", " ", f"{food.food_id} {food.name}".lower())
+                if norm_term in hay or (toks and all(tok in hay for tok in toks)):
+                    excl_ids.add(food.food_id)
+                    matched_dislikes.append(food.food_id)
+
+        # Normalize reported allergies and exclude dishes with documented matching allergens
+        allergen_aliases = {
+            "dairy": {"dairy", "milk", "curd", "yogurt", "lactose", "paneer", "ghee"},
+            "tree_nuts": {"tree_nuts", "tree nut", "tree nuts", "almond", "almonds", "nut", "nuts"},
+            "gluten": {"gluten", "wheat", "roti", "phulka"},
+            "peanuts": {"peanut", "peanuts", "groundnut"},
+            "mustard": {"mustard"},
+            "coconut": {"coconut"},
+            "egg": {"egg", "eggs"},
+            "fish": {"fish", "salmon", "tuna", "seafood"},
+        }
+        normalized_allergies: list[str] = []
+        allergy_excluded_ids: list[str] = []
+        for raw_a in (allergies or []):
+            a_low = raw_a.strip().lower()
+            if not a_low:
+                continue
+            canonical = a_low
+            for key, syns in allergen_aliases.items():
+                if a_low in syns or any(s in a_low for s in syns):
+                    canonical = key
+                    break
+            if canonical not in normalized_allergies:
+                normalized_allergies.append(canonical)
+            for food in food_db:
+                known = [str(k).lower() for k in (food.allergen_info or {}).get("known_allergens", [])]
+                if canonical in known or a_low in known or a_low in food.name.lower():
+                    excl_ids.add(food.food_id)
+                    allergy_excluded_ids.append(food.food_id)
+
+        if excl_ids:
+            merged_spec["excluded_food_ids"] = sorted(excl_ids)
+        if max_active_dishes is not None and merged_spec.get("max_active_dishes") is None:
+            merged_spec["max_active_dishes"] = int(max_active_dishes)
+
+        stage3_output = s3.solve_meal_plan(
+            stage2_dossier,
+            food_db,
+            time_limit_sec=2.0,
+            revision_spec=merged_spec,
+        )
         dt_s3_ms = (time.perf_counter() - t0) * 1000.0
 
         stage3_dict = stage3_output.to_dict()
+        catalog_notes = {
+            "pure_vegetarian": "Pure vegetarian plan generated from sourced lacto-vegetarian Indian & USDA entries.",
+            "veg_nonveg_combo": "Vegetarian + non-vegetarian combo combining sourced Indian vegetarian dishes with non-veg protein options.",
+            "pure_non_vegetarian": (
+                "Non-vegetarian-focused plan prioritizing sourced non-veg protein mains alongside required "
+                "whole grains and vegetables (essential for dietary fiber and vitamin C)."
+            ),
+        }
+        stage3_dict["preferences_applied"] = {
+            "dietary_preference": dietary_mode,
+            "dietary_mode": dietary_mode,
+            "reported_allergies": normalized_allergies,
+            "excluded_food_ids": sorted(excl_ids),
+            "allergy_excluded_food_ids": sorted(set(allergy_excluded_ids)),
+            "disliked_terms": clean_dislikes,
+            "matched_dislike_food_ids": sorted(set(matched_dislikes)),
+            "max_active_dishes": merged_spec.get("max_active_dishes"),
+            "catalog_note": catalog_notes[dietary_mode],
+        }
+        stage3_dict["revision"] = {
+            "dietary_mode": dietary_mode,
+            "excluded_food_ids": sorted(excl_ids),
+            "max_active_dishes": merged_spec.get("max_active_dishes"),
+            "status": "initial_with_preferences",
+        }
+        if normalized_allergies:
+            stage3_dict["flagged_unsuitable_for_allergies"] = list(normalized_allergies)
+
+        # If solve failed under user preferences, attach detailed conflict diagnosis
+        failure_payload = stage3_output.failure
+        if not stage3_output.accepted and failure_payload is not None:
+            try:
+                import chat_service
+                conflict = chat_service.tool_explain_constraint_conflict(
+                    failure_payload, stage2_dossier, food_db, merged_spec
+                )
+                failure_payload = dict(failure_payload)
+                failure_payload["message"] = conflict.get("summary") or failure_payload.get("message")
+                failure_payload["conflict_diagnosis"] = conflict
+                stage3_dict["failure"] = failure_payload
+            except Exception:
+                pass
+
         dossier["stage3_discrete_meal_synthesis"] = stage3_dict
         dossier["stage3_meal_plan"] = stage3_dict
 
         # Build 5-slot deterministic meal schedule & enrich categories
-        schedule = p14.build_deterministic_schedule(stage3_output.solved_food_basket)
+        schedule = p14.build_deterministic_schedule(stage3_output.solved_food_basket) if stage3_output.accepted else []
         schedule = _enrich_schedule_items(schedule, stage3_output.solved_food_basket)
 
         return {
+            "accepted": stage3_output.accepted,
+            "failure": failure_payload,
+            "clinical_verification": stage3_output.clinical_verification,
             "solved_food_basket": stage3_output.solved_food_basket,
             "meal_schedule": schedule,
             "delivered_nutrition": stage3_dict.get("delivered_nutrition", []),
@@ -351,15 +578,23 @@ def run_compilation(dossier: dict[str, Any], backend: str = "transformers") -> d
 
 
 def run_full_pipeline(
-    features: list[float],
+    features: list[float] | None = None,
     metadata_overrides: dict[str, Any] | None = None,
     backend: str = "transformers",
+    *,
+    named_features: Mapping[str, float] | None = None,
+    schema_version: str = "nhanes-87-v2",
 ) -> dict[str, Any]:
     """Execute complete 4-stage end-to-end pipeline."""
     t_start = time.perf_counter()
 
     # Stages 1 + 2
-    screen_res = run_screening(features, metadata_overrides)
+    screen_res = run_screening(
+        features,
+        metadata_overrides,
+        named_features=named_features,
+        schema_version=schema_version,
+    )
     unified_dossier = screen_res["dossier"]
 
     # Stage 3
@@ -370,7 +605,7 @@ def run_full_pipeline(
 
     # Stage 4
     report_res = None
-    if opt_res is not None:
+    if opt_res is not None and opt_res.get('accepted'):
         report_res = run_compilation(unified_dossier, backend=backend)
 
     t_total_ms = (time.perf_counter() - t_start) * 1000.0
@@ -381,6 +616,9 @@ def run_full_pipeline(
     s4_ms = report_res["compiler_metadata"]["generation_time_ms"] if report_res else 0.0
 
     return {
+        "pipeline_status": 'blocked_stage2' if opt_res is None else ('blocked_stage3' if not opt_res.get('accepted') else 'complete'),
+        "pipeline_failure": ({"code": "stage2_checks_failed", "message": "Stage 2 programmed checks did not pass. No meal plan was accepted."}
+                             if opt_res is None else opt_res.get('failure')),
         "screening": screen_res,
         "meal_plan": opt_res,
         "clinical_report": report_res,
@@ -396,21 +634,24 @@ def run_full_pipeline(
 
 
 def get_food_catalog() -> list[dict[str, Any]]:
-    """Return list of dishes from the IFCT cooked database."""
+    """Return list of dishes from the sourced cooked database."""
     global _FOOD_CATALOG_CACHE
     if _FOOD_CATALOG_CACHE is not None:
         return _FOOD_CATALOG_CACHE
 
     db = s3.load_food_database()
     items: list[dict[str, Any]] = []
-    for food in db.foods.values():
+    for food in db:
         items.append({
             "food_id": food.food_id,
             "name": food.name,
             "category": food.category,
             "serving_unit": food.serving_unit,
             "serving_weight_g": food.serving_weight_g,
-            "data_source": food.data_source
+            "data_source": food.data_source,
+            "catalog_version": food.catalog_version,
+            "unknown_nutrients": list(food.unknown_nutrients),
+            "allergen_info": dict(food.allergen_info),
         })
     items.sort(key=lambda x: (x["category"], x["name"]))
     _FOOD_CATALOG_CACHE = items
