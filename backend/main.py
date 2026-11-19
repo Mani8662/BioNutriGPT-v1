@@ -176,23 +176,27 @@ async def run_document_pipeline(
 
 
 def _document_questions(missing: list[dict[str, str]], metadata: dict[str, Any]) -> list[dict[str, Any]]:
+    missing_names = {field["name"] for field in missing}
+    categories = {field["category"] for field in missing}
     questions: list[dict[str, Any]] = []
-    for field in missing:
-        if field["category"].startswith(("Lifestyle", "Demographics")):
-            definition = next(item for item in ps.FEATURE_DEFINITIONS if item["name"] == field["name"])
-            questions.append({"key": field["name"], "label": definition["label"], "unit": definition["unit"],
-                              "min": definition["min_val"], "max": definition["max_val"], "kind": "number"})
-    for key, label, unit, low, high in [
-        ("weight_kg", "Patient weight", "kg", 1, 500),
-        ("height_cm", "Patient height", "cm", 30, 280),
-        ("activity_level", "Typical activity level", "", None, None),
-    ]:
-        if metadata.get(key) is None:
-            question = {"key": key, "label": label, "unit": unit,
-                        "kind": "select" if key == "activity_level" else "number"}
-            if key == "activity_level": question["options"] = ["sedentary", "light", "moderate", "active"]
-            else: question.update({"min": low, "max": high})
-            questions.append(question)
+
+    def number(key: str, label: str, unit: str, low: float, high: float, category: str) -> None:
+        questions.append({"key": key, "label": label, "unit": unit, "min": low, "max": high, "kind": "number", "category": category})
+
+    def select(key: str, label: str, options: list[str], category: str) -> None:
+        questions.append({"key": key, "label": label, "unit": "", "kind": "select", "options": options, "category": category})
+
+    if "RIDAGEYR" in missing_names: number("age_years", "Age", "years", 18, 100, "Demographics")
+    if "SEX_FEMALE" in missing_names: select("sex", "Sex used by this model", ["female", "male"], "Demographics")
+    if metadata.get("weight_kg") is None: number("weight_kg", "Weight", "kg", 1, 500, "Demographics")
+    if metadata.get("height_cm") is None: number("height_cm", "Height", "cm", 30, 280, "Demographics")
+    if metadata.get("activity_level") is None or "Lifestyle & Physical Activity" in categories:
+        select("activity_level", "Usual physical activity", ["sedentary", "light", "moderate", "active"], "Lifestyle · Activity")
+    if categories.intersection({"Lifestyle & Sleep"}):
+        number("sleep_hours", "Typical sleep per night", "hours", 3, 14, "Lifestyle · Sleep")
+        select("sleep_disorder", "Have you been told you have a sleep disorder?", ["yes", "no", "prefer not to say"], "Lifestyle · Sleep")
+    if categories.intersection({"Lifestyle & Smoking"}):
+        select("smoking_status", "Smoking status", ["never", "former", "some days", "every day", "prefer not to say"], "Lifestyle · Smoking")
     return questions
 
 
@@ -204,15 +208,31 @@ def _apply_document_answers(features: dict[str, float], metadata: dict[str, Any]
         value = answers[key]
         if question["kind"] == "select":
             if value not in question["options"]: raise ValueError(f"Invalid answer for {question['label']}")
-            metadata[key] = value
+            if key == "sex":
+                features["SEX_FEMALE"] = 1.0 if value == "female" else 0.0
+                metadata["is_female"] = value == "female"
+            elif key == "activity_level":
+                metadata[key] = value
+                met_minutes = {"sedentary": 0.0, "light": 600.0, "moderate": 1440.0, "active": 2400.0}[value]
+                features["PA_TOTAL_MET_MIN_WK"] = met_minutes
+                for code in ("PAQ605", "PAQ620", "PAQ635", "PAQ650", "PAQ665"):
+                    features[code] = 0.0 if value == "sedentary" else 1.0
+            elif key == "sleep_disorder":
+                if value != "prefer not to say": features["SLQ050"] = 1.0 if value == "yes" else 0.0
+            elif key == "smoking_status":
+                smoking_keys = {"never": "SMOKE_NEVER", "former": "SMOKE_FORMER", "some days": "SMOKE_SOMEDAYS", "every day": "SMOKE_EVERYDAY"}
+                if value != "prefer not to say":
+                    for code in smoking_keys.values(): features[code] = 0.0
+                    features[smoking_keys[value]] = 1.0
         else:
             number = float(value)
             if not math.isfinite(number) or not question["min"] <= number <= question["max"]:
                 raise ValueError(f"{question['label']} must be between {question['min']} and {question['max']}")
             if key in {"weight_kg", "height_cm"}: metadata[key] = number
-            else: features[key] = number
-    if "RIDAGEYR" in features: metadata["age_years"] = features["RIDAGEYR"]
-    if "SEX_FEMALE" in features: metadata["is_female"] = bool(features["SEX_FEMALE"] >= 0.5)
+            elif key == "age_years": features["RIDAGEYR"] = number; metadata[key] = number
+            elif key == "sleep_hours":
+                features["SLEEP_HOURS"] = number
+                features["SLEEP_DEV_FROM_7_5"] = number - 7.5
 
 
 def _impute_document_features(features: dict[str, float]) -> None:
