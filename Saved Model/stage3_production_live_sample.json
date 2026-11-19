@@ -1,0 +1,18 @@
+{
+  "device": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "actual_model_execution": true,
+  "elapsed_seconds": 314.9111620999993,
+  "pipeline_status": "complete",
+  "pipeline_failure": null,
+  "stage3_accepted": true,
+  "stage4_generated": true,
+  "screening_checks_passed": true,
+  "stage3_failure": null,
+  "latency": {
+    "stage1_diagnostics_ms": 1425.82,
+    "stage2_counterfactual_ms": 19603.44,
+    "stage3_milp_solver_ms": 621.16,
+    "stage4_compiler_ms": 293146.494,
+    "total_pipeline_ms": 314904.17
+  }
+}

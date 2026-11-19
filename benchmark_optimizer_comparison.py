@@ -45,43 +45,47 @@ sys.path.insert(0, str(script_dir))
 
 import stage3_milp_solver as s3
 
-# Dated regional retail ingredient costs per standard household serving (INR).
-# Source: Department of Consumer Affairs (DCA) Price Monitoring Division & Agmarknet retail monitoring
-# Reference date: Q4 2026 / November 2026 (Urban & Semi-Urban Indian Composite: Delhi-NCR, Hyderabad, Bengaluru, Mumbai).
-# Standardized to raw ingredient equivalents + cooking oil/fuel overhead per cooked household portion.
+# Illustrative household-serving price assumptions (INR) for the active 29-entry
+# sourced catalog (20 INDB recipe variants + 9 USDA single-food proxies).
+# These are unverified benchmark assumptions, not audited market quotations.
 FOOD_COSTS_INR = {
-    "dal_moong_tadka": 18.0,  # 150g cooked katori (~35g dry moong dal @ ₹140/kg + spices/oil)
-    "dal_toor": 20.0,         # 150g cooked katori (~40g dry toor dal @ ₹165/kg + tadka)
-    "dal_masoor": 16.0,       # 150g cooked katori (~35g dry masoor dal @ ₹115/kg)
-    "chana_masala": 22.0,     # 150g cooked katori (~45g dry kabuli chana @ ₹135/kg)
-    "rajma_curry": 24.0,      # 150g cooked katori (~45g dry rajma @ ₹160/kg)
-    "sprouted_moong_usal": 15.0, # 150g cooked katori (home-sprouted whole moong)
-    "phulka": 4.0,            # 1 phulka (35g cooked, ~25g whole-wheat atta @ ₹40/kg)
-    "brown_rice": 12.0,       # 1/2 cup cooked (100g, ~40g dry brown rice @ ₹85/kg)
-    "steamed_rice": 8.0,      # 1/2 cup cooked (100g, ~40g raw white rice @ ₹55/kg)
-    "jowar_roti": 7.0,        # 1 roti (45g cooked, ~35g jowar flour @ ₹65/kg)
-    "bajra_roti": 7.0,        # 1 roti (45g cooked, ~35g bajra flour @ ₹55/kg)
-    "vegetable_oats_upma": 18.0, # 1 cup cooked (180g oats + mixed seasonal vegetables)
-    "idli": 12.0,             # 2 idlis (120g fermented rice-urad batter)
-    "dosa_plain": 14.0,       # 1 plain dosa (100g fermented batter + oil)
-    "vegetable_pulao": 25.0,  # 1 cup cooked (180g basmati rice + mixed vegetables)
-    "palak_sabzi": 16.0,      # 1 katori (120g cooked spinach @ ₹40/kg raw)
-    "bhindi_masala": 18.0,    # 1 katori (120g cooked okra @ ₹50/kg raw)
-    "mixed_veg_sabzi": 18.0,  # 1 katori (150g beans, carrots, peas, cauliflower)
-    "lauki_tomato": 12.0,     # 1 katori (150g bottle gourd + tomato curry)
-    "aloo_gobi": 14.0,        # 1 katori (150g potato & cauliflower)
-    "baingan_bharta": 15.0,   # 1 katori (150g roasted spiced eggplant)
-    "cabbage_peas": 14.0,     # 1 katori (150g green cabbage + peas)
-    "cucumber_salad": 10.0,   # 1 bowl (150g raw cucumber, tomato, carrot slices)
-    "skim_curd": 12.0,        # 1 katori (150g fortified skim-milk dahi @ ₹70/kg)
-    "lowfat_curd": 14.0,      # 1 katori (150g low-fat cow milk dahi @ ₹75/kg)
-    "buttermilk_chaas": 8.0,  # 1 glass (200ml spiced watered dahi)
-    "lowfat_paneer_bhurji": 35.0, # 1 katori (120g low-fat paneer @ ₹320/kg)
-    "apple_fresh": 20.0,      # 1 small apple (~120g @ ₹160/kg)
-    "papaya_cubes": 15.0,     # 1 cup cubed papaya (150g @ ₹50/kg)
-    "guava_fresh": 12.0,      # 1 medium guava (130g @ ₹70/kg)
-    "mustard_oil": 5.0,       # 1 measured cooking portion (10g @ ₹155/L)
-    "sunflower_oil": 5.0,     # 1 measured cooking portion (10g @ ₹145/L)
+    "recipe_moong_dal_tadka": 18.0,
+    "recipe_masoor_dal": 16.0,
+    "recipe_chana_masala": 22.0,
+    "recipe_rajma_curry": 24.0,
+    "recipe_sambar_vegetable": 18.0,
+    "recipe_dal_palak": 20.0,
+    "recipe_panchmel_dal": 20.0,
+    "recipe_whole_wheat_phulka": 4.0,
+    "recipe_brown_rice_cooked": 12.0,
+    "recipe_steamed_rice": 8.0,
+    "recipe_veg_pulao": 25.0,
+    "recipe_moong_dal_khichdi": 20.0,
+    "recipe_steamed_idli": 12.0,
+    "recipe_plain_dosa": 14.0,
+    "recipe_vegetable_oats_upma": 18.0,
+    "recipe_vegetable_poha": 15.0,
+    "recipe_palak_sabzi": 16.0,
+    "recipe_bhindi_masala": 18.0,
+    "recipe_mixed_veg_sabzi": 18.0,
+    "recipe_lauki_tomato": 12.0,
+    "recipe_aloo_gobi": 14.0,
+    "recipe_baingan_bharta": 15.0,
+    "recipe_cabbage_peas": 14.0,
+    "recipe_karela_masala": 15.0,
+    "recipe_methi_aloo": 16.0,
+    "recipe_cucumber_salad": 10.0,
+    "recipe_skim_curd": 12.0,
+    "recipe_lowfat_curd": 14.0,
+    "recipe_lowfat_paneer_bhurji": 35.0,
+    "recipe_palak_paneer": 35.0,
+    "recipe_chaas_buttermilk": 8.0,
+    "recipe_fresh_guava": 12.0,
+    "recipe_fresh_papaya": 15.0,
+    "recipe_fresh_apple": 20.0,
+    "recipe_fresh_orange": 15.0,
+    "recipe_fresh_banana": 8.0,
+    "recipe_pomegranate_arils": 20.0,
 }
 
 
@@ -222,8 +226,9 @@ def solve_relaxed_lp(
     res = milp(c=c, integrality=integrality, bounds=bounds, constraints=constraints, options={"time_limit": time_limit_sec})
     latency_ms = (time.perf_counter() - t0) * 1000.0
     
-    if not res.success:
-        return {"status": "infeasible", "latency_ms": latency_ms}
+    if res.x is None:
+        return {"status": "infeasible", "solver_status": int(res.status), "latency_ms": latency_ms}
+    solver_state = "optimal" if res.status == 0 else "time_limit_with_incumbent"
         
     x_sol = res.x[:n_foods]
     slack_sol = res.x[n_foods:]
@@ -259,6 +264,7 @@ def solve_relaxed_lp(
             
     return {
         "status": "success",
+        "solver_state": solver_state,
         "latency_ms": latency_ms,
         "selected_dishes": selected_items,
         "fractional_serving_count": fractional_count,
@@ -362,26 +368,30 @@ def solve_relaxed_lp_with_heuristic_tuning(
     plan = {k: int(round(v)) for k, v in dishes.items() if round(v) > 0}
     cat_dict = {f.food_id: f for f in catalog}
     
-    # 1. Greedy category repair
+    # 1. Greedy category repair using active catalog entries
+    default_cereal = next(f.food_id for f in catalog if f.category == "cereal_grain")
+    default_dal = next(f.food_id for f in catalog if f.category == "dal_pulse")
+    default_veg = next(f.food_id for f in catalog if f.category == "vegetable_sabzi")
+
     cereal = sum(qty for fid, qty in plan.items() if cat_dict[fid].category == "cereal_grain")
     while cereal < 2:
-        plan["phulka"] = plan.get("phulka", 0) + 1
+        plan[default_cereal] = plan.get(default_cereal, 0) + 1
         cereal += 1
         
     dal = sum(qty for fid, qty in plan.items() if cat_dict[fid].category == "dal_pulse")
     while dal < 1:
-        plan["dal_toor"] = plan.get("dal_toor", 0) + 1
+        plan[default_dal] = plan.get(default_dal, 0) + 1
         dal += 1
         
     veg = sum(qty for fid, qty in plan.items() if cat_dict[fid].category == "vegetable_sabzi")
     while veg < 2:
-        plan["mixed_veg_sabzi"] = plan.get("mixed_veg_sabzi", 0) + 1
+        plan[default_veg] = plan.get(default_veg, 0) + 1
         veg += 1
         
     # Plate cardinality repair (min 4 dishes)
     if len(plan) < 4:
-        for fid in ["cucumber_salad", "skim_curd", "apple_fresh", "palak_sabzi"]:
-            if fid not in plan:
+        for fid in ["recipe_skim_curd", "recipe_fresh_apple", "recipe_aloo_gobi", "recipe_cabbage_peas"]:
+            if fid in cat_dict and fid not in plan:
                 plan[fid] = 1
                 if len(plan) >= 4:
                     break
@@ -432,7 +442,7 @@ def solve_relaxed_lp_with_heuristic_tuning(
 def solve_discrete_milp(
     catalog: List[s3.FoodItem],
     target_envelope: Dict[str, Tuple[float, float]],
-    time_limit_sec: float = 1.0
+    time_limit_sec: float = 2.0
 ) -> Dict[str, Any]:
     """Solves BioNutriGPT Discrete MILP with integer household servings and plate constraints."""
     t0 = time.perf_counter()
@@ -532,8 +542,9 @@ def solve_discrete_milp(
     res = milp(c=c, integrality=integrality, bounds=bounds, constraints=constraints, options={"time_limit": time_limit_sec})
     latency_ms = (time.perf_counter() - t0) * 1000.0
     
-    if not res.success:
-        return {"status": "infeasible", "latency_ms": latency_ms}
+    if res.x is None:
+        return {"status": "infeasible", "solver_status": int(res.status), "latency_ms": latency_ms}
+    solver_state = "optimal" if res.status == 0 else "time_limit_with_incumbent"
         
     x_sol = np.round(res.x[:n_foods]).astype(int)
     slack_sol = res.x[2*n_foods:]
@@ -561,6 +572,7 @@ def solve_discrete_milp(
             
     return {
         "status": "success",
+        "solver_state": solver_state,
         "latency_ms": latency_ms,
         "selected_dishes": selected_items,
         "fractional_serving_count": 0, # Guaranteed 0 by integrality
@@ -589,14 +601,14 @@ def simulate_unconstrained_llm_plan(
     time.sleep(0.005) # Simulated LLM token generation overhead
     latency_ms = (time.perf_counter() - t0) * 1000.0 + 850.0 # Realistic local 3B LLM latency ~850ms
     
-    # Typical unconstrained LLM output: 2-3 rotis, 1-2 katori dal, 1 sabzi, 1 curd, 1 fruit
+    # Typical unconstrained heuristic selection mapped to active 29-entry sourced IDs
     selected = {
-        "phulka": int(rng.choice([2, 3, 4])),
-        "dal_toor": int(rng.choice([1, 2])),
-        "mixed_veg_sabzi": int(rng.choice([1, 2])),
-        "lowfat_curd": int(rng.choice([0, 1])),
-        "steamed_rice": int(rng.choice([0, 1])),
-        "apple_fresh": int(rng.choice([0, 1])),
+        "recipe_whole_wheat_phulka": int(rng.choice([2, 3, 4])),
+        "recipe_moong_dal_tadka": int(rng.choice([1, 2])),
+        "recipe_bhindi_masala": int(rng.choice([1, 2])),
+        "recipe_lowfat_curd": int(rng.choice([0, 1])),
+        "recipe_brown_rice_cooked": int(rng.choice([0, 1])),
+        "recipe_fresh_apple": int(rng.choice([0, 1])),
     }
     # Clean zeros
     selected = {k: v for k, v in selected.items() if v > 0}
@@ -653,11 +665,14 @@ def simulate_unconstrained_llm_plan(
 
 
 def main():
-    catalog = s3._build_fallback_catalog()
+    catalog = s3.load_food_database()
     archetypes = build_clinical_archetypes()
+    covered_fields = [c for c in s3.NUTRIENT_CODES if all(c not in f.unknown_nutrients for f in catalog)]
+    uncovered_fields = [c for c in s3.NUTRIENT_CODES if c not in covered_fields]
     print(f"Running 5-Paradigm Stage 3 Optimizer Benchmark across {len(archetypes)} Clinical Archetypes...")
-    print(f"Available dishes in IFCT 2017 catalog: {len(catalog)}")
-    
+    print(f"Active sourced catalog entries: {len(catalog)} (20 INDB recipe variants + 9 USDA single-food proxies)")
+    print(f"Fully covered nutrients: {len(covered_fields)}/39 | Unknown/incomplete: {len(uncovered_fields)}/39")
+
     results = {
         "metadata": {
             "num_archetypes": len(archetypes),
@@ -667,12 +682,19 @@ def main():
                 "Hypertension_DASH": 10,
                 "Multimorbid": 10
             },
+            "catalog_file": "food_composition_cooked_sourced.json",
             "catalog_food_count": len(catalog),
+            "catalog_composition": "29 sourced entries (20 INDB recipe variants + 9 USDA single-food proxies; 15 unmatched legacy entries excluded)",
+            "covered_nutrient_count": len(covered_fields),
+            "uncovered_nutrient_count": len(uncovered_fields),
+            "uncovered_nutrients": uncovered_fields,
+            "nutrients_evaluated_in_50_archetype_suite": 7,
+            "note": "7-nutrient archetype benchmark on the repaired 29-entry catalog; full 39-field adequacy is blocked by 16 unknown fields and the DR1TMFAT (MUFA) conflict documented in Data/food_sources/INDB/cooked_catalog_feasibility.json.",
             "solvers_compared": [
                 "Continuous_Linear_Programming (Relaxed LP)",
                 "Continuous_LP_PostHoc_Rounding (Nearest Integer)",
                 "Continuous_LP_Heuristic_Tuning (Greedy Plate Repair)",
-                "Unconstrained_Generative_LLM (Qwen 2.5 3B heuristic)",
+                "Simulated_Unconstrained_Heuristic (Stochastic Serving Guess Baseline)",
                 "BioNutriGPT_Discrete_MILP (HiGHS Branch-and-Cut)"
             ]
         },
@@ -779,7 +801,7 @@ def main():
             },
             "economic_and_runtime": {
                 "daily_cost_inr": summarize(lp_costs),
-                "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+                "pricing_reference": "Illustrative benchmark serving-cost assumptions (not audited market quotations)",
                 "latency_ms": summarize(lp_latencies)
             }
         },
@@ -799,7 +821,7 @@ def main():
             },
             "economic_and_runtime": {
                 "daily_cost_inr": summarize(rnd_costs),
-                "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+                "pricing_reference": "Illustrative benchmark serving-cost assumptions (not audited market quotations)",
                 "latency_ms": summarize(rnd_latencies)
             }
         },
@@ -819,12 +841,12 @@ def main():
             },
             "economic_and_runtime": {
                 "daily_cost_inr": summarize(tune_costs),
-                "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+                "pricing_reference": "Illustrative benchmark serving-cost assumptions (not audited market quotations)",
                 "latency_ms": summarize(tune_latencies)
             }
         },
         "Unconstrained_Generative_LLM": {
-            "paradigm_type": "Stochastic Prompt-Based LLM (Qwen 2.5 3B Heuristic Baseline)",
+            "paradigm_type": "Simulated Stochastic Serving-Guess Heuristic (not real LLM generation; see matched_milp_lp_qwen_benchmark_report for real Qwen 2.5 3B)",
             "hard_constraints": {
                 "integer_servings_enforced": True, # Natural discrete numbers in language
                 "integer_serving_rate_pct": 100.0,
@@ -839,7 +861,7 @@ def main():
             },
             "economic_and_runtime": {
                 "daily_cost_inr": summarize(llm_costs),
-                "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+                "pricing_reference": "Illustrative benchmark serving-cost assumptions (not audited market quotations)",
                 "latency_ms": summarize(llm_latencies)
             }
         },
@@ -861,7 +883,7 @@ def main():
             },
             "economic_and_runtime": {
                 "daily_cost_inr": summarize(milp_costs),
-                "pricing_reference": "DCA-PMD & Agmarknet Q4 2026 Indian Urban/Semi-Urban Retail Averages",
+                "pricing_reference": "Illustrative benchmark serving-cost assumptions (not audited market quotations)",
                 "latency_ms": summarize(milp_latencies)
             }
         }

@@ -1,0 +1,2781 @@
+{
+  "snapshot": {
+    "generated_at_utc": "2026-11-18T16:14:20.474742+00:00",
+    "scope": "Descriptive snapshot of current files; does not rerun model or benchmark evaluation.",
+    "cohorts": {
+      "development": {
+        "file": "Data\\BioNutriGPT_train_2007_2016_ml_ready.csv",
+        "sha256": "c5a1b0c45f27216b4fce45cf54b3d5f5aaddf63de76d723cb7ff53615a61d8d6",
+        "n": 23694,
+        "positive_cases": {
+          "TARGET_DIABETES": 3022,
+          "TARGET_OBESITY": 8932,
+          "TARGET_CVD": 2205
+        },
+        "all_87_features_present": true
+      },
+      "temporal_holdout": {
+        "file": "Data\\BioNutriGPT_test_2017_2020_ml_ready.csv",
+        "sha256": "7689f741aa8a56d687d11162fc2d00213302ae4e60831cf69c3c4dcbd8fd4b67",
+        "n": 7046,
+        "positive_cases": {
+          "TARGET_DIABETES": 1409,
+          "TARGET_OBESITY": 3075,
+          "TARGET_CVD": 845
+        },
+        "all_87_features_present": true
+      }
+    },
+    "participant_id_overlap": 0,
+    "features": {
+      "BIO_COLS": [
+        "LBDHDD",
+        "LBXTC",
+        "NON_HDL_CHOL",
+        "CHOL_HDL_RATIO",
+        "NON_HDL_TO_HDL_RATIO"
+      ],
+      "DIET_COLS": [
+        "DR1TKCAL",
+        "DR1TPROT",
+        "DR1TCARB",
+        "DR1TSUGR",
+        "DR1TFIBE",
+        "DR1TTFAT",
+        "DR1TSFAT",
+        "DR1TMFAT",
+        "DR1TPFAT",
+        "DR1TCHOL",
+        "DR1TATOC",
+        "DR1TRET",
+        "DR1TVARA",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TVB1",
+        "DR1TVB2",
+        "DR1TNIAC",
+        "DR1TVB6",
+        "DR1TFOLA",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TVB12",
+        "DR1TVC",
+        "DR1TVK",
+        "DR1TCALC",
+        "DR1TPHOS",
+        "DR1TMAGN",
+        "DR1TIRON",
+        "DR1TZINC",
+        "DR1TCOPP",
+        "DR1TSODI",
+        "DR1TPOTA",
+        "DR1TSELE",
+        "DR1TCAFF",
+        "DR1TALCO",
+        "PROT_PCT_KCAL",
+        "CARB_PCT_KCAL",
+        "FAT_PCT_KCAL",
+        "FIBER_PER_1000_KCAL",
+        "SUGAR_TO_FIBER_RATIO",
+        "SODIUM_POTASSIUM_RATIO",
+        "SAT_TO_UNSAT_FAT_RATIO"
+      ],
+      "LIFE_COLS": [
+        "SLEEP_HOURS",
+        "SLEEP_DEV_FROM_7_5",
+        "PAD680",
+        "PA_VIG_WORK_MIN_WK",
+        "PA_MOD_WORK_MIN_WK",
+        "PA_WALK_BIKE_MIN_WK",
+        "PA_VIG_REC_MIN_WK",
+        "PA_MOD_REC_MIN_WK",
+        "PA_TOTAL_MET_MIN_WK",
+        "SLQ050",
+        "PAQ605",
+        "PAQ620",
+        "PAQ635",
+        "PAQ650",
+        "PAQ665",
+        "SMOKE_NEVER",
+        "SMOKE_FORMER",
+        "SMOKE_SOMEDAYS",
+        "SMOKE_EVERYDAY"
+      ],
+      "DEMO_COLS": [
+        "RIDAGEYR",
+        "INDFMPIR",
+        "DMDEDUC2",
+        "SEX_FEMALE",
+        "RACE_MEX_AMER",
+        "RACE_OTHER_HISP",
+        "RACE_NH_WHITE",
+        "RACE_NH_BLACK",
+        "RACE_OTHER_MULTI",
+        "MARITAL_MARRIED",
+        "MARITAL_PREV_MARRIED",
+        "MARITAL_NEVER_MARRIED",
+        "INDFMPIR_MISS",
+        "SLEEP_HOURS_MISS",
+        "PAD680_MISS",
+        "PA_TOTAL_MET_MIN_WK_MISS",
+        "OTHER_FEATURE_MISS"
+      ]
+    },
+    "feature_count": 87,
+    "catalog": {
+      "file": "food_composition_cooked_sourced.json",
+      "sha256": "785b38d076c3c217565abac9f21572775dfd89654d0b1e9ffbead04aa6fce478",
+      "count": 49,
+      "versions": {
+        "sourced-cooked-v5-veg-nonveg": 49
+      },
+      "source_families": {
+        "INDB_recipe": 20,
+        "USDA_single_food_proxy": 29
+      },
+      "categories": {
+        "dal_pulse": 9,
+        "cereal_grain": 9,
+        "vegetable_sabzi": 11,
+        "dairy": 5,
+        "fruit": 9,
+        "non_veg_protein": 6
+      },
+      "dietary_types": {
+        "pure_vegetarian": 43,
+        "non_vegetarian": 6
+      },
+      "active_nutrient_count": 30,
+      "report_only": [
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TFF",
+        "DR1TFOLA",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TSUGR"
+      ],
+      "exposure_reporting": [
+        "DR1TALCO",
+        "DR1TCAFF"
+      ],
+      "complete_active_records_before_diet_or_preference_filters": 43,
+      "unknown_active_counts": {
+        "DR1TFA": 5,
+        "DR1TFDFE": 5,
+        "DR1TATOC": 2,
+        "DR1TRET": 1,
+        "DR1TVB12": 2
+      },
+      "records_with_known_allergen_tags": 20,
+      "records_with_unknown_allergen_risk": 49
+    },
+    "rule_version": "adult-food-rule-review-v4-exposure-separated",
+    "artifacts": {
+      "Saved Model/stage1_test_evaluation_report.json": {
+        "sha256": "31d68add51fda2b245c587876d730c36fbf0053ec6613196ba2e35318014cc63",
+        "bytes": 982
+      },
+      "Saved Model/tripod_baseline_evaluation_report.json": {
+        "sha256": "a4e6e907484bea58a1e36fca5f80eafa80a4acf6f7fe732938f5980a92b5e9e3",
+        "bytes": 21856
+      },
+      "Saved Model/matched_milp_lp_qwen_benchmark_report.json": {
+        "sha256": "478641f551e5cfe6d30b957a935ec1757203969bfc2b45d2135315389aa19cb5",
+        "bytes": 332474
+      },
+      "Saved Model/stage4_conversational_benchmark_report.json": {
+        "sha256": "df99ff2cf11c3e7727b4e29ee540c5bbaafa1cb35857df0de11f2b96bbf90143",
+        "bytes": 23962
+      },
+      "backend/chat_service.py": {
+        "sha256": "e6c536ee448ed23c77f72839c7cbe28ea8d2eeaa4cb6e2fdd825c2e8268e3174",
+        "bytes": 75316
+      },
+      "backend/plan_store.py": {
+        "sha256": "4de682b95df5cc6c3496e979380c5c85b8df601ac2f3b779037fbe73e1423704",
+        "bytes": 10641
+      },
+      "stage3_milp_solver.py": {
+        "sha256": "5099d28963c07cb417a30da3e4244ef2fcecea22ac60ab894efc93369fad8fe4",
+        "bytes": 73360
+      },
+      "nutrient_rule_policy.py": {
+        "sha256": "98cd05b20980d78961dcce156fb03903e9675f9fe18bf415f6658cc9256fb04d",
+        "bytes": 11528
+      },
+      "verify_stage4_chat_repairs.py": {
+        "sha256": "5980dfe93fd2b5f6ed547f9e62c85df7ec955ff8bb905c3f9fba220d4a746458",
+        "bytes": 7698
+      },
+      "verify_stage3_production.py": {
+        "sha256": "c87a9e6fb95f496e10d8c5abde63d40e9e2391df9c84c26e88f262acd0ee6a49",
+        "bytes": 19121
+      },
+      "Stage4_Chatbot_Repair_Report.md": {
+        "sha256": "ce44baecdf131f38a79dd33cae776822f97cea6c75ddf877eecaf735299bb00f",
+        "bytes": 2295
+      }
+    },
+    "lasi_evaluation": {
+      "cohort": {
+        "merged": 66859,
+        "eligible": 65368,
+        "evaluated": 100,
+        "strata": {
+          "diabetes_only": 25,
+          "obesity_only": 25,
+          "cvd_only": 25,
+          "multimorbid": 25
+        },
+        "female": 48,
+        "states": 29,
+        "survey_weighted": false
+      },
+      "stage3": {
+        "pure_vegetarian": {
+          "accepted": 91,
+          "total": 100,
+          "acceptance_pct": 91,
+          "failure_codes": {
+            "infeasible_active_rules": 9
+          },
+          "median_solve_ms": 2003.07,
+          "low_energy_band": "21/27 (77.8%)"
+        },
+        "veg_nonveg_combo": {
+          "accepted": 96,
+          "total": 100,
+          "acceptance_pct": 96,
+          "failure_codes": {
+            "timeout_no_valid_plan": 3,
+            "infeasible_active_rules": 1
+          },
+          "median_solve_ms": 2005.64,
+          "low_energy_band": "27/27 (100.0%)"
+        },
+        "pure_non_vegetarian": {
+          "accepted": 98,
+          "total": 100,
+          "acceptance_pct": 98,
+          "failure_codes": {
+            "timeout_no_valid_plan": 2
+          },
+          "median_solve_ms": 2006.12,
+          "low_energy_band": "27/27 (100.0%)"
+        }
+      },
+      "audit_file": "Saved Model\\LASI_Evaluation_Audit.json",
+      "audit_sha256": "01e31049ca681b4a2ec695724191b8f8eaa6a54cde94aff749bf02efe4fa1455",
+      "interpretation": "Selected-profile computational pilot; no Stage 1 external or clinical validation. Read audit limitations."
+    },
+    "stage4_v4": {
+      "verified_summary_file": "Saved Model\\stage4_lasi_v4_verified_summary.json",
+      "sha256": "2be41574d683fc43805a6d8d8ec1fe3ee1079325a2c651cad72943df0e240577",
+      "systems": {
+        "guarded_stage4_full_l1": {
+          "participants": 36,
+          "turns": 78,
+          "strata": {
+            "diabetes_only": 9,
+            "obesity_only": 9,
+            "cvd_only": 9,
+            "multimorbid": 9
+          },
+          "summary": {
+            "system": "guarded_stage4_full_l1_v4",
+            "scenarios": 36,
+            "distinct_participants": 36,
+            "turns_total": 78,
+            "strict_protocol_pass_rate": 0.9744,
+            "strict_protocol_passed_count": "76/78",
+            "revision_outcomes": {
+              "revision_turns_total": 42,
+              "oracle_feasible": 30,
+              "oracle_proven_infeasible": 11,
+              "oracle_timeout_unresolved": 1,
+              "validated_swap_proposals": 29,
+              "valid_proven_infeasible_refusals": 11,
+              "timeout_no_proposal": 2,
+              "missed_feasible_due_to_timeout": 1,
+              "missed_feasible_other": 0,
+              "invalid_proposals": 0,
+              "malformed_json_no_proposal": 0,
+              "unexplained_null_on_proven_infeasible": 0,
+              "invalid_proposals_on_feasible": 0
+            },
+            "validated_proposal_rate_all_revisions": 0.6905,
+            "validated_proposal_rate_given_oracle_feasible": 0.9667,
+            "invalid_proposal_rate_over_revisions": 0.0,
+            "invalid_proposal_rate_over_proposed": 0.0,
+            "unknown_food_id_proposals": 0,
+            "nutrient_query_grounding_rate": 1.0,
+            "nutrient_query_grounding_count": "12/12",
+            "lock_violation_rate": 0.0,
+            "lock_violations_count": "0/6",
+            "rollback_exact_match_rate": 1.0,
+            "rollback_exact_match_count": "12/12",
+            "safety_refusal_and_allergy_accuracy": 1.0,
+            "safety_refusal_and_allergy_count": "12/12",
+            "mean_swap_serving_delta": 8.34,
+            "median_swap_serving_delta": 8.0,
+            "validated_swap_count_for_delta": 29,
+            "mean_unchanged_dish_ratio": 0.5683,
+            "mean_turn_latency_ms": 770.7,
+            "p95_turn_latency_ms": 2235.7,
+            "uncertainty": {
+              "bootstrap_draws": 1000,
+              "seed": 42,
+              "resampling_unit": "participant/scenario",
+              "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+                0.9367088607594937,
+                1.0
+              ],
+              "all_turns_passed_scenarios": 34,
+              "scenario_count": 36,
+              "all_turns_passed_scenario_wilson_95ci": [
+                0.8185534279135275,
+                0.9846300133358382
+              ],
+              "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+            }
+          },
+          "outcomes": {
+            "validated_swap_proposal": 29,
+            "nutrient_grounded_numeric_proximity": 12,
+            "valid_proven_infeasible_refusal": 11,
+            "rollback_exact_match": 12,
+            "safety_refusal_correct": 6,
+            "allergy_flagged_safely": 6,
+            "timeout_unresolved_no_proposal": 1,
+            "timeout_missed_feasible": 1
+          }
+        },
+        "guarded_stage4_no_l1_ablation": {
+          "participants": 36,
+          "turns": 78,
+          "strata": {
+            "diabetes_only": 9,
+            "obesity_only": 9,
+            "cvd_only": 9,
+            "multimorbid": 9
+          },
+          "summary": {
+            "system": "guarded_stage4_no_l1_ablation_v4",
+            "scenarios": 36,
+            "distinct_participants": 36,
+            "turns_total": 78,
+            "strict_protocol_pass_rate": 0.9744,
+            "strict_protocol_passed_count": "76/78",
+            "revision_outcomes": {
+              "revision_turns_total": 42,
+              "oracle_feasible": 30,
+              "oracle_proven_infeasible": 11,
+              "oracle_timeout_unresolved": 1,
+              "validated_swap_proposals": 29,
+              "valid_proven_infeasible_refusals": 11,
+              "timeout_no_proposal": 2,
+              "missed_feasible_due_to_timeout": 1,
+              "missed_feasible_other": 0,
+              "invalid_proposals": 0,
+              "malformed_json_no_proposal": 0,
+              "unexplained_null_on_proven_infeasible": 0,
+              "invalid_proposals_on_feasible": 0
+            },
+            "validated_proposal_rate_all_revisions": 0.6905,
+            "validated_proposal_rate_given_oracle_feasible": 0.9667,
+            "invalid_proposal_rate_over_revisions": 0.0,
+            "invalid_proposal_rate_over_proposed": 0.0,
+            "unknown_food_id_proposals": 0,
+            "nutrient_query_grounding_rate": 1.0,
+            "nutrient_query_grounding_count": "12/12",
+            "lock_violation_rate": 0.0,
+            "lock_violations_count": "0/6",
+            "rollback_exact_match_rate": 1.0,
+            "rollback_exact_match_count": "12/12",
+            "safety_refusal_and_allergy_accuracy": 1.0,
+            "safety_refusal_and_allergy_count": "12/12",
+            "mean_swap_serving_delta": 16.76,
+            "median_swap_serving_delta": 17.0,
+            "validated_swap_count_for_delta": 29,
+            "mean_unchanged_dish_ratio": 0.225,
+            "mean_turn_latency_ms": 1127.79,
+            "p95_turn_latency_ms": 2421.8,
+            "uncertainty": {
+              "bootstrap_draws": 1000,
+              "seed": 42,
+              "resampling_unit": "participant/scenario",
+              "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+                0.9367088607594937,
+                1.0
+              ],
+              "all_turns_passed_scenarios": 34,
+              "scenario_count": 36,
+              "all_turns_passed_scenario_wilson_95ci": [
+                0.8185534279135275,
+                0.9846300133358382
+              ],
+              "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+            }
+          },
+          "outcomes": {
+            "validated_swap_proposal": 29,
+            "nutrient_grounded_numeric_proximity": 12,
+            "valid_proven_infeasible_refusal": 11,
+            "rollback_exact_match": 12,
+            "safety_refusal_correct": 6,
+            "allergy_flagged_safely": 6,
+            "timeout_unresolved_no_proposal": 1,
+            "timeout_missed_feasible": 1
+          }
+        },
+        "guarded_stage4_matched_subset": {
+          "participants": 12,
+          "turns": 24,
+          "strata": {
+            "obesity_only": 3,
+            "multimorbid": 3,
+            "diabetes_only": 3,
+            "cvd_only": 3
+          },
+          "summary": {
+            "system": "guarded_stage4_matched_subset_v4",
+            "scenarios": 12,
+            "distinct_participants": 12,
+            "turns_total": 24,
+            "strict_protocol_pass_rate": 1.0,
+            "strict_protocol_passed_count": "24/24",
+            "revision_outcomes": {
+              "revision_turns_total": 12,
+              "oracle_feasible": 9,
+              "oracle_proven_infeasible": 3,
+              "oracle_timeout_unresolved": 0,
+              "validated_swap_proposals": 9,
+              "valid_proven_infeasible_refusals": 3,
+              "timeout_no_proposal": 0,
+              "missed_feasible_due_to_timeout": 0,
+              "missed_feasible_other": 0,
+              "invalid_proposals": 0,
+              "malformed_json_no_proposal": 0,
+              "unexplained_null_on_proven_infeasible": 0,
+              "invalid_proposals_on_feasible": 0
+            },
+            "validated_proposal_rate_all_revisions": 0.75,
+            "validated_proposal_rate_given_oracle_feasible": 1.0,
+            "invalid_proposal_rate_over_revisions": 0.0,
+            "invalid_proposal_rate_over_proposed": 0.0,
+            "unknown_food_id_proposals": 0,
+            "nutrient_query_grounding_rate": 1.0,
+            "nutrient_query_grounding_count": "3/3",
+            "lock_violation_rate": 0.0,
+            "lock_violations_count": "0/3",
+            "rollback_exact_match_rate": 1.0,
+            "rollback_exact_match_count": "3/3",
+            "safety_refusal_and_allergy_accuracy": 1.0,
+            "safety_refusal_and_allergy_count": "6/6",
+            "mean_swap_serving_delta": 8.22,
+            "median_swap_serving_delta": 8.0,
+            "validated_swap_count_for_delta": 9,
+            "mean_unchanged_dish_ratio": 0.5536,
+            "mean_turn_latency_ms": 664.14,
+            "p95_turn_latency_ms": 2091.98,
+            "uncertainty": {
+              "bootstrap_draws": 1000,
+              "seed": 42,
+              "resampling_unit": "participant/scenario",
+              "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+                1.0,
+                1.0
+              ],
+              "all_turns_passed_scenarios": 12,
+              "scenario_count": 12,
+              "all_turns_passed_scenario_wilson_95ci": [
+                0.7575059933447592,
+                1
+              ],
+              "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+            }
+          },
+          "outcomes": {
+            "validated_swap_proposal": 9,
+            "nutrient_grounded_numeric_proximity": 3,
+            "valid_proven_infeasible_refusal": 3,
+            "rollback_exact_match": 3,
+            "safety_refusal_correct": 3,
+            "allergy_flagged_safely": 3
+          }
+        },
+        "prompt_only_qwen_equal_info_subset": {
+          "participants": 12,
+          "turns": 24,
+          "strata": {
+            "obesity_only": 3,
+            "multimorbid": 3,
+            "diabetes_only": 3,
+            "cvd_only": 3
+          },
+          "summary": {
+            "system": "prompt_only_qwen_2_5_3b_equal_info_v4",
+            "scenarios": 12,
+            "distinct_participants": 12,
+            "turns_total": 24,
+            "strict_protocol_pass_rate": 0.0833,
+            "strict_protocol_passed_count": "2/24",
+            "revision_outcomes": {
+              "revision_turns_total": 12,
+              "oracle_feasible": 9,
+              "oracle_proven_infeasible": 3,
+              "oracle_timeout_unresolved": 0,
+              "validated_swap_proposals": 0,
+              "valid_proven_infeasible_refusals": 0,
+              "timeout_no_proposal": 0,
+              "missed_feasible_due_to_timeout": 0,
+              "missed_feasible_other": 3,
+              "invalid_proposals": 8,
+              "malformed_json_no_proposal": 1,
+              "unexplained_null_on_proven_infeasible": 1,
+              "invalid_proposals_on_feasible": 6
+            },
+            "validated_proposal_rate_all_revisions": 0.0,
+            "validated_proposal_rate_given_oracle_feasible": 0.0,
+            "invalid_proposal_rate_over_revisions": 0.6667,
+            "invalid_proposal_rate_over_proposed": 1.0,
+            "unknown_food_id_proposals": 0,
+            "nutrient_query_grounding_rate": 0.6667,
+            "nutrient_query_grounding_count": "2/3",
+            "lock_violation_rate": 0.0,
+            "lock_violations_count": "0/3",
+            "rollback_exact_match_rate": 0.0,
+            "rollback_exact_match_count": "0/3",
+            "safety_refusal_and_allergy_accuracy": 0.0,
+            "safety_refusal_and_allergy_count": "0/6",
+            "mean_swap_serving_delta": null,
+            "median_swap_serving_delta": null,
+            "validated_swap_count_for_delta": 0,
+            "mean_unchanged_dish_ratio": null,
+            "mean_turn_latency_ms": 46111.91,
+            "p95_turn_latency_ms": 59922.13,
+            "uncertainty": {
+              "bootstrap_draws": 1000,
+              "seed": 42,
+              "resampling_unit": "participant/scenario",
+              "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+                0.0,
+                0.1853174603174602
+              ],
+              "all_turns_passed_scenarios": 0,
+              "scenario_count": 12,
+              "all_turns_passed_scenario_wilson_95ci": [
+                2.7755575615628914e-17,
+                0.24249400665524085
+              ],
+              "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+            },
+            "qwen_json_parse_count": "22/24",
+            "qwen_mean_prompt_tokens": 16599.9,
+            "qwen_max_prompt_tokens": 17159,
+            "qwen_mean_output_tokens": 136.5
+          },
+          "outcomes": {
+            "invalid_proposal": 8,
+            "nutrient_grounded_numeric_proximity": 2,
+            "unexplained_null_on_infeasible": 1,
+            "rollback_failed": 3,
+            "safety_refusal_failed": 3,
+            "allergy_flag_failed": 3,
+            "missed_feasible_no_proposal": 2,
+            "nutrient_ungrounded_or_missing": 1,
+            "malformed_json_no_proposal": 1
+          }
+        }
+      },
+      "statistics": {
+        "ablation": {
+          "trajectory_pairs": {
+            "paired_turns": 29,
+            "scenarios": 25,
+            "full_mean": 8.344827586206897,
+            "no_penalty_mean": 16.75862068965517,
+            "reduction_pct": 50.20576131687242,
+            "mean_difference_no_penalty_minus_full": 8.413793103448274,
+            "cluster_bootstrap_difference_95ci": [
+              5.905563446969697,
+              11.069027093596059
+            ],
+            "bootstrap_draws": 1000,
+            "seed": 42
+          },
+          "same_input_state_pairs": {
+            "paired_turns": 25,
+            "scenarios": 25,
+            "full_mean": 7.72,
+            "no_penalty_mean": 16.56,
+            "reduction_pct": 53.381642512077285,
+            "mean_difference_no_penalty_minus_full": 8.84,
+            "cluster_bootstrap_difference_95ci": [
+              6.72,
+              11.12
+            ],
+            "bootstrap_draws": 1000,
+            "seed": 42
+          },
+          "different_input_state_pairs": 4,
+          "scope": "Successful-pair conditional descriptive analysis. v3 same-state reconstruction uses preceding basket and frozen history; v4 compares logged full input states. Not a randomized clinical effect."
+        },
+        "matched_protocol_difference": {
+          "cluster_bootstrap_difference_95ci": [
+            0.7893020594965675,
+            1.0
+          ],
+          "bootstrap_draws": 1000,
+          "seed": 42,
+          "paired_scenarios": 12,
+          "scope": "Selected-case, scenario-paired exploratory comparison; no correction of historical prompt information."
+        }
+      },
+      "scope": "Selected scripted LASI profiles; no Stage 1 external validation, national weighted effectiveness, clinical benefit or proof of general LLM superiority. Successful-pair ablation and empirical bootstrap are conditional analyses."
+    }
+  },
+  "features": [
+    {
+      "position": 1,
+      "modality": "bio",
+      "feature": "LBDHDD"
+    },
+    {
+      "position": 2,
+      "modality": "bio",
+      "feature": "LBXTC"
+    },
+    {
+      "position": 3,
+      "modality": "bio",
+      "feature": "NON_HDL_CHOL"
+    },
+    {
+      "position": 4,
+      "modality": "bio",
+      "feature": "CHOL_HDL_RATIO"
+    },
+    {
+      "position": 5,
+      "modality": "bio",
+      "feature": "NON_HDL_TO_HDL_RATIO"
+    },
+    {
+      "position": 6,
+      "modality": "diet",
+      "feature": "DR1TKCAL"
+    },
+    {
+      "position": 7,
+      "modality": "diet",
+      "feature": "DR1TPROT"
+    },
+    {
+      "position": 8,
+      "modality": "diet",
+      "feature": "DR1TCARB"
+    },
+    {
+      "position": 9,
+      "modality": "diet",
+      "feature": "DR1TSUGR"
+    },
+    {
+      "position": 10,
+      "modality": "diet",
+      "feature": "DR1TFIBE"
+    },
+    {
+      "position": 11,
+      "modality": "diet",
+      "feature": "DR1TTFAT"
+    },
+    {
+      "position": 12,
+      "modality": "diet",
+      "feature": "DR1TSFAT"
+    },
+    {
+      "position": 13,
+      "modality": "diet",
+      "feature": "DR1TMFAT"
+    },
+    {
+      "position": 14,
+      "modality": "diet",
+      "feature": "DR1TPFAT"
+    },
+    {
+      "position": 15,
+      "modality": "diet",
+      "feature": "DR1TCHOL"
+    },
+    {
+      "position": 16,
+      "modality": "diet",
+      "feature": "DR1TATOC"
+    },
+    {
+      "position": 17,
+      "modality": "diet",
+      "feature": "DR1TRET"
+    },
+    {
+      "position": 18,
+      "modality": "diet",
+      "feature": "DR1TVARA"
+    },
+    {
+      "position": 19,
+      "modality": "diet",
+      "feature": "DR1TACAR"
+    },
+    {
+      "position": 20,
+      "modality": "diet",
+      "feature": "DR1TBCAR"
+    },
+    {
+      "position": 21,
+      "modality": "diet",
+      "feature": "DR1TLYCO"
+    },
+    {
+      "position": 22,
+      "modality": "diet",
+      "feature": "DR1TLZ"
+    },
+    {
+      "position": 23,
+      "modality": "diet",
+      "feature": "DR1TVB1"
+    },
+    {
+      "position": 24,
+      "modality": "diet",
+      "feature": "DR1TVB2"
+    },
+    {
+      "position": 25,
+      "modality": "diet",
+      "feature": "DR1TNIAC"
+    },
+    {
+      "position": 26,
+      "modality": "diet",
+      "feature": "DR1TVB6"
+    },
+    {
+      "position": 27,
+      "modality": "diet",
+      "feature": "DR1TFOLA"
+    },
+    {
+      "position": 28,
+      "modality": "diet",
+      "feature": "DR1TFA"
+    },
+    {
+      "position": 29,
+      "modality": "diet",
+      "feature": "DR1TFF"
+    },
+    {
+      "position": 30,
+      "modality": "diet",
+      "feature": "DR1TFDFE"
+    },
+    {
+      "position": 31,
+      "modality": "diet",
+      "feature": "DR1TVB12"
+    },
+    {
+      "position": 32,
+      "modality": "diet",
+      "feature": "DR1TVC"
+    },
+    {
+      "position": 33,
+      "modality": "diet",
+      "feature": "DR1TVK"
+    },
+    {
+      "position": 34,
+      "modality": "diet",
+      "feature": "DR1TCALC"
+    },
+    {
+      "position": 35,
+      "modality": "diet",
+      "feature": "DR1TPHOS"
+    },
+    {
+      "position": 36,
+      "modality": "diet",
+      "feature": "DR1TMAGN"
+    },
+    {
+      "position": 37,
+      "modality": "diet",
+      "feature": "DR1TIRON"
+    },
+    {
+      "position": 38,
+      "modality": "diet",
+      "feature": "DR1TZINC"
+    },
+    {
+      "position": 39,
+      "modality": "diet",
+      "feature": "DR1TCOPP"
+    },
+    {
+      "position": 40,
+      "modality": "diet",
+      "feature": "DR1TSODI"
+    },
+    {
+      "position": 41,
+      "modality": "diet",
+      "feature": "DR1TPOTA"
+    },
+    {
+      "position": 42,
+      "modality": "diet",
+      "feature": "DR1TSELE"
+    },
+    {
+      "position": 43,
+      "modality": "diet",
+      "feature": "DR1TCAFF"
+    },
+    {
+      "position": 44,
+      "modality": "diet",
+      "feature": "DR1TALCO"
+    },
+    {
+      "position": 45,
+      "modality": "diet",
+      "feature": "PROT_PCT_KCAL"
+    },
+    {
+      "position": 46,
+      "modality": "diet",
+      "feature": "CARB_PCT_KCAL"
+    },
+    {
+      "position": 47,
+      "modality": "diet",
+      "feature": "FAT_PCT_KCAL"
+    },
+    {
+      "position": 48,
+      "modality": "diet",
+      "feature": "FIBER_PER_1000_KCAL"
+    },
+    {
+      "position": 49,
+      "modality": "diet",
+      "feature": "SUGAR_TO_FIBER_RATIO"
+    },
+    {
+      "position": 50,
+      "modality": "diet",
+      "feature": "SODIUM_POTASSIUM_RATIO"
+    },
+    {
+      "position": 51,
+      "modality": "diet",
+      "feature": "SAT_TO_UNSAT_FAT_RATIO"
+    },
+    {
+      "position": 52,
+      "modality": "life",
+      "feature": "SLEEP_HOURS"
+    },
+    {
+      "position": 53,
+      "modality": "life",
+      "feature": "SLEEP_DEV_FROM_7_5"
+    },
+    {
+      "position": 54,
+      "modality": "life",
+      "feature": "PAD680"
+    },
+    {
+      "position": 55,
+      "modality": "life",
+      "feature": "PA_VIG_WORK_MIN_WK"
+    },
+    {
+      "position": 56,
+      "modality": "life",
+      "feature": "PA_MOD_WORK_MIN_WK"
+    },
+    {
+      "position": 57,
+      "modality": "life",
+      "feature": "PA_WALK_BIKE_MIN_WK"
+    },
+    {
+      "position": 58,
+      "modality": "life",
+      "feature": "PA_VIG_REC_MIN_WK"
+    },
+    {
+      "position": 59,
+      "modality": "life",
+      "feature": "PA_MOD_REC_MIN_WK"
+    },
+    {
+      "position": 60,
+      "modality": "life",
+      "feature": "PA_TOTAL_MET_MIN_WK"
+    },
+    {
+      "position": 61,
+      "modality": "life",
+      "feature": "SLQ050"
+    },
+    {
+      "position": 62,
+      "modality": "life",
+      "feature": "PAQ605"
+    },
+    {
+      "position": 63,
+      "modality": "life",
+      "feature": "PAQ620"
+    },
+    {
+      "position": 64,
+      "modality": "life",
+      "feature": "PAQ635"
+    },
+    {
+      "position": 65,
+      "modality": "life",
+      "feature": "PAQ650"
+    },
+    {
+      "position": 66,
+      "modality": "life",
+      "feature": "PAQ665"
+    },
+    {
+      "position": 67,
+      "modality": "life",
+      "feature": "SMOKE_NEVER"
+    },
+    {
+      "position": 68,
+      "modality": "life",
+      "feature": "SMOKE_FORMER"
+    },
+    {
+      "position": 69,
+      "modality": "life",
+      "feature": "SMOKE_SOMEDAYS"
+    },
+    {
+      "position": 70,
+      "modality": "life",
+      "feature": "SMOKE_EVERYDAY"
+    },
+    {
+      "position": 71,
+      "modality": "demo",
+      "feature": "RIDAGEYR"
+    },
+    {
+      "position": 72,
+      "modality": "demo",
+      "feature": "INDFMPIR"
+    },
+    {
+      "position": 73,
+      "modality": "demo",
+      "feature": "DMDEDUC2"
+    },
+    {
+      "position": 74,
+      "modality": "demo",
+      "feature": "SEX_FEMALE"
+    },
+    {
+      "position": 75,
+      "modality": "demo",
+      "feature": "RACE_MEX_AMER"
+    },
+    {
+      "position": 76,
+      "modality": "demo",
+      "feature": "RACE_OTHER_HISP"
+    },
+    {
+      "position": 77,
+      "modality": "demo",
+      "feature": "RACE_NH_WHITE"
+    },
+    {
+      "position": 78,
+      "modality": "demo",
+      "feature": "RACE_NH_BLACK"
+    },
+    {
+      "position": 79,
+      "modality": "demo",
+      "feature": "RACE_OTHER_MULTI"
+    },
+    {
+      "position": 80,
+      "modality": "demo",
+      "feature": "MARITAL_MARRIED"
+    },
+    {
+      "position": 81,
+      "modality": "demo",
+      "feature": "MARITAL_PREV_MARRIED"
+    },
+    {
+      "position": 82,
+      "modality": "demo",
+      "feature": "MARITAL_NEVER_MARRIED"
+    },
+    {
+      "position": 83,
+      "modality": "demo",
+      "feature": "INDFMPIR_MISS"
+    },
+    {
+      "position": 84,
+      "modality": "demo",
+      "feature": "SLEEP_HOURS_MISS"
+    },
+    {
+      "position": 85,
+      "modality": "demo",
+      "feature": "PAD680_MISS"
+    },
+    {
+      "position": 86,
+      "modality": "demo",
+      "feature": "PA_TOTAL_MET_MIN_WK_MISS"
+    },
+    {
+      "position": 87,
+      "modality": "demo",
+      "feature": "OTHER_FEATURE_MISS"
+    }
+  ],
+  "rules": [
+    {
+      "nutrient": "DR1TKCAL",
+      "unit": "kcal",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project energy prescription with 5% tolerance; not an RDA or clinical safety proof."
+    },
+    {
+      "nutrient": "DR1TPROT",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project 0.8\u20132 g/kg interval plus sex-specific floor; upper endpoint is not a UL. Renal status is unavailable."
+    },
+    {
+      "nutrient": "DR1TCARB",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "130 g adult reference plus project score-dependent upper fraction; no universally optimal diabetes carbohydrate percentage."
+    },
+    {
+      "nutrient": "DR1TSUGR",
+      "unit": "g",
+      "planning_role": "report_only",
+      "source_url": "https://www.who.int/publications/i/item/9789241549028",
+      "stage3_enforcement": "none",
+      "review_note": "Report total sugar separately; WHO free-sugar limits cannot be applied directly to total sugar."
+    },
+    {
+      "nutrient": "DR1TFIBE",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project fiber goal and computational upper bound; upper endpoint is not an established UL."
+    },
+    {
+      "nutrient": "DR1TTFAT",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "20\u201335% energy adult reference interval; applicability to this patient and current guidance requires review."
+    },
+    {
+      "nutrient": "DR1TSFAT",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://www.fao.org/4/i1953e/i1953e00.pdf",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project risk-stratified upper fraction; lower value is not an individualized medical prescription."
+    },
+    {
+      "nutrient": "DR1TMFAT",
+      "unit": "g",
+      "planning_role": "reference_interval",
+      "source_url": "https://www.fao.org/4/i1953e/i1953e00.pdf",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Nonnegative component bounded by total-fat ceiling; not a separate MUFA RDA or UL."
+    },
+    {
+      "nutrient": "DR1TPFAT",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://www.fao.org/4/i1953e/i1953e00.pdf",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project total-PUFA interval; not a substitute for separate essential LA/ALA requirements."
+    },
+    {
+      "nutrient": "DR1TCHOL",
+      "unit": "mg",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Legacy project cholesterol limits; 150/300 mg are not universally established ULs."
+    },
+    {
+      "nutrient": "DR1TATOC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RDA reference; supplemental UL is not a food ceiling."
+    },
+    {
+      "nutrient": "DR1TRET",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Preformed vitamin A UL screening; include supplements and ester forms for a full assessment."
+    },
+    {
+      "nutrient": "DR1TVARA",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RAE adequacy reference; preformed-vitamin-A UL must not cap total RAE."
+    },
+    {
+      "nutrient": "DR1TACAR",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Research/reporting field; no independent adequacy minimum or supported clinical ceiling is configured."
+    },
+    {
+      "nutrient": "DR1TBCAR",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Research/reporting field; no independent adequacy minimum or supported clinical ceiling is configured."
+    },
+    {
+      "nutrient": "DR1TLYCO",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Research/reporting field; no independent adequacy minimum or supported clinical ceiling is configured."
+    },
+    {
+      "nutrient": "DR1TLZ",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Research/reporting field; no independent adequacy minimum or supported clinical ceiling is configured."
+    },
+    {
+      "nutrient": "DR1TVB1",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RDA reference; no established UL."
+    },
+    {
+      "nutrient": "DR1TVB2",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RDA reference; no established UL."
+    },
+    {
+      "nutrient": "DR1TNIAC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Food niacin is a proxy for NE; tryptophan contribution is unavailable. Synthetic/supplemental UL is not a whole-food ceiling."
+    },
+    {
+      "nutrient": "DR1TVB6",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex US RDA and UL reference; this is not a universally agreed international ceiling."
+    },
+    {
+      "nutrient": "DR1TFOLA",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Total folate reporting only; 400 ug DFE is not a total-folate requirement."
+    },
+    {
+      "nutrient": "DR1TFA",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Synthetic folic acid ceiling requires counting fortified foods and supplements; food basket alone is incomplete exposure."
+    },
+    {
+      "nutrient": "DR1TFF",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Food folate reporting only; no independent duplicate adequacy target or natural-food UL."
+    },
+    {
+      "nutrient": "DR1TFDFE",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "DFE adequacy reference; the folic-acid UL is expressed in ug folic acid, not DFE."
+    },
+    {
+      "nutrient": "DR1TVB12",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RDA reference; no established UL; missing data remain a priority gap."
+    },
+    {
+      "nutrient": "DR1TVC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex reference; smoking-related additional needs are not implemented."
+    },
+    {
+      "nutrient": "DR1TVK",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "K1 used as a proxy for the vitamin K AI, not an RDA; no established UL; vitamin K antagonist therapy needs review."
+    },
+    {
+      "nutrient": "DR1TCALC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex RDA and UL reference; include other foods and supplements."
+    },
+    {
+      "nutrient": "DR1TPHOS",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age-dependent RDA and UL reference; renal disease requires separate assessment."
+    },
+    {
+      "nutrient": "DR1TMAGN",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex RDA reference; supplemental magnesium UL is not a food magnesium ceiling."
+    },
+    {
+      "nutrient": "DR1TIRON",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex RDA and UL reference; menstrual status and vegetarian bioavailability need review."
+    },
+    {
+      "nutrient": "DR1TZINC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex reference; bioavailability and supplements may alter interpretation."
+    },
+    {
+      "nutrient": "DR1TCOPP",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age-dependent RDA and UL reference."
+    },
+    {
+      "nutrient": "DR1TSODI",
+      "unit": "mg",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Legacy project sodium interval; 500 mg floor and risk-score choice of ceiling require review."
+    },
+    {
+      "nutrient": "DR1TPOTA",
+      "unit": "mg",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Legacy project interval; AI differs by sex. Screening-score-based potassium escalation requires clinical review."
+    },
+    {
+      "nutrient": "DR1TSELE",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "US RDA and UL reference; other authorities can differ."
+    },
+    {
+      "nutrient": "DR1TCAFF",
+      "unit": "mg",
+      "planning_role": "exposure_reporting",
+      "source_url": "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much",
+      "stage3_enforcement": "none",
+      "review_note": "400 mg FDA general adult exposure reference; not universal safety, and drinks outside the plan are omitted."
+    },
+    {
+      "nutrient": "DR1TALCO",
+      "unit": "g",
+      "planning_role": "exposure_reporting",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "none",
+      "review_note": "Legacy project exposure restriction, not a safe drinking allowance or recommendation to drink."
+    }
+  ],
+  "catalog": [
+    {
+      "food_id": "recipe_moong_dal_tadka",
+      "name": "Washed moong dal (Dhuli moong ki dal)",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe ASC151; standard variant of Moong Dal Tadka",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_masoor_dal",
+      "name": "Whole masoor (Masoor ki dal)",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe ASC157; standard variant of Masoor Dal Curry",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_chana_masala",
+      "name": "Chickpeas curry (Safed channa curry)",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe ASC162; standard variant of Chana Masala",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_rajma_curry",
+      "name": "Kidney bean curry (Rajmah curry)",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe ASC165; standard variant of Rajma Curry",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_sambar_vegetable",
+      "name": "Sambar",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 180.0,
+      "data_source": "INDB published recipe ASC167; standard variant of South Indian Sambar",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "allergen_info": {
+        "known_allergens": [
+          "coconut",
+          "mustard"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_dal_palak",
+      "name": "Arhar with spinach (Arhar dal aur palak)",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe BFP172; standard variant of Dal Palak (Spinach Dal)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_panchmel_dal",
+      "name": "Panchmel dal",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe OSR144; standard variant of Rajasthani Panchmel Dal",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TATOC",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_whole_wheat_phulka",
+      "name": "Chapati/Roti",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 35.0,
+      "data_source": "INDB published recipe ASC096; standard variant of Whole-Wheat Phulka",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "gluten",
+          "milk",
+          "wheat"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_brown_rice_cooked",
+      "name": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "USDA SR Legacy 169704; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_steamed_rice",
+      "name": "Boiled rice (Uble chawal)",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "INDB published recipe ASC113; standard variant of Steamed White Rice",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_veg_pulao",
+      "name": "Mixed vegetable pulao",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 180.0,
+      "data_source": "INDB published recipe ASC115; standard variant of Vegetable Pulao",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TATOC",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_moong_dal_khichdi",
+      "name": "Plain khitchdi (Plain khichri/khichdi)",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 200.0,
+      "data_source": "INDB published recipe BFP144; standard variant of Moong Dal Khichdi",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_steamed_idli",
+      "name": "Idli",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 120.0,
+      "data_source": "INDB published recipe ASC144; standard variant of Steamed Idli (2 pcs)",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_plain_dosa",
+      "name": "Plain dosa",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "INDB published recipe BFP148; standard variant of Plain Dosa",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_vegetable_poha",
+      "name": "Vegetable poha",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe BFP045; standard variant of Vegetable Poha",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TRET",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TVB12",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "allergen_info": {
+        "known_allergens": [
+          "mustard",
+          "peanuts"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_bhindi_masala",
+      "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 120.0,
+      "data_source": "INDB published recipe BFP269; standard variant of Bhindi Masala",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_aloo_gobi",
+      "name": "Potato cauliflower (Aloo gobhi)",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe ASC171; standard variant of Aloo Gobi",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_baingan_bharta",
+      "name": "Brinjal bhartha (Baingan ka bhartha)",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe ASC177; standard variant of Baingan Bharta",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_cabbage_peas",
+      "name": "Cabbage and peas (Pattagobhi aur matar)",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe ASC173; standard variant of Cabbage Peas Sabzi",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFF",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_methi_aloo",
+      "name": "Potato fenugreek (Aloo methi)",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 140.0,
+      "data_source": "INDB published recipe ASC175; standard variant of Methi Aloo",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TCAFF",
+        "DR1TALCO"
+      ],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_skim_curd",
+      "name": "Yogurt, plain, skim milk",
+      "category": "dairy",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "USDA SR Legacy 170887; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_lowfat_curd",
+      "name": "Yogurt, plain, low fat",
+      "category": "dairy",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "USDA SR Legacy 170886; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_palak_paneer",
+      "name": "Spinach paneer (Palak paneer)",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "INDB published recipe ASC215; standard variant of Palak Paneer",
+      "unknown_nutrients": [
+        "DR1TSUGR",
+        "DR1TACAR",
+        "DR1TBCAR",
+        "DR1TLYCO",
+        "DR1TLZ",
+        "DR1TFA",
+        "DR1TFF",
+        "DR1TFDFE",
+        "DR1TVB12",
+        "DR1TCAFF"
+      ],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_fresh_guava",
+      "name": "Guavas, common, raw",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "USDA SR Legacy 173044; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_fresh_papaya",
+      "name": "Papayas, raw",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 140.0,
+      "data_source": "USDA SR Legacy 169926; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_fresh_apple",
+      "name": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "USDA SR Legacy 171688; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_fresh_orange",
+      "name": "Oranges, raw, all commercial varieties",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 130.0,
+      "data_source": "USDA SR Legacy 169097; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_fresh_banana",
+      "name": "Bananas, raw",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "USDA SR Legacy 173944; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_pomegranate_arils",
+      "name": "Pomegranates, raw",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 85.0,
+      "data_source": "USDA SR Legacy 169134; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_skim_milk",
+      "name": "Milk, nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)",
+      "category": "dairy",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 250.0,
+      "data_source": "USDA SR Legacy 171269; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_almonds_raw",
+      "name": "Nuts, almonds",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 28.0,
+      "data_source": "USDA SR Legacy 170567; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "almonds",
+          "tree_nuts"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_lowfat_milk_1pct",
+      "name": "Milk, lowfat, fluid, 1% milkfat, with added vitamin A and vitamin D",
+      "category": "dairy",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 250.0,
+      "data_source": "USDA SR Legacy 170872; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_greek_yogurt_nonfat",
+      "name": "Yogurt, Greek, plain, nonfat (Includes foods for USDA's Food Distribution Program)",
+      "category": "dairy",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 200.0,
+      "data_source": "USDA SR Legacy 170894; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "dairy",
+          "milk"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_carrots_cooked",
+      "name": "Carrots, cooked, boiled, drained, without salt",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 120.0,
+      "data_source": "USDA SR Legacy 170394; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_sweet_potato_cooked",
+      "name": "Sweet potato, cooked, boiled, without skin",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "USDA SR Legacy 168484; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_spinach_cooked",
+      "name": "Spinach, cooked, boiled, drained, without salt",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 120.0,
+      "data_source": "USDA SR Legacy 168463; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_broccoli_cooked",
+      "name": "Broccoli, cooked, boiled, drained, without salt",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 120.0,
+      "data_source": "USDA SR Legacy 169967; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_oats_cooked",
+      "name": "Cereals, oats, regular and quick, unenriched, cooked with water (includes boiling and microwaving), without salt",
+      "category": "cereal_grain",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 200.0,
+      "data_source": "USDA SR Legacy 173905; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_sunflower_seeds",
+      "name": "Seeds, sunflower seed kernels, dry roasted, without salt",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 28.0,
+      "data_source": "USDA SR Legacy 170563; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_pumpkin_seeds",
+      "name": "Seeds, pumpkin and squash seed kernels, roasted, without salt",
+      "category": "fruit",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 28.0,
+      "data_source": "USDA SR Legacy 170557; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_chickpeas_boiled",
+      "name": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "USDA SR Legacy 173757; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_firm_tofu_calcium",
+      "name": "Tofu, firm, prepared with calcium sulfate and magnesium chloride (nigari)",
+      "category": "dal_pulse",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 150.0,
+      "data_source": "USDA SR Legacy 172448; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "soy"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_kale_cooked",
+      "name": "Kale, cooked, boiled, drained, without salt",
+      "category": "vegetable_sabzi",
+      "dietary_type": "pure_vegetarian",
+      "serving_weight_g": 130.0,
+      "data_source": "USDA SR Legacy 169238; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_boiled_egg",
+      "name": "Egg, whole, cooked, hard-boiled",
+      "category": "non_veg_protein",
+      "dietary_type": "non_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "USDA SR Legacy 173424; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "egg"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_grilled_chicken_breast",
+      "name": "Chicken, broilers or fryers, breast, meat only, cooked, roasted",
+      "category": "non_veg_protein",
+      "dietary_type": "non_vegetarian",
+      "serving_weight_g": 120.0,
+      "data_source": "USDA SR Legacy 171477; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_baked_salmon",
+      "name": "Fish, salmon, Atlantic, farmed, cooked, dry heat",
+      "category": "non_veg_protein",
+      "dietary_type": "non_vegetarian",
+      "serving_weight_g": 120.0,
+      "data_source": "USDA SR Legacy 175168; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "fish"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_light_tuna",
+      "name": "Fish, tuna, light, canned in water, drained solids (Includes foods for USDA's Food Distribution Program)",
+      "category": "non_veg_protein",
+      "dietary_type": "non_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "USDA SR Legacy 173709; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "fish"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_sardines_bone",
+      "name": "Fish, sardine, Atlantic, canned in oil, drained solids with bone",
+      "category": "non_veg_protein",
+      "dietary_type": "non_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "USDA SR Legacy 175139; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "fish"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    },
+    {
+      "food_id": "recipe_pink_salmon_canned",
+      "name": "Fish, salmon, pink, canned, total can contents",
+      "category": "non_veg_protein",
+      "dietary_type": "non_vegetarian",
+      "serving_weight_g": 100.0,
+      "data_source": "USDA SR Legacy 173690; single ready-to-eat food proxy",
+      "unknown_nutrients": [],
+      "allergen_info": {
+        "known_allergens": [
+          "fish"
+        ],
+        "allergen_verification_status": "ingredient_derived_unverified_cross_contact",
+        "unknown_allergens_possible": true,
+        "safety_note": "Known major allergens detected from recorded source ingredients only. Absence from this list does NOT certify the dish allergen-free; trace cross-contact and unrecorded spice/sub-ingredient allergens remain unknown."
+      }
+    }
+  ],
+  "stage1": {
+    "evaluation": "temporal_external_validation",
+    "cohort": "NHANES 2017-2020",
+    "n_samples": 7046,
+    "target_order": [
+      "TARGET_DIABETES",
+      "TARGET_OBESITY",
+      "TARGET_CVD"
+    ],
+    "metrics": {
+      "diabetes": {
+        "auroc": 0.7998653578146921,
+        "pr_auc_average_precision": 0.4851827123591943,
+        "brier_score": 0.20506416261196136
+      },
+      "obesity": {
+        "auroc": 0.7518208638646448,
+        "pr_auc_average_precision": 0.6830737122343122,
+        "brier_score": 0.20149418711662292
+      },
+      "cvd": {
+        "auroc": 0.825967180326899,
+        "pr_auc_average_precision": 0.393985415917438,
+        "brier_score": 0.18125075101852417
+      },
+      "mean": {
+        "auroc": 0.7925511340020787,
+        "pr_auc_average_precision": 0.5207472801703149,
+        "brier_score": 0.19593636691570282
+      }
+    },
+    "checkpoint": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\Saved Model\\bionutrigpt_stage1_best.pt"
+  },
+  "stage4_v4": {
+    "status": "Measured run verified against saved prompts, journals, stage checkpoints, frozen requests and source hashes.",
+    "report_sha256": "815a266ff56f5848107888d5059b7c720d0bb4cd1fd8c26046aa39969c86d5a1",
+    "prompt_checks_passed": 24,
+    "actual_model_revisions": [
+      "aa8e72537993ba99e69dfaafa59ed015b17504d1"
+    ],
+    "model_metadata_example": {
+      "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "input_device": "cuda:0",
+      "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+      "quantization_config": "BitsAndBytesConfig {\n  \"_load_in_4bit\": true,\n  \"_load_in_8bit\": false,\n  \"bnb_4bit_compute_dtype\": \"float16\",\n  \"bnb_4bit_quant_storage\": \"uint8\",\n  \"bnb_4bit_quant_type\": \"nf4\",\n  \"bnb_4bit_use_double_quant\": true,\n  \"llm_int8_enable_fp32_cpu_offload\": false,\n  \"llm_int8_has_fp16_weight\": false,\n  \"llm_int8_skip_modules\": null,\n  \"llm_int8_threshold\": 6.0,\n  \"load_in_4bit\": true,\n  \"load_in_8bit\": false,\n  \"quant_method\": \"bitsandbytes\"\n}\n",
+      "max_new_tokens": 512,
+      "do_sample": false,
+      "repetition_penalty": 1.03
+    },
+    "systems": {
+      "guarded_stage4_full_l1": {
+        "participants": 36,
+        "turns": 78,
+        "strata": {
+          "diabetes_only": 9,
+          "obesity_only": 9,
+          "cvd_only": 9,
+          "multimorbid": 9
+        },
+        "summary": {
+          "system": "guarded_stage4_full_l1_v4",
+          "scenarios": 36,
+          "distinct_participants": 36,
+          "turns_total": 78,
+          "strict_protocol_pass_rate": 0.9744,
+          "strict_protocol_passed_count": "76/78",
+          "revision_outcomes": {
+            "revision_turns_total": 42,
+            "oracle_feasible": 30,
+            "oracle_proven_infeasible": 11,
+            "oracle_timeout_unresolved": 1,
+            "validated_swap_proposals": 29,
+            "valid_proven_infeasible_refusals": 11,
+            "timeout_no_proposal": 2,
+            "missed_feasible_due_to_timeout": 1,
+            "missed_feasible_other": 0,
+            "invalid_proposals": 0,
+            "malformed_json_no_proposal": 0,
+            "unexplained_null_on_proven_infeasible": 0,
+            "invalid_proposals_on_feasible": 0
+          },
+          "validated_proposal_rate_all_revisions": 0.6905,
+          "validated_proposal_rate_given_oracle_feasible": 0.9667,
+          "invalid_proposal_rate_over_revisions": 0.0,
+          "invalid_proposal_rate_over_proposed": 0.0,
+          "unknown_food_id_proposals": 0,
+          "nutrient_query_grounding_rate": 1.0,
+          "nutrient_query_grounding_count": "12/12",
+          "lock_violation_rate": 0.0,
+          "lock_violations_count": "0/6",
+          "rollback_exact_match_rate": 1.0,
+          "rollback_exact_match_count": "12/12",
+          "safety_refusal_and_allergy_accuracy": 1.0,
+          "safety_refusal_and_allergy_count": "12/12",
+          "mean_swap_serving_delta": 8.34,
+          "median_swap_serving_delta": 8.0,
+          "validated_swap_count_for_delta": 29,
+          "mean_unchanged_dish_ratio": 0.5683,
+          "mean_turn_latency_ms": 770.7,
+          "p95_turn_latency_ms": 2235.7,
+          "uncertainty": {
+            "bootstrap_draws": 1000,
+            "seed": 42,
+            "resampling_unit": "participant/scenario",
+            "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+              0.9367088607594937,
+              1.0
+            ],
+            "all_turns_passed_scenarios": 34,
+            "scenario_count": 36,
+            "all_turns_passed_scenario_wilson_95ci": [
+              0.8185534279135275,
+              0.9846300133358382
+            ],
+            "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+          }
+        },
+        "outcomes": {
+          "validated_swap_proposal": 29,
+          "nutrient_grounded_numeric_proximity": 12,
+          "valid_proven_infeasible_refusal": 11,
+          "rollback_exact_match": 12,
+          "safety_refusal_correct": 6,
+          "allergy_flagged_safely": 6,
+          "timeout_unresolved_no_proposal": 1,
+          "timeout_missed_feasible": 1
+        }
+      },
+      "guarded_stage4_no_l1_ablation": {
+        "participants": 36,
+        "turns": 78,
+        "strata": {
+          "diabetes_only": 9,
+          "obesity_only": 9,
+          "cvd_only": 9,
+          "multimorbid": 9
+        },
+        "summary": {
+          "system": "guarded_stage4_no_l1_ablation_v4",
+          "scenarios": 36,
+          "distinct_participants": 36,
+          "turns_total": 78,
+          "strict_protocol_pass_rate": 0.9744,
+          "strict_protocol_passed_count": "76/78",
+          "revision_outcomes": {
+            "revision_turns_total": 42,
+            "oracle_feasible": 30,
+            "oracle_proven_infeasible": 11,
+            "oracle_timeout_unresolved": 1,
+            "validated_swap_proposals": 29,
+            "valid_proven_infeasible_refusals": 11,
+            "timeout_no_proposal": 2,
+            "missed_feasible_due_to_timeout": 1,
+            "missed_feasible_other": 0,
+            "invalid_proposals": 0,
+            "malformed_json_no_proposal": 0,
+            "unexplained_null_on_proven_infeasible": 0,
+            "invalid_proposals_on_feasible": 0
+          },
+          "validated_proposal_rate_all_revisions": 0.6905,
+          "validated_proposal_rate_given_oracle_feasible": 0.9667,
+          "invalid_proposal_rate_over_revisions": 0.0,
+          "invalid_proposal_rate_over_proposed": 0.0,
+          "unknown_food_id_proposals": 0,
+          "nutrient_query_grounding_rate": 1.0,
+          "nutrient_query_grounding_count": "12/12",
+          "lock_violation_rate": 0.0,
+          "lock_violations_count": "0/6",
+          "rollback_exact_match_rate": 1.0,
+          "rollback_exact_match_count": "12/12",
+          "safety_refusal_and_allergy_accuracy": 1.0,
+          "safety_refusal_and_allergy_count": "12/12",
+          "mean_swap_serving_delta": 16.76,
+          "median_swap_serving_delta": 17.0,
+          "validated_swap_count_for_delta": 29,
+          "mean_unchanged_dish_ratio": 0.225,
+          "mean_turn_latency_ms": 1127.79,
+          "p95_turn_latency_ms": 2421.8,
+          "uncertainty": {
+            "bootstrap_draws": 1000,
+            "seed": 42,
+            "resampling_unit": "participant/scenario",
+            "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+              0.9367088607594937,
+              1.0
+            ],
+            "all_turns_passed_scenarios": 34,
+            "scenario_count": 36,
+            "all_turns_passed_scenario_wilson_95ci": [
+              0.8185534279135275,
+              0.9846300133358382
+            ],
+            "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+          }
+        },
+        "outcomes": {
+          "validated_swap_proposal": 29,
+          "nutrient_grounded_numeric_proximity": 12,
+          "valid_proven_infeasible_refusal": 11,
+          "rollback_exact_match": 12,
+          "safety_refusal_correct": 6,
+          "allergy_flagged_safely": 6,
+          "timeout_unresolved_no_proposal": 1,
+          "timeout_missed_feasible": 1
+        }
+      },
+      "guarded_stage4_matched_subset": {
+        "participants": 12,
+        "turns": 24,
+        "strata": {
+          "obesity_only": 3,
+          "multimorbid": 3,
+          "diabetes_only": 3,
+          "cvd_only": 3
+        },
+        "summary": {
+          "system": "guarded_stage4_matched_subset_v4",
+          "scenarios": 12,
+          "distinct_participants": 12,
+          "turns_total": 24,
+          "strict_protocol_pass_rate": 1.0,
+          "strict_protocol_passed_count": "24/24",
+          "revision_outcomes": {
+            "revision_turns_total": 12,
+            "oracle_feasible": 9,
+            "oracle_proven_infeasible": 3,
+            "oracle_timeout_unresolved": 0,
+            "validated_swap_proposals": 9,
+            "valid_proven_infeasible_refusals": 3,
+            "timeout_no_proposal": 0,
+            "missed_feasible_due_to_timeout": 0,
+            "missed_feasible_other": 0,
+            "invalid_proposals": 0,
+            "malformed_json_no_proposal": 0,
+            "unexplained_null_on_proven_infeasible": 0,
+            "invalid_proposals_on_feasible": 0
+          },
+          "validated_proposal_rate_all_revisions": 0.75,
+          "validated_proposal_rate_given_oracle_feasible": 1.0,
+          "invalid_proposal_rate_over_revisions": 0.0,
+          "invalid_proposal_rate_over_proposed": 0.0,
+          "unknown_food_id_proposals": 0,
+          "nutrient_query_grounding_rate": 1.0,
+          "nutrient_query_grounding_count": "3/3",
+          "lock_violation_rate": 0.0,
+          "lock_violations_count": "0/3",
+          "rollback_exact_match_rate": 1.0,
+          "rollback_exact_match_count": "3/3",
+          "safety_refusal_and_allergy_accuracy": 1.0,
+          "safety_refusal_and_allergy_count": "6/6",
+          "mean_swap_serving_delta": 8.22,
+          "median_swap_serving_delta": 8.0,
+          "validated_swap_count_for_delta": 9,
+          "mean_unchanged_dish_ratio": 0.5536,
+          "mean_turn_latency_ms": 664.14,
+          "p95_turn_latency_ms": 2091.98,
+          "uncertainty": {
+            "bootstrap_draws": 1000,
+            "seed": 42,
+            "resampling_unit": "participant/scenario",
+            "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+              1.0,
+              1.0
+            ],
+            "all_turns_passed_scenarios": 12,
+            "scenario_count": 12,
+            "all_turns_passed_scenario_wilson_95ci": [
+              0.7575059933447592,
+              1
+            ],
+            "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+          }
+        },
+        "outcomes": {
+          "validated_swap_proposal": 9,
+          "nutrient_grounded_numeric_proximity": 3,
+          "valid_proven_infeasible_refusal": 3,
+          "rollback_exact_match": 3,
+          "safety_refusal_correct": 3,
+          "allergy_flagged_safely": 3
+        }
+      },
+      "prompt_only_qwen_equal_info_subset": {
+        "participants": 12,
+        "turns": 24,
+        "strata": {
+          "obesity_only": 3,
+          "multimorbid": 3,
+          "diabetes_only": 3,
+          "cvd_only": 3
+        },
+        "summary": {
+          "system": "prompt_only_qwen_2_5_3b_equal_info_v4",
+          "scenarios": 12,
+          "distinct_participants": 12,
+          "turns_total": 24,
+          "strict_protocol_pass_rate": 0.0833,
+          "strict_protocol_passed_count": "2/24",
+          "revision_outcomes": {
+            "revision_turns_total": 12,
+            "oracle_feasible": 9,
+            "oracle_proven_infeasible": 3,
+            "oracle_timeout_unresolved": 0,
+            "validated_swap_proposals": 0,
+            "valid_proven_infeasible_refusals": 0,
+            "timeout_no_proposal": 0,
+            "missed_feasible_due_to_timeout": 0,
+            "missed_feasible_other": 3,
+            "invalid_proposals": 8,
+            "malformed_json_no_proposal": 1,
+            "unexplained_null_on_proven_infeasible": 1,
+            "invalid_proposals_on_feasible": 6
+          },
+          "validated_proposal_rate_all_revisions": 0.0,
+          "validated_proposal_rate_given_oracle_feasible": 0.0,
+          "invalid_proposal_rate_over_revisions": 0.6667,
+          "invalid_proposal_rate_over_proposed": 1.0,
+          "unknown_food_id_proposals": 0,
+          "nutrient_query_grounding_rate": 0.6667,
+          "nutrient_query_grounding_count": "2/3",
+          "lock_violation_rate": 0.0,
+          "lock_violations_count": "0/3",
+          "rollback_exact_match_rate": 0.0,
+          "rollback_exact_match_count": "0/3",
+          "safety_refusal_and_allergy_accuracy": 0.0,
+          "safety_refusal_and_allergy_count": "0/6",
+          "mean_swap_serving_delta": null,
+          "median_swap_serving_delta": null,
+          "validated_swap_count_for_delta": 0,
+          "mean_unchanged_dish_ratio": null,
+          "mean_turn_latency_ms": 46111.91,
+          "p95_turn_latency_ms": 59922.13,
+          "uncertainty": {
+            "bootstrap_draws": 1000,
+            "seed": 42,
+            "resampling_unit": "participant/scenario",
+            "turn_weighted_protocol_rate_cluster_bootstrap_95ci": [
+              0.0,
+              0.1853174603174602
+            ],
+            "all_turns_passed_scenarios": 0,
+            "scenario_count": 12,
+            "all_turns_passed_scenario_wilson_95ci": [
+              2.7755575615628914e-17,
+              0.24249400665524085
+            ],
+            "scope": "Exploratory uncertainty conditional on selected scripted cases, not design-weighted national inference. All-success bootstrap intervals can degenerate; Wilson bounds assume independent scenarios."
+          },
+          "qwen_json_parse_count": "22/24",
+          "qwen_mean_prompt_tokens": 16599.9,
+          "qwen_max_prompt_tokens": 17159,
+          "qwen_mean_output_tokens": 136.5
+        },
+        "outcomes": {
+          "invalid_proposal": 8,
+          "nutrient_grounded_numeric_proximity": 2,
+          "unexplained_null_on_infeasible": 1,
+          "rollback_failed": 3,
+          "safety_refusal_failed": 3,
+          "allergy_flag_failed": 3,
+          "missed_feasible_no_proposal": 2,
+          "nutrient_ungrounded_or_missing": 1,
+          "malformed_json_no_proposal": 1
+        }
+      }
+    },
+    "statistics": {
+      "ablation": {
+        "trajectory_pairs": {
+          "paired_turns": 29,
+          "scenarios": 25,
+          "full_mean": 8.344827586206897,
+          "no_penalty_mean": 16.75862068965517,
+          "reduction_pct": 50.20576131687242,
+          "mean_difference_no_penalty_minus_full": 8.413793103448274,
+          "cluster_bootstrap_difference_95ci": [
+            5.905563446969697,
+            11.069027093596059
+          ],
+          "bootstrap_draws": 1000,
+          "seed": 42
+        },
+        "same_input_state_pairs": {
+          "paired_turns": 25,
+          "scenarios": 25,
+          "full_mean": 7.72,
+          "no_penalty_mean": 16.56,
+          "reduction_pct": 53.381642512077285,
+          "mean_difference_no_penalty_minus_full": 8.84,
+          "cluster_bootstrap_difference_95ci": [
+            6.72,
+            11.12
+          ],
+          "bootstrap_draws": 1000,
+          "seed": 42
+        },
+        "different_input_state_pairs": 4,
+        "scope": "Successful-pair conditional descriptive analysis. v3 same-state reconstruction uses preceding basket and frozen history; v4 compares logged full input states. Not a randomized clinical effect."
+      },
+      "matched_protocol_difference": {
+        "cluster_bootstrap_difference_95ci": [
+          0.7893020594965675,
+          1.0
+        ],
+        "bootstrap_draws": 1000,
+        "seed": 42,
+        "paired_scenarios": 12,
+        "scope": "Selected-case, scenario-paired exploratory comparison; no correction of historical prompt information."
+      }
+    },
+    "scope": "Selected scripted LASI profiles; no Stage 1 external validation, national weighted effectiveness, clinical benefit or proof of general LLM superiority. Successful-pair ablation and empirical bootstrap are conditional analyses."
+  },
+  "prepared_without_new_experiments": true
+}

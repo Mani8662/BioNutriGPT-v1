@@ -38,6 +38,8 @@ import torch
 from torch import nn
 
 import train_bionutrigpt_stage1 as s1
+from nutrient_rule_policy import (mufa_component_bounds, reviewed_default_bounds,
+                                 reviewed_rule_metadata, RULESET_VERSION)
 
 warnings.filterwarnings(
     "ignore",
@@ -478,8 +480,8 @@ def _predict_probabilities(
 def get_default_micronutrient_bounds(
     age_years: float, is_female: bool
 ) -> dict[str, tuple[float, float]]:
-    """Return built-in age/sex-aware RDA-to-UL envelopes in intake units."""
-    return {
+    """Return reviewed US food references plus labeled numerical search domains."""
+    legacy_defaults = {
         "DR1TATOC": (15.0, 1000.0),
         "DR1TRET": (0.0, 3000.0),
         "DR1TVARA": (700.0 if is_female else 900.0, 3000.0),
@@ -507,6 +509,7 @@ def get_default_micronutrient_bounds(
         "DR1TSELE": (55.0, 400.0),
         "DR1TCAFF": (0.0, 400.0),
     }
+    return reviewed_default_bounds(legacy_defaults, age_years, is_female)
 
 
 def _build_nutrient_bounds(
@@ -536,7 +539,9 @@ def _build_nutrient_bounds(
     carb_fraction = 0.45 if p_diab_0 >= CUTOFF_DIABETES else 0.60
     carb_max = max(135.0, (carb_fraction * t_kcal) / 4.0)
     put("DR1TCARB", 130.0, carb_max)
-    put("DR1TSUGR", 0.0, 25.0 if p_diab_0 >= CUTOFF_DIABETES else 50.0)
+    # Total sugar is not WHO free/added sugar. Keep a component search domain,
+    # then report it without applying the former 25/50 g therapeutic claim.
+    put("DR1TSUGR", 0.0, carb_max)
     fiber_min = max(
         35.0 if p_diab_0 >= CUTOFF_DIABETES else 28.0,
         (14.0 * t_kcal) / 1000.0,
@@ -548,7 +553,9 @@ def _build_nutrient_bounds(
         "DR1TSFAT", 0.0,
         ((0.06 if p_cvd_0 >= CUTOFF_CVD else 0.10) * t_kcal) / 9.0,
     )
-    put("DR1TMFAT", (0.10 * t_kcal) / 9.0, (0.20 * t_kcal) / 9.0)
+    # The previous 10–20% energy interval was an unsupported independent
+    # adequacy rule. MUFA is a component of fat, not a separate minimum target.
+    put("DR1TMFAT", *mufa_component_bounds(float(upper[NUTRIENT_INDEX['DR1TTFAT']])))
     put("DR1TPFAT", (0.05 * t_kcal) / 9.0, (0.10 * t_kcal) / 9.0)
     put("DR1TCHOL", 0.0, 150.0 if p_cvd_0 >= CUTOFF_CVD else 300.0)
     put("DR1TSODI", 500.0, 1500.0 if p_cvd_0 >= CUTOFF_CVD else 2300.0)
@@ -1125,6 +1132,7 @@ def generate_counterfactual_prescription(
                 "min_bound": float(lower[i]),
                 "max_bound": float(upper[i]),
                 "delta": target_value - baseline_value,
+                "rule_provenance": reviewed_rule_metadata(name, float(lower[i]), float(upper[i])),
             }
         )
 
@@ -1132,6 +1140,8 @@ def generate_counterfactual_prescription(
         filter1_final and filter2_final and filter3_final and filter4_passed
     )
     dossier: dict[str, Any] = {
+        "nutrient_ruleset_version": RULESET_VERSION,
+        "clinical_prescribing_validated": False,
         "patient_baseline": {
             "probabilities": {
                 "diabetes": p_diab_0,

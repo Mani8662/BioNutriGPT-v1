@@ -1,0 +1,11 @@
+# Observed versions where available; not a clean-environment lockfile.
+numpy==2.5.2
+pandas==3.0.6
+scipy==1.18.1
+torch==2.14.0+cu130
+scikit-learn==1.9.1
+joblib==1.6.0
+fastapi==0.141.1
+uvicorn
+pydantic==2.13.5
+python-multipart==0.0.32

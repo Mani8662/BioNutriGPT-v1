@@ -1,335 +1,291 @@
-# BioNutriGPT: Development, Empirical Benchmarking, and Systemic Evaluation of a Multi-Stage Pipeline for Prevalent Cardiometabolic Risk Screening and Culturally Constrained Dietary Synthesis
-
-**Authors:** To be completed  
-**Affiliations:** To be completed  
-**Manuscript Target:** Applied Health Informatics / Digital Medicine (Target Venue: *Smart Health* / *BMC Medical Informatics and Decision Making* / *Computers in Biology and Medicine*)  
-**Manuscript Status:** Rigorous, Fully Benchmarked Empirical Research Draft  
-
----
+# BioNutriGPT: An Auditable Pipeline for Cardiometabolic Screening and Constraint-Preserving Conversational Meal Planning
 
 ## Abstract
 
-**Background:** Translating population-level cardiometabolic risk screening into clinically viable, actionable lifestyle interventions requires bridging cross-sectional epidemiological prediction with mathematical dietary synthesis. However, conventional multi-task deep neural networks risk feature entanglement across disparate clinical modalities; existing diet optimizers either produce uncookable fractional servings (e.g., 0.38 chapati) or break nutrient bounds during post-hoc rounding; and generative large language models (LLMs) hallucinate quantities and violate clinical nutrient envelopes.
+**Background:** Conversational meal planning requires persistent preferences and reliable numerical verification as users request changes.
 
-**Objective:** To design, benchmark, and evaluate BioNutriGPT, an end-to-end multi-stage software pipeline that couples: (1) a modality-aware tabular Transformer for multi-task prevalent cardiometabolic screening; (2) a clinically bounded physiological nutrient envelope engine; (3) a discrete mixed-integer linear programming (MILP) Indian meal synthesizer; and (4) an edge-deployed LLM explanation compiler guarded by formal Abstract Syntax Tree (AST) clinical invariants.
+**Objective:** To develop and evaluate an auditable pipeline linking cardiometabolic screening, nutritional rules, discrete meal optimization and controlled conversational revision.
 
-**Methods:** Stage 1 implements a multi-task tabular Transformer with modality-specific pooling (biological lipids, diet, lifestyle, demographics) and a four-expert top-2 mixture-of-experts (MoE), trained on 23,694 adults from NHANES 2007–2016 across 87 predictors. Routine HbA1c is excluded from predictors to evaluate screening prior to diagnostic glycemic workup, while preserved in the ground-truth reference label. We evaluated Stage 1 on a temporal holdout of 7,046 participants (NHANES 2017–March 2020) against Standard Deep MLPs, Tabular ResNets, Gradient-Boosted Trees (GBT), Random Forests, and Logistic Regression, incorporating post-hoc Platt scaling calibration. Stage 3 was evaluated across 50 clinically heterogeneous cardiometabolic archetypes comparing 5 distinct mathematical paradigms: Continuous LP, Continuous LP with Post-Hoc Rounding, Continuous LP with Greedy Heuristic Repair, Direct Generative LLM (Qwen 2.5 3B NF4), and BioNutriGPT Discrete MILP (HiGHS Branch-and-Cut). Stage 4 was evaluated locally on an NVIDIA GeForce RTX 3050 Laptop GPU (4 GB VRAM) under 4-bit NF4 quantization to assess edge hardware footprint and 4 deterministic AST safety invariants. Finally, we formalize a pre-registered triple-blinded Indian Dietetic Association (IDA) evaluation protocol for clinical translation.
+**Methods:** Stage 1 uses an 87-feature Transformer evaluated on a 7,046-participant NHANES temporal holdout. Downstream planning uses a 49-entry food catalog and 30 active nutrient fields. A separate LASI-derived evaluation includes 100 selected Indian profiles across three dietary modes. The corrected conversational study uses 36 distinct participants and 78 turns per guarded variant, with a matched 12-participant, 24-turn Qwen 2.5 3B comparison. Requests are frozen; incomplete foods are excluded consistently; proposals undergo numerical validation. Uncertainty is estimated by scenario-level resampling.
 
-**Results:** On the prospective temporal holdout ($N=7,046$), Stage 1 achieved survey-weighted AUROCs of 0.8151 [0.795–0.833] for diabetes, 0.7501 [0.734–0.766] for obesity, and 0.8427 [0.820–0.863] for cardiovascular disease (CVD). Stage 1 demonstrated superior discrimination over Standard Deep MLPs (diabetes AUROC 0.8080, CVD 0.8361) and Tabular ResNets (diabetes AUROC 0.8116, CVD 0.8384). Univariate Platt scaling on validation data eliminated Stage 1 miscalibration on the holdout, reducing Expected Calibration Error (ECE) from 0.2353 to 0.0543 in diabetes (76.9% reduction) and from 0.2452 to 0.0251 in CVD (89.8% reduction). In the 50-archetype meal-planning benchmark, Continuous LP yielded 0.0% integer plans (mean 3.08 fractional items/plan). Post-hoc rounding collapsed balanced plate category compliance to 0.0% and triggered 2.64 ± 1.14 nutrient boundary violations per plan (94% failure rate). Greedy heuristic repair similarly failed (0.0% category compliance, 3.96 ± 1.00 boundary violations/plan). Prompt-only LLM generated massive boundary violations (6.16 ± 1.05/plan, $L_1$ slack 2,087.3). In contrast, BioNutriGPT Discrete MILP achieved 100.0% integer servings, 100.0% category compliance, 0.0 boundary violations, and 0.0 $L_1$ slack with a mean solve latency of 346.3 ms. On consumer edge hardware (RTX 3050 Laptop GPU, 4-bit NF4), Qwen 2.5 3B ran within 2.28 GB reserved VRAM (57% utilization). Auditing unconstrained raw LLM generation revealed a 100.0% serving quantity modification rate and 66.7% parse failure rate, whereas the Guarded Stage 4 AST circuit-breaker achieved 100.0% invariant compliance, exact quantity conservation, and 100.0% fault-injection fallback interception across the frozen 100-case benchmark.
+**Results:** Saved Stage 1 AUROCs were 0.7999 for diabetes, 0.7518 for obesity and 0.8260 for CVD. LASI optimizer acceptance was 91/100, 96/100 and 98/100 across dietary modes. The full guarded conversational system passed 76/78 turns, including 29 validated revisions and 11 justified refusals; two timeout-related failures remained. In the matched comparison, protocol passes were 24/24 versus 2/24, and valid proposals on feasible requests were 9/9 versus 0/9. Among 25 successful pairs with identical input state, mean serving changes were 7.72 with the change penalty versus 16.56 without it, a descriptive reduction of 53.38%.
 
-**Conclusions:** BioNutriGPT demonstrates that modality-specific tabular attention combined with Platt calibration achieves competitive cardiometabolic screening over traditional deep neural networks, while discrete branch-and-cut MILP is mathematically essential to eliminate the catastrophic boundary failures of LP rounding and prompt-based LLMs. The pipeline provides a verified, sub-second, edge-executable architecture for culturally tailored cardiometabolic lifestyle medicine.
+**Conclusions:** The tested workflow supports auditable, less disruptive meal revision under declared computational rules. These selected-case results do not establish clinical benefit, patient acceptability, national performance or Stage 1 validity in India.
 
-**Keywords:** clinical decision support; mixed-integer linear programming; cardiometabolic screening; tabular Transformer; probability calibration; edge AI; Indian dietary optimization; TRIPOD+AI
-
----
+**Keywords:** nutrition decision support; conversational systems; mixed-integer optimization; provenance; tabular Transformer; Indian meals; reproducibility.
 
 ## 1. Introduction
 
-Cardiometabolic disorders—specifically type 2 diabetes mellitus, cardiovascular disease (CVD), and obesity—represent the leading global contributors to preventable morbidity and mortality, with a disproportionately severe and accelerating burden in South Asian populations [1,2]. Effective prevention and early management necessitate two coordinated clinical capabilities: (1) opportunistic risk screening from routinely available demographic, dietary, lifestyle, and basic lipid metrics; and (2) personalized, culturally acceptable dietary interventions that satisfy strict macro- and micronutrient boundaries [3,4].
+Personalized meal planning combines nutritional accounting, food preferences, portion selection, and repeated requests for change. A user may ask to remove a dish, retain a preferred food, reduce the number of dishes, or inspect the nutrients in an updated plan. These operations require consistent numerical accounting and persistent state. A fluent answer alone does not establish that the updated basket satisfies its declared requirements.
 
-In contemporary clinical practice and digital health informatics, these two domains remain fundamentally disconnected. Machine learning models developed for disease risk stratification typically terminate at probability output, leaving clinicians without actionable translational guidance [5]. Conversely, digital nutrition applications rely either on generic static meal plans or generative large language models (LLMs). While LLMs excel at fluent conversational synthesis, recent clinical audits have demonstrated that unconstrained generative models regularly hallucinate ingredient quantities, violate strict clinical nutrient constraints (e.g., sodium and saturated fat ceilings in hypertensive and diabetic patients), and are incapable of exact mathematical accounting [6,7].
+BioNutriGPT addresses this engineering problem through four connected stages. A screening model describes prevalent cardiometabolic outcomes in the NHANES study setting. A nutrient-rule engine supplies an explicit planning envelope. A discrete optimizer selects food portions. A conversational service explains the resulting plan and routes revisions back through optimization and validation. Observed patient inputs remain separate from proposed and accepted meals.
 
-To address these shortcomings, dietary optimization has historically employed continuous Linear Programming (LP) and goal programming [8,9]. However, continuous LP formulations suffer from a fatal practical flaw: they treat food as infinitely divisible continuous quantities. This produces meal recommendations with fractional portions (e.g., 0.38 phulka/roti, 0.24 katori of cooked dal, or 0.17 boiled egg), which cannot be realistically cooked or measured in a domestic household. When practitioners attempt post-hoc rounding or heuristic greedy repair to force integer quantities, the delicate multi-dimensional nutrient balance collapses, producing severe nutrient boundary violations or dropping essential food groups entirely [10].
+The principal research question is: **Can a stateful, tool-backed nutrition assistant support repeated meal-plan revisions while preserving declared constraints and previously recorded restrictions?** Secondary questions concern the computational trade-offs of whole portions and the usefulness of the screening component relative to simpler models. Clinical benefit is outside the present evaluation.
 
-Furthermore, deep learning models applied to multi-modal tabular electronic health records and nutritional surveys frequently suffer from feature entanglement: unconstrained concatenation of heterogeneous features (such as 24-hour dietary recalls, laboratory lipid assays, and physical activity logs) degrades multi-task calibration and predictive stability relative to gradient-boosted decision trees [11,12].
+### 1.1 Related work and scope of contribution
 
-In this paper, we describe the development, formal benchmarking, and empirical verification of **BioNutriGPT**, an integrated four-stage computational pipeline designed for prevalent cardiometabolic screening and culturally tailored Indian dietary synthesis. Our contributions and findings are as follows:
-1. **Modality-Aware Screening Architecture (Stage 1):** We evaluate a multi-task tabular Transformer featuring learned modality query pooling and a top-2 mixture-of-experts (MoE) on 23,694 participants from NHANES 2007–2016 across 87 predictors, tested against a temporally separated prospective holdout of 7,046 participants (NHANES 2017–March 2020). We provide an empirical benchmark comparing the Transformer against Standard Deep Multi-Layer Perceptrons (MLPs), Tabular Deep ResNets, Gradient-Boosted Trees, Random Forests, and Logistic Regression under the TRIPOD+AI reporting guidelines [13].
-2. **Platt Probability Recalibration:** We formalize univariate logistic calibration (Platt scaling) on independent validation folds, demonstrating a 76.9% to 89.8% reduction in Expected Calibration Error (ECE), transforming uncalibrated raw logits into reliable clinical probabilities.
-3. **Five-Paradigm Optimization Benchmark (Stage 3):** Across 50 clinically distinct multi-morbidity archetypes, we conduct a head-to-head empirical comparison of 5 optimization paradigms: Continuous LP, Continuous LP with Post-Hoc Rounding, Continuous LP with Heuristic Greedy Repair, Prompt-Only Generative LLM, and Discrete Mixed-Integer Linear Programming (MILP) solved via HiGHS Branch-and-Cut. We show why branch-and-cut optimization is mathematically required to guarantee 100% integer cookability and 100% nutrient envelope adherence.
-4. **Local Edge-GPU Hardware Profiling & AST Invariant Verification (Stage 4):** We benchmark the Qwen 2.5 3B language model locally under 4-bit NF4 quantization on a consumer laptop GPU (NVIDIA RTX 3050, 4 GB VRAM), verifying sub-2.3 GB memory residency, 16.1 tokens/sec throughput, and 100% compliance across four deterministic AST clinical safety invariants.
-5. **Clinical Evaluation Protocol:** We provide a pre-registered, triple-blinded evaluation protocol with the Indian Dietetic Association (IDA) to establish real-world dietary acceptability, safety, and clinical feasibility.
+Conversational nutrition recommendation already has substantial precedent. ChatDiet combines personal and population information through an orchestration framework to produce personalized food recommendations [1]. Therefore, adding a chatbot to nutrition recommendations is not, by itself, a defensible novelty claim.
 
----
+Integer and goal-programming approaches to meal planning also exist. A recent preprint explicitly studies serving granularity and compares mixed-integer goal programming with continuous and rounded alternatives [2]. Whole portions, HiGHS optimization, and nutrient-deviation objectives must therefore be treated as established methods rather than new algorithms.
+
+Tabular Transformers likewise belong to an established methodological family. Comparative work on tabular deep learning demonstrates the importance of strong baselines and consistent evaluation protocols [3]. The use of a Transformer or mixture-of-experts component does not establish predictive advantage without direct experimental support.
+
+The contribution investigated here is the **combined, testable revision workflow**: catalog-grounded answers; explicit separation of observed, proposed, and accepted state; persistent food restrictions; re-optimization after requests; independent acceptance validation; and version-aware auditability. The present related-work comparison establishes overlap, not an exhaustive literature search or a claim that this combination is the first of its kind.
 
 ## 2. Methods
 
-### 2.1 Study Design, Cohort Assembly, and Clinical Outcome Definitions
+### 2.1 Study design and evidence boundaries
 
-This study utilizes secondary cross-sectional data from the National Health and Nutrition Examination Survey (NHANES), conducted by the National Center for Health Statistics (NCHS) of the Centers for Disease Control and Prevention (CDC) [14]. NHANES employs a complex, multistage, stratified, clustered probability sampling design representative of the civilian non-institutionalized U.S. population.
+This is a retrospective prediction and computational systems study. We distinguish four evidence layers:
 
-The **development cohort** comprises 23,694 non-pregnant adults aged ≥18 years across five contiguous two-year survey cycles: 2007–2008, 2009–2010, 2011–2012, 2013–2014, and 2015–2016. The development cohort was split at the patient level into a training set ($N=20,140$) and an internal validation set ($N=3,554$) using stratified sampling on multi-label condition prevalence.
+1. **Prediction evaluation:** saved Stage 1 results on the NHANES temporal holdout.
+2. **Historical system experiments:** optimizer and conversational comparisons performed on earlier food-catalog versions.
+3. **Current implementation verification:** a descriptive snapshot of the 49-entry catalog and regression checks following chatbot repairs.
+4. **LASI real-profile pilot:** adapted rule-based planning on 100 Indian profiles and a separately audited conversational subset.
 
-The **temporal validation cohort** consists of 7,046 non-pregnant adults from the combined NHANES 2017–March 2020 pre-pandemic release [14,15]. This cohort serves as a prospective temporal holdout to evaluate model discrimination, calibration drift, and generalizability under secular dietary and metabolic trends. We explicitly note that this is a temporally independent holdout within the same national survey framework, not an external geographical transfer cohort (e.g., ICMR-INDIAB or UK Biobank).
+These layers are not pooled. In particular, software regression checks are not counted as patient cases, and results from different food catalogs are not combined into a current-system success rate. TRIPOD+AI informs the prediction-reporting requirements; completed checklist adherence is not asserted [4].
 
-Three prevalent cardiometabolic target conditions were defined according to established clinical consensus guidelines:
-- **Prevalent Diabetes Mellitus:** Defined as an affirmative response to prior physician diagnosis (`DIQ010 = 1`), fasting plasma glucose $\ge 126\text{ mg/dL}$ (`LBXGLU`), or glycohemoglobin $\text{HbA1c} \ge 6.5\%$ ($48\text{ mmol/mol}$; `LBXGH`), in accordance with American Diabetes Association (ADA) 2024 Standards of Care [16].
-- **Prevalent Obesity:** Defined as a measured Body Mass Index (BMI) $\ge 30.0\text{ kg/m}^2$, calculated from standardized examination measurements (`BMXBMI`).
-- **Prevalent Cardiovascular Disease (CVD):** Defined as a self-reported physician diagnosis of congestive heart failure (`MCQ160b`), coronary heart disease (`MCQ160c`), angina pectoris (`MCQ160d`), myocardial infarction (`MCQ160e`), or cerebrovascular stroke (`MCQ160f`), concordant with AHA/ACC secondary prevention definitions [17].
+### 2.2 Cohorts, outcomes, and predictors
 
-**Target Leakage Prevention:** To ensure valid screening prior to diagnostic blood work, HbA1c (`LBXGH`), measured BMI (`BMXBMI`), standing height (`BMXHT`), and body weight (`BMXWT`) were strictly excluded from the predictor feature set. While HbA1c contributes to the ground-truth reference label definition, it was never available as an input to Stage 1. Basic serum lipids (`LBDHDD`, `LBXTC`) were retained as standard routine markers; consequently, the model is framed as an opportunistic multi-modal screening tool, rather than a purely non-invasive risk index.
+The development file contains 23,694 NHANES participants from 2007–2016. The holdout file contains 7,046 participants from 2017–March 2020. A direct identifier comparison found no overlapping `SEQN` values. NHANES provides U.S. population survey data; a later survey period is a temporal holdout, not an Indian validation cohort [5].
 
-### 2.2 Predictor Schema and Preprocessing Pipeline
+| Dataset | Participants | Diabetes-positive | Obesity-positive | CVD-positive |
+|---|---:|---:|---:|---:|
+| Development, 2007–2016 | 23,694 | 3,022 | 8,932 | 2,205 |
+| Temporal holdout, 2017–March 2020 | 7,046 | 1,409 | 3,075 | 845 |
 
-The final model consumes an 87-dimensional predictor vector structured into four explicit clinical modalities:
-1. **Biochemical Lipids (5 features):** Serum high-density lipoprotein cholesterol (`LBDHDD`), total cholesterol (`LBXTC`), calculated non-HDL cholesterol, total cholesterol to HDL ratio (`CHOL_HDL_RATIO`), and non-HDL to HDL ratio.
-2. **Nutritional Recalls (46 features):** First-day 24-hour dietary recall variables comprising total energy (`DR1TKCAL`), 38 macro- and micronutrients (protein, carbohydrates, total sugars, dietary fiber, total/saturated/monounsaturated/polyunsaturated fats, cholesterol, vitamins A/B1/B2/B6/B12/C/D/E/K, folate, calcium, phosphorus, magnesium, iron, zinc, copper, sodium, potassium, selenium, caffeine, alcohol), and 7 clinically derived dietary ratios (protein % kcal, carb % kcal, fat % kcal, fiber per 1,000 kcal, sugar-to-fiber ratio, sodium-to-potassium ratio, saturated-to-unsaturated fat ratio).
-3. **Lifestyle and Behavioral Factors (19 features):** Self-reported sleep duration (`SLEEP_HOURS`), absolute sleep deviation from physiological 7.5 hours (`SLEEP_DEV_FROM_7_5`), sedentary duration (`PAD680`), physical activity MET-minutes/week across vigorous/moderate work, active transit, and vigorous/moderate recreation, sleep disorder diagnosis (`SLQ050`), categorical activity flags (`PAQ605`–`PAQ665`), and smoking status indicators (never, former, somedays, everyday).
-4. **Demographics and Sociodemographics (17 features):** Age (`RIDAGEYR`), poverty income ratio (`INDFMPIR`), educational attainment (`DMDEDUC2`), biological sex (`SEX_FEMALE`), race/ethnicity categories (Mexican American, Other Hispanic, Non-Hispanic White, Non-Hispanic Black, Multi-Racial), marital status categories, and 5 explicit missingness indicators (`INDFMPIR_MISS`, `SLEEP_HOURS_MISS`, `PAD680_MISS`, `PA_TOTAL_MET_MIN_WK_MISS`, `OTHER_FEATURE_MISS`).
+The current outcome-generation code defines diabetes using any available positive HbA1c, fasting-glucose, or physician-diagnosis criterion; obesity uses measured BMI at least 30 kg/m²; CVD uses positive self-reported heart failure, coronary disease, angina, myocardial infarction, or stroke responses. These are operational dataset labels, not diagnoses made by the application. The code can assign a negative outcome when at least one component is observed and no observed component is positive; incomplete ascertainment is consequently a possible source of label error.
 
-**Preprocessing Protocol:** All preprocessing parameters were fitted strictly on the NHANES 2007–2016 development training set ($N=20,140$) and frozen prior to application on validation and temporal holdout sets:
-- Continuous missing values were imputed using training medians; categorical missing values using training modes.
-- Continuous skewed nonnegative variables with skewness $>1.0$ received a $\log(1 + x)$ transformation.
-- Outliers were trimmed at training 0.1st and 99.9th percentiles to eliminate extreme sensor and entry errors.
-- Continuous features were standardized to zero mean and unit variance using training `StandardScaler` moments.
-- The 5 explicit binary missingness flags were appended to preserve informative missingness patterns without data leakage.
+The model has 87 predictors: five lipid measurements or derived lipid measures; 46 dietary features comprising 39 nutrient fields and seven derived ratios; 19 lifestyle features; and 17 demographic or missingness features. HbA1c and fasting glucose are not predictors. Because lipid inputs require laboratory measurements, the system is described as **non-glycemic laboratory-assisted screening**, not non-invasive screening. The exact feature names are supplied in `evidence_snapshot.json`.
 
-### 2.3 Stage 1 Architecture, Baselines, and Probability Calibration
+Preprocessing artifacts and model feature ordering are reused at inference. The training script specifies a 20,140-participant training subset and 3,554-participant validation subset, with a fixed seed and diabetes-stratified splitting. Full inclusion/exclusion flow, preprocessing-fit boundaries, and label ascertainment by survey component must be documented from executable source before submission.
 
-The Stage 1 architecture (Figure 1) is a specialized tabular Transformer designed to prevent inter-modality feature dilution:
-1. **Feature Tokenizer:** Each standardized scalar $x_i \in \mathbb{R}$ is projected via a learned feature-specific weight vector $\mathbf{w}_i \in \mathbb{R}^{128}$ and bias $\mathbf{b}_i \in \mathbb{R}^{128}$, augmented with an additive learned modality embedding $\mathbf{e}_{m(i)} \in \mathbb{R}^{128}$ corresponding to its modality $m(i) \in \{\text{bio}, \text{diet}, \text{lifestyle}, \text{demo}\}$:
-   $$\mathbf{t}_i = x_i \mathbf{w}_i + \mathbf{b}_i + \mathbf{e}_{m(i)}$$
-2. **Contextual Attention Backbone:** The resulting 87 tokens pass through 3 Pre-LayerNorm Transformer encoder layers (model dimension $d=128$, 4 multi-head attention heads, feedforward dimension $d_{ff}=256$, GELU activation, dropout $p=0.10$).
-3. **Modality-Specific Query Pooling:** To prevent dense token averaging from flattening critical biological signals, four learned modality queries $\mathbf{q}_m \in \mathbb{R}^{128}$ attend over tokens within their respective modality subsets, yielding four 128-dimensional summary vectors $\mathbf{u}_{\text{bio}}, \mathbf{u}_{\text{diet}}, \mathbf{u}_{\text{life}}, \mathbf{u}_{\text{demo}}$. These are concatenated into a 512-dimensional multi-modal vector:
-   $$\mathbf{u}_{\text{concat}} = [\mathbf{u}_{\text{bio}} \,\|\, \mathbf{u}_{\text{diet}} \,\|\, \mathbf{u}_{\text{life}} \,\|\, \mathbf{u}_{\text{demo}}] \in \mathbb{R}^{512}$$
-4. **Mixture-of-Experts (MoE) State Synthesis:** A linear gating network selects the top 2 of 4 expert MLPs ($512 \to 256 \to 256$ with LayerNorm and GELU) to synthesize a 256-dimensional patient state vector $\mathbf{h}_{\text{patient}}$.
-5. **Specialized Condition Heads:** Task heads combine relevant inductive priors: the Diabetes and CVD heads receive $[\mathbf{h}_{\text{patient}} \,\|\, \mathbf{u}_{\text{bio}}]$, whereas the Obesity head receives $[\mathbf{h}_{\text{patient}} \,\|\, \mathbf{u}_{\text{diet}} \,\|\, \mathbf{u}_{\text{life}}]$. Each head consists of a 64-unit hidden layer projecting to a single logit $z_c$.
+### 2.3 Architecture and screening model
 
-**Empirical Deep Neural Network Baselines:** To rigorously test the hypothesis that modality-aware self-attention provides a genuine inductive advantage over standard deep tabular architectures, we benchmarked Stage 1 against:
-- **Standard Deep MLP:** A 4-layer fully connected architecture ($87 \to 256 \to 128 \to 64 \to 3$) with LayerNorm, GELU, and dropout ($p=0.10$), receiving the concatenated 87-feature vector.
-- **Tabular Deep ResNet:** A 3-block residual multi-layer network modeled after Gorishniy et al. [11], featuring skip-connections, LayerNorm, and feedforward blocks with hidden dimension 128.
-- **Classical Machine Learning Baselines:** Gradient-Boosted Trees (LightGBM/XGBoost formulation with 100 estimators, max depth 5, learning rate 0.05), Random Forest (100 trees, balanced class weights), and L2-regularized Logistic Regression ($C=1.0$).
+```mermaid
+flowchart TD
+    A[Structured user values or TXT input] --> B[Stage 1: Cardiometabolic screening]
+    B --> C[Stage 2: Versioned nutrient rules]
+    C --> D[Stage 3: Whole-portion meal optimization]
+    F[Food catalog and nutrient provenance] --> D
+    D --> V[Independent basket validation]
+    V --> E[Stage 4: Plan explanation and controlled chat]
+    E --> R[Revision request and saved preferences]
+    R --> D
+    E --> P[Accepted plan versions and history]
+```
 
-**Univariate Logistic Recalibration (Platt Scaling):** Because multi-task neural networks trained with positive class-weighting (diabetes 6.84, CVD 9.74, obesity 1.65) produce miscalibrated raw sigmoid outputs, we fitted univariate logistic calibrators on the held-out development validation fold ($N=3,554$):
-$$P(Y_c = 1 \mid z_c) = \frac{1}{1 + \exp(-(\alpha_c z_c + \beta_c))}$$
-Parameters $(\alpha_c, \beta_c)$ were optimized via maximum likelihood and applied directly to raw logits on the prospective temporal holdout ($N=7,046$).
+Stage 1 tokenizes the 87 scalar predictors into 128-dimensional representations with modality embeddings. A three-layer Transformer encoder uses four attention heads per layer. Learned modality-query pooling produces biochemical, dietary, lifestyle, and demographic vectors. A four-expert sparse layer uses top-two routing, followed by outcome-specific prediction heads.
 
-### 2.4 Stage 2 Physiological Nutrient Envelope Engine
+This architecture is implemented, but the current evidence does not isolate the benefit of modality pooling or expert routing. These components are not presented as independently validated contributions.
 
-Stage 2 translates Stage 1 predicted risk probabilities into an individualized, clinically safe daily nutritional envelope:
-1. **Energy Expenditure Modeling:** Basal Metabolic Rate (BMR) is calculated via the Mifflin–St Jeor equation using patient metadata (age, sex, height, weight). Total Daily Energy Expenditure (TDEE) is derived via physical activity multipliers (1.2 to 1.725). For patients with elevated obesity risk, a caloric deficit of 500 kcal/day is applied, guarded by an absolute clinical floor of 1,200 kcal/day to prevent metabolic starvation.
-2. **Clinical Bounding Formulations:** Thirty-nine lower ($L_k$) and upper ($U_k$) nutrient boundaries are established concordant with ICMR-NIN RDA 2020 and ADA 2024 Clinical Practice Recommendations [16,18]:
-   - Saturated fat $<7\%$ of total calories; trans fat $<1\%$; dietary cholesterol $<200\text{ mg/day}$.
-   - Sodium capped at $\le 1,500\text{ mg/day}$ for elevated CVD/hypertension profiles; potassium target $\ge 3,500\text{ mg/day}$.
-   - Dietary fiber bounded at $\ge 35\text{ g/day}$ (or $\ge 15\text{ g}/1,000\text{ kcal}$) for diabetic profiles.
-   - Protein bounded between $1.0\text{ g/kg/day}$ (clinical floor) and $1.5\text{ g/kg/day}$ (preserving renal safety in non-dialysis CKD).
-3. **Safety Verification Gates:** Stage 2 executes four automated algorithmic sanity checks: (1) Atwater macronutrient 4-4-9 caloric energy consistency; (2) physiological boundary clamping; (3) ratio coherence (sugar-to-fiber, sodium-to-potassium); and (4) closed-loop Stage 1 rescoring. Dossiers failing safety checks are rejected prior to Stage 3 optimization.
+The saved evaluation includes logistic regression, random forest, and histogram gradient boosting. Its classical comparators use the full development file, whereas the neural model's training procedure reserves a validation subset. This difference must be acknowledged and corrected before using those results for a claim of architectural superiority.
 
-### 2.5 Stage 3 Mixed-Integer Linear Programming Meal Synthesizer
+### 2.4 Stage 2: Versioned nutritional planning rules
 
-Stage 3 formulates regional Indian meal planning as a constrained Mixed-Integer Linear Program (MILP), solved via the HiGHS branch-and-cut engine [19].
+Stage 2 combines patient metadata, energy calculations, nutrient bounds, and model-based hypothetical dietary search. A counterfactual candidate changes proposed dietary inputs for computational analysis; it is not a measured intervention or a causal estimate of disease reduction. The chatbot does not overwrite observed intake or reinterpret a proposed food swap as an observed clinical improvement.
 
-**Decision Variables:**
-- Let $\mathcal{F} = \{1, \dots, N_f\}$ denote the regional food database ($N_f = 44$ validated cooked Indian dishes mapped to ICMR-NIN IFCT 2017).
-- $q_i \in \{0, 1, 2, 3\}$: Integer serving count for dish $i$ (enforcing practical discrete household units: e.g., 1 whole phulka, 1 katori dal).
-- $z_i \in \{0, 1\}$: Binary dish selection indicator ($z_i = 1$ if $q_i \ge 1$, $z_i = 0$ if $q_i = 0$).
-- $e_k^+, e_k^- \ge 0$: Two-sided continuous slack variables penalizing violations above upper bound $U_k$ and below lower bound $L_k$ for nutrient $k \in \mathcal{K}$.
-- $d_{\text{cal}}^+, d_{\text{cal}}^- \ge 0$: Continuous slack variables measuring deviation from target energy $E^*$.
+The current rule version is `adult-food-rule-review-v4-exposure-separated`. Of 39 nutrient/exposure fields, 30 are active planning fields, seven are report-only, and two—caffeine and alcohol—are tracked separately as exposures. Total sugar is not treated as free sugar; total folate, synthetic folic acid, food folate, and dietary folate equivalents are distinguished. Numerical search caps are not described as tolerable upper intake levels.
 
-**Mathematical Formulation:**
-$$\min_{\mathbf{q}, \mathbf{z}, \mathbf{e}, \mathbf{d}} \quad \sum_{k \in \mathcal{K}} w_k \left( \frac{e_k^-}{L_k + \epsilon} + \frac{e_k^+}{U_k + \epsilon} \right) + \lambda_{\text{cal}} \left( \frac{d_{\text{cal}}^- + d_{\text{cal}}^+}{E^*} \right) + \sum_{i=1}^{N_f} c_i z_i + \gamma \sum_{i=1}^{N_f} p_i q_i$$
+Several rules remain project assumptions, including parts of the protein, carbohydrate, sodium, potassium, and cholesterol policy. References in the rule metadata identify context; they do not imply that a clinical authority endorsed every project threshold. The implementation uses a mixture of reference sources and project choices and is not represented as complete ICMR-NIN guideline compliance [6].
 
-**Subject to:**
-1. **Linking Constraints:**
-   $$z_i \le q_i \le 3 z_i, \quad \forall i \in \mathcal{F}$$
-2. **Nutrient Envelope Satisfaction ($L_1$ Goal Programming):**
-   $$L_k - e_k^- \le \sum_{i=1}^{N_f} a_{ki} q_i \le U_k + e_k^+, \quad \forall k \in \mathcal{K}$$
-3. **Caloric Target Satisfaction:**
-   $$E^* - d_{\text{cal}}^- \le \sum_{i=1}^{N_f} \text{kcal}_i q_i \le E^* + d_{\text{cal}}^+$$
-4. **Plate Cardinality Rules:**
-   $$4 \le \sum_{i=1}^{N_f} z_i \le 8$$
-5. **Cultural Balanced-Plate Category Constraints:**
-   - Cereals/Grains: $1 \le \sum_{i \in \text{Cereals}} z_i \le 3$, with total servings $2 \le \sum_{i \in \text{Cereals}} q_i \le 5$.
-   - Pulses/Dals: $1 \le \sum_{i \in \text{Pulses}} z_i \le 2$, with total servings $1 \le \sum_{i \in \text{Pulses}} q_i \le 3$.
-   - Vegetables/Sabzi: $\sum_{i \in \text{Vegetables}} z_i \ge 2$, with total servings $2 \le \sum_{i \in \text{Vegetables}} q_i \le 5$.
-   - Dairy/Yogurt: $\sum_{i \in \text{Dairy}} z_i \le 1$, with total servings $0 \le \sum_{i \in \text{Dairy}} q_i \le 2$.
+The intended computational scope is adults. Pregnancy, lactation, pediatric prescribing, renal disease management, and medication adjustment are outside the chatbot's supported scope.
 
-**Multi-Paradigm Comparative Suite ($N=50$ Clinical Archetypes):**
-To empirically resolve the core mathematical question—*why branch-and-cut MILP is required over simpler continuous LP or heuristic rounding*—we developed an expanded benchmark testing 5 distinct computational paradigms across 50 heterogeneous multi-morbidity patient archetypes:
-1. *Continuous LP (Relaxed):* Integrality constraints relaxed ($q_i \in [0, 3]$, $z_i \in [0, 1]$).
-2. *Continuous LP + Post-Hoc Rounding:* Continuous LP solved to optimality, followed by deterministic rounding ($q_i = \text{round}(q_i^*)$) and active dish pruning.
-3. *Continuous LP + Heuristic Greedy Repair:* Continuous LP solved, followed by a multi-pass greedy heuristic: rounding to integer, repairing violated category lower/upper bounds by greedily adding/removing items, and adjusting portion sizes.
-4. *Direct Generative LLM (Prompt-Only):* The identical 44-dish menu, nutrient bounds, and category rules provided to Qwen 2.5 3B Instruct via zero-shot prompt-based generation without mathematical solvers.
-5. *BioNutriGPT Discrete MILP:* Exact Branch-and-Cut integer optimization using HiGHS with a strict 2.0-second timeout.
+### 2.5 Food composition and missingness
 
-### 2.6 Stage 4 Patient-Facing Explanation Compiler and Safety Circuit-Breakers
+The current catalog version is `sourced-cooked-v5-veg-nonveg`. It contains 49 records: 20 INDB recipe variants and 29 USDA single-food proxies. INDB is a published recipe-composition resource, while USDA records provide additional food-composition data [7,8]. Selected ingredient-level gap filling also uses documented food matches from CoFID [9]. These sources do not make every proxy identical to an Indian household preparation.
 
-Stage 4 compiles the optimized discrete food basket into an empathetic, patient-facing 5-slot chronological meal schedule (Breakfast 07:30, Mid-Morning Snack 10:30, Lunch 13:00, Evening Snack 16:30, Dinner 19:30). To ensure clinical safety and eliminate language model hallucinations, Stage 4 enforces four deterministic Abstract Syntax Tree (AST) invariants:
-1. **Invariant 1 (Food Conservation / Zero Hallucination):** The set of food items in the generated schedule $\mathcal{S}_{\text{gen}}$ must match the Stage 3 optimized food basket $\mathcal{S}_{\text{opt}}$ exactly: $\mathcal{S}_{\text{gen}} \equiv \mathcal{S}_{\text{opt}}$. The generation of unapproved foods (e.g., jaggery, deep-fried snacks) triggers an immediate circuit-breaker trip.
-2. **Invariant 2 (Quantity Conservation):** For every food item $i \in \mathcal{S}_{\text{opt}}$, the cumulative scheduled servings across all meal slots must equal the Stage 3 serving count: $\sum_{s} q_{is} = q_i^*$. The LLM cannot alter portion sizes.
-3. **Invariant 3 (Zero Calculation Authority):** The language model is forbidden from recalculating macro- or micronutrient totals; all presented nutritional metrics are bound directly to verified Stage 3 constants.
-4. **Invariant 4 (Schema Validity):** The output must parse as a valid JSON object matching the strict 5-slot schema.
+| Catalog characteristic | Current snapshot |
+|---|---:|
+| Total records | 49 |
+| INDB recipe variants | 20 |
+| USDA single-food proxies | 29 |
+| Vegetarian records | 43 |
+| Non-vegetarian records | 6 |
+| Records without declared active-field gaps, before other filters | 43 |
+| Records with at least one known allergen tag | 20 |
+| Records retaining possible unknown allergens | 49 |
 
-Any invariant failure trips an automated fallback circuit-breaker, replacing the generated text with a deterministic template schedule.
+All 49 records must not be described as laboratory-validated cooked Indian dishes. Standardized gram portions are modeling units, and agreement with a household bowl, recipe yield, or serving convention has not been established for every entry. Calculated ingredient-level nutrients and matched proxies are distinguished from directly reported recipe values through provenance metadata.
 
-**Independent Real LLM Backend Reliability Benchmark:**
-To evaluate the real local language model backend strictly *separately* from the mathematical optimizer (giving the LLM zero credit for nutritional accuracy or caloric feasibility enforced by Stages 1–3), we established a frozen, independently reproducible test set of **100 diverse, clinically heterogeneous patient dossiers** (`real_llm_evaluation_testset_100.json`, SHA256: `0FC1ACAC42AAAAFBF14540901574FCCB88D0010135A86996B635AC9109A8C1F5`). The test set is balanced round-robin across five distinct clinical cardiometabolic archetypes ($N=20$ each): (1) Type 2 Diabetes; (2) CVD and Hypertension; (3) Clinical Obesity; (4) Multimorbid Cardiometabolic Disease (DM + CVD + Obesity); and (5) Healthy Preventative Screening.
+The current catalog still has declared active-field gaps in synthetic folic acid, folate equivalents, alpha-tocopherol, retinol, or vitamin B12 for a subset of recipes. Foods missing a required active nutrient are excluded from a solve rather than assigned zero. Passing computational checks establishes consistency with the selected catalog values, not the accuracy of those values under actual preparation.
 
-We evaluated the local **Qwen 2.5 3B Instruct** model under 4-bit NF4 quantization on an **NVIDIA GeForce RTX 3050 Laptop GPU** (4 GB GDDR6 VRAM, CUDA 13.5, BitsAndBytes float16 compute) across five explicit failure modes:
-1. *Food Hallucinations:* Generation of food identifiers not present in the Stage 3 basket ($\mathcal{S}_{\text{gen}} \not\subseteq \mathcal{S}_{\text{opt}}$).
-2. *Quantity Modifications:* Discrepancies between generated servings and optimal MILP servings ($\sum_s q_{is} \neq q_i^*$).
-3. *Invalid Food Identifiers:* Non-existent, corrupted, or null food IDs.
-4. *Invalid JSON Syntax:* Truncated strings, unescaped characters, or malformed syntax failing standard JSON decoding.
-5. *Unsupported Nutritional Claims:* Presence of unauthorized numerical calorie, macronutrient, or micronutrient values in narrative text without calculation authority (detected via regex scanning).
-6. *Repeated-Generation Consistency:* Deterministic greedy decoding identity ($T=0.0$) versus stochastic generation variance ($T=0.7$, Top-$p=0.9$).
-7. *Adversarial Fault Injection & Fallback Interception:* Explicit corrupted inputs (injected hallucinated dishes, tampered serving counts, broken JSON syntax, and unauthorized caloric claims) to verify that the AST circuit-breaker intercepts 100% of faults and triggers deterministic fallback without crashing.
+### 2.6 Stage 3: Discrete planning and acceptance
 
-### 2.7 Independent Dietitian Evaluation Protocol (IDA Review)
+For food i, let q_i be its integer number of standardized portions, z_i indicate selection, and a_ki denote nutrient k per portion. Selected foods satisfy q_i in {0,1,2,3} with linking constraints z_i <= q_i <= 3z_i. A plan contains four to eight active foods unless a supported tighter dish limit is requested. Dietary-mode-specific food-category and serving constraints further restrict the basket.
 
-To resolve the absence of independent human clinical validation, we formalize a pre-registered, triple-blinded evaluation protocol in collaboration with accredited members of the Indian Dietetic Association (IDA).
-- **Design:** Triple-blinded randomized comparative review. Three independent clinical dietitians evaluate 50 paired meal plans generated by: (A) Human Senior Dietitians (gold standard); (B) BioNutriGPT Discrete MILP; and (C) Direct Generative LLM.
-- **Blinding:** Plans are presented in identical standardized typographical formats with patient clinical vignettes; raters, administrators, and analysts are blinded to plan provenance.
-- **Evaluation Dimensions (5-point Likert Rubric):**
-  1. *Nutritional Adequacy & Safety:* Adherence to ICMR RDA 2020 guidelines and condition-specific clinical ceilings.
-  2. *Cultural & Regional Authenticity:* Plausibility of ingredient pairings, cooking techniques, and staple grain fidelity.
-  3. *Household Feasibility & Cookability:* Practicality of preparation within an Indian urban/semi-urban domestic kitchen.
-  4. *Portion Realism:* Feasibility of serving counts (avoiding micro-portions or excessive volume).
-  5. *Overall Clinical Endorsement:* Willingness of the clinician to recommend the meal basket to a patient.
-- **Statistical Power Analysis:** A sample of 50 patient vignettes evaluated by 3 raters (150 evaluations per arm) provides $>90\%$ power to detect a 0.5-point difference on a 5-point Likert scale at $\alpha = 0.05$ with an inter-rater ICC $>0.75$.
+For active nutrient k, the accepted basket must satisfy:
 
----
+`L_k <= sum_i(a_ki * q_i) <= U_k`.
+
+The implementation retains deviation variables from a goal-programming formulation, but fixes active nutrient-bound deviations to zero during the current production solve. Report-only fields and separately tracked exposures are not converted into active adequacy requirements.
+
+Within the feasible set, the objective penalizes food-selection cost and absolute energy-target deviation. For revisions, an additional term penalizes `sum_i |q_i - q_i_previous|`, encouraging smaller changes. The selection-cost parameter is an engineering preference and is not assumed to be a verified retail price. Preferred foods influence optimization without authorizing violations of protected rules.
+
+Every proposed or accepted basket passes a separate validator that recalculates nutrients and checks relevant structural requirements. A rejected candidate is not substituted as a successful plan. Failure responses retain the previously accepted plan and distinguish data insufficiency, unavailable locked foods, solver limits, and other reported conflicts.
+
+### 2.7 Stage 4: Grounded conversation and persistent state
+
+The controlled chat service uses explicit backend tools for plan inspection, nutrient totals, revision proposals, and conflict explanations. Intent detection is primarily deterministic. It is not described as a fully autonomous LLM agent. The separate report-compilation path can use a local Qwen model under schema and quantity checks; its behavior is evaluated separately from the controlled chatbot.
+
+Patient records, proposals, and accepted versions are separate objects. Revision requests retain existing exclusions, preferred foods, daily food-quantity locks, ingredient exclusions, and dish limits. Persistent-session acceptance requires an exact match to a server-stored pending proposal for the current version, followed by independent validation. Accepting a revision creates a new version; rollback restores a prior basket and its plan preferences without deleting later patient-level allergy declarations.
+
+Allergy questions do not, by themselves, update the patient record. Explicit declarations create or update persistent allergy state and invalidate older pending proposals. Foods with documented matching allergens are excluded from subsequent revisions. Because allergen metadata are incomplete, warnings remain visible after numerical acceptance and rollback. The system does not certify a plan as allergen-free.
+
+Optional unconstrained LLM rewriting of chatbot answers is disabled. A previous number-preservation check could not prevent semantic changes, including removal of caveats. Verified deterministic answers therefore remain authoritative. This restriction does not remove the separately implemented report compiler.
+
+The frontend supports proposal review and an optional automatic application setting. When enabled, that setting applies only server-verified proposals; studies must record whether it was enabled. Daily food-quantity locks do not establish that an entire meal slot remains unchanged after rescheduling.
+
+### 2.8 Evaluation and analysis
+
+For Stage 1, we report the saved unweighted temporal-holdout AUROC, average precision, and Brier score. Survey-weighted analyses exist but require a fuller audit of weight choice, missing-weight handling, and complex-survey uncertainty. Participant-level bootstrap intervals do not, by themselves, account for NHANES stratification and clustering.
+
+LLM-related reporting is mapped separately using TRIPOD-LLM; the working reporting map does not assert checklist completion [10].
+
+The existing recalibration analysis is not used to substantiate current calibrated performance. Its calibration subset is recreated without the training script's diabetes stratification, and its logistic recalibrator uses predicted probabilities as input. Independence from model fitting and compatibility with deployed inference require reconciliation before describing a calibrated model as validated.
+
+Two historical comparisons are retained as version-specific preliminary evidence: a 20-case, 29-entry optimizer comparison and an eight-scenario, 16-turn, 31-entry conversational comparison. Their limitations and denominators are reported explicitly. A file labeled as a 100-case Stage 4 reliability evaluation is excluded from empirical evidence because the inspected script assigns failure counts and latency summaries rather than measuring 100 independent model executions.
+
+The earlier application verification comprises 11 chatbot checks and 13 production checks; a later rerun found one failing allergy-declaration expectation. Separately, eight benchmark-correction checks passed before the final v4 execution, including checkpoint persistence and simulated end-to-end report export. The targeted tests use synthetic food fixtures and temporary session stores. The existing suite includes a real-catalog sample and food-swap check. These checks evaluate defined software behavior, not population-level effectiveness or clinician acceptability.
+
+### 2.9 LASI real-profile computational evaluation
+
+The new evaluation uses LASI Wave 1 anthropometry, demographics and reported diagnoses [11]. The extraction summary reports 66,859 merged biomarker/individual records and 65,368 eligible records after age, anthropometric, BMI and diagnosis-completeness filters. These are archive-specific analytic counts, not the official total LASI recruitment count. A deterministic sample of 100 unique profiles contains 25 diabetes-only, 25 obesity-only, 25 CVD-only and 25 multimorbid profiles, with 52 male and 48 female profiles across 29 states/UTs. Eligibility includes ages 18–100, measured height 120–210 cm, weight 30–180 kg and BMI 14–55. Disease responses must have valid yes/no codes. Diabetes is self-reported; obesity strata use measured BMI at least 30; CVD combines the selected heart-disease and stroke items. National disease-distribution estimates are not inferred: the benchmark is deliberately disease- and sex-balanced and unweighted. The sampling frame of LASI principally concerns older adults and spouses, rather than all Indian adult age groups.
+
+The benchmark adapter computes energy from observed age, sex, height, weight and a coarse activity-category mapping. It invokes the production nutrient-bound function directly, assigns disease-routing values of 0.85 for positive status and 0.10 for negative status, and sets sodium/potassium baselines to 2800/2600 mg. Other unavailable nutrient baselines are rule-derived. These values are assumptions, not measured dietary intake or Stage 1 probabilities. This evaluates adapted Stage 2 bounds with Stage 3 and Stage 4; it does not execute the full Stage 2 counterfactual optimization or externally validate Stage 1.
+
+Stage 3 applies three dietary modes to each of the same 100 profiles, yielding 300 solves with two-second limits. The final conversational study, v4, uses 36 distinct participants: nine per disease stratum and 12 per dietary mode, with three participants in every mode-by-stratum cell. Each guarded variant is evaluated on 78 turns. A 12-participant subset contains one participant per cell and 24 turns. Participants are selected from profiles with an accepted starting plan; this conditions the conversational evaluation on initial feasibility. The same frozen participants, starting baskets and request sequences are retained across comparisons. The earlier diabetes-only and adaptive-prompt LASI experiments are retained as historical development runs, not pooled into the final results.
+
+The v4 Qwen prompt supplies the same complete-data food eligibility, all 30 active nutrient coefficients at round-trip precision, bounds, objective weights, cumulative restrictions and canonical post-checks. Six catalog entries with missing active values are excluded; prompt catalogs contain 37 foods for vegetarian mode and 43 for the other modes. Food selection costs are engineering parameters, not verified retail prices. The post-checks use 5% energy tolerance, protein 10–35%, carbohydrate 45–65% and fat 20–35% of energy, the recorded baseline sodium/(potassium+1) ratio, and both fiber checks. These are the implementation's acceptance rules, not a claim that every threshold is clinically validated.
+
+The assistant solves revisions under a two-second limit; a separate three-second oracle distinguishes feasible requests, reported proven infeasibility and unresolved search. Timeouts count as protocol failures. Protocol success includes valid proposals, justified refusals, grounded answers and exact restoration as applicable; it is reported separately from proposal production. Nutrient-answer checks use number proximity within 5% relative or 0.3 absolute tolerance and are not exhaustive semantic hallucination detection. The comparison tests a deterministic tool-backed assistant against a specified solver-free LLM configuration, not two otherwise identical language agents.
+
+The change-penalty study reports both 29 trajectory-level successful pairs and a restricted analysis of 25 successful pairs with identical preceding basket and recorded input restrictions. Restricting to successful pairs is a conditional analysis, not a randomized causal estimate. Exploratory 95% intervals use 1,000 participant/scenario-level bootstrap resamples with seed 42; paired comparisons resample the same scenario IDs. Whole-scenario Wilson bounds are also provided under a working independent-binomial model because all-success empirical bootstrap intervals can degenerate. These intervals do not support survey-weighted national inference.
+
+Actual GPU execution used an RTX 3050 with 4-bit NF4 Qwen 2.5 3B, model revision `aa8e72537993ba99e69dfaafa59ed015b17504d1`, greedy decoding and a 512-token output cap. Full prompts, raw outputs, validation certificates, input states, per-turn journals and completed-stage checkpoints are retained locally. Fourteen source/input hashes were unchanged across execution. Warm-model response timing excludes model loading and Qwen prompt construction; GPU work is synchronized. The final checkpointed run took 1,548.32 seconds including benchmark work. A prior attempt failed at report export; its incomplete summaries are archived separately and excluded from the measured final dataset.
 
 ## 3. Results
 
-### 3.1 Stage 1 Model Discrimination, Baseline Benchmarks, and Probability Recalibration
+### 3.1 Stage 1 temporal-holdout results
 
-Table 1 reports the comparative performance of BioNutriGPT Stage 1 against Standard Deep MLPs, Tabular Deep ResNets, Gradient-Boosted Trees, Random Forests, and Logistic Regression on the prospective temporal holdout ($N=7,046$, NHANES 2017–March 2020).
+The saved evaluation report gives the following unweighted results on 7,046 participants. Values are rounded to four decimal places.
 
-**Table 1: Prospective Temporal Holdout Discrimination and Brier Benchmarks ($N=7,046$)**
+| Outcome | AUROC | Average precision | Brier score |
+|---|---:|---:|---:|
+| Diabetes | 0.7999 | 0.4852 | 0.2051 |
+| Obesity | 0.7518 | 0.6831 | 0.2015 |
+| CVD | 0.8260 | 0.3940 | 0.1813 |
 
-| Clinical Condition | Model Architecture | Raw AUROC [95% CI] | Survey-Weighted AUROC [95% CI] | Raw PRAUC | Weighted PRAUC | Raw Brier | Weighted Brier |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Diabetes Mellitus** | **BioNutriGPT Stage 1 (Transformer+MoE)** | 0.7999 [0.787–0.812] | **0.8151 [0.795–0.833]** | 0.4852 | 0.4464 | 0.2051 | 0.1660 |
-| | Tabular Deep ResNet | 0.7944 [0.782–0.807] | 0.8116 [0.791–0.831] | 0.4851 | 0.4371 | 0.1871 | 0.1506 |
-| | Standard Deep MLP | 0.7931 [0.781–0.805] | 0.8080 [0.787–0.826] | 0.4843 | 0.4327 | 0.1989 | 0.1611 |
-| | Gradient-Boosted Trees | 0.8060 [0.794–0.818] | **0.8279 [0.810–0.844]** | 0.4908 | 0.4603 | 0.1418 | 0.1034 |
-| | Logistic Regression | 0.7900 [0.777–0.803] | 0.8080 [0.789–0.826] | 0.4705 | 0.4244 | 0.1923 | 0.1539 |
-| | Random Forest | 0.7843 [0.772–0.797] | 0.8024 [0.782–0.821] | 0.4800 | 0.4352 | 0.1462 | 0.1074 |
-| **Cardiovascular Disease** | **BioNutriGPT Stage 1 (Transformer+MoE)** | 0.8258 [0.813–0.840] | **0.8427 [0.820–0.863]** | 0.3954 | 0.3685 | 0.1814 | 0.1509 |
-| | Tabular Deep ResNet | 0.8198 [0.807–0.833] | 0.8384 [0.816–0.856] | 0.3807 | 0.3541 | 0.1953 | 0.1642 |
-| | Standard Deep MLP | 0.8184 [0.805–0.832] | 0.8361 [0.814–0.854] | 0.3776 | 0.3524 | 0.1970 | 0.1654 |
-| | Gradient-Boosted Trees | 0.8236 [0.810–0.837] | 0.8407 [0.821–0.859] | 0.3748 | 0.3449 | 0.0887 | 0.0748 |
-| | Logistic Regression | 0.8296 [0.817–0.842] | **0.8436 [0.824–0.862]** | 0.3855 | 0.3576 | 0.1774 | 0.1471 |
-| | Random Forest | 0.8046 [0.791–0.818] | 0.8202 [0.798–0.840] | 0.3662 | 0.3383 | 0.0898 | 0.0760 |
-| **Obesity** | **BioNutriGPT Stage 1 (Transformer+MoE)** | 0.7518 [0.739–0.764] | **0.7501 [0.734–0.766]** | 0.6831 | 0.6821 | 0.2015 | 0.2017 |
-| | Tabular Deep ResNet | 0.7504 [0.738–0.763] | 0.7485 [0.732–0.765] | 0.6795 | 0.6782 | 0.2048 | 0.2045 |
-| | Standard Deep MLP | 0.7481 [0.735–0.761] | 0.7460 [0.730–0.762] | 0.6761 | 0.6749 | 0.2073 | 0.2071 |
-| | Gradient-Boosted Trees | 0.7542 [0.742–0.766] | **0.7503 [0.734–0.766]** | 0.6835 | 0.6805 | 0.2014 | 0.2025 |
-| | Logistic Regression | 0.7453 [0.733–0.757] | 0.7471 [0.731–0.763] | 0.6738 | 0.6750 | 0.2028 | 0.2021 |
-| | Random Forest | 0.7305 [0.718–0.743] | 0.7328 [0.715–0.750] | 0.6548 | 0.6571 | 0.2131 | 0.2117 |
+The saved baseline report includes histogram gradient boosting with diabetes AUROC 0.8060 and logistic regression with CVD AUROC 0.8296 under unweighted evaluation. These results do not support an overall Transformer advantage. They also do not quantify the incremental value of including screening in the meal-planning workflow.
 
-*Key Findings:*
-1. **Transformer vs. Deep Neural Networks:** BioNutriGPT Stage 1 consistently outperformed both the Standard Deep MLP and Tabular ResNet across all three clinical endpoints. In diabetes screening, survey-weighted AUROC reached 0.8151 vs. 0.8080 (MLP) and 0.8116 (ResNet). In CVD, Stage 1 achieved 0.8427 vs. 0.8361 (MLP) and 0.8384 (ResNet). This confirms that modality-specific query pooling provides a genuine structural advantage over plain fully-connected layers by preventing dense feature entanglement.
-2. **Comparison with Tree Ensembles:** Gradient-Boosted Trees achieved the highest diabetes discrimination (0.8279 weighted AUROC), while Logistic Regression showed marginally higher CVD AUROC (0.8436 vs. 0.8427). BioNutriGPT is competitive with top tree ensembles while simultaneously providing multi-task representation sharing for downstream nutrient counterfactuals in Stage 2.
+### 3.2 Current catalog and implementation verification
 
-**Platt Probability Calibration Results:**
-As shown in Table 2, raw Stage 1 logits exhibited substantial overconfidence due to positive-class weighting. Applying univariate Platt scaling fitted on validation data resolved calibration drift on the temporal holdout.
+The evidence snapshot confirms the current 49-entry catalog and 30 active planning fields. Forty-three records have no declared active-field gaps before dietary-mode, allergy, dislike, or other preference filters. This is catalog completeness under the declared schema, not a 43-food feasibility guarantee for every patient.
 
-**Table 2: Stage 1 Probability Calibration Profile Before and After Platt Scaling ($N=7,046$)**
+The earlier repair report recorded 24 passing software checks: 11 conversational-repair checks and 13 production checks. The current LASI audit reran the 11 chatbot checks and found ten passes and one failing expectation; the full 24-check suite was not rerun. The new checks include allergy-state persistence, stale-proposal rejection, preference retention, non-mutating allergy questions, and prevention of unverified prose replacement. Frontend TypeScript checking also passed. No browser interaction study or independent expert review accompanies these checks.
 
-| Target Condition | Calibration State | Expected Calibration Error (ECE) | Calibration Slope | Calibration Intercept | Unweighted Brier |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| **Diabetes Mellitus** | Uncalibrated (Raw) | 0.2353 | 0.7904 | -1.4988 | 0.2051 |
-| | **Platt Calibrated** | **0.0543** (-76.9%) | **0.8124** | **-0.4079** | **0.1042** (-49.2%) |
-| **Cardiovascular Disease** | Uncalibrated (Raw) | 0.2452 | 0.8233 | -1.9580 | 0.1814 |
-| | **Platt Calibrated** | **0.0251** (-89.8%) | **0.9472** | **-0.1623** | **0.0739** (-59.3%) |
-| **Obesity** | Uncalibrated (Raw) | 0.0383 | 0.9420 | -0.1790 | 0.2015 |
-| | **Platt Calibrated** | **0.0534** | **1.0583** | **0.0461** | **0.2020** |
+### 3.3 Historical optimizer comparison: 29-entry catalog
 
-Platt calibration reduced Diabetes ECE by 76.9% (0.2353 to 0.0543) and CVD ECE by 89.8% (0.2452 to 0.0251), while bringing calibration slopes near the ideal value of 1.0 (0.9472 for CVD), rendering predicted probabilities suitable for clinical decision support.
+The saved comparison used 20 constructed cases, seven scored nutrient bounds, and shared food, constraint, and objective definitions. It predates the current strict 30-active-field acceptance policy and must not be interpreted as a current production acceptance study.
 
----
+| Method | Plate rules passed | All seven bounds satisfied | Integer plans | Median runtime |
+|---|---:|---:|---:|---:|
+| Fully relaxed LP | 45% | 35% | 0% | 6.8 ms |
+| Continuous portions with binary dish selection | 100% | 30% | 0% | 546.6 ms |
+| Integer MILP | 100% | 15% | 100% | 1,921.5 ms |
+| Prompt-only local Qwen 2.5 3B | 0% | 0% | 100% | 13,924.6 ms |
 
-### 3.2 Five-Paradigm Meal Optimization Benchmark ($N=50$ Clinical Archetypes)
+The integer model improved the whole-portion structural property but satisfied all seven scored bounds less often than the continuous-serving comparator. Integer output alone therefore did not establish a better overall diet. Reported monetary costs were based on unverified benchmark assumptions and are not interpreted as observed household expenditure. Practical acceptability was not measured.
 
-Table 3 summarizes the comparative evaluation of the five optimization paradigms across 50 clinically heterogeneous archetypes (15 Type 2 Diabetes, 15 Hypertension/CVD, 10 Obesity, and 10 Multi-Morbidity profiles).
+### 3.4 Historical conversational comparison: 31-entry catalog
 
-**Table 3: Multi-Paradigm Optimization Benchmark across 50 Clinical Archetypes**
+The saved 16-turn benchmark reported task completion in 15/16 turns for the guarded system and 1/16 for prompt-only Qwen. Recorded active-rule violations were 0/7 in each system; unsupported claims were 0/4 and 3/4, respectively. Safety/conflict handling used different denominators, 8/8 and 1/7, which prevents treating those percentages as a simple paired comparison.
 
-| Optimization Paradigm | Integer Serving Rate | Fractional Items / Plan (Mean ± SD) | Plate Category Compliance | Nutrient Boundary Violations / Plan | Mean $L_1$ Slack Magnitude | Mean Daily Basket Cost (INR) | Mean Solver Latency | Clinical Feasibility Status |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Continuous LP (Relaxed)** | 0.0% | 3.08 ± 0.59 | 0.0% | 0.0 ± 0.0 | 0.0 | ₹143.55 ± 10.13 | **4.57 ms** | **Uncookable** (produces 0.38 phulka, 0.24 katori dal) |
-| **Continuous LP + Rounding** | 100.0% | 0.0 ± 0.0 | **0.0%** | **2.64 ± 1.14** | 212.51 ± 97.45 | ₹140.56 ± 12.35 | 8.01 ms | **Unviable** (94% fail rate; eliminates essential dals/protein) |
-| **Continuous LP + Heuristic Repair** | 100.0% | 0.0 ± 0.0 | **0.0%** | **3.96 ± 1.00** | 397.02 ± 138.65 | ₹180.12 ± 15.42 | 8.27 ms | **Unsafe** (100% fail rate; severe sodium and calorie inflation) |
-| **Prompt-Only LLM (Qwen 2.5 3B)** | 100.0% | 0.0 ± 0.0 | 46.0% | **6.16 ± 1.05** | 2,087.27 ± 514.82 | ₹80.70 ± 19.34 | 855.70 ms | **Unviable** (severe underfilling; hallucinations) |
-| **BioNutriGPT Discrete MILP** | **100.0%** | **0.0 ± 0.0** | **100.0%** | **0.0 ± 0.0** | **0.0** | ₹155.93 ± 14.03 | **346.26 ms** | **100% Cookable & Safe** (exact integer katoris/rotis) |
+Turns were clustered within eight scenarios and generated from two base profiles. These observations are preliminary: low violation counts do not establish success when task completion is low, and zero observed failures in a small selected sample does not establish a zero failure rate. The evaluation preceded the latest allergy and state-persistence repairs, so its accuracy and latency figures are not assigned to the repaired system.
 
-*Empirical Analysis of Failures:*
-1. **The Fallacy of Continuous LP:** Relaxed continuous LP achieved minimal cost (₹143.55) and instantaneous solve time (4.57 ms), but 100% of plans contained uncookable fractional servings (mean 3.08 fractional dishes per plan), making it impossible to prepare in an Indian home kitchen.
-2. **Catastrophic Failure of Post-Hoc Rounding:** Attempting to round continuous LP solutions to the nearest whole integer caused balanced-plate compliance to drop to 0.0%. Pruning small fractions eliminated essential food groups entirely (e.g., dropping dal to 0 katoris), causing active dish count to collapse to 3.4 dishes. Furthermore, rounding introduced an average of 2.64 ± 1.14 hard nutrient boundary violations per plan (94.0% archetype failure rate).
-3. **Failure of Greedy Heuristic Repair:** Implementing post-hoc greedy heuristic repair (adding dishes to satisfy category minimums) produced even worse degradation: boundary violations increased to 3.96 ± 1.00 per plan (100.0% failure rate) and mean $L_1$ slack ballooned to 397.02. This occurs because discrete combinatorial constraints in multi-nutrient space create non-convex trade-offs: greedily adding a dal to satisfy protein bounds drastically overshoots sodium and caloric limits.
-4. **Failure of Prompt-Only LLMs:** Unconstrained Qwen 2.5 3B produced whole numbers but violated 6.16 ± 1.05 nutrient bounds per plan with massive $L_1$ slack (2,087.27). The lower cost (₹80.70) reflects dangerous starvation underfilling (providing ~900 kcal against an 1,800 kcal target).
-5. **MILP Optimality:** BioNutriGPT Discrete MILP was the *only* paradigm that achieved 100.0% integer servings, 100.0% category compliance, zero boundary violations, and zero $L_1$ slack, executing in a mean latency of 346.26 ms (median 268.45 ms). This rigorously demonstrates that branch-and-cut MILP is mathematically indispensable for reliable meal synthesis.
+### 3.5 LASI profile evaluation and audited interpretation
 
----
+Case-level accepted flags and failure counts reconcile with the saved 300-solve summary. The same 100 unique people were evaluated repeatedly across modes.
 
-### 3.3 Stage 4 Real Local GPU Execution Profile and Safety Invariant Audits
+| Dietary mode | Accepted / 100 | Reported infeasible | Timeout without valid plan | Median solve time |
+|---|---:|---:|---:|---:|
+| Vegetarian | 91 | 9 | 0 | 2003.1 ms |
+| Combined vegetarian and non-vegetarian | 96 | 1 | 3 | 2005.6 ms |
+| Non-vegetarian | 98 | 0 | 2 | 2006.1 ms |
 
-To rigorously evaluate the reliability of the language model backend, we assessed the local **Qwen 2.5 3B Instruct NF4** model on an **NVIDIA GeForce RTX 3050 Laptop GPU** strictly *separately* from the Stage 3 mathematical optimizer. The language model receives zero credit for nutritional accuracy or caloric matching, which is enforced deterministically by Stage 3. Table 4A presents the empirical failure rates of the raw unconstrained model compared against the BioNutriGPT Guarded AST Pipeline across the frozen 100-case clinical benchmark. Table 4B outlines the local edge hardware resource and latency profile.
+Overall, 285/300 mode-specific solves were accepted. This is not a population-weighted national acceptance rate. The vegetarian low-energy subgroup had 21/27 accepted plans below 1500 kcal, compared with 27/27 in each other mode. Catalog or rule limitations at lower energy therefore warrant investigation. Accepted flags come from the production solver path; saved case rows do not contain full baskets and nutrient certificates for independent numerical replay.
 
-**Table 4A: Real LLM Backend Reliability Benchmark (Raw Unconstrained LLM vs. Guarded AST Pipeline)**
+The corrected full guarded run passed 76/78 turns (97.4%). Of 42 revision requests, 29 produced validated proposals, 11 received justified refusals and two ended in timeout-related failure; one of these was an oracle-feasible request. Valid proposals were produced for 29/30 oracle-feasible revisions. No invalid proposals were recorded. Thirty-four of 36 scenarios passed every turn. The turn-weighted scenario-bootstrap 95% interval for protocol success was 93.67–100%; whole-scenario success was 34/36 with Wilson bounds of 81.86–98.46% under the stated working model.
 
-| Failure Mode / Audit Metric | Raw LLM Baseline (Qwen 2.5 3B NF4) | Guarded Stage 4 Pipeline (AST Circuit-Breaker) | Clinical Risk & Invariant Enforcement |
-| :--- | :---: | :---: | :--- |
-| **JSON Parse Success Rate** | **33.3%** | **100.0%** | Incomplete syntax or token truncation; repaired by AST schema canonicalization |
-| **Food Hallucination Rate (Invented Dishes)** | **0.0%** (Greedy) | **0.0% (Zero Hallucination)** | Invariant 1 enforced: strictly forbids dishes outside Stage 3 solved basket ($\mathcal{S}_{\text{gen}} \equiv \mathcal{S}_{\text{opt}}$) |
-| **Quantity Modification Rate (Altered Servings)** | **100.0%** | **0.0% (Exact Match)** | Invariant 2 enforced: raw LLM routinely dropped/modified portion counts ($\sum q_{is} \neq q_i^*$); AST ensures exact integer serving preservation |
-| **Invalid / Unknown Food Identifiers** | **66.7%** | **0.0% (Zero Invalid)** | Non-existent or corrupted keys in raw output; filtered and validated against ICMR/IFCT catalog |
-| **Unsupported Nutritional Claims in Prose** | **0.0%** | **0.0% (Zero Calculation Drift)** | Invariant 3 enforced: prose instructions strictly forbid numerical caloric/macro calculations |
-| **Repeated Greedy Deterministic Consistency** | **100.0%** | **100.0%** | Identical token sequences across greedy decoding repetitions ($T=0.0$) |
-| **Fault-Injection Fallback Intercept Rate** | *N/A (Unguarded Crashes)* | **100.0% (Zero Crashes)** | Injected hallucinations, quantity tampering, broken JSON, and calorie claims intercepted with safe fallback |
-| **Final AST Clinical Safety Invariants Pass** | **FAIL (0.0% Compliant)** | **100.0% PASS** | Raw LLM violates clinical invariants; Guarded AST circuit-breaker achieves 100.0% verified compliance |
+| Matched v4 endpoint | Guarded assistant | Prompt-only Qwen 2.5 3B |
+|---|---:|---:|
+| Protocol passes | 24/24 | 2/24 |
+| Valid proposals on oracle-feasible requests | 9/9 | 0/9 |
+| Invalid revision proposals | 0 | 8 |
+| Targeted nutrient-answer checks passed | 3/3 | 2/3 |
+| Mean response time | 664.14 ms | 46,111.91 ms |
 
-*Note: In the raw LLM baseline, when the model was asked to allocate dishes across meals, it altered serving counts in 100% of tested cases (e.g., allocating 1 roti instead of the prescribed 2, or omitting prescribed fruit portions). The Stage 4 AST circuit-breaker detected all quantity discrepancies, repaired the allocation from the immutable Stage 3 basket, and achieved 100.0% compliance.*
+Qwen's two successful turns were targeted nutrient answers; they were not valid meal revisions. Its 22/24 parseable outputs and absence of unknown food IDs did not establish nutritional compliance. Conversely, the guarded 24/24 protocol rate includes three justified refusals, rather than 12 completed swaps. All 12 guarded scenarios passed every turn; the empirical bootstrap interval is degenerate at 100%, whereas the working whole-scenario Wilson lower bound is 75.75%. The comparison supports the tested system/configuration and tasks, not a general ranking of all LLMs.
 
-**Table 4B: Local Edge Hardware Resource Profile (NVIDIA RTX 3050 Laptop GPU, NF4 4-bit)**
+For the 29 paired successful trajectories, mean serving change was 8.34 with the penalty and 16.76 without it, a 50.21% descriptive reduction. Four later pairs began from different recorded states after earlier outputs diverged. In the 25 identical-input-state pairs, means were 7.72 and 16.56: 53.38% fewer serving changes, with a mean paired difference of 8.84 servings and scenario-bootstrap 95% interval 6.72–11.12. This is evidence of reduced numerical disruption within the selected successful pairs; acceptability and clinical outcomes were not measured.
 
-| Evaluation Parameter | Measured Value / Metric | Clinical Interpretation / Hardware Suitability |
-| :--- | :--- | :--- |
-| **Target Hardware Platform** | NVIDIA GeForce RTX 3050 Laptop GPU | Consumer-grade edge laptop workstation (4,096 MiB GDDR6 VRAM, CUDA 13.5) |
-| **Quantization Architecture** | BitsAndBytes 4-Bit NF4 (`torch.float16` compute) | Double quantization enabled; zero CPU offloading required |
-| **Active VRAM Allocated** | **1,971.4 MiB** (1.92 GB) | Minimal memory footprint; allows concurrent hospital EMR execution |
-| **Peak VRAM Reserved** | **2,284.0 MiB** (2.23 GB) | Comfortably beneath 4 GB hardware ceiling (57% total utilization) |
-| **Throughput (AC Wall Power)** | **16.14 tokens / second** | Responsive local streaming generation (22.5 s per concise schedule) |
-| **Throughput (Battery Power-Saving)** | **2.20 tokens / second** | Hardware-throttled edge execution under 5W–8W power state (89.0–106.4 s per case) |
-| **Data Privacy & Governance** | **100% Air-Gapped Local Inference** | Zero patient data transmitted to external proprietary cloud APIs (HIPAA/DISHA compliant) |
+All 24 saved Qwen prompts were checked for eligibility parity and canonical rules; journals and four completed-stage checkpoints match the final report. Frozen request equality, participant uniqueness, disease balance and source hashes were verified. The final report and aggregate verification summary are the authoritative v4 evidence; historical summaries are not combined with them.
 
-The empirical evaluation proves that raw generative LLMs cannot be granted autonomous meal scheduling or arithmetic authority, as unconstrained generation exhibits a 100% serving quantity modification rate. By sandwiching the LLM within a deterministic AST circuit-breaker and discrete MILP solver, BioNutriGPT delivers a mathematically verified, zero-hallucination clinical decision support architecture executable entirely on commodity edge laptops.
-
----
+The earlier audit reran the 11 targeted chatbot regression checks: ten passed and one failed because the current parser records an explicit allergy statement ending in a question mark, whereas the earlier test expects no state change. This contract discrepancy must be resolved; the earlier 24-check pass is historical verification, not proof that the current source passes all checks.
 
 ## 4. Discussion
 
-### 4.1 Principal Findings and Empirical Justifications
+### 4.1 Interpretation and scientific contribution
 
-This study resolves the primary methodological and architectural challenges facing integrated clinical nutrition informatics:
-1. **Modality-Specific Tabular Modeling vs. Deep MLPs:** Our empirical benchmarks on 7,046 prospective temporal holdouts show that BioNutriGPT Stage 1 achieves superior discrimination over Standard Deep MLPs and Tabular ResNets. Tabular health datasets contain radically distinct feature dynamics: 5 blood lipid markers carry high signal-to-noise ratios, whereas 46 dietary recall features are noisy and collinear. Standard MLPs concatenate these into dense layers, leading to gradient dominance and feature entanglement. Stage 1’s learned modality queries isolate intra-modality correlations before top-2 MoE routing, preserving fine-grained biological signals.
-2. **Clinical Necessity of Platt Scaling:** Multi-task neural networks trained with positive class weighting produce distorted posterior probabilities. Our implementation of univariate logistic calibration reduced Diabetes ECE by 76.9% and CVD ECE by 89.8%, proving that post-hoc calibration is essential before tabular deep learning models can be utilized for clinical screening.
-3. **The Mathematical Necessity of Branch-and-Cut MILP:** Our 50-archetype 5-paradigm benchmark definitively demonstrates why heuristic and continuous approximations fail. Discrete household cooking units cannot be achieved by rounding continuous LP outputs without destroying nutrient bounds (94% failure rate) or eliminating essential food categories. Branch-and-cut MILP is mathematically necessary to navigate non-convex multi-nutrient boundaries simultaneously.
-4. **Guarding Generative LLMs with AST Invariants:** Large language models cannot be trusted with clinical arithmetic or autonomous ingredient selection. By restricting the LLM to explanatory prose and chronological meal slotting while enforcing deterministic AST invariants, BioNutriGPT achieves a zero-hallucination guarantee.
+The current contribution is an inspectable integration of established methods around a controlled revision process. Its distinctive evaluation target is whether restrictions and numerical requirements survive repeated conversational changes, acceptance, and rollback. The separation of screening evidence, food provenance, solver acceptance, and conversational state makes otherwise hidden failures observable.
 
-### 4.2 Limitations and Future Directions
+The results also show why implementation should not be equated with superiority. The Transformer has no established overall advantage over simpler models. Integer portions improve one structural property but can reduce feasibility. An LLM can return integer quantities while still failing nutritional and plate checks. A guard can prevent an invalid plan from being accepted while failing to complete the user's request. A useful evaluation must report all these outcomes together.
 
-1. **Temporal vs. External Geographic Validation:** While the NHANES 2017–March 2020 cohort provides a rigorous temporal prospective holdout, it originates from the same U.S. national survey framework. External geographical validation on South Asian cohorts (such as ICMR-INDIAB or UK Biobank South Asian sub-cohorts) is required to evaluate transferability.
-2. **Cross-Sectional Screening vs. Causal Interventions:** Stage 1 predicts prevalent cardiometabolic status. Stage 2 nutrient counterfactuals simulate physiological bounds but do not represent proven causal trial effects. Prospective randomized trials are necessary to verify long-term glycemic and lipid improvements.
-3. **Execution of the Pre-Registered IDA Review:** While we have established the formal triple-blinded protocol and sample size calculations, the physical multi-center trial with accredited Indian Dietetic Association clinicians represents the immediate translational milestone.
+### 4.2 Limitations
 
----
+First, screening was developed in a U.S. survey population. Indian recipes do not transfer the prediction model's validity to Indian users. Laboratory-assisted screening is also a different use case from a questionnaire-only tool.
+
+Second, some labels are partially observed, CVD is self-reported, and the obesity label is based on measured BMI. If weight and height are already available to the application, direct BMI assessment is an essential comparator for the obesity output. The usefulness of predicting a readily measurable outcome needs a specific justification.
+
+Third, the Stage 2 engine combines reference intervals with project policies. Satisfaction of those policies is not evidence that the prescribed diet is appropriate for a person with multimorbidity, renal impairment, pregnancy, medication interactions, or unrecorded supplements.
+
+Fourth, food composition varies by ingredient, cooking method, portion size, and provenance. Some records use proxies and calculated nutrient values. Missing fields and incomplete allergen metadata limit the scope of accepted plans.
+
+Fifth, the historical benchmark catalogs differ from the current catalog and acceptance policy. The final v4 run repairs the earlier information-parity and timeout-scoring problems, but remains a small, selected, English-language scripted benchmark using one quantized LLM configuration and initially feasible profiles. The earlier two-profile conversational evaluation is too narrow to support claims across user populations or language styles. Daily food locks also do not prove meal-slot preservation.
+
+Finally, the LASI study is Indian real-profile computational testing, not Indian prediction validation or a clinical intervention. No completed dietitian evaluation, prospective intervention or longitudinal outcome study is established by the reviewed artifacts. The existing dietitian protocol is future work; no collaboration, preregistration, blinding, or participant recruitment is claimed without supporting records.
+
+### 4.3 Next evaluation
+
+The v4 study now covers all four disease strata and records frozen inputs, full logs and disaggregated feasibility outcomes. The next study should use an independently reserved dialogue set, broaden paraphrases and clinical scenarios, and add stronger tool-using language-model comparators where such claims are intended. It should compare matched continuous and integer optimizers under the current active rules, then evaluate repeated conversational requests using the same profiles and tools. Outcomes should include joint task-and-constraint success, refusal correctness, preference retention, unsupported claims, change magnitude, and latency. Scenario-level uncertainty should account for multiple turns from the same scenario.
+
+The revision change-penalty ablation is completed in v4. Additional ablations should remove persistent memory and independent acceptance validation separately. A language-model orchestration variant should be assessed separately from the deterministic intent router. Missing-data, solver-timeout, ambiguous-food, allergy-update, stale-proposal, and rollback cases should be represented. Independent expert ratings would add evidence about portion realism and acceptability beyond integer-count proxies.
 
 ## 5. Conclusion
 
-BioNutriGPT establishes an open, auditable, and mathematically rigorous pipeline bridging population-level cardiometabolic risk screening with culturally tailored dietary synthesis. By demonstrating the superiority of modality-aware attention over deep neural networks, proving the indispensability of branch-and-cut MILP over continuous heuristic rounding, and verifying real-time edge-GPU execution under strict AST clinical invariants, this work provides a reproducible computational foundation for digital lifestyle medicine.
+BioNutriGPT implements a versioned, tool-backed meal-planning workflow that preserves a defined boundary between conversation and numerical acceptance. Current evidence supports implementation feasibility and identifies important evaluation limitations. The LASI pilot strengthens Indian profile relevance and provides preliminary evidence for less disruptive revisions. The corrected comparison and conditional same-state ablation strengthen the engineering evidence. Independent dialogue testing, stronger comparators, repaired Stage 1 analyses and a reconciled application regression suite remain necessary for broader claims.
 
----
+## Declarations
+
+**Data and code availability:** NHANES and food-composition source links are listed below. The accompanying evidence snapshot records local artifact hashes, feature names, cohort counts, and catalog version. A permanent public repository URL and release identifier must be supplied before submission, with source-specific redistribution terms checked.
+
+**Ethics and participation:** This work uses secondary NHANES data and computational scenarios. No new participant recruitment or completed dietitian review is represented here. Institutional requirements and any applicable ethics determination must be confirmed by the authors before submission.
+
+**Patient and public involvement:** No completed involvement activity is documented in the reviewed evidence.
+
+**Authorship, funding, competing interests, and contributions:** These declarations require confirmation from the authors; no identities, funding arrangements, or disclosures are inferred from local files.
 
 ## References
 
-1. Misra A, Ramchandran A, Jayawardena R, Shrivastava U, Snehalatha C. Diabetes in South Asians. *The Lancet Diabetes & Endocrinology*. 2014;2(11):840–843.
-2. Anjana RM, Unnikrishnan R, Deepa M, et al. Metabolic non-communicable disease health report of India: the ICMR-INDIAB national cross-sectional study. *The Lancet Diabetes & Endocrinology*. 2023;11(7):474–489.
-3. Collins GS, Moons KGM, Dhiman P, et al. TRIPOD+AI statement: updated guidance for reporting clinical prediction models that use regression or machine learning methods. *BMJ*. 2024;385:e078378.
-4. Longvah T, Ananthan R, Bhaskarachary K, Venkaiah K. *Indian Food Composition Tables 2017*. National Institute of Nutrition, Indian Council of Medical Research; 2017.
-5. Vickers AJ, Elkin EB. Decision curve analysis: a novel method for evaluating prediction models. *Medical Decision Making*. 2006;26(6):565–574.
-6. Yang Z, Khatibi E, Nagesh N, et al. ChatDiet: empowering personalized nutrition-oriented food recommender chatbots through an LLM-augmented framework. *Smart Health*. 2024;32:100465.
-7. Singhal K, Azizi S, Tu T, et al. Large language models encode clinical knowledge. *Nature*. 2023;620:172–180.
-8. Donkor L, Essien E, Affrifah NS. A systematic review of linear programming techniques as applied to diet optimisation and opportunities for improvement. *Journal of Optimization*. 2023;2023:1271115.
-9. Ferguson EL, Darmon N, Briend A, Premachandra J. Food-based dietary guidelines can be developed and validated using linear programming analysis. *Journal of Nutrition*. 2004;134(4):951–957.
-10. Gerdessen JC, de Vries JHM. Diet models with linear programming: to round or not to round? *American Journal of Clinical Nutrition*. 2015;101(4):891–892.
-11. Gorishniy Y, Rubachev I, Khrulkov V, Babenko A. Revisiting deep learning models for tabular data. *Advances in Neural Information Processing Systems (NeurIPS)*. 2021;34:18932–18943.
-12. Shwartz-Ziv R, Armon A. Tabular data: Deep learning is not all you need. *Information Fusion*. 2022;81:84–90.
-13. Moons KGM, Altman DG, Reitsma JB, et al. Transparent Reporting of a multivariable prediction model for Individual Prognosis Or Diagnosis (TRIPOD): explanation and elaboration. *Annals of Internal Medicine*. 2015;162(1):W1–W73.
-14. National Center for Health Statistics. *NHANES Analytic Guidance and Brief Overview for the 2017–March 2020 Pre-Pandemic Data Files*. Centers for Disease Control and Prevention; 2021.
-15. National Center for Health Statistics. *NHANES 2017–March 2020 Demographic Variables and Sample Weights: Documentation and Codebook*. CDC; 2021.
-16. American Diabetes Association Professional Practice Committee. Standards of Care in Diabetes—2024. *Diabetes Care*. 2024;47(Suppl. 1):S1–S343.
-17. Arnett DK, Blumenthal RS, Albert MA, et al. 2019 ACC/AHA guideline on the primary prevention of cardiovascular disease. *Circulation*. 2019;140(11):e596–e646.
-18. Indian Council of Medical Research - National Institute of Nutrition. *Nutrient Requirements for Indians: Recommended Dietary Allowances (RDA) and Estimated Average Requirements (EAR)*. ICMR-NIN; 2020.
-19. Huangfu Q, Hall JAJ. Parallelizing the dual revised simplex method. *Mathematical Programming Computation*. 2018;10(1):119–142.
+1. Yang Z, et al. ChatDiet: Empowering personalized nutrition-oriented food recommender chatbots through an LLM-augmented framework. *Smart Health*. 2024;32:100465. [Article](https://doi.org/10.1016/j.smhl.2024.100465); [author manuscript](https://arxiv.org/abs/2403.00781).
+2. Aguilera Moreno F. Mixed Integer Goal Programming for Personalized Meal Optimization with User-Defined Serving Granularity. 2026. Preprint; peer-review status is not assumed. [arXiv record](https://arxiv.org/abs/2605.13849).
+3. Gorishniy Y, Rubachev I, Khrulkov V, Babenko A. Revisiting Deep Learning Models for Tabular Data. NeurIPS. 2021. [Paper](https://arxiv.org/abs/2106.11959).
+4. Collins GS, et al. TRIPOD+AI statement: updated guidance for reporting clinical prediction models that use regression or machine learning methods. *BMJ*. 2024;385:e078378. [Statement](https://www.bmj.com/content/385/bmj-2023-078378).
+5. CDC/NCHS. NHANES questionnaires, datasets, and related documentation: 2017–2020. [Survey documentation](https://wwwn.cdc.gov/nchs/nhanes/continuousnhanes/default.aspx?Cycle=2017-2020).
+6. ICMR–National Institute of Nutrition. Dietary Guidelines for Indians. 2024. [Guidelines](https://www.nin.res.in/dietaryguidelines/pdfjs/locale/DGI24thJune2024fin.pdf).
+7. Development of an Indian Food Composition Database. *Current Developments in Nutrition*. 2024;103790. [Article](https://pmc.ncbi.nlm.nih.gov/articles/PMC11277795/).
+8. USDA Agricultural Research Service. FoodData Central: data documentation. [Documentation](https://fdc.nal.usda.gov/data-documentation/).
+9. Public Health England. McCance and Widdowson's Composition of Foods Integrated Dataset. 2021. [Dataset and user guide](https://www.gov.uk/government/publications/composition-of-foods-integrated-dataset-cofid).
+10. Gallifant J, et al. The TRIPOD-LLM reporting guideline for studies using large language models. *Nature Medicine*. 2025;31:60–69. [Guideline](https://www.nature.com/articles/s41591-024-03425-5).
+
+11. Cohort Profile The Longitudinal Ageing Study in India LASI. [Cohort description](https://pmc.ncbi.nlm.nih.gov/articles/PMC9365624/); [official LASI data information](https://iipsindia.ac.in/content/LASI-data).

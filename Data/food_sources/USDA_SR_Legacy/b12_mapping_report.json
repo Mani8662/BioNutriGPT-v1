@@ -1,0 +1,2757 @@
+{
+  "source_url": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip",
+  "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+  "nutrient_id": 1178,
+  "matched": [
+    {
+      "food_id": "ifct_c033",
+      "name": "Spinach",
+      "status": "borrowed_generic_food",
+      "fdc_id": 168462,
+      "source_description": "Spinach, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168462/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1362475",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 120.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e001",
+      "name": "Apple, big",
+      "status": "borrowed_generic_food",
+      "fdc_id": 171688,
+      "source_description": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1631370",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e002",
+      "name": "Apple, green",
+      "status": "borrowed_generic_food",
+      "fdc_id": 171688,
+      "source_description": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1631370",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e003",
+      "name": "Apple, small",
+      "status": "borrowed_generic_food",
+      "fdc_id": 171688,
+      "source_description": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1631370",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e004",
+      "name": "Apple, small, Kashmir",
+      "status": "borrowed_generic_food",
+      "fdc_id": 171688,
+      "source_description": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1631370",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e009",
+      "name": "Banana, ripe, montham",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173944,
+      "source_description": "Bananas, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1817905",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e010",
+      "name": "Banana, ripe, poovam",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173944,
+      "source_description": "Bananas, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1817905",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e011",
+      "name": "Banana, ripe, red",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173944,
+      "source_description": "Bananas, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1817905",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e012",
+      "name": "Banana, ripe, robusta",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173944,
+      "source_description": "Bananas, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1817905",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e028",
+      "name": "Guava, white flesh",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173044,
+      "source_description": "Guavas, common, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173044/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1744519",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e029",
+      "name": "Guava, pink flesh",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173044,
+      "source_description": "Guavas, common, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173044/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1744519",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e047",
+      "name": "Orange, pulp",
+      "status": "borrowed_generic_food",
+      "fdc_id": 169097,
+      "source_description": "Oranges, raw, all commercial varieties",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169097/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1413028",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_e049",
+      "name": "Papaya, ripe",
+      "status": "borrowed_generic_food",
+      "fdc_id": 169926,
+      "source_description": "Papayas, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169926/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1480461",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "ifct_l002",
+      "name": "Milk, whole, Cow",
+      "status": "borrowed_generic_food",
+      "fdc_id": 172217,
+      "source_description": "Milk, whole, 3.25% milkfat, without added vitamin A and vitamin D",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172217/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1677599",
+      "source_derivation_id": "1",
+      "source_data_points": "14",
+      "ug_per_100g": 0.45,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.675
+    },
+    {
+      "food_id": "ifct_m001",
+      "name": "Egg, poultry, whole, raw",
+      "status": "borrowed_generic_food",
+      "fdc_id": 171287,
+      "source_description": "Egg, whole, raw, fresh",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1597653",
+      "source_derivation_id": "1",
+      "source_data_points": "6",
+      "ug_per_100g": 0.89,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 1.335
+    },
+    {
+      "food_id": "ifct_m004",
+      "name": "Egg, poultry, whole, boiled",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173424,
+      "source_description": "Egg, whole, cooked, hard-boiled",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1777881",
+      "source_derivation_id": "",
+      "source_data_points": "14",
+      "ug_per_100g": 1.11,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 1.665
+    },
+    {
+      "food_id": "ifct_n005",
+      "name": "Poultry, chicken, liver",
+      "status": "borrowed_generic_food",
+      "fdc_id": 171060,
+      "source_description": "Chicken, liver, all classes, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171060/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1576572",
+      "source_derivation_id": "1",
+      "source_data_points": "4",
+      "ug_per_100g": 16.58,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 24.87
+    },
+    {
+      "food_id": "ifct_o021",
+      "name": "Sheep, liver",
+      "status": "borrowed_generic_food",
+      "fdc_id": 172531,
+      "source_description": "Lamb, variety meats and by-products, liver, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172531/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1702179",
+      "source_derivation_id": "",
+      "source_data_points": "19",
+      "ug_per_100g": 90.05,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 135.075
+    },
+    {
+      "food_id": "ifct_o032",
+      "name": "Beef, liver",
+      "status": "borrowed_generic_food",
+      "fdc_id": 169451,
+      "source_description": "Beef, variety meats and by-products, liver, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169451/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1443299",
+      "source_derivation_id": "1",
+      "source_data_points": "4",
+      "ug_per_100g": 59.3,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 88.95
+    },
+    {
+      "food_id": "ifct_o042",
+      "name": "Calf, liver",
+      "status": "borrowed_generic_food",
+      "fdc_id": 172534,
+      "source_description": "Veal, variety meats and by-products, liver, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172534/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1702420",
+      "source_derivation_id": "1",
+      "source_data_points": "2",
+      "ug_per_100g": 59.85,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 89.775
+    },
+    {
+      "food_id": "ifct_o053",
+      "name": "Pork, liver",
+      "status": "borrowed_generic_food",
+      "fdc_id": 167862,
+      "source_description": "Pork, fresh, variety meats and by-products, liver, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/167862/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1311513",
+      "source_derivation_id": "",
+      "source_data_points": "5",
+      "ug_per_100g": 26.0,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 39.0
+    },
+    {
+      "food_id": "recipe_brown_rice_cooked",
+      "name": "Cooked Brown Rice",
+      "status": "borrowed_generic_food",
+      "fdc_id": 169704,
+      "source_description": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169704/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1462935",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "recipe_steamed_rice",
+      "name": "Steamed White Rice",
+      "status": "borrowed_generic_food",
+      "fdc_id": 168878,
+      "source_description": "Rice, white, long-grain, regular, enriched, cooked",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1395803",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "recipe_skim_curd",
+      "name": "Skim-Milk Curd (Dahi)",
+      "status": "borrowed_generic_food",
+      "fdc_id": 170887,
+      "source_description": "Yogurt, plain, skim milk",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170887/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1562751",
+      "source_derivation_id": "",
+      "source_data_points": "0",
+      "ug_per_100g": 0.61,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.915
+    },
+    {
+      "food_id": "recipe_lowfat_curd",
+      "name": "Low-Fat Curd",
+      "status": "borrowed_generic_food",
+      "fdc_id": 170886,
+      "source_description": "Yogurt, plain, low fat",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170886/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1562704",
+      "source_derivation_id": "",
+      "source_data_points": "8",
+      "ug_per_100g": 0.56,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.84
+    },
+    {
+      "food_id": "recipe_fresh_guava",
+      "name": "Fresh Indian Guava",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173044,
+      "source_description": "Guavas, common, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173044/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1744519",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "recipe_fresh_papaya",
+      "name": "Fresh Ripe Papaya",
+      "status": "borrowed_generic_food",
+      "fdc_id": 169926,
+      "source_description": "Papayas, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169926/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1480461",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 140.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "recipe_fresh_apple",
+      "name": "Apple with Skin",
+      "status": "borrowed_generic_food",
+      "fdc_id": 171688,
+      "source_description": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1631370",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 150.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "recipe_fresh_orange",
+      "name": "Fresh Nagpur Orange",
+      "status": "borrowed_generic_food",
+      "fdc_id": 169097,
+      "source_description": "Oranges, raw, all commercial varieties",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169097/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1413028",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 130.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "recipe_fresh_banana",
+      "name": "Small Robusta Banana",
+      "status": "borrowed_generic_food",
+      "fdc_id": 173944,
+      "source_description": "Bananas, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1817905",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 100.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    },
+    {
+      "food_id": "recipe_pomegranate_arils",
+      "name": "Fresh Pomegranate Arils",
+      "status": "borrowed_generic_food",
+      "fdc_id": 169134,
+      "source_description": "Pomegranates, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169134/nutrients",
+      "source_archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "nutrient_id": 1178,
+      "source_food_nutrient_id": "1416172",
+      "source_derivation_id": "68",
+      "source_data_points": "0",
+      "ug_per_100g": 0.0,
+      "serving_weight_g": 85.0,
+      "method": "USDA proxy per 100 g multiplied by catalog serving weight / 100; not an Indian assay",
+      "ug_per_serving": 0.0
+    }
+  ],
+  "unknown": [
+    {
+      "food_id": "ifct_a001",
+      "name": "Amaranth seed, black"
+    },
+    {
+      "food_id": "ifct_a002",
+      "name": "Amaranth seed, pale brown"
+    },
+    {
+      "food_id": "ifct_a003",
+      "name": "Bajra"
+    },
+    {
+      "food_id": "ifct_a004",
+      "name": "Barley"
+    },
+    {
+      "food_id": "ifct_a005",
+      "name": "Jowar"
+    },
+    {
+      "food_id": "ifct_a006",
+      "name": "Maize, dry"
+    },
+    {
+      "food_id": "ifct_a007",
+      "name": "Maize, tender, local"
+    },
+    {
+      "food_id": "ifct_a008",
+      "name": "Maize, tender, sweet"
+    },
+    {
+      "food_id": "ifct_a009",
+      "name": "Quinoa"
+    },
+    {
+      "food_id": "ifct_a010",
+      "name": "Ragi"
+    },
+    {
+      "food_id": "ifct_a011",
+      "name": "Rice flakes"
+    },
+    {
+      "food_id": "ifct_a012",
+      "name": "Rice puffed"
+    },
+    {
+      "food_id": "ifct_a013",
+      "name": "Rice, raw, brown"
+    },
+    {
+      "food_id": "ifct_a014",
+      "name": "Rice, parboiled, milled"
+    },
+    {
+      "food_id": "ifct_a015",
+      "name": "Rice, raw, milled"
+    },
+    {
+      "food_id": "ifct_a016",
+      "name": "Samai"
+    },
+    {
+      "food_id": "ifct_a017",
+      "name": "Varagu"
+    },
+    {
+      "food_id": "ifct_a018",
+      "name": "Wheat flour, refined"
+    },
+    {
+      "food_id": "ifct_a019",
+      "name": "Wheat flour, atta"
+    },
+    {
+      "food_id": "ifct_a020",
+      "name": "Wheat, whole"
+    },
+    {
+      "food_id": "ifct_a021",
+      "name": "Wheat, bulgur"
+    },
+    {
+      "food_id": "ifct_a022",
+      "name": "Wheat, semolina"
+    },
+    {
+      "food_id": "ifct_a023",
+      "name": "Wheat, vermicelli"
+    },
+    {
+      "food_id": "ifct_a024",
+      "name": "Wheat, vermicelli, roasted"
+    },
+    {
+      "food_id": "ifct_b001",
+      "name": "Bengal gram, dal"
+    },
+    {
+      "food_id": "ifct_b002",
+      "name": "Bengal gram, whole"
+    },
+    {
+      "food_id": "ifct_b003",
+      "name": "Black gram, dal"
+    },
+    {
+      "food_id": "ifct_b004",
+      "name": "Black gram, whole"
+    },
+    {
+      "food_id": "ifct_b005",
+      "name": "Cowpea, brown"
+    },
+    {
+      "food_id": "ifct_b006",
+      "name": "Cowpea, white"
+    },
+    {
+      "food_id": "ifct_b007",
+      "name": "Field bean, black"
+    },
+    {
+      "food_id": "ifct_b008",
+      "name": "Field bean, brown"
+    },
+    {
+      "food_id": "ifct_b009",
+      "name": "Field bean, white"
+    },
+    {
+      "food_id": "ifct_b010",
+      "name": "Green gram, dal"
+    },
+    {
+      "food_id": "ifct_b011",
+      "name": "Green gram, whole"
+    },
+    {
+      "food_id": "ifct_b012",
+      "name": "Horse gram, whole"
+    },
+    {
+      "food_id": "ifct_b013",
+      "name": "Lentil dal"
+    },
+    {
+      "food_id": "ifct_b014",
+      "name": "Lentil whole, brown"
+    },
+    {
+      "food_id": "ifct_b015",
+      "name": "Lentil whole, yellowish"
+    },
+    {
+      "food_id": "ifct_b016",
+      "name": "Moth bean"
+    },
+    {
+      "food_id": "ifct_b017",
+      "name": "Peas, dry"
+    },
+    {
+      "food_id": "ifct_b018",
+      "name": "Rajmah, black"
+    },
+    {
+      "food_id": "ifct_b019",
+      "name": "Rajmah, brown"
+    },
+    {
+      "food_id": "ifct_b020",
+      "name": "Rajmah, red"
+    },
+    {
+      "food_id": "ifct_b021",
+      "name": "Red gram, dal"
+    },
+    {
+      "food_id": "ifct_b022",
+      "name": "Red gram, whole"
+    },
+    {
+      "food_id": "ifct_b023",
+      "name": "Ricebean"
+    },
+    {
+      "food_id": "ifct_b024",
+      "name": "Soya bean, brown"
+    },
+    {
+      "food_id": "ifct_b025",
+      "name": "Soya bean, white"
+    },
+    {
+      "food_id": "ifct_c001",
+      "name": "Agathi leaves"
+    },
+    {
+      "food_id": "ifct_c002",
+      "name": "Amaranth leaves, green"
+    },
+    {
+      "food_id": "ifct_c003",
+      "name": "Amaranth leaves, red mix"
+    },
+    {
+      "food_id": "ifct_c004",
+      "name": "Amaranth leaves, red and green mix"
+    },
+    {
+      "food_id": "ifct_c005",
+      "name": "Amaranth spinosus, leaves, green mix"
+    },
+    {
+      "food_id": "ifct_c006",
+      "name": "Amaranth spinosus, leaves, red and green mix"
+    },
+    {
+      "food_id": "ifct_c007",
+      "name": "Basella leaves"
+    },
+    {
+      "food_id": "ifct_c008",
+      "name": "Bathua leaves"
+    },
+    {
+      "food_id": "ifct_c009",
+      "name": "Beet greens"
+    },
+    {
+      "food_id": "ifct_c010",
+      "name": "Betel leaves, big (kolkata)"
+    },
+    {
+      "food_id": "ifct_c011",
+      "name": "Betel leaves, small"
+    },
+    {
+      "food_id": "ifct_c012",
+      "name": "Brussels sprouts"
+    },
+    {
+      "food_id": "ifct_c013",
+      "name": "Cabbage, Chinese"
+    },
+    {
+      "food_id": "ifct_c014",
+      "name": "Cabbage, collard greens"
+    },
+    {
+      "food_id": "ifct_c015",
+      "name": "Cabbage, green"
+    },
+    {
+      "food_id": "ifct_c016",
+      "name": "Cabbage, violet"
+    },
+    {
+      "food_id": "ifct_c017",
+      "name": "Cauliflower leaves"
+    },
+    {
+      "food_id": "ifct_c018",
+      "name": "Colocasia leaves, green"
+    },
+    {
+      "food_id": "ifct_c019",
+      "name": "Drumstick leaves"
+    },
+    {
+      "food_id": "ifct_c020",
+      "name": "Fenugreek leaves"
+    },
+    {
+      "food_id": "ifct_c021",
+      "name": "Garden cress"
+    },
+    {
+      "food_id": "ifct_c022",
+      "name": "Gogu leaves, green"
+    },
+    {
+      "food_id": "ifct_c023",
+      "name": "Gogu leaves, red"
+    },
+    {
+      "food_id": "ifct_c024",
+      "name": "Knol-Khol, leaves"
+    },
+    {
+      "food_id": "ifct_c025",
+      "name": "Lettuce"
+    },
+    {
+      "food_id": "ifct_c026",
+      "name": "Mustard leaves"
+    },
+    {
+      "food_id": "ifct_c027",
+      "name": "Pak Choi leaves"
+    },
+    {
+      "food_id": "ifct_c028",
+      "name": "Parsley"
+    },
+    {
+      "food_id": "ifct_c029",
+      "name": "Ponnaganni"
+    },
+    {
+      "food_id": "ifct_c030",
+      "name": "Pumpkin leaves, tender"
+    },
+    {
+      "food_id": "ifct_c031",
+      "name": "Radish leaves"
+    },
+    {
+      "food_id": "ifct_c032",
+      "name": "Rumex leaves"
+    },
+    {
+      "food_id": "ifct_c034",
+      "name": "Tamarind leaves, tender"
+    },
+    {
+      "food_id": "ifct_d001",
+      "name": "Ash gourd"
+    },
+    {
+      "food_id": "ifct_d002",
+      "name": "Bamboo shoot, tender"
+    },
+    {
+      "food_id": "ifct_d003",
+      "name": "Bean scarlet, tender"
+    },
+    {
+      "food_id": "ifct_d004",
+      "name": "Bitter gourd, jagged, teeth ridges, elongate"
+    },
+    {
+      "food_id": "ifct_d005",
+      "name": "Bitter gourd, jagged, teeth ridges, short"
+    },
+    {
+      "food_id": "ifct_d006",
+      "name": "Bitter gourd, jagged, smooth ridges, elongate"
+    },
+    {
+      "food_id": "ifct_d007",
+      "name": "Bottle gourd, elongate, pale green"
+    },
+    {
+      "food_id": "ifct_d008",
+      "name": "Bottle gourd, round, pale green"
+    },
+    {
+      "food_id": "ifct_d009",
+      "name": "Bottle gourd, elongate, dark green"
+    },
+    {
+      "food_id": "ifct_d010",
+      "name": "Brinjal-1"
+    },
+    {
+      "food_id": "ifct_d011",
+      "name": "Brinjal-2"
+    },
+    {
+      "food_id": "ifct_d012",
+      "name": "Brinjal-3"
+    },
+    {
+      "food_id": "ifct_d013",
+      "name": "Brinjal-4"
+    },
+    {
+      "food_id": "ifct_d014",
+      "name": "Brinjal-5"
+    },
+    {
+      "food_id": "ifct_d015",
+      "name": "Brinjal-6"
+    },
+    {
+      "food_id": "ifct_d016",
+      "name": "Brinjal-7"
+    },
+    {
+      "food_id": "ifct_d017",
+      "name": "Brinjal-8"
+    },
+    {
+      "food_id": "ifct_d018",
+      "name": "Brinjal-9"
+    },
+    {
+      "food_id": "ifct_d019",
+      "name": "Brinjal-10"
+    },
+    {
+      "food_id": "ifct_d020",
+      "name": "Brinjal-11"
+    },
+    {
+      "food_id": "ifct_d021",
+      "name": "Brinjal-12"
+    },
+    {
+      "food_id": "ifct_d022",
+      "name": "Brinjal-13"
+    },
+    {
+      "food_id": "ifct_d023",
+      "name": "Brinjal-14"
+    },
+    {
+      "food_id": "ifct_d024",
+      "name": "Brinjal-15"
+    },
+    {
+      "food_id": "ifct_d025",
+      "name": "Brinjal-16"
+    },
+    {
+      "food_id": "ifct_d026",
+      "name": "Brinjal-17"
+    },
+    {
+      "food_id": "ifct_d027",
+      "name": "Brinjal-18"
+    },
+    {
+      "food_id": "ifct_d028",
+      "name": "Brinjal-19"
+    },
+    {
+      "food_id": "ifct_d029",
+      "name": "Brinjal-20"
+    },
+    {
+      "food_id": "ifct_d030",
+      "name": "Brinjal-21"
+    },
+    {
+      "food_id": "ifct_d031",
+      "name": "Brinjal - all varieties"
+    },
+    {
+      "food_id": "ifct_d032",
+      "name": "Broad beans"
+    },
+    {
+      "food_id": "ifct_d033",
+      "name": "Capsicum, green"
+    },
+    {
+      "food_id": "ifct_d034",
+      "name": "Capsicum, red"
+    },
+    {
+      "food_id": "ifct_d035",
+      "name": "Capsicum, yellow"
+    },
+    {
+      "food_id": "ifct_d036",
+      "name": "Cauliflower"
+    },
+    {
+      "food_id": "ifct_d037",
+      "name": "Celery stalk"
+    },
+    {
+      "food_id": "ifct_d038",
+      "name": "Cho-cho-marrow"
+    },
+    {
+      "food_id": "ifct_d039",
+      "name": "Cluster beans"
+    },
+    {
+      "food_id": "ifct_d040",
+      "name": "Colocasia, stem, black"
+    },
+    {
+      "food_id": "ifct_d041",
+      "name": "Colocasia, stem, green"
+    },
+    {
+      "food_id": "ifct_d042",
+      "name": "Corn, Baby"
+    },
+    {
+      "food_id": "ifct_d043",
+      "name": "Cucumber, green, elongate"
+    },
+    {
+      "food_id": "ifct_d044",
+      "name": "Cucumber, green, short"
+    },
+    {
+      "food_id": "ifct_d045",
+      "name": "Cucumber, orange, round"
+    },
+    {
+      "food_id": "ifct_d046",
+      "name": "Drumstick"
+    },
+    {
+      "food_id": "ifct_d047",
+      "name": "Field beans, tender, broad"
+    },
+    {
+      "food_id": "ifct_d048",
+      "name": "Field beans, tender, lean"
+    },
+    {
+      "food_id": "ifct_d049",
+      "name": "French beans, country"
+    },
+    {
+      "food_id": "ifct_d050",
+      "name": "French beans, hybrid"
+    },
+    {
+      "food_id": "ifct_d051",
+      "name": "Jack fruit, raw"
+    },
+    {
+      "food_id": "ifct_d052",
+      "name": "Jack fruit, seed, mature"
+    },
+    {
+      "food_id": "ifct_d053",
+      "name": "Knol - Khol"
+    },
+    {
+      "food_id": "ifct_d054",
+      "name": "Kovai, big"
+    },
+    {
+      "food_id": "ifct_d055",
+      "name": "Kovai, small"
+    },
+    {
+      "food_id": "ifct_d056",
+      "name": "Ladies finger"
+    },
+    {
+      "food_id": "ifct_d057",
+      "name": "Mango, green, raw"
+    },
+    {
+      "food_id": "ifct_d058",
+      "name": "Onion, stalk"
+    },
+    {
+      "food_id": "ifct_d059",
+      "name": "Papaya, raw"
+    },
+    {
+      "food_id": "ifct_d060",
+      "name": "Parwar"
+    },
+    {
+      "food_id": "ifct_d061",
+      "name": "Peas, fresh"
+    },
+    {
+      "food_id": "ifct_d062",
+      "name": "Plantain, flower"
+    },
+    {
+      "food_id": "ifct_d063",
+      "name": "Plantain, green"
+    },
+    {
+      "food_id": "ifct_d064",
+      "name": "Plantain, stem"
+    },
+    {
+      "food_id": "ifct_d065",
+      "name": "Pumpkin, green, cylindrical"
+    },
+    {
+      "food_id": "ifct_d066",
+      "name": "Pumpkin, orange, round"
+    },
+    {
+      "food_id": "ifct_d067",
+      "name": "Red gram, tender, fresh"
+    },
+    {
+      "food_id": "ifct_d068",
+      "name": "Ridge gourd"
+    },
+    {
+      "food_id": "ifct_d069",
+      "name": "Ridge gourd, smooth skin"
+    },
+    {
+      "food_id": "ifct_d070",
+      "name": "Snake gourd, long, pale green"
+    },
+    {
+      "food_id": "ifct_d071",
+      "name": "Snake gourd, long, dark green"
+    },
+    {
+      "food_id": "ifct_d072",
+      "name": "Snake gourd, short"
+    },
+    {
+      "food_id": "ifct_d073",
+      "name": "Tinda, tender"
+    },
+    {
+      "food_id": "ifct_d074",
+      "name": "Tomato, green"
+    },
+    {
+      "food_id": "ifct_d075",
+      "name": "Tomato, ripe, hybrid"
+    },
+    {
+      "food_id": "ifct_d076",
+      "name": "Tomato, ripe, local"
+    },
+    {
+      "food_id": "ifct_d077",
+      "name": "Zucchini, green"
+    },
+    {
+      "food_id": "ifct_d078",
+      "name": "Zucchini, yellow"
+    },
+    {
+      "food_id": "ifct_e005",
+      "name": "Apricot, dried"
+    },
+    {
+      "food_id": "ifct_e006",
+      "name": "Apricot, processed"
+    },
+    {
+      "food_id": "ifct_e007",
+      "name": "Avocado fruit"
+    },
+    {
+      "food_id": "ifct_e008",
+      "name": "Bael fruit"
+    },
+    {
+      "food_id": "ifct_e013",
+      "name": "Black berry"
+    },
+    {
+      "food_id": "ifct_e014",
+      "name": "Cherries, red"
+    },
+    {
+      "food_id": "ifct_e015",
+      "name": "Currants, black"
+    },
+    {
+      "food_id": "ifct_e016",
+      "name": "Custard apple"
+    },
+    {
+      "food_id": "ifct_e017",
+      "name": "Dates, dry, pale brown"
+    },
+    {
+      "food_id": "ifct_e018",
+      "name": "Dates, dry, dark brown"
+    },
+    {
+      "food_id": "ifct_e019",
+      "name": "Dates, processed"
+    },
+    {
+      "food_id": "ifct_e020",
+      "name": "Fig"
+    },
+    {
+      "food_id": "ifct_e021",
+      "name": "Goosberry"
+    },
+    {
+      "food_id": "ifct_e022",
+      "name": "Grapes, seeded, round, black"
+    },
+    {
+      "food_id": "ifct_e023",
+      "name": "Grapes, seeded, round, green"
+    },
+    {
+      "food_id": "ifct_e024",
+      "name": "Grapes, seeded, round, red"
+    },
+    {
+      "food_id": "ifct_e025",
+      "name": "Grapes, seedless, oval, black"
+    },
+    {
+      "food_id": "ifct_e026",
+      "name": "Grapes, seedless, round, green"
+    },
+    {
+      "food_id": "ifct_e027",
+      "name": "Grapes, seedless, round, black"
+    },
+    {
+      "food_id": "ifct_e030",
+      "name": "Jack fruit, ripe"
+    },
+    {
+      "food_id": "ifct_e031",
+      "name": "Jambu fruit, ripe"
+    },
+    {
+      "food_id": "ifct_e032",
+      "name": "Karonda fruit"
+    },
+    {
+      "food_id": "ifct_e033",
+      "name": "Lemon, juice"
+    },
+    {
+      "food_id": "ifct_e034",
+      "name": "Lime, sweet, pulp"
+    },
+    {
+      "food_id": "ifct_e035",
+      "name": "Litchi"
+    },
+    {
+      "food_id": "ifct_e036",
+      "name": "Mango, ripe, banganapalli"
+    },
+    {
+      "food_id": "ifct_e037",
+      "name": "Mango, ripe, gulabkhas"
+    },
+    {
+      "food_id": "ifct_e038",
+      "name": "Mango, ripe, himsagar"
+    },
+    {
+      "food_id": "ifct_e039",
+      "name": "Mango, ripe, kesar"
+    },
+    {
+      "food_id": "ifct_e040",
+      "name": "Mango, ripe, neelam"
+    },
+    {
+      "food_id": "ifct_e041",
+      "name": "Mango, ripe, paheri"
+    },
+    {
+      "food_id": "ifct_e042",
+      "name": "Mango, ripe, totapari"
+    },
+    {
+      "food_id": "ifct_e043",
+      "name": "Mangosteen"
+    },
+    {
+      "food_id": "ifct_e044",
+      "name": "Manila tamarind"
+    },
+    {
+      "food_id": "ifct_e045",
+      "name": "Musk melon, orange flesh"
+    },
+    {
+      "food_id": "ifct_e046",
+      "name": "Musk melon, yellow flesh"
+    },
+    {
+      "food_id": "ifct_e048",
+      "name": "Palm fruit, tender"
+    },
+    {
+      "food_id": "ifct_e050",
+      "name": "Peach"
+    },
+    {
+      "food_id": "ifct_e051",
+      "name": "Pear"
+    },
+    {
+      "food_id": "ifct_e052",
+      "name": "Phalsa"
+    },
+    {
+      "food_id": "ifct_e053",
+      "name": "Pineapple"
+    },
+    {
+      "food_id": "ifct_e054",
+      "name": "Plum"
+    },
+    {
+      "food_id": "ifct_e055",
+      "name": "Pomegranate, maroon seeds"
+    },
+    {
+      "food_id": "ifct_e056",
+      "name": "Pummelo"
+    },
+    {
+      "food_id": "ifct_e057",
+      "name": "Raisins, dried, black"
+    },
+    {
+      "food_id": "ifct_e058",
+      "name": "Raisins, dried, golden"
+    },
+    {
+      "food_id": "ifct_e059",
+      "name": "Rambutan"
+    },
+    {
+      "food_id": "ifct_e060",
+      "name": "Sapota"
+    },
+    {
+      "food_id": "ifct_e061",
+      "name": "Soursop"
+    },
+    {
+      "food_id": "ifct_e062",
+      "name": "Star fruit"
+    },
+    {
+      "food_id": "ifct_e063",
+      "name": "Strawberry"
+    },
+    {
+      "food_id": "ifct_e064",
+      "name": "Tamarind, pulp"
+    },
+    {
+      "food_id": "ifct_e065",
+      "name": "Water melon, dark green (sugar baby)"
+    },
+    {
+      "food_id": "ifct_e066",
+      "name": "Water melon, pale green"
+    },
+    {
+      "food_id": "ifct_e067",
+      "name": "Wood Apple"
+    },
+    {
+      "food_id": "ifct_e068",
+      "name": "Zizyphus"
+    },
+    {
+      "food_id": "ifct_f001",
+      "name": "Beet root"
+    },
+    {
+      "food_id": "ifct_f002",
+      "name": "Carrot, orange"
+    },
+    {
+      "food_id": "ifct_f003",
+      "name": "Carrot, red"
+    },
+    {
+      "food_id": "ifct_f004",
+      "name": "Colocasia"
+    },
+    {
+      "food_id": "ifct_f005",
+      "name": "Lotus root"
+    },
+    {
+      "food_id": "ifct_f006",
+      "name": "Potato, brown skin, big"
+    },
+    {
+      "food_id": "ifct_f007",
+      "name": "Potato, brown skin, small"
+    },
+    {
+      "food_id": "ifct_f008",
+      "name": "Potato, red skin"
+    },
+    {
+      "food_id": "ifct_f009",
+      "name": "Radish, elongate, red skin"
+    },
+    {
+      "food_id": "ifct_f010",
+      "name": "Radish, elongate, white skin"
+    },
+    {
+      "food_id": "ifct_f011",
+      "name": "Radish, round, red skin"
+    },
+    {
+      "food_id": "ifct_f012",
+      "name": "Radish, round, white skin"
+    },
+    {
+      "food_id": "ifct_f013",
+      "name": "Sweet potato, brown skin"
+    },
+    {
+      "food_id": "ifct_f014",
+      "name": "Sweet potato, pink skin"
+    },
+    {
+      "food_id": "ifct_f015",
+      "name": "Tapioca"
+    },
+    {
+      "food_id": "ifct_f016",
+      "name": "Water Chestnut"
+    },
+    {
+      "food_id": "ifct_f017",
+      "name": "Yam, elephant"
+    },
+    {
+      "food_id": "ifct_f018",
+      "name": "Yam, ordinary"
+    },
+    {
+      "food_id": "ifct_f019",
+      "name": "Yam, wild"
+    },
+    {
+      "food_id": "ifct_g001",
+      "name": "Chillies, green-1"
+    },
+    {
+      "food_id": "ifct_g002",
+      "name": "Chillies, green-2"
+    },
+    {
+      "food_id": "ifct_g003",
+      "name": "Chillies, green-3"
+    },
+    {
+      "food_id": "ifct_g004",
+      "name": "Chillies, green-4"
+    },
+    {
+      "food_id": "ifct_g005",
+      "name": "Chillies, green-5"
+    },
+    {
+      "food_id": "ifct_g006",
+      "name": "Chillies, green-6"
+    },
+    {
+      "food_id": "ifct_g007",
+      "name": "Chillies, green-7"
+    },
+    {
+      "food_id": "ifct_g008",
+      "name": "Chillies, green - all varieties"
+    },
+    {
+      "food_id": "ifct_g009",
+      "name": "Coriander leaves"
+    },
+    {
+      "food_id": "ifct_g010",
+      "name": "Curry leaves"
+    },
+    {
+      "food_id": "ifct_g011",
+      "name": "Garlic, big clove"
+    },
+    {
+      "food_id": "ifct_g012",
+      "name": "Garlic, small clove"
+    },
+    {
+      "food_id": "ifct_g013",
+      "name": "Garlic, single clove, Kashmir"
+    },
+    {
+      "food_id": "ifct_g014",
+      "name": "Ginger, fresh"
+    },
+    {
+      "food_id": "ifct_g015",
+      "name": "Mango ginger"
+    },
+    {
+      "food_id": "ifct_g016",
+      "name": "Mint leaves"
+    },
+    {
+      "food_id": "ifct_g017",
+      "name": "Onion, big"
+    },
+    {
+      "food_id": "ifct_g018",
+      "name": "Onion, small"
+    },
+    {
+      "food_id": "ifct_g019",
+      "name": "Asafoetida"
+    },
+    {
+      "food_id": "ifct_g020",
+      "name": "Cardamom, green"
+    },
+    {
+      "food_id": "ifct_g021",
+      "name": "Cardamom, black"
+    },
+    {
+      "food_id": "ifct_g022",
+      "name": "Chillies, red"
+    },
+    {
+      "food_id": "ifct_g023",
+      "name": "Cloves"
+    },
+    {
+      "food_id": "ifct_g024",
+      "name": "Coriander seeds"
+    },
+    {
+      "food_id": "ifct_g025",
+      "name": "Cumin seeds"
+    },
+    {
+      "food_id": "ifct_g026",
+      "name": "Fenugreek seeds"
+    },
+    {
+      "food_id": "ifct_g027",
+      "name": "Mace"
+    },
+    {
+      "food_id": "ifct_g028",
+      "name": "Nutmeg"
+    },
+    {
+      "food_id": "ifct_g029",
+      "name": "Omum"
+    },
+    {
+      "food_id": "ifct_g030",
+      "name": "Pippali"
+    },
+    {
+      "food_id": "ifct_g031",
+      "name": "Pepper, black"
+    },
+    {
+      "food_id": "ifct_g032",
+      "name": "Poppy seeds"
+    },
+    {
+      "food_id": "ifct_g033",
+      "name": "Turmeric powder"
+    },
+    {
+      "food_id": "ifct_h001",
+      "name": "Almond"
+    },
+    {
+      "food_id": "ifct_h002",
+      "name": "Arecanut, dried, brown"
+    },
+    {
+      "food_id": "ifct_h003",
+      "name": "Arecanut, dried, red color"
+    },
+    {
+      "food_id": "ifct_h004",
+      "name": "Arecanut, fresh"
+    },
+    {
+      "food_id": "ifct_h005",
+      "name": "Cashew nut"
+    },
+    {
+      "food_id": "ifct_h006",
+      "name": "Coconut, kernal, dry"
+    },
+    {
+      "food_id": "ifct_h007",
+      "name": "Coconut, kernel, fresh"
+    },
+    {
+      "food_id": "ifct_h008",
+      "name": "Garden cress, seeds"
+    },
+    {
+      "food_id": "ifct_h009",
+      "name": "Gingelly seeds, black"
+    },
+    {
+      "food_id": "ifct_h010",
+      "name": "Gingelly seeds, brown"
+    },
+    {
+      "food_id": "ifct_h011",
+      "name": "Gingelly seeds, white"
+    },
+    {
+      "food_id": "ifct_h012",
+      "name": "Ground nut"
+    },
+    {
+      "food_id": "ifct_h013",
+      "name": "Mustard seeds"
+    },
+    {
+      "food_id": "ifct_h014",
+      "name": "Linseeds"
+    },
+    {
+      "food_id": "ifct_h015",
+      "name": "Niger seeds, black"
+    },
+    {
+      "food_id": "ifct_h016",
+      "name": "Niger seeds, gray"
+    },
+    {
+      "food_id": "ifct_h017",
+      "name": "Pine seed"
+    },
+    {
+      "food_id": "ifct_h018",
+      "name": "Pistachio nuts"
+    },
+    {
+      "food_id": "ifct_h019",
+      "name": "Safflower seeds"
+    },
+    {
+      "food_id": "ifct_h020",
+      "name": "Sunflower seeds"
+    },
+    {
+      "food_id": "ifct_h021",
+      "name": "Walnut"
+    },
+    {
+      "food_id": "ifct_i001",
+      "name": "Jaggery, cane"
+    },
+    {
+      "food_id": "ifct_i002",
+      "name": "Sugarcane, juice"
+    },
+    {
+      "food_id": "ifct_j001",
+      "name": "Button mushroom, fresh"
+    },
+    {
+      "food_id": "ifct_j002",
+      "name": "Chicken mushroom, fresh"
+    },
+    {
+      "food_id": "ifct_j003",
+      "name": "Shiitake mushroom, fresh"
+    },
+    {
+      "food_id": "ifct_j004",
+      "name": "Oyster mushroom, dried"
+    },
+    {
+      "food_id": "ifct_k001",
+      "name": "Toddy"
+    },
+    {
+      "food_id": "ifct_k002",
+      "name": "Coconut Water"
+    },
+    {
+      "food_id": "ifct_l001",
+      "name": "Milk, whole, Buffalo"
+    },
+    {
+      "food_id": "ifct_l003",
+      "name": "Paneer"
+    },
+    {
+      "food_id": "ifct_l004",
+      "name": "Khoa"
+    },
+    {
+      "food_id": "ifct_m002",
+      "name": "Egg, poultry, white, raw"
+    },
+    {
+      "food_id": "ifct_m003",
+      "name": "Egg, poultry, yolk, raw"
+    },
+    {
+      "food_id": "ifct_m005",
+      "name": "Egg, poultry, white, boiled"
+    },
+    {
+      "food_id": "ifct_m006",
+      "name": "Egg, poultry, yolk, boiled"
+    },
+    {
+      "food_id": "ifct_m007",
+      "name": "Egg, poultry, omlet"
+    },
+    {
+      "food_id": "ifct_m008",
+      "name": "Egg, country hen, whole, raw"
+    },
+    {
+      "food_id": "ifct_m009",
+      "name": "Egg, country hen, whole, boiled"
+    },
+    {
+      "food_id": "ifct_m010",
+      "name": "Egg, country hen, omlet"
+    },
+    {
+      "food_id": "ifct_m011",
+      "name": "Egg, duck, whole, boiled"
+    },
+    {
+      "food_id": "ifct_m012",
+      "name": "Egg, duck, whole, raw"
+    },
+    {
+      "food_id": "ifct_m013",
+      "name": "Egg, duck, whole, omlet"
+    },
+    {
+      "food_id": "ifct_m014",
+      "name": "Egg, quial, whole, raw"
+    },
+    {
+      "food_id": "ifct_m015",
+      "name": "Egg, quial, whole, boiled"
+    },
+    {
+      "food_id": "ifct_n001",
+      "name": "Chicken, poultry, leg, skinless"
+    },
+    {
+      "food_id": "ifct_n002",
+      "name": "Chicken, poultry, thigh, skinless"
+    },
+    {
+      "food_id": "ifct_n003",
+      "name": "Chicken, poultry, breast, skinless"
+    },
+    {
+      "food_id": "ifct_n004",
+      "name": "Chicken, poultry, wing, skinless"
+    },
+    {
+      "food_id": "ifct_n006",
+      "name": "Poultry, chicken, gizzard"
+    },
+    {
+      "food_id": "ifct_n007",
+      "name": "Country hen, leg, with skin"
+    },
+    {
+      "food_id": "ifct_n008",
+      "name": "Country hen, thigh, with skin"
+    },
+    {
+      "food_id": "ifct_n009",
+      "name": "Country hen, breast, with skin"
+    },
+    {
+      "food_id": "ifct_n010",
+      "name": "Country hen, wing, with skin"
+    },
+    {
+      "food_id": "ifct_n011",
+      "name": "Duck, meat, with skin"
+    },
+    {
+      "food_id": "ifct_n012",
+      "name": "Emu, meat, skinless"
+    },
+    {
+      "food_id": "ifct_n013",
+      "name": "Guinea fowl, meat, with skin"
+    },
+    {
+      "food_id": "ifct_n014",
+      "name": "Pigeon, meat, with skin"
+    },
+    {
+      "food_id": "ifct_n015",
+      "name": "Quail, meat, skinless"
+    },
+    {
+      "food_id": "ifct_n016",
+      "name": "Turkey, leg, with skin"
+    },
+    {
+      "food_id": "ifct_n017",
+      "name": "Turkey, thigh, with skin"
+    },
+    {
+      "food_id": "ifct_n018",
+      "name": "Turkey, breast, with skin"
+    },
+    {
+      "food_id": "ifct_n019",
+      "name": "Turkey, wing, with skin"
+    },
+    {
+      "food_id": "ifct_o001",
+      "name": "Goat, shoulder, meat"
+    },
+    {
+      "food_id": "ifct_o002",
+      "name": "Goat, chops"
+    },
+    {
+      "food_id": "ifct_o003",
+      "name": "Goat, legs"
+    },
+    {
+      "food_id": "ifct_o004",
+      "name": "Goat, brain"
+    },
+    {
+      "food_id": "ifct_o005",
+      "name": "Goat, tongue"
+    },
+    {
+      "food_id": "ifct_o006",
+      "name": "Goat, lungs"
+    },
+    {
+      "food_id": "ifct_o007",
+      "name": "Goat, heart"
+    },
+    {
+      "food_id": "ifct_o008",
+      "name": "Goat, liver"
+    },
+    {
+      "food_id": "ifct_o009",
+      "name": "Goat, tripe"
+    },
+    {
+      "food_id": "ifct_o010",
+      "name": "Goat, spleen"
+    },
+    {
+      "food_id": "ifct_o011",
+      "name": "Goat, kidneys"
+    },
+    {
+      "food_id": "ifct_o012",
+      "name": "Goat, tube (small intestine)"
+    },
+    {
+      "food_id": "ifct_o013",
+      "name": "Goat, testis"
+    },
+    {
+      "food_id": "ifct_o014",
+      "name": "Sheep, shoulder"
+    },
+    {
+      "food_id": "ifct_o015",
+      "name": "Sheep, chops"
+    },
+    {
+      "food_id": "ifct_o016",
+      "name": "Sheep, leg"
+    },
+    {
+      "food_id": "ifct_o017",
+      "name": "Sheep, brain"
+    },
+    {
+      "food_id": "ifct_o018",
+      "name": "Sheep, tongue"
+    },
+    {
+      "food_id": "ifct_o019",
+      "name": "Sheep, lungs"
+    },
+    {
+      "food_id": "ifct_o020",
+      "name": "Sheep, heart"
+    },
+    {
+      "food_id": "ifct_o022",
+      "name": "Sheep, tripe"
+    },
+    {
+      "food_id": "ifct_o023",
+      "name": "Sheep, spleen"
+    },
+    {
+      "food_id": "ifct_o024",
+      "name": "Sheep, kidneys"
+    },
+    {
+      "food_id": "ifct_o025",
+      "name": "Beef, shoulder"
+    },
+    {
+      "food_id": "ifct_o026",
+      "name": "Beef, chops"
+    },
+    {
+      "food_id": "ifct_o027",
+      "name": "Beef, round (leg)"
+    },
+    {
+      "food_id": "ifct_o028",
+      "name": "Beef, brain"
+    },
+    {
+      "food_id": "ifct_o029",
+      "name": "Beef, tongue"
+    },
+    {
+      "food_id": "ifct_o030",
+      "name": "Beef, lungs"
+    },
+    {
+      "food_id": "ifct_o031",
+      "name": "Beef, heart"
+    },
+    {
+      "food_id": "ifct_o033",
+      "name": "Beef, tripe"
+    },
+    {
+      "food_id": "ifct_o034",
+      "name": "Beef, spleen"
+    },
+    {
+      "food_id": "ifct_o035",
+      "name": "Beef, kidneys"
+    },
+    {
+      "food_id": "ifct_o036",
+      "name": "Calf, shoulder"
+    },
+    {
+      "food_id": "ifct_o037",
+      "name": "Calf, chops"
+    },
+    {
+      "food_id": "ifct_o038",
+      "name": "Calf, round (leg)"
+    },
+    {
+      "food_id": "ifct_o039",
+      "name": "Calf, brain"
+    },
+    {
+      "food_id": "ifct_o040",
+      "name": "Calf, tongue"
+    },
+    {
+      "food_id": "ifct_o041",
+      "name": "Calf, heart"
+    },
+    {
+      "food_id": "ifct_o043",
+      "name": "Calf, spleen"
+    },
+    {
+      "food_id": "ifct_o044",
+      "name": "Calf, kidneys"
+    },
+    {
+      "food_id": "ifct_o045",
+      "name": "Mithun, shoulder"
+    },
+    {
+      "food_id": "ifct_o046",
+      "name": "Mithun, chops"
+    },
+    {
+      "food_id": "ifct_o047",
+      "name": "Mithun, round (leg)"
+    },
+    {
+      "food_id": "ifct_o048",
+      "name": "Pork, shoulder"
+    },
+    {
+      "food_id": "ifct_o049",
+      "name": "Pork, chops"
+    },
+    {
+      "food_id": "ifct_o050",
+      "name": "Pork, ham"
+    },
+    {
+      "food_id": "ifct_o051",
+      "name": "Pork, lungs"
+    },
+    {
+      "food_id": "ifct_o052",
+      "name": "Pork, heart"
+    },
+    {
+      "food_id": "ifct_o054",
+      "name": "Pork, stomach"
+    },
+    {
+      "food_id": "ifct_o055",
+      "name": "Pork, spleen"
+    },
+    {
+      "food_id": "ifct_o056",
+      "name": "Pork, kidneys"
+    },
+    {
+      "food_id": "ifct_o057",
+      "name": "Pork, tube (small intestine)"
+    },
+    {
+      "food_id": "ifct_o058",
+      "name": "Hare, shoulder"
+    },
+    {
+      "food_id": "ifct_o059",
+      "name": "Hare, chops"
+    },
+    {
+      "food_id": "ifct_o060",
+      "name": "Hare, leg"
+    },
+    {
+      "food_id": "ifct_o061",
+      "name": "Rabbit, shoulder"
+    },
+    {
+      "food_id": "ifct_o062",
+      "name": "Rabbit, chops"
+    },
+    {
+      "food_id": "ifct_o063",
+      "name": "Rabbit, leg"
+    },
+    {
+      "food_id": "ifct_p001",
+      "name": "Allathi"
+    },
+    {
+      "food_id": "ifct_p002",
+      "name": "Aluva"
+    },
+    {
+      "food_id": "ifct_p003",
+      "name": "Anchovy"
+    },
+    {
+      "food_id": "ifct_p004",
+      "name": "Ari fish"
+    },
+    {
+      "food_id": "ifct_p005",
+      "name": "Betki"
+    },
+    {
+      "food_id": "ifct_p006",
+      "name": "Black snapper"
+    },
+    {
+      "food_id": "ifct_p007",
+      "name": "Bombay duck"
+    },
+    {
+      "food_id": "ifct_p008",
+      "name": "Bommuralu"
+    },
+    {
+      "food_id": "ifct_p009",
+      "name": "Cat fish"
+    },
+    {
+      "food_id": "ifct_p010",
+      "name": "Chakla"
+    },
+    {
+      "food_id": "ifct_p011",
+      "name": "Chappal"
+    },
+    {
+      "food_id": "ifct_p012",
+      "name": "Chelu"
+    },
+    {
+      "food_id": "ifct_p013",
+      "name": "Chembali"
+    },
+    {
+      "food_id": "ifct_p014",
+      "name": "Eri meen"
+    },
+    {
+      "food_id": "ifct_p015",
+      "name": "Gobro"
+    },
+    {
+      "food_id": "ifct_p016",
+      "name": "Guitar fish"
+    },
+    {
+      "food_id": "ifct_p017",
+      "name": "Hilsa"
+    },
+    {
+      "food_id": "ifct_p018",
+      "name": "Jallal"
+    },
+    {
+      "food_id": "ifct_p019",
+      "name": "Jathi vela meen"
+    },
+    {
+      "food_id": "ifct_p020",
+      "name": "Kadal bral"
+    },
+    {
+      "food_id": "ifct_p021",
+      "name": "Kadali"
+    },
+    {
+      "food_id": "ifct_p022",
+      "name": "Kalamaara"
+    },
+    {
+      "food_id": "ifct_p023",
+      "name": "Kalava"
+    },
+    {
+      "food_id": "ifct_p024",
+      "name": "Kanamayya"
+    },
+    {
+      "food_id": "ifct_p025",
+      "name": "Kannadi paarai"
+    },
+    {
+      "food_id": "ifct_p026",
+      "name": "Karimeen"
+    },
+    {
+      "food_id": "ifct_p027",
+      "name": "Karnagawala"
+    },
+    {
+      "food_id": "ifct_p028",
+      "name": "Kayrai"
+    },
+    {
+      "food_id": "ifct_p029",
+      "name": "Kiriyan"
+    },
+    {
+      "food_id": "ifct_p030",
+      "name": "Kite fish"
+    },
+    {
+      "food_id": "ifct_p031",
+      "name": "Korka"
+    },
+    {
+      "food_id": "ifct_p032",
+      "name": "Kulam paarai"
+    },
+    {
+      "food_id": "ifct_p033",
+      "name": "Maagaa"
+    },
+    {
+      "food_id": "ifct_p034",
+      "name": "Mackerel"
+    },
+    {
+      "food_id": "ifct_p035",
+      "name": "Manda clathi"
+    },
+    {
+      "food_id": "ifct_p036",
+      "name": "Matha"
+    },
+    {
+      "food_id": "ifct_p037",
+      "name": "Milk fish"
+    },
+    {
+      "food_id": "ifct_p038",
+      "name": "Moon fish"
+    },
+    {
+      "food_id": "ifct_p039",
+      "name": "Mullet"
+    },
+    {
+      "food_id": "ifct_p040",
+      "name": "Mural"
+    },
+    {
+      "food_id": "ifct_p041",
+      "name": "Myil meen"
+    },
+    {
+      "food_id": "ifct_p042",
+      "name": "Nalla bontha"
+    },
+    {
+      "food_id": "ifct_p043",
+      "name": "Narba"
+    },
+    {
+      "food_id": "ifct_p044",
+      "name": "Paarai"
+    },
+    {
+      "food_id": "ifct_p045",
+      "name": "Padayappa"
+    },
+    {
+      "food_id": "ifct_p046",
+      "name": "Pali kora"
+    },
+    {
+      "food_id": "ifct_p047",
+      "name": "Pambada"
+    },
+    {
+      "food_id": "ifct_p048",
+      "name": "Pandukopa"
+    },
+    {
+      "food_id": "ifct_p049",
+      "name": "Parava"
+    },
+    {
+      "food_id": "ifct_p050",
+      "name": "Parcus"
+    },
+    {
+      "food_id": "ifct_p051",
+      "name": "Parrot fish"
+    },
+    {
+      "food_id": "ifct_p052",
+      "name": "Perinkilichai"
+    },
+    {
+      "food_id": "ifct_p053",
+      "name": "Phopat"
+    },
+    {
+      "food_id": "ifct_p054",
+      "name": "Piranha"
+    },
+    {
+      "food_id": "ifct_p055",
+      "name": "Pomfret, black"
+    },
+    {
+      "food_id": "ifct_p056",
+      "name": "Pomfret, snub nose"
+    },
+    {
+      "food_id": "ifct_p057",
+      "name": "Pomfret, white"
+    },
+    {
+      "food_id": "ifct_p058",
+      "name": "Pranel"
+    },
+    {
+      "food_id": "ifct_p059",
+      "name": "Pulli paarai"
+    },
+    {
+      "food_id": "ifct_p060",
+      "name": "Queen fish"
+    },
+    {
+      "food_id": "ifct_p061",
+      "name": "Raai fish"
+    },
+    {
+      "food_id": "ifct_p062",
+      "name": "Raai vanthu"
+    },
+    {
+      "food_id": "ifct_p063",
+      "name": "Rani"
+    },
+    {
+      "food_id": "ifct_p064",
+      "name": "Ray fish, bow head, spotted"
+    },
+    {
+      "food_id": "ifct_p065",
+      "name": "Red snapper"
+    },
+    {
+      "food_id": "ifct_p066",
+      "name": "Red snapper, small"
+    },
+    {
+      "food_id": "ifct_p067",
+      "name": "Sadaya"
+    },
+    {
+      "food_id": "ifct_p068",
+      "name": "Salmon"
+    },
+    {
+      "food_id": "ifct_p069",
+      "name": "Sangada"
+    },
+    {
+      "food_id": "ifct_p070",
+      "name": "Sankata paarai"
+    },
+    {
+      "food_id": "ifct_p071",
+      "name": "Sardine"
+    },
+    {
+      "food_id": "ifct_p072",
+      "name": "Shark"
+    },
+    {
+      "food_id": "ifct_p073",
+      "name": "Shark, hammer head"
+    },
+    {
+      "food_id": "ifct_p074",
+      "name": "Shark, spotted"
+    },
+    {
+      "food_id": "ifct_p075",
+      "name": "Shelavu"
+    },
+    {
+      "food_id": "ifct_p076",
+      "name": "Silan"
+    },
+    {
+      "food_id": "ifct_p077",
+      "name": "Silk fish"
+    },
+    {
+      "food_id": "ifct_p078",
+      "name": "Silver carp"
+    },
+    {
+      "food_id": "ifct_p079",
+      "name": "Sole fish"
+    },
+    {
+      "food_id": "ifct_p080",
+      "name": "Stingray"
+    },
+    {
+      "food_id": "ifct_p081",
+      "name": "Tarlava"
+    },
+    {
+      "food_id": "ifct_p082",
+      "name": "Tholam"
+    },
+    {
+      "food_id": "ifct_p083",
+      "name": "Tilapia"
+    },
+    {
+      "food_id": "ifct_p084",
+      "name": "Tuna"
+    },
+    {
+      "food_id": "ifct_p085",
+      "name": "Tuna, striped"
+    },
+    {
+      "food_id": "ifct_p086",
+      "name": "Valava"
+    },
+    {
+      "food_id": "ifct_p087",
+      "name": "Vanjaram"
+    },
+    {
+      "food_id": "ifct_p088",
+      "name": "Vela meen"
+    },
+    {
+      "food_id": "ifct_p089",
+      "name": "Vora"
+    },
+    {
+      "food_id": "ifct_p090",
+      "name": "Whale shark"
+    },
+    {
+      "food_id": "ifct_p091",
+      "name": "Xiphinis"
+    },
+    {
+      "food_id": "ifct_p092",
+      "name": "Eggs, Cat fish"
+    },
+    {
+      "food_id": "ifct_q001",
+      "name": "Crab"
+    },
+    {
+      "food_id": "ifct_q002",
+      "name": "Crab, sea"
+    },
+    {
+      "food_id": "ifct_q003",
+      "name": "Lobster, brown"
+    },
+    {
+      "food_id": "ifct_q004",
+      "name": "Lobster, king size"
+    },
+    {
+      "food_id": "ifct_q005",
+      "name": "Mud crab"
+    },
+    {
+      "food_id": "ifct_q006",
+      "name": "Oyster"
+    },
+    {
+      "food_id": "ifct_q007",
+      "name": "Tiger prawns, brown"
+    },
+    {
+      "food_id": "ifct_q008",
+      "name": "Tiger Prawns, orange"
+    },
+    {
+      "food_id": "ifct_r001",
+      "name": "Clam, green shell"
+    },
+    {
+      "food_id": "ifct_r002",
+      "name": "Clam, white shell, ribbed"
+    },
+    {
+      "food_id": "ifct_r003",
+      "name": "Octopus"
+    },
+    {
+      "food_id": "ifct_r004",
+      "name": "Squid, black"
+    },
+    {
+      "food_id": "ifct_r005",
+      "name": "Squid, hard shell"
+    },
+    {
+      "food_id": "ifct_r006",
+      "name": "Squid, red"
+    },
+    {
+      "food_id": "ifct_r007",
+      "name": "Squid, white, small"
+    },
+    {
+      "food_id": "ifct_s001",
+      "name": "Cat fish"
+    },
+    {
+      "food_id": "ifct_s002",
+      "name": "Catla"
+    },
+    {
+      "food_id": "ifct_s003",
+      "name": "Freshwater Eel"
+    },
+    {
+      "food_id": "ifct_s004",
+      "name": "Gold fish"
+    },
+    {
+      "food_id": "ifct_s005",
+      "name": "Pangas"
+    },
+    {
+      "food_id": "ifct_s006",
+      "name": "Rohu"
+    },
+    {
+      "food_id": "ifct_s007",
+      "name": "Crab"
+    },
+    {
+      "food_id": "ifct_s008",
+      "name": "Prawns, big"
+    },
+    {
+      "food_id": "ifct_s009",
+      "name": "Prawns, small"
+    },
+    {
+      "food_id": "ifct_s010",
+      "name": "Tiger prawns"
+    },
+    {
+      "food_id": "ifct_t001",
+      "name": "Coconut oil"
+    },
+    {
+      "food_id": "ifct_t002",
+      "name": "Corn oil"
+    },
+    {
+      "food_id": "ifct_t003",
+      "name": "Cotton seed oil"
+    },
+    {
+      "food_id": "ifct_t004",
+      "name": "Gingelly oil"
+    },
+    {
+      "food_id": "ifct_t005",
+      "name": "Groundnut oil"
+    },
+    {
+      "food_id": "ifct_t006",
+      "name": "Mustard oil"
+    },
+    {
+      "food_id": "ifct_t007",
+      "name": "Palm oil"
+    },
+    {
+      "food_id": "ifct_t008",
+      "name": "Rice bran oil"
+    },
+    {
+      "food_id": "ifct_t009",
+      "name": "Safflower oil"
+    },
+    {
+      "food_id": "ifct_t010",
+      "name": "Safflower oil (blended)"
+    },
+    {
+      "food_id": "ifct_t011",
+      "name": "Soyabean oil"
+    },
+    {
+      "food_id": "ifct_t012",
+      "name": "Sunflower oil"
+    },
+    {
+      "food_id": "ifct_t013",
+      "name": "Ghee"
+    },
+    {
+      "food_id": "ifct_t014",
+      "name": "Vanaspati"
+    },
+    {
+      "food_id": "recipe_toor_dal_tadka",
+      "name": "Toor Dal Tadka"
+    },
+    {
+      "food_id": "recipe_moong_dal_tadka",
+      "name": "Moong Dal Tadka"
+    },
+    {
+      "food_id": "recipe_masoor_dal",
+      "name": "Masoor Dal Curry"
+    },
+    {
+      "food_id": "recipe_chana_masala",
+      "name": "Chana Masala"
+    },
+    {
+      "food_id": "recipe_rajma_curry",
+      "name": "Rajma Curry"
+    },
+    {
+      "food_id": "recipe_sprouted_moong_usal",
+      "name": "Sprouted Moong Usal"
+    },
+    {
+      "food_id": "recipe_sambar_vegetable",
+      "name": "South Indian Sambar"
+    },
+    {
+      "food_id": "recipe_dal_palak",
+      "name": "Dal Palak (Spinach Dal)"
+    },
+    {
+      "food_id": "recipe_panchmel_dal",
+      "name": "Rajasthani Panchmel Dal"
+    },
+    {
+      "food_id": "recipe_whole_wheat_phulka",
+      "name": "Whole-Wheat Phulka"
+    },
+    {
+      "food_id": "recipe_jowar_roti",
+      "name": "Jowar Roti"
+    },
+    {
+      "food_id": "recipe_bajra_roti",
+      "name": "Bajra Roti"
+    },
+    {
+      "food_id": "recipe_ragi_roti",
+      "name": "Ragi Roti"
+    },
+    {
+      "food_id": "recipe_missi_roti",
+      "name": "Missi Roti (Wheat + Besan)"
+    },
+    {
+      "food_id": "recipe_veg_pulao",
+      "name": "Vegetable Pulao"
+    },
+    {
+      "food_id": "recipe_moong_dal_khichdi",
+      "name": "Moong Dal Khichdi"
+    },
+    {
+      "food_id": "recipe_steamed_idli",
+      "name": "Steamed Idli (2 pcs)"
+    },
+    {
+      "food_id": "recipe_plain_dosa",
+      "name": "Plain Dosa"
+    },
+    {
+      "food_id": "recipe_vegetable_oats_upma",
+      "name": "Vegetable Oats Upma"
+    },
+    {
+      "food_id": "recipe_vegetable_poha",
+      "name": "Vegetable Poha"
+    },
+    {
+      "food_id": "recipe_palak_sabzi",
+      "name": "Palak Sabzi"
+    },
+    {
+      "food_id": "recipe_bhindi_masala",
+      "name": "Bhindi Masala"
+    },
+    {
+      "food_id": "recipe_mixed_veg_sabzi",
+      "name": "Mixed Vegetable Sabzi"
+    },
+    {
+      "food_id": "recipe_lauki_tomato",
+      "name": "Lauki Tomato Sabzi"
+    },
+    {
+      "food_id": "recipe_aloo_gobi",
+      "name": "Aloo Gobi"
+    },
+    {
+      "food_id": "recipe_baingan_bharta",
+      "name": "Baingan Bharta"
+    },
+    {
+      "food_id": "recipe_cabbage_peas",
+      "name": "Cabbage Peas Sabzi"
+    },
+    {
+      "food_id": "recipe_karela_masala",
+      "name": "Karela Masala (Bitter Gourd)"
+    },
+    {
+      "food_id": "recipe_methi_aloo",
+      "name": "Methi Aloo"
+    },
+    {
+      "food_id": "recipe_cucumber_salad",
+      "name": "Kachumber Cucumber Salad"
+    },
+    {
+      "food_id": "recipe_lowfat_paneer_bhurji",
+      "name": "Low-Fat Paneer Bhurji"
+    },
+    {
+      "food_id": "recipe_palak_paneer",
+      "name": "Palak Paneer"
+    },
+    {
+      "food_id": "recipe_chaas_buttermilk",
+      "name": "Spiced Buttermilk (Chaas)"
+    },
+    {
+      "food_id": "recipe_soya_chunk_curry",
+      "name": "Soya Chunk Curry"
+    }
+  ],
+  "scope": "B12 only; other nutrient estimates are unchanged"
+}

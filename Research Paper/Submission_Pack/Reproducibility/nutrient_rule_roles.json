@@ -1,0 +1,318 @@
+{
+  "rule_version": "adult-food-rule-review-v4-exposure-separated",
+  "note": "Roles and contextual references only; numeric patient-specific bounds are not inferred here.",
+  "rules": [
+    {
+      "nutrient": "DR1TKCAL",
+      "unit": "kcal",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project energy prescription with 5% tolerance; not an RDA or clinical safety proof."
+    },
+    {
+      "nutrient": "DR1TPROT",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project 0.8\u20132 g/kg interval plus sex-specific floor; upper endpoint is not a UL. Renal status is unavailable."
+    },
+    {
+      "nutrient": "DR1TCARB",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "130 g adult reference plus project score-dependent upper fraction; no universally optimal diabetes carbohydrate percentage."
+    },
+    {
+      "nutrient": "DR1TSUGR",
+      "unit": "g",
+      "planning_role": "report_only",
+      "source_url": "https://www.who.int/publications/i/item/9789241549028",
+      "stage3_enforcement": "none",
+      "review_note": "Report total sugar separately; WHO free-sugar limits cannot be applied directly to total sugar."
+    },
+    {
+      "nutrient": "DR1TFIBE",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project fiber goal and computational upper bound; upper endpoint is not an established UL."
+    },
+    {
+      "nutrient": "DR1TTFAT",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "20\u201335% energy adult reference interval; applicability to this patient and current guidance requires review."
+    },
+    {
+      "nutrient": "DR1TSFAT",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://www.fao.org/4/i1953e/i1953e00.pdf",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project risk-stratified upper fraction; lower value is not an individualized medical prescription."
+    },
+    {
+      "nutrient": "DR1TMFAT",
+      "unit": "g",
+      "planning_role": "reference_interval",
+      "source_url": "https://www.fao.org/4/i1953e/i1953e00.pdf",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Nonnegative component bounded by total-fat ceiling; not a separate MUFA RDA or UL."
+    },
+    {
+      "nutrient": "DR1TPFAT",
+      "unit": "g",
+      "planning_role": "project_assumption",
+      "source_url": "https://www.fao.org/4/i1953e/i1953e00.pdf",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Project total-PUFA interval; not a substitute for separate essential LA/ALA requirements."
+    },
+    {
+      "nutrient": "DR1TCHOL",
+      "unit": "mg",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Legacy project cholesterol limits; 150/300 mg are not universally established ULs."
+    },
+    {
+      "nutrient": "DR1TATOC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RDA reference; supplemental UL is not a food ceiling."
+    },
+    {
+      "nutrient": "DR1TRET",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Preformed vitamin A UL screening; include supplements and ester forms for a full assessment."
+    },
+    {
+      "nutrient": "DR1TVARA",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RAE adequacy reference; preformed-vitamin-A UL must not cap total RAE."
+    },
+    {
+      "nutrient": "DR1TACAR",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Research/reporting field; no independent adequacy minimum or supported clinical ceiling is configured."
+    },
+    {
+      "nutrient": "DR1TBCAR",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Research/reporting field; no independent adequacy minimum or supported clinical ceiling is configured."
+    },
+    {
+      "nutrient": "DR1TLYCO",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Research/reporting field; no independent adequacy minimum or supported clinical ceiling is configured."
+    },
+    {
+      "nutrient": "DR1TLZ",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminA-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Research/reporting field; no independent adequacy minimum or supported clinical ceiling is configured."
+    },
+    {
+      "nutrient": "DR1TVB1",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Thiamin-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RDA reference; no established UL."
+    },
+    {
+      "nutrient": "DR1TVB2",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Riboflavin-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RDA reference; no established UL."
+    },
+    {
+      "nutrient": "DR1TNIAC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Niacin-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Food niacin is a proxy for NE; tryptophan contribution is unavailable. Synthetic/supplemental UL is not a whole-food ceiling."
+    },
+    {
+      "nutrient": "DR1TVB6",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminB6-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex US RDA and UL reference; this is not a universally agreed international ceiling."
+    },
+    {
+      "nutrient": "DR1TFOLA",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Total folate reporting only; 400 ug DFE is not a total-folate requirement."
+    },
+    {
+      "nutrient": "DR1TFA",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Synthetic folic acid ceiling requires counting fortified foods and supplements; food basket alone is incomplete exposure."
+    },
+    {
+      "nutrient": "DR1TFF",
+      "unit": "ug",
+      "planning_role": "report_only",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "stage3_enforcement": "none",
+      "review_note": "Food folate reporting only; no independent duplicate adequacy target or natural-food UL."
+    },
+    {
+      "nutrient": "DR1TFDFE",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "DFE adequacy reference; the folic-acid UL is expressed in ug folic acid, not DFE."
+    },
+    {
+      "nutrient": "DR1TVB12",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "RDA reference; no established UL; missing data remain a priority gap."
+    },
+    {
+      "nutrient": "DR1TVC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminC-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex reference; smoking-related additional needs are not implemented."
+    },
+    {
+      "nutrient": "DR1TVK",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/VitaminK-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "K1 used as a proxy for the vitamin K AI, not an RDA; no established UL; vitamin K antagonist therapy needs review."
+    },
+    {
+      "nutrient": "DR1TCALC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Calcium-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex RDA and UL reference; include other foods and supplements."
+    },
+    {
+      "nutrient": "DR1TPHOS",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Phosphorus-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age-dependent RDA and UL reference; renal disease requires separate assessment."
+    },
+    {
+      "nutrient": "DR1TMAGN",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Magnesium-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex RDA reference; supplemental magnesium UL is not a food magnesium ceiling."
+    },
+    {
+      "nutrient": "DR1TIRON",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex RDA and UL reference; menstrual status and vegetarian bioavailability need review."
+    },
+    {
+      "nutrient": "DR1TZINC",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age/sex reference; bioavailability and supplements may alter interpretation."
+    },
+    {
+      "nutrient": "DR1TCOPP",
+      "unit": "mg",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Copper-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Age-dependent RDA and UL reference."
+    },
+    {
+      "nutrient": "DR1TSODI",
+      "unit": "mg",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Legacy project sodium interval; 500 mg floor and risk-score choice of ceiling require review."
+    },
+    {
+      "nutrient": "DR1TPOTA",
+      "unit": "mg",
+      "planning_role": "project_assumption",
+      "source_url": "https://ods.od.nih.gov/factsheets/Potassium-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "Legacy project interval; AI differs by sex. Screening-score-based potassium escalation requires clinical review."
+    },
+    {
+      "nutrient": "DR1TSELE",
+      "unit": "ug",
+      "planning_role": "reference_interval",
+      "source_url": "https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/",
+      "stage3_enforcement": "required_for_acceptance",
+      "review_note": "US RDA and UL reference; other authorities can differ."
+    },
+    {
+      "nutrient": "DR1TCAFF",
+      "unit": "mg",
+      "planning_role": "exposure_reporting",
+      "source_url": "https://www.fda.gov/consumers/consumer-updates/spilling-beans-how-much-caffeine-too-much",
+      "stage3_enforcement": "none",
+      "review_note": "400 mg FDA general adult exposure reference; not universal safety, and drinks outside the plan are omitted."
+    },
+    {
+      "nutrient": "DR1TALCO",
+      "unit": "g",
+      "planning_role": "exposure_reporting",
+      "source_url": "https://ods.od.nih.gov/HealthInformation/nutrientrecommendations.aspx",
+      "stage3_enforcement": "none",
+      "review_note": "Legacy project exposure restriction, not a safe drinking allowance or recommendation to drink."
+    }
+  ]
+}

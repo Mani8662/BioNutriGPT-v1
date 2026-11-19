@@ -26,6 +26,62 @@ export interface TxtParseResponse {
   summary: string
 }
 
+export interface RevisionDiff {
+  added: Array<{ food_id: string; name: string; quantity: number }>
+  removed: Array<{ food_id: string; name: string; quantity: number }>
+  quantity_changed: Array<{ food_id: string; name: string; previous_quantity: number; new_quantity: number }>
+  unchanged: Array<{ food_id: string; name: string; quantity: number }>
+  total_serving_delta: number
+}
+
+export interface ChatResponse {
+  answer: string
+  intent: 'plan' | 'nutrient' | 'portion' | 'risk' | 'revision' | 'history' | 'rollback' | 'allergy' | 'unsupported'
+  sources: string[]
+  tool_calls_used?: string[]
+  revision_diff?: RevisionDiff | null
+  session_id?: string | null
+  plan_version?: number | null
+  plan_flagged_unsuitable?: boolean
+  proposed_meal_plan?: {
+    solved_food_basket: FoodItem[]
+    delivered_nutrition: Array<Record<string, any>>
+    clinical_verification: Record<string, any>
+    revision: Record<string, any>
+  } | null
+}
+
+export interface PlanSessionVersion {
+  version: number
+  created_at: string
+  reason: string
+  diff_from_previous?: RevisionDiff | null
+  flagged_unsuitable_for_allergies?: string[]
+}
+
+export interface PlanSessionRecord {
+  session_id: string
+  created_at: string
+  updated_at: string
+  current_version: number
+  versions: PlanSessionVersion[]
+  preferences: {
+    excluded_food_ids: string[]
+    preferred_food_ids: string[]
+    locked_food_quantities: Record<string, number>
+    max_active_dishes: number | null
+    reported_allergies: string[]
+  }
+}
+
+export interface ChatAcceptResponse {
+  session_id?: string | null
+  plan_version?: number
+  revision_diff?: RevisionDiff
+  dossier: Record<string, any>
+  meal_plan: MealPlanResult
+}
+
 export interface RiskProbabilities {
   diabetes: number
   obesity: number
@@ -81,6 +137,9 @@ export interface MealSlot {
 }
 
 export interface MealPlanResult {
+  accepted: boolean
+  failure?: { code: string; message: string; details?: Record<string, any> } | null
+  clinical_verification?: Record<string, any>
   solved_food_basket: Array<{
     food_id: string
     name: string
@@ -93,12 +152,21 @@ export interface MealPlanResult {
   meal_schedule: MealSlot[]
   delivered_nutrition: Array<{
     nutrient: string
-    prescribed_target: number
-    delivered_value: number
-    lower_bound: number
-    upper_bound: number
-    delta: number
-    unit: string
+    delivered?: number
+    target?: number
+    min_bound?: number
+    max_bound?: number
+    within_bounds?: boolean
+    constraint_applied?: boolean
+    unknown_food_count?: number
+    value_status?: string
+    rule_provenance?: Record<string, any>
+    prescribed_target?: number
+    delivered_value?: number
+    lower_bound?: number
+    upper_bound?: number
+    delta?: number
+    unit?: string
   }>
   solver_metadata: {
     solver: string
@@ -151,6 +219,8 @@ export interface ClinicalReport {
 }
 
 export interface FullPipelineResponse {
+  pipeline_status?: string
+  pipeline_failure?: { code: string; message: string } | null
   screening: ScreeningResult
   meal_plan: MealPlanResult | null
   clinical_report: ClinicalReport | null
@@ -162,6 +232,46 @@ export interface FullPipelineResponse {
     total_pipeline_ms: number
   }
   mode_a_subsecond: boolean
+}
+
+export interface FoodCatalogItem {
+  food_id: string
+  name: string
+  category: string
+  serving_unit: string
+  serving_weight_g: number
+  data_source: string
+  catalog_version?: string
+  unknown_nutrients?: string[]
+  allergen_info?: {
+    known_allergens?: string[]
+    unknown_allergens_possible?: boolean
+  }
+}
+
+export interface IntakeChatState {
+  dietary_mode?: 'pure_vegetarian' | 'veg_nonveg_combo' | 'pure_non_vegetarian' | null
+  allergies_answered?: boolean
+  allergies?: string[]
+  dislikes_answered?: boolean
+  disliked_terms?: string[]
+  excluded_food_ids?: string[]
+}
+
+export interface IntakeChatResponse {
+  assistant_reply: string
+  state: IntakeChatState
+  ready_to_generate: boolean
+  llm_used: boolean
+  meal_plan?: MealPlanResult | null
+}
+
+export interface MealPlanPreferences {
+  dietary_preference: 'pure_vegetarian' | 'veg_nonveg_combo' | 'pure_non_vegetarian'
+  allergies: string[]
+  excluded_food_ids: string[]
+  disliked_terms: string[]
+  max_active_dishes: number | null
 }
 
 export interface HealthStatus {

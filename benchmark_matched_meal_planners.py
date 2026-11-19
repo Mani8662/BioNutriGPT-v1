@@ -130,11 +130,10 @@ def pick_cases() -> list[dict[str, Any]]:
 def load_recipe_catalog() -> list[s3.FoodItem]:
     catalog = [f for f in s3.load_food_database() if f.food_id.startswith("recipe_")]
     if not catalog:
-        raise RuntimeError("No recipe_* entries found in food_composition_ifct2017.csv")
+        raise RuntimeError("No recipe_* entries found in active food catalog")
     missing = sorted({f.food_id for f in catalog} - set(PRICE_INR))
-    extra = sorted(set(PRICE_INR) - {f.food_id for f in catalog})
-    if missing or extra:
-        raise RuntimeError(f"Price map/catalog mismatch; missing={missing}, extra={extra}")
+    if missing:
+        raise RuntimeError(f"Price map/catalog mismatch; missing={missing}")
     return catalog
 
 
@@ -523,8 +522,8 @@ def write_outputs(report: dict[str, Any]) -> None:
         "## Design",
         "",
         f"- {report['metadata']['n_cases']} balanced synthetic profiles (five each: diabetes, obesity, CVD/hypertension, multimorbid).",
-        f"- Same {report['metadata']['food_count']} cooked Indian recipes, household serving units, seven nutrient bounds, plate rules, estimated serving prices, and objective for every method.",
-        f"- Real local model: `{MODEL_ID}`, 4-bit NF4; model load time {report['metadata']['qwen_model_load_seconds']:.1f} s (one-time). Qwen plans are scored as generated, without repair.",
+        f"- Same {report['metadata']['food_count']} sourced entries (20 INDB recipe variants + 9 USDA single-food proxies; 15 unmatched legacy entries excluded), standardized gram portions, seven covered nutrient bounds, plate rules, estimated serving prices, and objective for every method.",
+        f"- Real local model: `{MODEL_ID}`, 4-bit NF4; model load time {(report['metadata'].get('qwen_model_load_seconds') or 0.0):.1f} s (one-time). Qwen plans are scored as generated, without repair.",
         "- The LP relaxes integer restrictions on servings and dish activation. A second continuous-serving comparator keeps dish activations binary and relaxes only serving quantities, isolating the effect of whole portions.",
         "- Shared score = normalized weighted nutrient-bound slack + (150/energy target)×absolute calorie deviation + 0.10 per active dish + 0.01×estimated basket cost in INR. Lower is better.",
         "- Household-practicality proxy = integer-serving plan rate and fractional-serving distance. This is not a dietitian or patient acceptability rating.",
@@ -564,7 +563,7 @@ def write_outputs(report: dict[str, Any]) -> None:
         "- The solver-score column is the actual linear optimization objective. For the LP it uses relaxed fractional dish-activation variables; realized-plan score counts each selected dish as active. The MILP's solver and realized scores should coincide up to numerical tolerance.",
         f"- Qwen met the plate rules in {llm['hard_rules_met_rate']*100:.1f}% of cases and all seven nutrient bounds in {llm['nutrient_bounds_met_rate']*100:.1f}%. Its mean estimated cost was ₹{llm['mean_estimated_cost_inr']:.2f}; median generation time was {llm['median_runtime_ms']/1000:.1f} s, excluding the one-time model load.",
         "- Price values are illustrative assumptions carried over or extended from the earlier benchmark, not verified current local market prices. Cost differences are therefore provisional.",
-        "- Nutrient and recipe values are from the project's constructed RecipeDB-style entries; the micro/secondary nutrient values are estimates. Results are a computational pilot, not clinical or taste validation.",
+        "- Nutrient and recipe values are from `food_composition_cooked_sourced.json` (20 INDB recipe variants + 9 USDA single-food proxies; 23 fully covered nutrients, 16 unsupported nutrients marked unknown). This 7-nutrient matched benchmark covers only a subset of the 23 covered fields; see `Data/food_sources/INDB/cooked_catalog_feasibility.json` for full 39-field missingness and the MUFA (`DR1TMFAT`) feasibility conflict. Results are a computational benchmark, not clinical or taste validation.",
         "- This study measures portion integrality as a practical proxy. It cannot establish that patients or dietitians prefer the integer plans; that requires blinded dietitian/patient review.",
         "",
         "Per-case plans and raw Qwen generations are in the JSON report; the CSV has the aggregated case-level scores.",
@@ -582,9 +581,9 @@ def main() -> int:
             "benchmark": "matched MILP vs continuous LP relaxation vs real local Qwen",
             "model": MODEL_ID,
             "quantization": "4-bit NF4",
-            "food_catalog": str(ROOT / "food_composition_ifct2017.csv"),
+            "food_catalog": str(ROOT / "food_composition_cooked_sourced.json"),
             "food_count": len(catalog),
-            "food_source_label": "RecipeDB Indian Cooked Formulation in project CSV; 39-field values partly estimated",
+            "food_source_label": "29 sourced entries (20 INDB recipe variants + 9 USDA single-food proxies); 15 unmatched legacy entries excluded; 23 covered / 16 unknown fields",
             "price_source": "hand-entered benchmark assumptions; unverified current prices",
             "n_cases": len(cases),
             "phenotype_counts": {p: sum(c["case_id"].startswith(p + "_") for c in cases) for p in ("DM", "OB", "CVD", "MULTI")},
@@ -609,7 +608,13 @@ def main() -> int:
     previous = None
     if previous_path.exists():
         try:
-            previous = json.loads(previous_path.read_text(encoding="utf-8"))
+            loaded_prev = json.loads(previous_path.read_text(encoding="utf-8"))
+            prev_meta = loaded_prev.get("metadata", {})
+            if (
+                prev_meta.get("food_catalog") == report["metadata"]["food_catalog"]
+                and prev_meta.get("food_count") == len(catalog)
+            ):
+                previous = loaded_prev
         except Exception:
             previous = None
     previous_cases = {item["case_id"]: item for item in (previous or {}).get("cases", [])}

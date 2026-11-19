@@ -1,0 +1,34 @@
+{
+  "hashes": {
+    "benchmark_stage4_lasi_conversational_v4.py": "3076f1803d03e677bc43ceacc7222fda26fd8f37e13526f2b022869106659dc7",
+    "stage4_benchmark_protocol.py": "b769eb9b25adc47dbfc5852624b6a0d585a3f1489aa5baeaa91a9dcebcbf3f80",
+    "stage4_benchmark_analysis.py": "d675ac3455da0d5023f7e22822eebeae97b66658f4aa88eb7c91dd5662f3c688",
+    "backend/chat_service.py": "e6c536ee448ed23c77f72839c7cbe28ea8d2eeaa4cb6e2fdd825c2e8268e3174",
+    "backend/plan_store.py": "4de682b95df5cc6c3496e979380c5c85b8df601ac2f3b779037fbe73e1423704",
+    "stage3_milp_solver.py": "5099d28963c07cb417a30da3e4244ef2fcecea22ac60ab894efc93369fad8fe4",
+    "stage2_counterfactual_engine.py": "37cadd62afd338ed6a2e86deb4a7a28556173d52e17a07a26933c96c90305aa8",
+    "nutrient_rule_policy.py": "98cd05b20980d78961dcce156fb03903e9675f9fe18bf415f6658cc9256fb04d",
+    "benchmark_lasi_stage3_indian_cohort.py": "12ee1073fdfacfd1328aa53adedf73002da0363dd9a747b48398e78810e80a5c",
+    "infer_bionutrigpt_pipeline_Stage_1_to_4.py": "ffca9669b7607f4c12d6b3cd3cc498c92a915eca70e3d2086dcb62e5aa532917",
+    "benchmark_stage4_conversational_revisions.py": "176fdec3ec582bbb0ad10b606d25c1e57f8c48153513f67e0e0ff9ab8db5626e",
+    "food_composition_cooked_sourced.json": "785b38d076c3c217565abac9f21572775dfd89654d0b1e9ffbead04aa6fce478",
+    "Data/lasi_w1_indian_cohort_100.json": "c7f8806a5a5e52fafb9c377d70cb1e735db3bf29038c2da923b03f38d8648bbb",
+    "Saved Model\\stage4_lasi_v4_frozen_scenarios.json": "6d6377d0266d2094b2a63be2bd342771053509f8b5992c247fa2e8391a8a6961"
+  },
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "packages": {
+    "torch": "2.14.0+cu130",
+    "transformers": "4.57.3",
+    "bitsandbytes": "0.50.2",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1"
+  },
+  "generation_config": {
+    "model": "Qwen/Qwen2.5-3B-Instruct",
+    "max_new_tokens": 512,
+    "do_sample": false,
+    "repetition_penalty": 1.03
+  },
+  "status": "Captured before execution; model revision and actual generation details are logged per LLM turn."
+}

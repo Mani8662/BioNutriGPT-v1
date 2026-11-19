@@ -19,6 +19,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from schemas import (
+    ChatAcceptRequest,
+    ChatRequest,
+    ChatResponse,
+    ChatRollbackRequest,
     ClinicalReport,
     DossierPayload,
     FeatureFieldInfo,
@@ -26,14 +30,19 @@ from schemas import (
     FullPipelineRequest,
     FullPipelineResponse,
     HealthStatus,
+    IntakeChatRequest,
+    IntakeChatResponse,
     LLMCompileRequest,
     MealPlanResult,
     PatientInput,
     RawTextInput,
     ScreeningResult,
+    SessionCreateRequest,
     TxtParseResponse,
 )
 import pipeline_service as ps
+import chat_service
+import plan_store
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 LOGGER = logging.getLogger("BioNutriGPT.API")
@@ -82,7 +91,7 @@ def get_sample_patient() -> dict[str, Any]:
 
 @app.get("/api/foods", response_model=list[FoodCatalogItem], tags=["Database"])
 def get_foods() -> list[FoodCatalogItem]:
-    """Return list of validated cooked Indian dishes from ICMR-NIN IFCT 2017 & RecipeDB."""
+    """Return list of sourced cooked dishes with nutrient provenance and allergen info."""
     return [FoodCatalogItem(**item) for item in ps.get_food_catalog()]
 
 
@@ -140,6 +149,88 @@ async def upload_txt_file(file: UploadFile = File(...)) -> TxtParseResponse:
 # Pipeline Modular Stage Endpoints
 # ---------------------------------------------------------------------------
 
+@app.post("/api/sessions", tags=["Stage 4"])
+def create_plan_session(payload: SessionCreateRequest) -> dict[str, Any]:
+    """Create a persistent versioned meal-plan session separated from observed Stage 1/2 inputs."""
+    try:
+        record = plan_store.create_session(payload.dossier, session_id=payload.session_id)
+        return {
+            "session_id": record["session_id"],
+            "current_version": record["current_version"],
+            "versions_count": len(record["versions"]),
+            "created_at": record["created_at"],
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.get("/api/sessions/{session_id}", tags=["Stage 4"])
+def get_plan_session(session_id: str) -> dict[str, Any]:
+    """Retrieve persistent session state, version history, preferences, and audit log."""
+    try:
+        return plan_store.get_session(session_id)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.post("/api/chat/intake-preferences", response_model=IntakeChatResponse, tags=["Stage 4"])
+def chat_intake_preferences(payload: IntakeChatRequest) -> IntakeChatResponse:
+    """Conversational free-text preference intake (dietary style, allergies, dislikes) -> triggers Stage 3."""
+    try:
+        res = chat_service.converse_intake_preferences(
+            payload.message,
+            payload.dossier,
+            current_state=payload.current_state,
+            use_llm=payload.use_llm,
+        )
+        return IntakeChatResponse(**res)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as exc:
+        LOGGER.error("Intake chat error: %s\n%s", exc, traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Could not process intake preferences.") from exc
+
+
+@app.post("/api/chat", response_model=ChatResponse, tags=["Stage 4"])
+def chat_about_plan(payload: ChatRequest) -> ChatResponse:
+    """Answer from catalog facts or return a validated, unaccepted controlled revision."""
+    try:
+        return ChatResponse(**chat_service.answer(
+            payload.message,
+            payload.dossier,
+            session_id=payload.session_id,
+            use_llm_explanation=payload.use_llm_explanation,
+        ))
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as exc:
+        LOGGER.error("Chat error: %s\n%s", exc, traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Could not check this plan request.") from exc
+
+
+@app.post("/api/chat/accept", tags=["Stage 4"])
+def accept_chat_plan(payload: ChatAcceptRequest) -> dict[str, Any]:
+    """Revalidate a proposal from catalog data before accepting it and saving a new version."""
+    try:
+        return chat_service.accept(payload.dossier, payload.proposal, session_id=payload.session_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as exc:
+        LOGGER.error("Revision acceptance error: %s\n%s", exc, traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Could not accept this plan.") from exc
+
+
+@app.post("/api/chat/rollback", tags=["Stage 4"])
+def rollback_chat_plan(payload: ChatRollbackRequest) -> dict[str, Any]:
+    """Rollback a persistent session to an earlier accepted plan version."""
+    try:
+        return chat_service.rollback(payload.session_id, payload.target_version)
+    except (ValueError, KeyError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as exc:
+        LOGGER.error("Rollback error: %s\n%s", exc, traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Could not roll back plan version.") from exc
+
 @app.post("/api/screen", response_model=ScreeningResult, tags=["Stages 1 & 2"])
 def run_screening_stage(input_data: PatientInput) -> ScreeningResult:
     """Run Stage 1 (Diagnostics) and Stage 2 (Counterfactual Optimization)."""
@@ -151,8 +242,15 @@ def run_screening_stage(input_data: PatientInput) -> ScreeningResult:
             "is_female": input_data.is_female,
             "activity_level": input_data.activity_level,
         }
-        res = ps.run_screening(input_data.features, metadata_overrides)
+        res = ps.run_screening(
+            input_data.features,
+            metadata_overrides,
+            named_features=input_data.named_features,
+            schema_version=input_data.schema_version,
+        )
         return ScreeningResult(**res)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     except Exception as exc:
         LOGGER.error("Screening error: %s\n%s", exc, traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Stage 1/2 screening failed: {exc}") from exc
@@ -160,10 +258,19 @@ def run_screening_stage(input_data: PatientInput) -> ScreeningResult:
 
 @app.post("/api/optimize", response_model=MealPlanResult, tags=["Stage 3"])
 def run_meal_optimization_stage(payload: DossierPayload) -> MealPlanResult:
-    """Run Stage 3 (HiGHS Mixed-Integer Linear Programming Meal Synthesis)."""
+    """Run Stage 3 (HiGHS MILP Meal Synthesis) incorporating dietary preferences, allergies, and dislikes."""
     try:
-        res = ps.run_optimization(payload.dossier)
+        res = ps.run_optimization(
+            payload.dossier,
+            dietary_preference=payload.dietary_preference,
+            allergies=payload.allergies,
+            excluded_food_ids=payload.excluded_food_ids,
+            disliked_terms=payload.disliked_terms,
+            max_active_dishes=payload.max_active_dishes,
+        )
         return MealPlanResult(**res)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     except Exception as exc:
         LOGGER.error("Meal optimization error: %s\n%s", exc, traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Stage 3 optimization failed: {exc}") from exc
@@ -175,6 +282,8 @@ def run_clinical_compiler(payload: DossierPayload) -> ClinicalReport:
     try:
         res = ps.run_compilation(payload.dossier, backend="transformers")
         return ClinicalReport(**res)
+    except ps.p14.Stage4Error as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     except Exception as exc:
         LOGGER.error("Compiler error: %s\n%s", exc, traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Stage 4 compilation failed: {exc}") from exc
@@ -186,6 +295,8 @@ def run_clinical_compiler_llm(payload: LLMCompileRequest) -> ClinicalReport:
     try:
         res = ps.run_compilation(payload.dossier, backend=payload.backend)
         return ClinicalReport(**res)
+    except ps.p14.Stage4Error as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     except Exception as exc:
         LOGGER.error("LLM compiler error: %s\n%s", exc, traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Stage 4 LLM compilation failed: {exc}") from exc
@@ -206,8 +317,16 @@ def run_full_pipeline_json(req: FullPipelineRequest) -> FullPipelineResponse:
             "is_female": req.is_female,
             "activity_level": req.activity_level,
         }
-        res = ps.run_full_pipeline(req.features, metadata_overrides, backend=req.backend)
+        res = ps.run_full_pipeline(
+            req.features,
+            metadata_overrides,
+            backend=req.backend,
+            named_features=req.named_features,
+            schema_version=req.schema_version,
+        )
         return FullPipelineResponse(**res)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     except Exception as exc:
         LOGGER.error("Full pipeline error: %s\n%s", exc, traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Full pipeline execution failed: {exc}") from exc

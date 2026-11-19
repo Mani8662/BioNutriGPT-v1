@@ -1,0 +1,47 @@
+{
+  "version": "stage1-comparison-v2",
+  "data_version": "stage1-foundation-v2",
+  "status": "Forward protocol after legacy results; not preregistration",
+  "seed": 42,
+  "primary_outcome_indices": [0, 2],
+  "selection": "Highest validation mean AUROC across diabetes and CVD; ties choose earliest predefined configuration. Obesity is reported separately as secondary.",
+  "training": "Same 16,894 participants and 87 transformed predictors for every family. Unweighted binary log-loss; no class weights. Joint neural models average losses equally over three outcomes. Separate classical heads share a single selected configuration. Four configurations per family is a modest equal-count search, not equal FLOPs or exhaustive optimization.",
+  "neural": {"batch_size": 64, "max_epochs": 40, "patience": 7, "gradient_clip": 1.0, "moe_aux_coefficient": 0.01, "precision": "float32", "optimizer": "AdamW", "scheduler": "none"},
+  "calibration": "One prespecified unpenalized logistic recalibrator per outcome, fitted on clipped raw probability logits using only calibration participants, after validation selects the model. Do not choose calibration method from temporal results. Report raw and calibrated separately.",
+  "evaluation": "Unweighted temporal metrics; AUROC, AP, Brier, log-loss, diagnostic calibration intercept/slope and decile curves. Descriptive sensitivity/specificity/PPV/NPV at fixed 0.5 only; no validated clinical cutoff. No confidence intervals, survey inference or superiority conclusions in this work block; paired uncertainty follows in a separate analysis.",
+  "timing": "Warm raw-model inference, batch size 1 and 128, 3 warmups and 20 repeats; excludes loading, preprocessing and recalibration. CPU models run on all available CPU threads; CUDA models synchronize timing. Deployment devices differ and are reported explicitly.",
+  "compute": "CUDA required for CatBoost and neural families; explicit failure if unavailable. CPU linear/histogram models use all logical cores via threadpoolctl. One family per invocation; checkpoint completed trials and selected model before calibration/export. Interrupted neural trial restarts from its beginning; completed trials are reused only after hash verification.",
+  "models": {
+    "logistic_regression": [{"C": 0.01}, {"C": 0.1}, {"C": 1.0}, {"C": 10.0}],
+    "hist_gradient_boosting": [
+      {"learning_rate": 0.05, "max_leaf_nodes": 15, "l2_regularization": 1.0, "max_iter": 300},
+      {"learning_rate": 0.1, "max_leaf_nodes": 15, "l2_regularization": 1.0, "max_iter": 300},
+      {"learning_rate": 0.05, "max_leaf_nodes": 31, "l2_regularization": 1.0, "max_iter": 300},
+      {"learning_rate": 0.1, "max_leaf_nodes": 31, "l2_regularization": 1.0, "max_iter": 300}
+    ],
+    "catboost": [
+      {"depth": 4, "learning_rate": 0.03, "iterations": 600, "l2_leaf_reg": 3.0},
+      {"depth": 4, "learning_rate": 0.1, "iterations": 600, "l2_leaf_reg": 3.0},
+      {"depth": 6, "learning_rate": 0.03, "iterations": 600, "l2_leaf_reg": 3.0},
+      {"depth": 6, "learning_rate": 0.1, "iterations": 600, "l2_leaf_reg": 3.0}
+    ],
+    "mlp": [
+      {"hidden": [256, 128], "dropout": 0.1, "lr": 0.0003, "weight_decay": 0.0001},
+      {"hidden": [256, 128], "dropout": 0.1, "lr": 0.001, "weight_decay": 0.0001},
+      {"hidden": [256, 256, 128], "dropout": 0.2, "lr": 0.0003, "weight_decay": 0.0001},
+      {"hidden": [256, 256, 128], "dropout": 0.2, "lr": 0.001, "weight_decay": 0.0001}
+    ],
+    "bionutrigpt": [
+      {"lr": 0.0001, "weight_decay": 0.0001},
+      {"lr": 0.0003, "weight_decay": 0.0001},
+      {"lr": 0.0001, "weight_decay": 0.001},
+      {"lr": 0.0003, "weight_decay": 0.001}
+    ],
+    "ft_transformer": [
+      {"n_blocks": 2, "lr": 0.0001, "weight_decay": 0.0001},
+      {"n_blocks": 2, "lr": 0.0003, "weight_decay": 0.0001},
+      {"n_blocks": 3, "lr": 0.0001, "weight_decay": 0.0001},
+      {"n_blocks": 3, "lr": 0.0003, "weight_decay": 0.0001}
+    ]
+  }
+}

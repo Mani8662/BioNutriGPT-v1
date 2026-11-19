@@ -1,0 +1,20 @@
+{
+  "configuration": {
+    "depth": 4,
+    "learning_rate": 0.1,
+    "iterations": 600,
+    "l2_leaf_reg": 3.0
+  },
+  "seed": 42,
+  "selection_score": 0.8305265055202057,
+  "training_seconds_including_validation_and_checkpointing": 17.510682099999997,
+  "epochs": [],
+  "peak_process_rss_bytes": 986140672,
+  "cuda_peak_allocated_bytes": null,
+  "cuda_memory_scope": "PyTorch allocator only; CatBoost allocation is not measured",
+  "parameter_count": null,
+  "artifact_hashes": {
+    "model.joblib": "00860067c7c9d4eac936e0398b5bc15a662187594144f1e27dc007f6aa080fb0",
+    "validation_probabilities.npy": "251c0de59e66e96e2fa08ae83779d37af05f21bcebed215c56604a7e3e3ce0b7"
+  }
+}

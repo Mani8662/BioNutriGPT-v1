@@ -1,0 +1,54 @@
+{
+  "version": "stage1-foundation-v2",
+  "status": "Forward repair protocol after inspection of legacy results; not preregistration",
+  "minimum_age": 20,
+  "development_cycles": ["2007-2008", "2009-2010", "2011-2012", "2013-2014", "2015-2016"],
+  "temporal_cycles": ["2017-2020"],
+  "diabetes_primary": {
+    "positive": "DIQ010 == 1 OR valid LBXGH >= 6.5",
+    "negative": "DIQ010 in [2,3] AND valid LBXGH < 6.5",
+    "otherwise": "missing; exclude from complete-outcome joint study",
+    "valid_hba1c_range_percent": [3.0, 20.0],
+    "interpretation": "Reported diabetes or single-measurement elevated HbA1c research phenotype; not confirmed clinical diagnosis or specifically type 2 diabetes",
+    "borderline": "DIQ010=3 with HbA1c below threshold is diabetes-negative, not metabolically normal; strict yes/no-only sensitivity is provided",
+    "glucose": "Excluded from primary definition for uniform non-fasting ascertainment; measured-glucose composite and fully observed-component sensitivity are retained with fasting limitations"
+  },
+  "cvd_primary": {
+    "components": ["MCQ160B", "MCQ160C", "MCQ160D", "MCQ160E", "MCQ160F"],
+    "positive": "Any component == 1",
+    "negative": "Every component == 2",
+    "otherwise": "missing; never infer absence from an unanswered component",
+    "interpretation": "Self-reported history of heart failure, coronary heart disease, angina, heart attack or stroke"
+  },
+  "obesity_secondary": "Measured BMXBMI >= 30; missing or nonpositive BMI is unknown; exploratory outcome",
+  "selection": "Rebuild from available merged raw data; retain existing measured HbA1c/HDL/total cholesterol, reliable complete recall and fixed plausibility rules; require complete harmonized outcomes",
+  "split": {
+    "seed": 42,
+    "training_fraction": 0.70,
+    "validation_fraction": 0.15,
+    "calibration_fraction": 0.15,
+    "stratification": "Joint three-outcome binary pattern",
+    "procedure": "Reserve calibration with test_size=0.15; reserve validation from remainder with test_size=0.15/0.85; sklearn train_test_split, seed=42 in both calls",
+    "role_training": "Fit preprocessing and all model parameters; any inner tuning folds must fit their own preprocessors",
+    "role_validation": "Hyperparameter selection and early stopping only",
+    "role_calibration": "Fit prespecified probability recalibration after model selection; not training or early stopping",
+    "role_temporal": "Final evaluation on already-inspected historical temporal period; no tuning/calibration",
+    "thresholds": "No new clinical threshold selected in this task; define action and development-only selection rule before comparison"
+  },
+  "preprocessing": "Reuse named-feature transformations; fit medians, modes, skew selection, clipping and scaling solely on new training partition",
+  "production": "Separate research artifacts only; existing checkpoint is incompatible with refitted preprocessing and must not be paired with it",
+  "sources": {
+    "diq": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_DIQ.htm",
+    "mcq": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_MCQ.htm",
+    "glucose": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_GLU.htm",
+    "hba1c": "https://www.niddk.nih.gov/health-information/diagnostic-tests/a1c-test"
+  },
+  "limitations": [
+    "Original upstream development assembly file is absent; rebuilding begins at the available merged raw file",
+    "Unweighted selected analytic sample; survey weighting and cross-cycle assay harmonization remain separate audits",
+    "Current complete-outcome, complete-recall and measured-laboratory requirements introduce selection",
+    "Medication-based sensitivity and pregnancy applicability require additional review",
+    "Indian prediction performance remains unestablished",
+    "This protocol has not been selected based on new model performance"
+  ]
+}
