@@ -125,9 +125,11 @@ async def run_document_pipeline(
         notices.append("Some extracted values were outside the model’s allowed ranges and were excluded.")
     if missing_features:
         notices.append(
-            f"The predictor requires all 87 trained input features. The LLM found {len(extracted_values)}; "
+            f"The predictor requires all 87 trained input features. The document parser found {len(extracted_values)}; "
             f"the model was not run because {len(missing_features)} are absent. No sample defaults were substituted."
         )
+        if os.getenv("BIONUTRIGPT_DOCUMENT_EXTRACTOR", "local").lower() != "llm":
+            notices.append("Fast local extraction only accepts clear feature labels, values, and units. Enter the remaining model inputs in the form or upload the complete 87-value patient vector.")
         return DocumentPipelineResponse(
             status="needs_more_input",
             extracted_values=extracted_values,

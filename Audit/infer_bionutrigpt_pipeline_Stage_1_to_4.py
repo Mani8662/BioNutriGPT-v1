@@ -471,39 +471,26 @@ def _load_local_qwen_cached(model_name: str) -> tuple[Any, Any]:
     except ImportError as exc:
         raise Stage4Error("Local Qwen execution requires `transformers`, `torch`, `accelerate`, and `bitsandbytes`.") from exc
 
-    LOGGER.info("Configuring 4-bit BitsAndBytes quantization for %s...", model_name)
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True,
-    )
+    use_cuda = torch.cuda.is_available()
+    use_mps = bool(getattr(torch.backends, "mps", None) and torch.backends.mps.is_available())
+    load_kwargs: dict[str, Any] = {"device_map": "cuda:0" if use_cuda else ("mps" if use_mps else "cpu")}
+    if use_cuda:
+        LOGGER.info("Configuring 4-bit BitsAndBytes quantization for %s...", model_name)
+        load_kwargs["quantization_config"] = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.float16,
+            bnb_4bit_use_double_quant=True,
+        )
+        load_kwargs["torch_dtype"] = torch.float16
+    else:
+        LOGGER.info("Loading %s on %s without CUDA quantization...", model_name, "Apple MPS" if use_mps else "CPU")
+        load_kwargs["torch_dtype"] = torch.float16 if use_mps else torch.float32
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    if "3b" in model_name.lower():
-        device_map = "cuda:0" if torch.cuda.is_available() else "auto"
-        max_mem = None
-    else:
-        device_map = "auto"
-        max_mem = {0: "3.5GiB", "cpu": "16GiB"} if torch.cuda.is_available() else None
-
-    load_kwargs: dict[str, Any] = {
-        "quantization_config": bnb_config,
-        "device_map": device_map,
-        "torch_dtype": torch.float16,
-    }
-    if max_mem:
-        load_kwargs["max_memory"] = max_mem
-
-    try:
-        model = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
-    except Exception as exc:
-        LOGGER.warning("Accelerate device mapping hit an error (%s); falling back to device_map='auto'", exc)
-        load_kwargs["device_map"] = "auto"
-        load_kwargs.pop("max_memory", None)
-        model = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
+    model = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
 
     _TORCH_MODEL_CACHE[model_name] = (tokenizer, model)
     return tokenizer, model

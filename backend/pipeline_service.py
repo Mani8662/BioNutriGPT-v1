@@ -359,9 +359,15 @@ def run_compilation(dossier: dict[str, Any], backend: str = "transformers") -> d
 
 
 def extract_pipeline_features(document_text: str) -> dict[str, Any]:
-    """Use the configured local LLM to extract only explicitly reported model inputs."""
+    """Extract explicit model inputs quickly; opt into LLM extraction when configured."""
     if not document_text.strip():
         raise ValueError("No readable document text was provided.")
+
+    # Avoid loading a multi-billion-parameter model for routine file uploads.
+    # The local parser only accepts a value when its feature label/code and unit
+    # are present on the same line, so unsupported or ambiguous rows stay missing.
+    if os.getenv("BIONUTRIGPT_DOCUMENT_EXTRACTOR", "local").lower() != "llm":
+        return _extract_pipeline_features_locally(document_text)
 
     feature_catalog = [
         f"{item['name']} | {item['label']} | expected unit: {item['unit']} | "
@@ -505,6 +511,58 @@ def extract_pipeline_features(document_text: str) -> dict[str, Any]:
     if safe_metadata["activity_level"] not in {"sedentary", "light", "moderate", "active"}:
         safe_metadata["activity_level"] = None
     return {"features": feature_values, "metadata": safe_metadata, "rejected_values": rejected_values}
+
+
+def _extract_pipeline_features_locally(document_text: str) -> dict[str, Any]:
+    """Read unambiguous label/value/unit rows without loading an LLM."""
+    features: dict[str, float] = {}
+    rejected: list[dict[str, Any]] = []
+    lines = document_text.splitlines()
+    for definition in FEATURE_DEFINITIONS:
+        code = definition["name"]
+        code_key = _normalize_feature_name(code)
+        label_key = _normalize_feature_name(definition["label"])
+        matches = []
+        for line in lines:
+            normalized = _normalize_feature_name(line)
+            if code_key in normalized or (label_key and label_key in normalized):
+                # Require a single nearby value; ranges and multiple values are ambiguous.
+                marker = re.search(re.escape(code), line, re.I)
+                if not marker:
+                    marker = re.search(re.escape(definition["label"]), line, re.I)
+                if not marker:
+                    continue
+                tail = line[marker.end():]
+                numbers = re.findall(r"(?<![\w.])[-+]?(?:\d+\.?\d*|\.\d+)(?![\w.])", tail)
+                if numbers:
+                    matches.append((line.strip(), numbers[0], len(numbers)))
+        if len(matches) != 1:
+            continue
+        evidence, raw_value, number_count = matches[0]
+        expected_unit = definition["unit"]
+        unit_aliases = {
+            "mg/dL": r"mg\s*/\s*dL", "g": r"\bg\b", "mg": r"\bmg\b",
+            "kcal": r"\bkcal\b", "hours/night": r"hours?\s*(?:/\s*night)?",
+            "years": r"\byears?\b", "ratio": r"\bratio\b", "%": r"%",
+        }
+        unit_pattern = unit_aliases.get(expected_unit)
+        has_unit = bool(unit_pattern and re.search(unit_pattern, evidence, re.I))
+        is_binary = expected_unit == "0 or 1" and raw_value in {"0", "1"}
+        if not has_unit and not is_binary:
+            continue
+        try:
+            value = float(raw_value)
+        except ValueError:
+            continue
+        if not math.isfinite(value) or not definition["min_val"] <= value <= definition["max_val"]:
+            rejected.append({"name": code, "value": value, "reason": "outside model input range"})
+            continue
+        if number_count > 1 and not re.search(r"\b(?:result|value|measured)\b", evidence, re.I):
+            continue
+        features[code] = value
+
+    metadata: dict[str, Any] = {key: None for key in ("age_years", "weight_kg", "height_cm", "is_female", "activity_level")}
+    return {"features": features, "metadata": metadata, "rejected_values": rejected}
 
 
 def _contains_verbatim_evidence(document_text: str, evidence: str) -> bool:
