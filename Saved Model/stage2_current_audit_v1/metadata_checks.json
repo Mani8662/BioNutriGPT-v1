@@ -1,0 +1,77 @@
+[
+  {
+    "case": "missing_weight",
+    "accepted": false,
+    "error": "patient_metadata is missing required keys: ['weight_kg']."
+  },
+  {
+    "case": "minor_age",
+    "accepted": true,
+    "result": {
+      "weight_kg": 70.0,
+      "height_cm": 170.0,
+      "age_years": 12.0,
+      "is_female": false,
+      "activity_level": "sedentary"
+    }
+  },
+  {
+    "case": "zero_age",
+    "accepted": true,
+    "result": {
+      "weight_kg": 70.0,
+      "height_cm": 170.0,
+      "age_years": 0.0,
+      "is_female": false,
+      "activity_level": "sedentary"
+    }
+  },
+  {
+    "case": "negative_weight",
+    "accepted": false,
+    "error": "weight_kg and height_cm must be > 0; age_years must be >= 0."
+  },
+  {
+    "case": "nonfinite_height",
+    "accepted": false,
+    "error": "height_cm must be finite; got nan."
+  },
+  {
+    "case": "unknown_activity",
+    "accepted": false,
+    "error": "activity_level must be one of ['active', 'light', 'moderate', 'sedentary']; received 'unknown'."
+  },
+  {
+    "case": "sex_inferred",
+    "accepted": true,
+    "result": {
+      "weight_kg": 70.0,
+      "height_cm": 170.0,
+      "age_years": 42.0,
+      "is_female": false,
+      "activity_level": "sedentary"
+    }
+  },
+  {
+    "case": "declared_renal",
+    "accepted": true,
+    "result": {
+      "weight_kg": 70.0,
+      "height_cm": 170.0,
+      "age_years": 42.0,
+      "is_female": false,
+      "activity_level": "sedentary"
+    }
+  },
+  {
+    "case": "declared_pregnancy",
+    "accepted": true,
+    "result": {
+      "weight_kg": 70.0,
+      "height_cm": 170.0,
+      "age_years": 42.0,
+      "is_female": false,
+      "activity_level": "sedentary"
+    }
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "cases": [
+    "baseline",
+    "repeat"
+  ],
+  "selection": "Existing backend sample with dietary ratios recomputed consistently in every case; no selection or retries",
+  "iterations_per_run": 50,
+  "claims": "Model-score behavior only; no health-effect inference."
+}

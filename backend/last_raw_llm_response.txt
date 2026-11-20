@@ -1,9 +1,9 @@
 {
-  "health_narrative": "Your recent health check-up shows that you're in a good place. We've made some adjustments to your meals to help you stay healthy and energized. Your body is working well, and we're making sure you get all the nutrients you need.",
+  "health_narrative": "Your body is in good shape, but we can make some small adjustments to help you stay healthy and energized throughout the day. We've included all the foods from your food basket in the meals, so you can enjoy them while meeting your nutritional needs.",
   "biomarker_driver_explanations": [
     {
       "modality": "Blood tests",
-      "plain_language_explanation": "We use blood tests to understand how your body is doing. These tests can show if you might be at risk for certain health problems."
+      "plain_language_explanation": "We use blood tests to check how well your body is working. These tests can show if you need to make changes to your diet or lifestyle."
     }
   ],
   "meal_schedule": [
@@ -15,73 +15,106 @@
           "food_id": "recipe_dal_palak",
           "name": "Arhar with spinach (Arhar dal aur palak)",
           "quantity": 1,
-          "guidance": "Enjoy your Arhar with spinach. It's a great way to start your day with a nutritious meal."
+          "items": [
+            {
+              "food_id": "recipe_dal_palak",
+              "name": "Arhar with spinach (Arhar dal aur palak)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 150 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "Start your day with a balanced breakfast. Enjoy your Arhar with spinach. It's a great way to start your day with a nutritious meal."
+      "guidance": "Enjoy your Arhar with spinach. It's a great way to start your day with a balanced meal."
     },
     {
       "meal": "Mid-Morning Snack",
-      "time": "10:30",
-      "items": [
-        {
-          "food_id": "recipe_brown_rice_cooked",
-          "name": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
-          "quantity": 1,
-          "guidance": "Take a small portion of cooked rice. It's a good source of carbohydrates and fiber."
-        }
-      ],
-      "guidance": "Have a mid-morning snack. A small portion of cooked rice is a good choice. It's a good source of carbohydrates and fiber."
-    },
-    {
-      "meal": "Lunch",
-      "time": "13:00",
+      "time": "10:00",
       "items": [
         {
           "food_id": "recipe_plain_dosa",
           "name": "Plain dosa",
           "quantity": 1,
-          "guidance": "Enjoy a plain dosa. It's a tasty and nutritious option for lunch."
+          "items": [
+            {
+              "food_id": "recipe_plain_dosa",
+              "name": "Plain dosa",
+              "quantity": 1,
+              "serving_unit": "1 standardized 100 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "Have a nutritious lunch. Enjoy a plain dosa. It's a tasty and nutritious option for lunch."
+      "guidance": "Have a plain dosa. It's a light snack that can keep you feeling full until lunch."
+    },
+    {
+      "meal": "Lunch",
+      "time": "12:30",
+      "items": [
+        {
+          "food_id": "recipe_brown_rice_cooked",
+          "name": "Brown rice, cooked (Bhure chawal)",
+          "quantity": 1,
+          "items": [
+            {
+              "food_id": "recipe_brown_rice_cooked",
+              "name": "Brown rice, cooked (Bhure chawal)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 100 g portion"
+            }
+          ]
+        }
+      ],
+      "guidance": "Eat a serving of brown rice. It's a nutritious grain that's good for your heart and blood sugar levels."
     },
     {
       "meal": "Evening Snack",
-      "time": "17:00",
+      "time": "18:00",
       "items": [
         {
           "food_id": "recipe_bhindi_masala",
           "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
           "quantity": 1,
-          "guidance": "Have a side of okra fry. It's a simple and delicious snack to enjoy after work."
+          "items": [
+            {
+              "food_id": "recipe_bhindi_masala",
+              "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 120 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "Have a simple and delicious snack. Have a side of okra fry. It's a simple and delicious snack to enjoy after work."
+      "guidance": "Have a side of okra. It's a tasty vegetable that's good for your health."
     },
     {
       "meal": "Dinner",
-      "time": "19:30",
+      "time": "20:30",
       "items": [
         {
-          "food_id": "recipe_cabbage_peas",
-          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "food_id": "recipe_skim_curd",
+          "name": "Skim-milk curd / dahi (plain)",
           "quantity": 1,
-          "guidance": "End your day with a healthy dinner. Enjoy cabbage and peas. It's a balanced meal that will keep you full and satisfied."
+          "items": [
+            {
+              "food_id": "recipe_skim_curd",
+              "name": "Skim-milk curd / dahi (plain)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 150 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "End your day with a healthy dinner. Enjoy cabbage and peas. It's a balanced meal that will keep you full and satisfied."
+      "guidance": "End your day with a bowl of plain curd. It's a good source of protein and calcium."
     }
   ],
   "culinary_directives": [
-    "Use fresh ingredients whenever possible.",
-    "Cook your meals at home to better control the quality and quantity of ingredients.",
-    "Stay hydrated throughout the day, especially during meals."
+    "Make sure to drink plenty of water throughout the day. It's important for your health and helps you stay hydrated."
   ],
   "lifestyle_hydration_guidance": {
-    "hydration": "Drink plenty of water throughout the day, especially before and after meals.",
-    "post_meal_activity": "After meals, take a short walk to aid digestion and promote overall health.",
-    "sleep_hygiene": "Ensure you get enough sleep each night to support your body's natural rhythms and processes."
+    "hydration": "Drink at least 8 glasses of water per day.",
+    "post_meal_activity": "After meals, take a short walk to help with digestion and reduce bloating.",
+    "sleep_hygiene": "Ensure you get 7-9 hours of sleep each night to support your overall health."
   },
-  "closing_message": "We hope these meal suggestions help you feel your best. Remember, it's important to listen to your body and adjust as needed. If you have any questions or concerns, please don't hesitate to reach out."
+  "closing_message": "Remember, these are just suggestions. If you have any questions or concerns, please talk to your healthcare provider."
 }

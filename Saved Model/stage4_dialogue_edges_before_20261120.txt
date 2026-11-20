@@ -1,0 +1,41 @@
+E.FFF...
+======================================================================
+ERROR: test_ambiguous_food_choice_preserves_quantity (verify_stage4_dialogue_edges.DialogueEdges.test_ambiguous_food_choice_preserves_quantity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\MANI KUMAR\CURRENT\GitHub\BioNutriGPT\Models\Less Data\verify_stage4_dialogue_edges.py", line 27, in test_ambiguous_food_choice_preserves_quantity
+    self.assertEqual(solver.call_args.args[3]['locked_food_quantities'], {'0':3})
+                     ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'args'
+
+======================================================================
+FAIL: test_decimal_servings_are_not_read_as_integers (verify_stage4_dialogue_edges.DialogueEdges.test_decimal_servings_are_not_read_as_integers) (amount='-2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\MANI KUMAR\CURRENT\GitHub\BioNutriGPT\Models\Less Data\verify_stage4_dialogue_edges.py", line 33, in test_decimal_servings_are_not_read_as_integers
+    self.assertNotIn('Check this interpreted request', result.get('clarification_options', []))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Check this interpreted request' unexpectedly found in ['Check this interpreted request', 'Cancel interpreted request']
+
+======================================================================
+FAIL: test_decimal_servings_are_not_read_as_integers (verify_stage4_dialogue_edges.DialogueEdges.test_decimal_servings_are_not_read_as_integers) (amount='0.2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\MANI KUMAR\CURRENT\GitHub\BioNutriGPT\Models\Less Data\verify_stage4_dialogue_edges.py", line 33, in test_decimal_servings_are_not_read_as_integers
+    self.assertNotIn('Check this interpreted request', result.get('clarification_options', []))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Check this interpreted request' unexpectedly found in ['Check this interpreted request', 'Cancel interpreted request']
+
+======================================================================
+FAIL: test_meal_modifiers_are_not_silently_dropped (verify_stage4_dialogue_edges.DialogueEdges.test_meal_modifiers_are_not_silently_dropped) (modifier='only if it costs less')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\MANI KUMAR\CURRENT\GitHub\BioNutriGPT\Models\Less Data\verify_stage4_dialogue_edges.py", line 18, in test_meal_modifiers_are_not_silently_dropped
+    self.assertNotIn('Check this interpreted request', reply.get('clarification_options', []))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Check this interpreted request' unexpectedly found in ['Check this interpreted request', 'Cancel interpreted request']
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.777s
+
+FAILED (failures=3, errors=1)

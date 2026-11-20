@@ -228,6 +228,7 @@ def run_stage1_diagnostics(
     preprocessor_path: Path = DEFAULT_PREPROCESSOR,
 ) -> tuple[dict[str, Any], torch.device]:
     """Run Stage 1 using the exact preprocessing/model loaders from Stage 2."""
+    raw_vector, ratio_audit = s2.canonicalize_dietary_ratios(raw_vector)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     artifacts = s2._load_preprocessing_artifacts(preprocessor_path)
     model = s2._load_stage1_model(checkpoint_path, artifacts, device)
@@ -295,6 +296,8 @@ def run_stage1_diagnostics(
             ]
 
     assessment = {
+        "derived_input_audit": ratio_audit,
+        "model_binding": s2.model_binding(checkpoint_path, preprocessor_path),
         "probabilities": probabilities,
         "classifications": classifications,
         "top_feature_drivers": top_drivers,

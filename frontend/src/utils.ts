@@ -11,6 +11,8 @@ export const splitList = (text: string) => [
   ),
 ];
 export function validateProfile(values: string[], meta: PatientMetadata) {
+  if (meta.renal_disease === true || meta.pregnant === true || meta.lactating === true)
+    return "These meal-planning rules do not cover kidney disease, pregnancy or breastfeeding. Individual review is required.";
   if (
     !Number.isFinite(meta.age_years) ||
     meta.age_years < 18 ||

@@ -99,6 +99,23 @@ export default function Profile(p: Props) {
           </button>
         </div>
         <fieldset disabled={p.busy}>
+          <div className="form-grid">
+            {([
+              ["renal_disease", "Known kidney disease"],
+              ["pregnant", "Currently pregnant"],
+              ["lactating", "Currently breastfeeding"],
+            ] as const).map(([key, label]) => (
+              <Select key={key} label={label}
+                value={p.meta[key] == null ? "unknown" : String(p.meta[key])}
+                onChange={(e) => p.setMeta({ ...p.meta, [key]: e.target.value === "unknown" ? null : e.target.value === "true" })}>
+                <option value="unknown">Unknown / not provided</option>
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </Select>
+            ))}
+          </div>
+          <p className="help">These meal-planning rules are for adults. A Yes answer requires individual review and stops automatic planning. Unknown answers remain unverified.</p>
+
           {tab === "import" ? (
             <div className="import-panel">
               <label className="upload-box">

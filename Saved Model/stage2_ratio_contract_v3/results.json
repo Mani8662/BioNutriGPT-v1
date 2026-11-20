@@ -1,0 +1,200 @@
+[
+  {
+    "case": "baseline",
+    "certified": true,
+    "immutable_unchanged": true,
+    "target": [
+      1989.94140625,
+      92.0260238647461,
+      250.9166717529297,
+      43.88202667236328,
+      31.389114465186786,
+      68.32939147949219,
+      18.28786277770996,
+      29.794782638549805,
+      18.649118423461914,
+      219.6864471435547,
+      15.0,
+      349.8891296386719,
+      900.0201416015625,
+      500.0093688964844,
+      3200.00341796875,
+      6000.001953125,
+      1800.0087890625,
+      2.9904394149780273,
+      3.019306182861328,
+      16.075923919677734,
+      3.3564019203186035,
+      500.0078430175781,
+      120.6047134399414,
+      379.9157409667969,
+      583.961669921875,
+      2.7806882858276367,
+      99.91304779052734,
+      120.34748077392578,
+      1000.0,
+      1400.0235595703125,
+      420.0,
+      16.01702880859375,
+      11.014217376708984,
+      2.6424479484558105,
+      1899.9915771484375,
+      3500.006103515625,
+      89.66127014160156,
+      79.3887710571289,
+      0.0
+    ],
+    "bounds_violations": [],
+    "filters": {
+      "filter_1_thermodynamic_balance": {
+        "passed": true,
+        "adjusted": false,
+        "calculated_kcal": 1986.7353057861328,
+        "target_kcal_after_filter": 1989.94140625,
+        "relative_error_before": 0.0016111531996859203,
+        "relative_error_after": 0.0016111531996859203,
+        "passed_after_all_later_filters": true
+      },
+      "filter_2_iom_safety_clamps": {
+        "passed": true,
+        "changes": [],
+        "sodium_max": 2300.0,
+        "potassium_min": 2600.0,
+        "protein_g_per_kg": 1.2435949170911633,
+        "target_kcal": 1989.94140625,
+        "passed_after_all_later_filters": true
+      },
+      "filter_3_clinical_ratio_coherence": {
+        "passed": true,
+        "changes": [
+          "DR1TFIBE increased to satisfy baseline sugar-to-fiber ratio"
+        ],
+        "unresolved": [],
+        "baseline": {
+          "sugar_to_fiber": 1.3548387289047241,
+          "sodium_to_potassium": 0.5427020788192749,
+          "sat_to_unsat_fat": 0.39911308884620667
+        },
+        "target": {
+          "sugar_to_fiber": 1.3548387289047241,
+          "sodium_to_potassium": 0.5426987331557384,
+          "sat_to_unsat_fat": 0.37672832997802114
+        },
+        "within_nutrient_bounds": true,
+        "passed_after_all_later_filters": true
+      },
+      "filter_4_closed_loop_rescoring": {
+        "passed": true,
+        "delta_diabetes": -0.12603075802326202,
+        "delta_obesity": -0.09286108613014221,
+        "delta_cvd": -0.01693079248070717,
+        "target_probabilities": {
+          "diabetes": 0.2183280736207962,
+          "obesity": 0.1452116221189499,
+          "cvd": 0.022086136043071747
+        }
+      }
+    },
+    "seconds": 6.003028599999652,
+    "max_relative_target_change": 0.0
+  },
+  {
+    "case": "repeat",
+    "certified": true,
+    "immutable_unchanged": true,
+    "target": [
+      1989.94140625,
+      92.0260238647461,
+      250.9166717529297,
+      43.88202667236328,
+      31.389114465186786,
+      68.32939147949219,
+      18.28786277770996,
+      29.794782638549805,
+      18.649118423461914,
+      219.6864471435547,
+      15.0,
+      349.8891296386719,
+      900.0201416015625,
+      500.0093688964844,
+      3200.00341796875,
+      6000.001953125,
+      1800.0087890625,
+      2.9904394149780273,
+      3.019306182861328,
+      16.075923919677734,
+      3.3564019203186035,
+      500.0078430175781,
+      120.6047134399414,
+      379.9157409667969,
+      583.961669921875,
+      2.7806882858276367,
+      99.91304779052734,
+      120.34748077392578,
+      1000.0,
+      1400.0235595703125,
+      420.0,
+      16.01702880859375,
+      11.014217376708984,
+      2.6424479484558105,
+      1899.9915771484375,
+      3500.006103515625,
+      89.66127014160156,
+      79.3887710571289,
+      0.0
+    ],
+    "bounds_violations": [],
+    "filters": {
+      "filter_1_thermodynamic_balance": {
+        "passed": true,
+        "adjusted": false,
+        "calculated_kcal": 1986.7353057861328,
+        "target_kcal_after_filter": 1989.94140625,
+        "relative_error_before": 0.0016111531996859203,
+        "relative_error_after": 0.0016111531996859203,
+        "passed_after_all_later_filters": true
+      },
+      "filter_2_iom_safety_clamps": {
+        "passed": true,
+        "changes": [],
+        "sodium_max": 2300.0,
+        "potassium_min": 2600.0,
+        "protein_g_per_kg": 1.2435949170911633,
+        "target_kcal": 1989.94140625,
+        "passed_after_all_later_filters": true
+      },
+      "filter_3_clinical_ratio_coherence": {
+        "passed": true,
+        "changes": [
+          "DR1TFIBE increased to satisfy baseline sugar-to-fiber ratio"
+        ],
+        "unresolved": [],
+        "baseline": {
+          "sugar_to_fiber": 1.3548387289047241,
+          "sodium_to_potassium": 0.5427020788192749,
+          "sat_to_unsat_fat": 0.39911308884620667
+        },
+        "target": {
+          "sugar_to_fiber": 1.3548387289047241,
+          "sodium_to_potassium": 0.5426987331557384,
+          "sat_to_unsat_fat": 0.37672832997802114
+        },
+        "within_nutrient_bounds": true,
+        "passed_after_all_later_filters": true
+      },
+      "filter_4_closed_loop_rescoring": {
+        "passed": true,
+        "delta_diabetes": -0.12603075802326202,
+        "delta_obesity": -0.09286108613014221,
+        "delta_cvd": -0.01693079248070717,
+        "target_probabilities": {
+          "diabetes": 0.2183280736207962,
+          "obesity": 0.1452116221189499,
+          "cvd": 0.022086136043071747
+        }
+      }
+    },
+    "seconds": 1.9907875999997486,
+    "max_relative_target_change": 0.0
+  }
+]

@@ -196,6 +196,17 @@ def parse_raw_text(text: str) -> tuple[list[float], dict[str, Any]]:
         if not line:
             continue
         if line.startswith("#"):
+            for key in ("renal_disease", "pregnant", "lactating"):
+                match = re.search(r"\b"+key+r"\s*[:=]\s*([^\s,;]*)", line, re.I)
+                if match:
+                    token = match[1].lower()
+                    allowed = {"true": True, "yes": True, "1": True, "false": False, "no": False, "0": False, "unknown": None, "null": None}
+                    if token not in allowed:
+                        raise ValueError(f"{key} must be yes, no or unknown.")
+                    value = allowed[token]
+                    if key in metadata and metadata[key] != value:
+                        raise ValueError(f"Conflicting declarations for {key}.")
+                    metadata[key] = value
             # Check for clinical metadata: weight_kg=74.0 height_cm=176.0 activity_level=sedentary
             w_match = re.search(r'weight(?:_kg)?\s*[:=]\s*([0-9.]+)', line, re.I)
             h_match = re.search(r'height(?:_cm)?\s*[:=]\s*([0-9.]+)', line, re.I)
@@ -332,6 +343,8 @@ def run_screening(
             activity=overrides.get("activity_level"),
         )
         patient_metadata = p12.resolve_patient_metadata(args, raw_vector)
+        for key in ("renal_disease", "pregnant", "lactating"):
+            patient_metadata[key] = overrides.get(key)
 
         # Stage 1: Diagnostics
         t0 = time.perf_counter()

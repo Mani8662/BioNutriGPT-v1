@@ -1,0 +1,1 @@
+Initial pilot has inconsistent handling of derived dietary ratios between baseline and dietary perturbations. Do not interpret target changes as isolated dietary sensitivity. Retained as audit evidence; see stage2_stability_v2/Report.md for consistently recomputed inputs.

@@ -193,7 +193,7 @@ def rollback_version(
     rev_info = target["stage3_plan"].get("revision", {})
     record["preferences"]["excluded_food_ids"] = list(rev_info.get("excluded_food_ids", []))
     initial = target["stage3_plan"].get("preferences_applied", {})
-    for key, default in (("locked_food_quantities", {}), ("preferred_food_ids", []),
+    for key, default in (("excluded_food_groups", []), ("meal_requirements", {}), ("locked_food_quantities", {}), ("preferred_food_ids", []),
                          ("excluded_ingredient_codes", []), ("max_active_dishes", None)):
         record["preferences"][key] = copy.deepcopy(rev_info.get(key, initial.get(key, default)))
     target["flagged_unsuitable_for_allergies"] = sorted(set(

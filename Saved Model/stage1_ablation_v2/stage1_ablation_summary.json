@@ -1,0 +1,842 @@
+{
+  "benchmark_version": "stage1-ablation-v2",
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    2026
+  ],
+  "variants": [
+    "full",
+    "no_moe",
+    "mean_pooling",
+    "no_modality_embeddings",
+    "no_head_shortcuts"
+  ],
+  "variant_stats": {
+    "full": {
+      "parameter_count": 1295623,
+      "seeds": {
+        "42": {
+          "best_epoch": 16,
+          "training_seconds": 295.1623660000005,
+          "diabetes_raw_auroc": 0.8107622469827563,
+          "diabetes_cal_brier": 0.12136289051617366,
+          "cvd_raw_auroc": 0.8338498238494492,
+          "cvd_cal_brier": 0.0866401537983965,
+          "obesity_raw_auroc": 0.7510284080554094,
+          "obesity_cal_brier": 0.20244717373908294
+        },
+        "123": {
+          "best_epoch": 14,
+          "training_seconds": 305.1524479999998,
+          "diabetes_raw_auroc": 0.8081402738124938,
+          "diabetes_cal_brier": 0.12161845384551535,
+          "cvd_raw_auroc": 0.8317437991835684,
+          "cvd_cal_brier": 0.08686178129612171,
+          "obesity_raw_auroc": 0.7492463727974331,
+          "obesity_cal_brier": 0.20317974721601248
+        },
+        "456": {
+          "best_epoch": 23,
+          "training_seconds": 449.6375065000002,
+          "diabetes_raw_auroc": 0.8079837290485758,
+          "diabetes_cal_brier": 0.12181374568229843,
+          "cvd_raw_auroc": 0.8309049824618037,
+          "cvd_cal_brier": 0.08699737341965622,
+          "obesity_raw_auroc": 0.7525507047542516,
+          "obesity_cal_brier": 0.2026868492036586
+        },
+        "789": {
+          "best_epoch": 11,
+          "training_seconds": 277.2326272,
+          "diabetes_raw_auroc": 0.8089350602720928,
+          "diabetes_cal_brier": 0.12139398821430149,
+          "cvd_raw_auroc": 0.8313264564004569,
+          "cvd_cal_brier": 0.08733248320571158,
+          "obesity_raw_auroc": 0.7458315649314491,
+          "obesity_cal_brier": 0.20407657599098156
+        },
+        "2026": {
+          "best_epoch": 12,
+          "training_seconds": 217.3274094999997,
+          "diabetes_raw_auroc": 0.8090466565394402,
+          "diabetes_cal_brier": 0.12147084171415673,
+          "cvd_raw_auroc": 0.8304056890815481,
+          "cvd_cal_brier": 0.08715535212171227,
+          "obesity_raw_auroc": 0.7519595384676204,
+          "obesity_cal_brier": 0.20236795408391975
+        }
+      },
+      "means": {
+        "diabetes_raw_auroc": 0.8089735933310719,
+        "diabetes_cal_brier": 0.12153198399448913,
+        "cvd_raw_auroc": 0.8316461501953653,
+        "cvd_cal_brier": 0.08699742876831966,
+        "obesity_raw_auroc": 0.7501233178012328,
+        "obesity_cal_brier": 0.20295166004673107,
+        "training_seconds": 308.90247144000006
+      },
+      "stds": {
+        "diabetes_raw_auroc": 0.0011045765741382716,
+        "diabetes_cal_brier": 0.000185903538196767,
+        "cvd_raw_auroc": 0.0013281557142583921,
+        "cvd_cal_brier": 0.0002661047281962235,
+        "obesity_raw_auroc": 0.0027051468240442203,
+        "obesity_cal_brier": 0.0007040602791406537,
+        "training_seconds": 85.72947898789408
+      }
+    },
+    "no_moe": {
+      "parameter_count": 700675,
+      "seeds": {
+        "42": {
+          "best_epoch": 30,
+          "training_seconds": 343.9311566000015,
+          "diabetes_raw_auroc": 0.8070902850192929,
+          "diabetes_cal_brier": 0.1219948905752926,
+          "cvd_raw_auroc": 0.8315151445279962,
+          "cvd_cal_brier": 0.0870569875163964,
+          "obesity_raw_auroc": 0.7517765446135783,
+          "obesity_cal_brier": 0.20187391857028028
+        },
+        "123": {
+          "best_epoch": 26,
+          "training_seconds": 243.7717708,
+          "diabetes_raw_auroc": 0.8095226927909754,
+          "diabetes_cal_brier": 0.12120045918509234,
+          "cvd_raw_auroc": 0.8313322208035385,
+          "cvd_cal_brier": 0.08707706213384202,
+          "obesity_raw_auroc": 0.7547903075249841,
+          "obesity_cal_brier": 0.2013529481139613
+        },
+        "456": {
+          "best_epoch": 25,
+          "training_seconds": 229.44129020000037,
+          "diabetes_raw_auroc": 0.8104044111255009,
+          "diabetes_cal_brier": 0.12079394666490195,
+          "cvd_raw_auroc": 0.8314490460393267,
+          "cvd_cal_brier": 0.08688416448303923,
+          "obesity_raw_auroc": 0.7551789622706951,
+          "obesity_cal_brier": 0.20086552187274884
+        },
+        "789": {
+          "best_epoch": 35,
+          "training_seconds": 288.45222139999896,
+          "diabetes_raw_auroc": 0.8075903791617961,
+          "diabetes_cal_brier": 0.12157958928564983,
+          "cvd_raw_auroc": 0.83087625651978,
+          "cvd_cal_brier": 0.08719717940053609,
+          "obesity_raw_auroc": 0.7481533823322584,
+          "obesity_cal_brier": 0.2034756138822335
+        },
+        "2026": {
+          "best_epoch": 22,
+          "training_seconds": 197.89586539999982,
+          "diabetes_raw_auroc": 0.808378426716362,
+          "diabetes_cal_brier": 0.12159329966323938,
+          "cvd_raw_auroc": 0.8321738236534595,
+          "cvd_cal_brier": 0.08707461446737143,
+          "obesity_raw_auroc": 0.7504129586169511,
+          "obesity_cal_brier": 0.20262539234960059
+        }
+      },
+      "means": {
+        "diabetes_raw_auroc": 0.8085972389627853,
+        "diabetes_cal_brier": 0.12143243707483523,
+        "cvd_raw_auroc": 0.8314692983088202,
+        "cvd_cal_brier": 0.08705800160023702,
+        "obesity_raw_auroc": 0.7520624310716935,
+        "obesity_cal_brier": 0.20203867895776492,
+        "training_seconds": 260.69846088000014
+      },
+      "stds": {
+        "diabetes_raw_auroc": 0.0013651823742311835,
+        "diabetes_cal_brier": 0.0004542488939388803,
+        "cvd_raw_auroc": 0.00046619652440620313,
+        "cvd_cal_brier": 0.0001120603889354902,
+        "obesity_raw_auroc": 0.0029680477233332537,
+        "obesity_cal_brier": 0.00103473244160846,
+        "training_seconds": 56.80150177334078
+      }
+    },
+    "mean_pooling": {
+      "parameter_count": 1295111,
+      "seeds": {
+        "42": {
+          "best_epoch": 20,
+          "training_seconds": 186.8593137000007,
+          "diabetes_raw_auroc": 0.80704688647088,
+          "diabetes_cal_brier": 0.1219041724863159,
+          "cvd_raw_auroc": 0.8304531493335869,
+          "cvd_cal_brier": 0.08719990087077031,
+          "obesity_raw_auroc": 0.7525395991489792,
+          "obesity_cal_brier": 0.20231862182866
+        },
+        "123": {
+          "best_epoch": 11,
+          "training_seconds": 124.83854419999989,
+          "diabetes_raw_auroc": 0.8072279608491182,
+          "diabetes_cal_brier": 0.12182593753484942,
+          "cvd_raw_auroc": 0.8310538001346949,
+          "cvd_cal_brier": 0.08741738575775107,
+          "obesity_raw_auroc": 0.7500140270424803,
+          "obesity_cal_brier": 0.20274727376913754
+        },
+        "456": {
+          "best_epoch": 16,
+          "training_seconds": 173.54441820000102,
+          "diabetes_raw_auroc": 0.8091404620975003,
+          "diabetes_cal_brier": 0.12142634598948161,
+          "cvd_raw_auroc": 0.829962790778108,
+          "cvd_cal_brier": 0.08728854033957628,
+          "obesity_raw_auroc": 0.7490983118734087,
+          "obesity_cal_brier": 0.20284619048624342
+        },
+        "789": {
+          "best_epoch": 15,
+          "training_seconds": 155.78844709999976,
+          "diabetes_raw_auroc": 0.8075557411899261,
+          "diabetes_cal_brier": 0.12173746728583451,
+          "cvd_raw_auroc": 0.8305588300567506,
+          "cvd_cal_brier": 0.08725155735079225,
+          "obesity_raw_auroc": 0.7515642949486319,
+          "obesity_cal_brier": 0.20264058996464704
+        },
+        "2026": {
+          "best_epoch": 12,
+          "training_seconds": 134.27360500000032,
+          "diabetes_raw_auroc": 0.8066478759038724,
+          "diabetes_cal_brier": 0.12190032214742239,
+          "cvd_raw_auroc": 0.8306745984853069,
+          "cvd_cal_brier": 0.08714390373971145,
+          "obesity_raw_auroc": 0.7514176015058538,
+          "obesity_cal_brier": 0.20258864659219383
+        }
+      },
+      "means": {
+        "diabetes_raw_auroc": 0.8075237853022594,
+        "diabetes_cal_brier": 0.12175884908878076,
+        "cvd_raw_auroc": 0.8305406337576894,
+        "cvd_cal_brier": 0.08726025761172027,
+        "obesity_raw_auroc": 0.7509267669038708,
+        "obesity_cal_brier": 0.20262826452817637,
+        "training_seconds": 155.06086564000034
+      },
+      "stds": {
+        "diabetes_raw_auroc": 0.0009613567126276653,
+        "diabetes_cal_brier": 0.0001978950911021106,
+        "cvd_raw_auroc": 0.00039470666878903873,
+        "cvd_cal_brier": 0.00010337555467785114,
+        "obesity_raw_auroc": 0.0013624362662355291,
+        "obesity_cal_brier": 0.0001995338450195126,
+        "training_seconds": 25.975042382938422
+      }
+    },
+    "no_modality_embeddings": {
+      "parameter_count": 1295111,
+      "seeds": {
+        "42": {
+          "best_epoch": 16,
+          "training_seconds": 164.7002425999999,
+          "diabetes_raw_auroc": 0.8094768008477004,
+          "diabetes_cal_brier": 0.1215080935052147,
+          "cvd_raw_auroc": 0.8326536141366222,
+          "cvd_cal_brier": 0.08682773245366852,
+          "obesity_raw_auroc": 0.746238121249838,
+          "obesity_cal_brier": 0.20374274433388637
+        },
+        "123": {
+          "best_epoch": 20,
+          "training_seconds": 189.40614930000083,
+          "diabetes_raw_auroc": 0.8042231504839275,
+          "diabetes_cal_brier": 0.12266831278509167,
+          "cvd_raw_auroc": 0.8302663826737416,
+          "cvd_cal_brier": 0.0869457397425721,
+          "obesity_raw_auroc": 0.7461238329687132,
+          "obesity_cal_brier": 0.2045744107836395
+        },
+        "456": {
+          "best_epoch": 26,
+          "training_seconds": 231.6434147,
+          "diabetes_raw_auroc": 0.8073559326556959,
+          "diabetes_cal_brier": 0.12169761619510987,
+          "cvd_raw_auroc": 0.8268803723035804,
+          "cvd_cal_brier": 0.08783993332379508,
+          "obesity_raw_auroc": 0.7495634626912578,
+          "obesity_cal_brier": 0.20354169781094106
+        },
+        "789": {
+          "best_epoch": 17,
+          "training_seconds": 168.5163711999994,
+          "diabetes_raw_auroc": 0.809843464670549,
+          "diabetes_cal_brier": 0.1214573602351046,
+          "cvd_raw_auroc": 0.8312040589083564,
+          "cvd_cal_brier": 0.08755392438130241,
+          "obesity_raw_auroc": 0.752293369647005,
+          "obesity_cal_brier": 0.20225896903940122
+        },
+        "2026": {
+          "best_epoch": 18,
+          "training_seconds": 176.31346020000092,
+          "diabetes_raw_auroc": 0.8058438571443782,
+          "diabetes_cal_brier": 0.12209019724955728,
+          "cvd_raw_auroc": 0.8305353881508852,
+          "cvd_cal_brier": 0.08705553760844399,
+          "obesity_raw_auroc": 0.7472163676068059,
+          "obesity_cal_brier": 0.2036604549008448
+        }
+      },
+      "means": {
+        "diabetes_raw_auroc": 0.8073486411604502,
+        "diabetes_cal_brier": 0.12188431599401564,
+        "cvd_raw_auroc": 0.8303079632346371,
+        "cvd_cal_brier": 0.08724457350195643,
+        "obesity_raw_auroc": 0.748287030832724,
+        "obesity_cal_brier": 0.2035556553737426,
+        "training_seconds": 186.11592760000022
+      },
+      "stds": {
+        "diabetes_raw_auroc": 0.0023867513523059794,
+        "diabetes_cal_brier": 0.0005039170209119868,
+        "cvd_raw_auroc": 0.002127609940560015,
+        "cvd_cal_brier": 0.00043270773286754,
+        "obesity_raw_auroc": 0.0026317201696481186,
+        "obesity_cal_brier": 0.0008314803167107711,
+        "training_seconds": 27.147937109013906
+      }
+    },
+    "no_head_shortcuts": {
+      "parameter_count": 1262855,
+      "seeds": {
+        "42": {
+          "best_epoch": 18,
+          "training_seconds": 178.30002160000004,
+          "diabetes_raw_auroc": 0.8077343221733022,
+          "diabetes_cal_brier": 0.12189206879058972,
+          "cvd_raw_auroc": 0.8293619478302305,
+          "cvd_cal_brier": 0.08738878367159633,
+          "obesity_raw_auroc": 0.7483423019383674,
+          "obesity_cal_brier": 0.20376789946354326
+        },
+        "123": {
+          "best_epoch": 5,
+          "training_seconds": 85.90661939999882,
+          "diabetes_raw_auroc": 0.8082845537692516,
+          "diabetes_cal_brier": 0.12167265645932383,
+          "cvd_raw_auroc": 0.8353968935631793,
+          "cvd_cal_brier": 0.0863206449453571,
+          "obesity_raw_auroc": 0.7498044294623752,
+          "obesity_cal_brier": 0.20350615497873542
+        },
+        "456": {
+          "best_epoch": 11,
+          "training_seconds": 126.35436760000084,
+          "diabetes_raw_auroc": 0.8053290721889028,
+          "diabetes_cal_brier": 0.12260561259059434,
+          "cvd_raw_auroc": 0.8323404149025191,
+          "cvd_cal_brier": 0.08723188718567738,
+          "obesity_raw_auroc": 0.7491911762816759,
+          "obesity_cal_brier": 0.20361121426869944
+        },
+        "789": {
+          "best_epoch": 15,
+          "training_seconds": 155.61182310000004,
+          "diabetes_raw_auroc": 0.8097291728411884,
+          "diabetes_cal_brier": 0.12132410230427072,
+          "cvd_raw_auroc": 0.8299353137900854,
+          "cvd_cal_brier": 0.08759903727055944,
+          "obesity_raw_auroc": 0.7490585306007909,
+          "obesity_cal_brier": 0.2036786170945707
+        },
+        "2026": {
+          "best_epoch": 14,
+          "training_seconds": 147.36062689999926,
+          "diabetes_raw_auroc": 0.8061459622570102,
+          "diabetes_cal_brier": 0.12212177409998143,
+          "cvd_raw_auroc": 0.8295172984932812,
+          "cvd_cal_brier": 0.08720231044131033,
+          "obesity_raw_auroc": 0.7459012650361814,
+          "obesity_cal_brier": 0.20475606717202802
+        }
+      },
+      "means": {
+        "diabetes_raw_auroc": 0.807444616645931,
+        "diabetes_cal_brier": 0.12192324284895202,
+        "cvd_raw_auroc": 0.831310373715859,
+        "cvd_cal_brier": 0.08714853270290011,
+        "obesity_raw_auroc": 0.7484595406638782,
+        "obesity_cal_brier": 0.20386399059551538,
+        "training_seconds": 138.7066917199998
+      },
+      "stds": {
+        "diabetes_raw_auroc": 0.0017443230953966332,
+        "diabetes_cal_brier": 0.00048160613441041616,
+        "cvd_raw_auroc": 0.002581806600707947,
+        "cvd_cal_brier": 0.0004888540292046726,
+        "obesity_raw_auroc": 0.0015216212248866858,
+        "obesity_cal_brier": 0.0005077744723037814,
+        "training_seconds": 34.88815479580449
+      }
+    }
+  },
+  "bootstrap_contrasts": {
+    "no_moe::TARGET_DIABETES::raw_auroc": {
+      "ablation": "no_moe",
+      "outcome": "TARGET_DIABETES",
+      "metric": "raw_auroc",
+      "is_primary": true,
+      "mean_difference": 0.0003663594225521985,
+      "median_difference": 0.00037802172069750783,
+      "std_difference": 0.0017979787914515983,
+      "ci95_pointwise": [
+        -0.0031749345023538824,
+        0.003908301888904125
+      ],
+      "ci95_bonferroni_16": [
+        -0.005215481894671811,
+        0.005831223284265365
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_moe::TARGET_DIABETES::cal_brier": {
+      "ablation": "no_moe",
+      "outcome": "TARGET_DIABETES",
+      "metric": "cal_brier",
+      "is_primary": true,
+      "mean_difference": 9.89264626542302e-05,
+      "median_difference": 0.00010008593907762098,
+      "std_difference": 0.0004580825011522767,
+      "ci95_pointwise": [
+        -0.0007915887672011696,
+        0.0009865685023387626
+      ],
+      "ci95_bonferroni_16": [
+        -0.0012889594312172022,
+        0.0015176853980212155
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_moe::TARGET_CVD::raw_auroc": {
+      "ablation": "no_moe",
+      "outcome": "TARGET_CVD",
+      "metric": "raw_auroc",
+      "is_primary": true,
+      "mean_difference": 0.00018245433999424215,
+      "median_difference": 0.00022108384918989588,
+      "std_difference": 0.0015646730984940607,
+      "ci95_pointwise": [
+        -0.002971216307574237,
+        0.0031686037870266776
+      ],
+      "ci95_bonferroni_16": [
+        -0.004777287776024736,
+        0.00467940212598003
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_moe::TARGET_CVD::cal_brier": {
+      "ablation": "no_moe",
+      "outcome": "TARGET_CVD",
+      "metric": "cal_brier",
+      "is_primary": true,
+      "mean_difference": -6.240820705269586e-05,
+      "median_difference": -6.924469843979514e-05,
+      "std_difference": 0.0002993813667873051,
+      "ci95_pointwise": [
+        -0.0006297536518206339,
+        0.0005326853649883569
+      ],
+      "ci95_bonferroni_16": [
+        -0.0009373969684222014,
+        0.000917155585977456
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "mean_pooling::TARGET_DIABETES::raw_auroc": {
+      "ablation": "mean_pooling",
+      "outcome": "TARGET_DIABETES",
+      "metric": "raw_auroc",
+      "is_primary": true,
+      "mean_difference": 0.0014580608548006612,
+      "median_difference": 0.0014450098189297544,
+      "std_difference": 0.001085426303521532,
+      "ci95_pointwise": [
+        -0.000687903726352454,
+        0.003629813376871923
+      ],
+      "ci95_bonferroni_16": [
+        -0.0019126756141959452,
+        0.005308255915738846
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "mean_pooling::TARGET_DIABETES::cal_brier": {
+      "ablation": "mean_pooling",
+      "outcome": "TARGET_DIABETES",
+      "metric": "cal_brier",
+      "is_primary": true,
+      "mean_difference": -0.00022947161844721076,
+      "median_difference": -0.00023602529805595573,
+      "std_difference": 0.00023724782300774916,
+      "ci95_pointwise": [
+        -0.0006786367452302659,
+        0.0002641253329526675
+      ],
+      "ci95_bonferroni_16": [
+        -0.0009615189880888905,
+        0.0005871778381232879
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "mean_pooling::TARGET_CVD::raw_auroc": {
+      "ablation": "mean_pooling",
+      "outcome": "TARGET_CVD",
+      "metric": "raw_auroc",
+      "is_primary": true,
+      "mean_difference": 0.0011123559012782953,
+      "median_difference": 0.0010923084773680203,
+      "std_difference": 0.0010652412426479343,
+      "ci95_pointwise": [
+        -0.0009181348080274209,
+        0.0032907855084460124
+      ],
+      "ci95_bonferroni_16": [
+        -0.0022007621917949074,
+        0.0046365097545980815
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "mean_pooling::TARGET_CVD::cal_brier": {
+      "ablation": "mean_pooling",
+      "outcome": "TARGET_CVD",
+      "metric": "cal_brier",
+      "is_primary": true,
+      "mean_difference": -0.00026400916381652876,
+      "median_difference": -0.000256826260981724,
+      "std_difference": 0.0002226208598120022,
+      "ci95_pointwise": [
+        -0.0007224007310022759,
+        0.00016147557172114496
+      ],
+      "ci95_bonferroni_16": [
+        -0.0009965641247331723,
+        0.0004263514738622542
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_modality_embeddings::TARGET_DIABETES::raw_auroc": {
+      "ablation": "no_modality_embeddings",
+      "outcome": "TARGET_DIABETES",
+      "metric": "raw_auroc",
+      "is_primary": true,
+      "mean_difference": 0.0016389054097388509,
+      "median_difference": 0.0016158361889369033,
+      "std_difference": 0.001435303082650084,
+      "ci95_pointwise": [
+        -0.001129978163960063,
+        0.0045006171261986385
+      ],
+      "ci95_bonferroni_16": [
+        -0.002614391168829467,
+        0.006177297752128872
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_modality_embeddings::TARGET_DIABETES::cal_brier": {
+      "ablation": "no_modality_embeddings",
+      "outcome": "TARGET_DIABETES",
+      "metric": "cal_brier",
+      "is_primary": true,
+      "mean_difference": -0.0003576121614454294,
+      "median_difference": -0.00035104566129352116,
+      "std_difference": 0.0003587287514843548,
+      "ci95_pointwise": [
+        -0.001091403090799924,
+        0.0003380539495015466
+      ],
+      "ci95_bonferroni_16": [
+        -0.0015497649576232952,
+        0.0007036818960600629
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_modality_embeddings::TARGET_CVD::raw_auroc": {
+      "ablation": "no_modality_embeddings",
+      "outcome": "TARGET_CVD",
+      "metric": "raw_auroc",
+      "is_primary": true,
+      "mean_difference": 0.0013217063565406563,
+      "median_difference": 0.0013055798998914958,
+      "std_difference": 0.0014255403386598418,
+      "ci95_pointwise": [
+        -0.0014108395384476613,
+        0.004195434231253238
+      ],
+      "ci95_bonferroni_16": [
+        -0.00290923895961896,
+        0.006107724475068929
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_modality_embeddings::TARGET_CVD::cal_brier": {
+      "ablation": "no_modality_embeddings",
+      "outcome": "TARGET_CVD",
+      "metric": "cal_brier",
+      "is_primary": true,
+      "mean_difference": -0.00024372339955922378,
+      "median_difference": -0.00024365380589947555,
+      "std_difference": 0.0002851604908899555,
+      "ci95_pointwise": [
+        -0.0008056598284813373,
+        0.0003098140142359208
+      ],
+      "ci95_bonferroni_16": [
+        -0.0011857069304545796,
+        0.0006208325078186541
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_head_shortcuts::TARGET_DIABETES::raw_auroc": {
+      "ablation": "no_head_shortcuts",
+      "outcome": "TARGET_DIABETES",
+      "metric": "raw_auroc",
+      "is_primary": true,
+      "mean_difference": 0.001529059433398765,
+      "median_difference": 0.0015171665622910058,
+      "std_difference": 0.0013993253007871511,
+      "ci95_pointwise": [
+        -0.001218633098191388,
+        0.0043085815746179415
+      ],
+      "ci95_bonferroni_16": [
+        -0.002693546267983737,
+        0.0058707367073023275
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_head_shortcuts::TARGET_DIABETES::cal_brier": {
+      "ablation": "no_head_shortcuts",
+      "outcome": "TARGET_DIABETES",
+      "metric": "cal_brier",
+      "is_primary": true,
+      "mean_difference": -0.0003921659676905397,
+      "median_difference": -0.00038879434135145885,
+      "std_difference": 0.00033625004194266724,
+      "ci95_pointwise": [
+        -0.0010649554005805906,
+        0.0002643284891674333
+      ],
+      "ci95_bonferroni_16": [
+        -0.001472922542689394,
+        0.0006288182874956338
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_head_shortcuts::TARGET_CVD::raw_auroc": {
+      "ablation": "no_head_shortcuts",
+      "outcome": "TARGET_CVD",
+      "metric": "raw_auroc",
+      "is_primary": true,
+      "mean_difference": 0.00033539321545928693,
+      "median_difference": 0.0003561291121169097,
+      "std_difference": 0.0017437428141550207,
+      "ci95_pointwise": [
+        -0.003181248801256553,
+        0.0037575345313995727
+      ],
+      "ci95_bonferroni_16": [
+        -0.005159450526588654,
+        0.005524570402657188
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_head_shortcuts::TARGET_CVD::cal_brier": {
+      "ablation": "no_head_shortcuts",
+      "outcome": "TARGET_CVD",
+      "metric": "cal_brier",
+      "is_primary": true,
+      "mean_difference": -0.00015131610966916757,
+      "median_difference": -0.00015597380891504975,
+      "std_difference": 0.0003097705229838648,
+      "ci95_pointwise": [
+        -0.0007454835953352397,
+        0.0004748362674524546
+      ],
+      "ci95_bonferroni_16": [
+        -0.001060227872747279,
+        0.0008816841088697091
+      ],
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_moe::TARGET_OBESITY::raw_auroc": {
+      "ablation": "no_moe",
+      "outcome": "TARGET_OBESITY",
+      "metric": "raw_auroc",
+      "is_primary": false,
+      "mean_difference": -0.0019360806751753106,
+      "median_difference": -0.0019332234154684214,
+      "std_difference": 0.001982887181800537,
+      "ci95_pointwise": [
+        -0.0058553371614725154,
+        0.0018996788026448194
+      ],
+      "ci95_bonferroni_16": null,
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_moe::TARGET_OBESITY::cal_brier": {
+      "ablation": "no_moe",
+      "outcome": "TARGET_OBESITY",
+      "metric": "cal_brier",
+      "is_primary": false,
+      "mean_difference": 0.000908352854885182,
+      "median_difference": 0.0009074248626572134,
+      "std_difference": 0.0006763869811156434,
+      "ci95_pointwise": [
+        -0.00041414936326153104,
+        0.0022264491858076684
+      ],
+      "ci95_bonferroni_16": null,
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "mean_pooling::TARGET_OBESITY::raw_auroc": {
+      "ablation": "mean_pooling",
+      "outcome": "TARGET_OBESITY",
+      "metric": "raw_auroc",
+      "is_primary": false,
+      "mean_difference": -0.0008189533309747585,
+      "median_difference": -0.0008133200827896703,
+      "std_difference": 0.001659791490915182,
+      "ci95_pointwise": [
+        -0.004104748653134827,
+        0.00248394875043677
+      ],
+      "ci95_bonferroni_16": null,
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "mean_pooling::TARGET_OBESITY::cal_brier": {
+      "ablation": "mean_pooling",
+      "outcome": "TARGET_OBESITY",
+      "metric": "cal_brier",
+      "is_primary": false,
+      "mean_difference": 0.0003253502694914017,
+      "median_difference": 0.0003235909202492365,
+      "std_difference": 0.0004243598477556568,
+      "ci95_pointwise": [
+        -0.0005109177981891734,
+        0.0011723959577042327
+      ],
+      "ci95_bonferroni_16": null,
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_modality_embeddings::TARGET_OBESITY::raw_auroc": {
+      "ablation": "no_modality_embeddings",
+      "outcome": "TARGET_OBESITY",
+      "metric": "raw_auroc",
+      "is_primary": false,
+      "mean_difference": 0.0018357337131649314,
+      "median_difference": 0.0019451660464781528,
+      "std_difference": 0.0022948482107268617,
+      "ci95_pointwise": [
+        -0.0029681639675222166,
+        0.005983581973692753
+      ],
+      "ci95_bonferroni_16": null,
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_modality_embeddings::TARGET_OBESITY::cal_brier": {
+      "ablation": "no_modality_embeddings",
+      "outcome": "TARGET_OBESITY",
+      "metric": "cal_brier",
+      "is_primary": false,
+      "mean_difference": -0.0006032509432011827,
+      "median_difference": -0.0006302815195914774,
+      "std_difference": 0.0006976636720080694,
+      "ci95_pointwise": [
+        -0.0018792360125848083,
+        0.0008518918152205906
+      ],
+      "ci95_bonferroni_16": null,
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_head_shortcuts::TARGET_OBESITY::raw_auroc": {
+      "ablation": "no_head_shortcuts",
+      "outcome": "TARGET_OBESITY",
+      "metric": "raw_auroc",
+      "is_primary": false,
+      "mean_difference": 0.0016562858528329264,
+      "median_difference": 0.0016532433789576695,
+      "std_difference": 0.002024576020613482,
+      "ci95_pointwise": [
+        -0.002329964732038775,
+        0.005638758410421857
+      ],
+      "ci95_bonferroni_16": null,
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    },
+    "no_head_shortcuts::TARGET_OBESITY::cal_brier": {
+      "ablation": "no_head_shortcuts",
+      "outcome": "TARGET_OBESITY",
+      "metric": "cal_brier",
+      "is_primary": false,
+      "mean_difference": -0.0009122263567586621,
+      "median_difference": -0.0009101790884613326,
+      "std_difference": 0.0006327701856053402,
+      "ci95_pointwise": [
+        -0.0021703671721085235,
+        0.00032430098229265354
+      ],
+      "ci95_bonferroni_16": null,
+      "favors_full": false,
+      "excludes_zero_pointwise": false,
+      "excludes_zero_bonferroni": false
+    }
+  }
+}

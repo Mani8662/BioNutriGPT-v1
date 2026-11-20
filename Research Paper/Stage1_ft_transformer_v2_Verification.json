@@ -1,0 +1,15 @@
+{
+  "model": "ft_transformer",
+  "status": "passed",
+  "completed_record_sha256": "776acf4179b0324ff4e5e7d15af10df93699cc6c336c2296f9a97732ec36cab2",
+  "checks": [
+    "All final and trial artifact hashes",
+    "Current source/data/environment binding",
+    "Frozen split membership and schema",
+    "Selection reproduced from all validation trial predictions",
+    "Participant IDs and outcome labels match all three exported partitions",
+    "Reloaded model and calibrators reproduce saved predictions",
+    "AUROC/AP/Brier/log-loss reproduced from exported temporal predictions"
+  ],
+  "scope": "No training or new model selection; confidence intervals and comparative inference remain pending."
+}

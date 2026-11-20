@@ -1,6 +1,6 @@
 # Stage 1 comparison and calibration — version 2
 
-Status updated 2026-11-19: logistic regression, histogram gradient boosting, CatBoost and MLP are completed and verified (four of six families). BioNutriGPT and FT-Transformer remain pending approval/execution. See Stage1_Comparison_v2_Current_Results.md and the individual model result reports. Nine synthetic-only verification tests passed, including CPU/GPU training loops, checkpoint reload, completed-run reuse, schema/ID rejection, calibration isolation and end-to-end exports. These are software checks, not evidence of model performance.
+Status updated 2026-11-19: all six model families are completed and verified, including reference FT-Transformer. Paired participant uncertainty analysis is complete and verified; see Stage1_Paired_Uncertainty_v2/Report.md. Repeated-seed and ablation studies remain pending. See Stage1_Comparison_v2_Current_Results.md and the individual model result reports. Nine synthetic-only verification tests passed, including CPU/GPU training loops, checkpoint reload, completed-run reuse, schema/ID rejection, calibration isolation and end-to-end exports. These are software checks, not evidence of model performance.
 
 ## Fixed design
 

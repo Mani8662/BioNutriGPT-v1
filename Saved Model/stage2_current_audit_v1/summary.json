@@ -1,0 +1,103 @@
+{
+  "scope": "Current function-level computational audit; no model inference, counterfactual search, clinical source revalidation or food feasibility claims.",
+  "ruleset": "adult-food-rule-review-v4-exposure-separated",
+  "historical_report_ruleset": "adult-food-rule-review-v3",
+  "rule_count": 39,
+  "grid_cases": 216,
+  "finite_ordered_cases": 216,
+  "protein_filter_conflicts": 27,
+  "metadata_checks": [
+    {
+      "case": "missing_weight",
+      "accepted": false,
+      "error": "patient_metadata is missing required keys: ['weight_kg']."
+    },
+    {
+      "case": "minor_age",
+      "accepted": true,
+      "result": {
+        "weight_kg": 70.0,
+        "height_cm": 170.0,
+        "age_years": 12.0,
+        "is_female": false,
+        "activity_level": "sedentary"
+      }
+    },
+    {
+      "case": "zero_age",
+      "accepted": true,
+      "result": {
+        "weight_kg": 70.0,
+        "height_cm": 170.0,
+        "age_years": 0.0,
+        "is_female": false,
+        "activity_level": "sedentary"
+      }
+    },
+    {
+      "case": "negative_weight",
+      "accepted": false,
+      "error": "weight_kg and height_cm must be > 0; age_years must be >= 0."
+    },
+    {
+      "case": "nonfinite_height",
+      "accepted": false,
+      "error": "height_cm must be finite; got nan."
+    },
+    {
+      "case": "unknown_activity",
+      "accepted": false,
+      "error": "activity_level must be one of ['active', 'light', 'moderate', 'sedentary']; received 'unknown'."
+    },
+    {
+      "case": "sex_inferred",
+      "accepted": true,
+      "result": {
+        "weight_kg": 70.0,
+        "height_cm": 170.0,
+        "age_years": 42.0,
+        "is_female": false,
+        "activity_level": "sedentary"
+      }
+    },
+    {
+      "case": "declared_renal",
+      "accepted": true,
+      "result": {
+        "weight_kg": 70.0,
+        "height_cm": 170.0,
+        "age_years": 42.0,
+        "is_female": false,
+        "activity_level": "sedentary"
+      }
+    },
+    {
+      "case": "declared_pregnancy",
+      "accepted": true,
+      "result": {
+        "weight_kg": 70.0,
+        "height_cm": 170.0,
+        "age_years": 42.0,
+        "is_female": false,
+        "activity_level": "sedentary"
+      }
+    }
+  ],
+  "override_checks": [
+    {
+      "case": "contradictory",
+      "accepted": false,
+      "error": "Infeasible nutrient bounds (lower > upper): ['DR1TVB12']."
+    },
+    {
+      "case": "negative",
+      "accepted": true
+    },
+    {
+      "case": "nonfinite",
+      "accepted": false,
+      "error": "nutrient_bounds[DR1TVB12].upper must be finite; got nan."
+    }
+  ],
+  "production_checkpoint": "C:\\Users\\MANI KUMAR\\CURRENT\\GitHub\\BioNutriGPT\\Models\\Less Data\\Saved Model\\bionutrigpt_stage1_best.pt"
+}

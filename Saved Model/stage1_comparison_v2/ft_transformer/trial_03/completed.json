@@ -1,0 +1,75 @@
+{
+  "configuration": {
+    "n_blocks": 3,
+    "lr": 0.0003,
+    "weight_decay": 0.0001
+  },
+  "seed": 42,
+  "selection_score": 0.8325613215768891,
+  "training_seconds_including_validation_and_checkpointing": 109.68681649999962,
+  "epochs": [
+    {
+      "epoch": 1,
+      "training_loss": 0.42671568598763626,
+      "validation_selection_auroc": 0.8204901187790012
+    },
+    {
+      "epoch": 2,
+      "training_loss": 0.39864305600945565,
+      "validation_selection_auroc": 0.8281773914980235
+    },
+    {
+      "epoch": 3,
+      "training_loss": 0.3908037775872769,
+      "validation_selection_auroc": 0.8262507399241001
+    },
+    {
+      "epoch": 4,
+      "training_loss": 0.3893143226687719,
+      "validation_selection_auroc": 0.8325613215768891
+    },
+    {
+      "epoch": 5,
+      "training_loss": 0.38627370146233414,
+      "validation_selection_auroc": 0.8325167885000874
+    },
+    {
+      "epoch": 6,
+      "training_loss": 0.3853568189614367,
+      "validation_selection_auroc": 0.8309662869595486
+    },
+    {
+      "epoch": 7,
+      "training_loss": 0.3839792069548246,
+      "validation_selection_auroc": 0.8297617196837761
+    },
+    {
+      "epoch": 8,
+      "training_loss": 0.3828186115365318,
+      "validation_selection_auroc": 0.8305411380412135
+    },
+    {
+      "epoch": 9,
+      "training_loss": 0.3822811533110063,
+      "validation_selection_auroc": 0.8300804799397039
+    },
+    {
+      "epoch": 10,
+      "training_loss": 0.3798040335836306,
+      "validation_selection_auroc": 0.8289779755360023
+    },
+    {
+      "epoch": 11,
+      "training_loss": 0.3787967273084542,
+      "validation_selection_auroc": 0.8277182176858355
+    }
+  ],
+  "peak_process_rss_bytes": 1384910848,
+  "cuda_peak_allocated_bytes": 296262144,
+  "cuda_memory_scope": "PyTorch allocator only; CatBoost allocation is not measured",
+  "parameter_count": 925635,
+  "artifact_hashes": {
+    "model.pt": "2bc31791373bb8b37097eabba539a14c7aee57b4db6c406daecd902fba785eef",
+    "validation_probabilities.npy": "27506f69d5f6f0b6e978de93e9713bf0b46fd019ad26386ff6456eb8fa12dfd1"
+  }
+}

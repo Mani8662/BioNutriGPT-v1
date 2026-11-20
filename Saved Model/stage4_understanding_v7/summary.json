@@ -1,0 +1,9 @@
+{
+  "turns": 8,
+  "cases": 5,
+  "proposals": 1,
+  "errors": [],
+  "unchanged_before_acceptance": 8,
+  "model_calls": 3,
+  "scope": "Engineering check on one saved profile. Inspect raw turns for interpretation quality; no general accuracy claim."
+}

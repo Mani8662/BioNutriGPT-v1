@@ -57,6 +57,9 @@ const pages = [
 ] as const;
 type Page = (typeof pages)[number]["id"];
 const blankMeta: PatientMetadata = {
+  renal_disease: null,
+  pregnant: null,
+  lactating: null,
   weight_kg: NaN,
   height_cm: NaN,
   age_years: NaN,
@@ -104,6 +107,7 @@ export default function App() {
       }>
     >([]),
     [question, setQuestion] = useState(""),
+    [naturalChat, setNaturalChat] = useState(false),
     [flagged, setFlagged] = useState(false);
   const [busy, setBusy] = useState(""),
     [error, setError] = useState(""),
@@ -327,7 +331,7 @@ export default function App() {
     if (!text.trim() || !plan?.accepted) return;
     act("Your assistant is reviewing your question…", async () => {
       const sid = await ensureSession();
-      const r = await api.chat(text.trim(), plan.dossier, sid);
+      const r = await api.chat(text.trim(), plan.dossier, sid, naturalChat);
       setFlagged((prev) => prev || !!r.plan_flagged_unsuitable);
       setTurns((t) => [
         ...t,
@@ -1157,7 +1161,7 @@ export default function App() {
                           <div className="suggestion-grid">
                             {[
                               "Explain my meal portions",
-                              "What foods provide protein?",
+                              "How much protein and fibre is in lunch?",
                               "Can I replace rice in my plan?",
                             ].map((q) => (
                               <button
@@ -1180,6 +1184,20 @@ export default function App() {
                               YOUR ASSISTANT
                             </span>
                             <p>{t.response.answer}</p>
+                            {t.response.interpreted_request && (
+                              <small>Understood as: {t.response.interpreted_request}</small>
+                            )}
+                            {["unavailable", "busy", "rejected", "semantic_rejected"].includes(t.response.interpretation_status || "") && (
+                              <small>Natural-language interpretation was unavailable or unclear. Please clarify your request.</small>
+                            )}
+                            {!!t.response.clarification_options?.length && (
+                              <div className="suggestion-grid">
+                                {t.response.clarification_options.map((option) => (
+                                  <button key={option} disabled={!!busy || i !== turns.length - 1}
+                                    onClick={() => send(option)}>{option}</button>
+                                ))}
+                              </div>
+                            )}
                             {t.response.proposed_meal_plan && (
                               <div className="proposal">
                                 <h4>Suggested plan update</h4>
@@ -1248,6 +1266,11 @@ export default function App() {
                         <Send size={19} />
                       </button>
                     </form>
+                    <label>
+                      <input type="checkbox" checked={naturalChat} disabled={!!busy}
+                        onChange={(e) => setNaturalChat(e.target.checked)} />
+                      Understand natural wording (experimental; responses may take longer)
+                    </label>
                     <p className="chat-footnote">
                       Proposed changes are only applied when you accept them.
                     </p>
