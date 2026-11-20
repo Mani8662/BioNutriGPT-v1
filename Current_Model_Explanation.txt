@@ -1,5 +1,19 @@
 STAGE 1 ARCHITECTURE ABLATION COMPLETE — 2026-11-19
-A controlled five-variant, five-seed architecture ablation study on 7,004 temporal evaluation participants (20,000 two-axis bootstrap resamples across participants and seed pairs) demonstrates that BioNutriGPT\'s bespoke components do not provide statistically significant advantages over simpler designs on this benchmark. Crucially, replacing the 4-expert sparse MoE with a standard dense feed-forward network reduces parameters by 45.9% (1,295,623 to 700,675) with negligible impact on performance (diabetes AUROC difference +0.0004 [-0.0032, +0.0039]; CVD AUROC difference +0.0002 [-0.0030, +0.0032]). Attention pooling, modality embeddings, and head shortcuts show modest positive trends (~0.0011 to 0.0016 AUROC) but span zero across all 16 primary contrasts after Bonferroni adjustment. See Research Paper/Stage1_Ablation_v2_Results.md and Saved Model/stage1_ablation_v2/.
+A controlled five-variant, five-seed architecture ablation study on 7,004 temporal evaluation participants (20,000 two-axis bootstrap resamples across participants and seed pairs) demonstrates that BioNutriGPT's bespoke components do not provide statistically significant advantages over simpler designs on this benchmark.
+Key Findings:
+1. FULL vs. NO_MOE: Replacing the 4-expert sparse MoE with a standard dense feed-forward network (512 -> 256 -> 256; aux loss = 0) reduces trainable parameters by 45.9% (1,295,623 to 700,675) and per-sample latency by 59.7% (10.88 ms to 4.38 ms) with negligible difference in performance (Diabetes AUROC diff: +0.0004 [-0.0032, +0.0039]; CVD AUROC diff: +0.0002 [-0.0030, +0.0032]; Calibrated Brier diff: +0.00010 on diabetes, -0.00006 on CVD).
+2. Modality Pooling, Modality Embeddings, and Head Shortcuts: Unweighted group mean pooling, removing modality vectors, or omitting residual head shortcuts show modest positive trends (~0.0011 to 0.0016 AUROC), but all 16 primary comparisons span zero after Bonferroni family-wise adjustment.
+See Research Paper/Stage1_Ablation_v2_Results.md, Research Paper/Stage1_Ablation_v2_Plan.md, and Saved Model/stage1_ablation_v2/.
+
+END-TO-END PIPELINE & PRODUCTION VERIFICATION — 2026-11-20
+The complete four-stage clinical decision support pipeline was verified end-to-end on the RTX 3050 Laptop GPU:
+- System Services: FastAPI Backend (http://127.0.0.1:8000) and Vite React Frontend (http://127.0.0.1:5173) fully verified and operational.
+- Stage 1 (Diagnostics): Neural tabular Transformer screening on CUDA in ~12.7s with calibrated risk probabilities and feature driver rankings.
+- Stage 2 (Counterfactuals): Optimization engine derives energy targets and 30 active nutrient boundaries with four programmatic safety filters.
+- Stage 3 (Discrete Meal Synthesis): HiGHS MILP solver generates culturally authentic Indian meal baskets in ~2.1s across Pure Vegetarian (8 dishes), Combo (8 dishes), and Non-Vegetarian (7 dishes) modes.
+- Stage 4 (Chrono-Nutrition Compiler): Local Qwen 2.5 3B NF4 quantized via BitsAndBytes on CUDA compiles five chronobiological meal windows with zero calculation authority.
+- Stage 4 (Interactive Revisions & Chat): Plan store versioning, rollback, and deterministic contextual nutritional QA (/api/chat) verified with exact nutrient accounting.
+- Regression & Contract Tests: 133 / 133 automated tests passed (verify_stage2_contracts: 10/10, verify_stage3_production: 13/13, verify_stage4_conversation_v2: 35/35, verify_stage4_dialogue_edges: 31/31, verify_stage4_interpreter: 41/41, verify_food_group_preferences: 3/3). Frontend TypeScript check (tsc --noEmit) clean with 0 errors.
 
 STAGE 1 COMPARISON UPDATE — 2026-11-19
 All six model families and paired uncertainty analysis are complete and verified. On 7,004 temporal participants, 20,000 paired bootstrap resamples show that BioNutriGPT improves diabetes AUROC over logistic regression and MLP, and calibrated diabetes Brier over logistic regression, after adjustment across 20 primary contrasts. No other primary contrast excludes zero; no overall advantage over competitive boosted-tree/reference Transformer models is established. These are unweighted conditional-on-fitted-model intervals, not survey-design or training-seed uncertainty. See Research Paper/Stage1_Paired_Uncertainty_v2/Report.md. Repeated-seed and component-ablation work remains pending; no new training launched. Production/manuscript performance remains legacy pending reconciliation.
@@ -109,6 +123,9 @@ Condition heads:
 - Diabetes and CVD heads receive $[\mathbf{h}_{\text{patient}} \,\|\, \mathbf{u}_{\text{bio}}]$.
 - Obesity head receives $[\mathbf{h}_{\text{patient}} \,\|\, \mathbf{u}_{\text{diet}} \,\|\, \mathbf{u}_{\text{life}}]$.
 Each head is a 64-unit GELU network outputting a single logit $z_c$.
+
+Ablation finding (v2): The 4-expert top-2 MoE contributes 594,948 parameters (45.9% of total model capacity). The controlled 5-seed architecture ablation study demonstrated that replacing the MoE with a single standard dense feed-forward network (512 -> 256 -> 256; 700,675 parameters) yields equivalent empirical performance (mean AUROC diff +0.0004 on diabetes, +0.0002 on CVD) with ~60% faster per-sample inference latency (4.38 ms vs 10.88 ms), indicating substantial parameter redundancy on tabular NHANES data.
+
 
 4.4 Training Objective
 Training sums three binary cross-entropy losses with positive-class weights (diabetes 6.84, CVD 9.74, obesity 1.65) and a 0.01-weighted MoE load-balancing term. Optimizer: AdamW (lr 1e-4, wd 1e-4), cosine lr schedule, batch size 128, early stopping on validation mean AUROC.
