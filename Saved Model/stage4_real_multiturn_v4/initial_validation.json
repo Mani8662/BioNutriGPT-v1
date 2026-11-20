@@ -1,0 +1,11 @@
+{
+  "accepted": true,
+  "structural_errors": [],
+  "unknown_active_nutrients": [],
+  "failed_active_nutrients": [],
+  "failed_post_checks": [],
+  "active_nutrient_count": 30,
+  "complete_39_field_data": false,
+  "clinical_validation_established": false,
+  "scope": "Acceptance means active arithmetic/portion checks passed, not clinical certification."
+}

@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "scope": "Catalog food-group preferences, not allergy certification",
+  "groups": {
+    "cereal_grain": {
+      "aliases": [
+        "cereal grain"
+      ],
+      "food_ids": [
+        "recipe_steamed_rice",
+        "recipe_brown_rice_cooked",
+        "recipe_whole_wheat_phulka",
+        "recipe_steamed_idli",
+        "recipe_veg_pulao",
+        "recipe_plain_dosa",
+        "recipe_moong_dal_khichdi",
+        "recipe_oats_cooked",
+        "recipe_vegetable_poha"
+      ]
+    },
+    "dairy": {
+      "aliases": [
+        "dairy"
+      ],
+      "food_ids": [
+        "recipe_lowfat_curd",
+        "recipe_lowfat_milk_1pct",
+        "recipe_greek_yogurt_nonfat",
+        "recipe_skim_milk",
+        "recipe_skim_curd"
+      ]
+    },
+    "dal_pulse": {
+      "aliases": [
+        "dal pulse"
+      ],
+      "food_ids": [
+        "recipe_dal_palak",
+        "recipe_chickpeas_boiled",
+        "recipe_chana_masala",
+        "recipe_firm_tofu_calcium",
+        "recipe_rajma_curry",
+        "recipe_panchmel_dal",
+        "recipe_sambar_vegetable",
+        "recipe_moong_dal_tadka",
+        "recipe_masoor_dal"
+      ]
+    },
+    "eggs": {
+      "aliases": [
+        "egg",
+        "eggs"
+      ],
+      "food_ids": [
+        "recipe_boiled_egg"
+      ]
+    },
+    "fish": {
+      "aliases": [
+        "fish"
+      ],
+      "food_ids": [
+        "recipe_baked_salmon",
+        "recipe_light_tuna",
+        "recipe_pink_salmon_canned",
+        "recipe_sardines_bone"
+      ]
+    },
+    "fruit": {
+      "aliases": [
+        "fruit"
+      ],
+      "food_ids": [
+        "recipe_fresh_apple",
+        "recipe_fresh_banana",
+        "recipe_fresh_guava",
+        "recipe_fresh_orange",
+        "recipe_fresh_papaya",
+        "recipe_pomegranate_arils"
+      ]
+    },
+    "nuts_and_seeds": {
+      "aliases": [
+        "nuts and seeds"
+      ],
+      "food_ids": [
+        "recipe_almonds_raw",
+        "recipe_pumpkin_seeds",
+        "recipe_sunflower_seeds"
+      ]
+    },
+    "poultry": {
+      "aliases": [
+        "poultry"
+      ],
+      "food_ids": [
+        "recipe_grilled_chicken_breast"
+      ]
+    },
+    "vegetable_sabzi": {
+      "aliases": [
+        "vegetable sabzi"
+      ],
+      "food_ids": [
+        "recipe_baingan_bharta",
+        "recipe_broccoli_cooked",
+        "recipe_cabbage_peas",
+        "recipe_carrots_cooked",
+        "recipe_kale_cooked",
+        "recipe_bhindi_masala",
+        "recipe_aloo_gobi",
+        "recipe_methi_aloo",
+        "recipe_palak_paneer",
+        "recipe_spinach_cooked",
+        "recipe_sweet_potato_cooked"
+      ]
+    }
+  }
+}

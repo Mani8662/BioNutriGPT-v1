@@ -1,0 +1,10 @@
+{
+  "status": "completed",
+  "turns": 9,
+  "proposals": 2,
+  "exceptions": 0,
+  "unchanged_before_acceptance": 9,
+  "scope": "One existing saved Stage 2 sample; real catalog and solver. Not new patients or clinical validation.",
+  "limitations": "Small engineering evaluation, includes regression wording; not a held-out research benchmark. Saved Stage 2 provenance remains its original scope. No feasibility oracle for absent proposals.",
+  "review_required": "Read every turn; no-proposal turns are not automatically passes."
+}

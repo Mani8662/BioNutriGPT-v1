@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "results_sha256": "1fbe5c7e76a57cde43be3dab247109fdd48cb16e1de10755909e0e4d54160ded",
+  "checks": [
+    "All input and output hashes match",
+    "20000 x 54 finite bootstrap matrix",
+    "162 independent sklearn checks on explicitly resampled participant rows match saved draws",
+    "All 45 paired interval endpoints reproduced",
+    "Exactly 20 primary comparisons receive Bonferroni adjustment"
+  ]
+}

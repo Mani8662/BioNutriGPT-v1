@@ -42,6 +42,7 @@ from schemas import (
 )
 import pipeline_service as ps
 import chat_service
+import conversation_service
 import plan_store
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
@@ -195,11 +196,12 @@ def chat_intake_preferences(payload: IntakeChatRequest) -> IntakeChatResponse:
 def chat_about_plan(payload: ChatRequest) -> ChatResponse:
     """Answer from catalog facts or return a validated, unaccepted controlled revision."""
     try:
-        return ChatResponse(**chat_service.answer(
+        return ChatResponse(**conversation_service.answer(
             payload.message,
             payload.dossier,
             session_id=payload.session_id,
             use_llm_explanation=payload.use_llm_explanation,
+            use_llm_interpretation=payload.use_llm_interpretation,
         ))
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
@@ -241,6 +243,10 @@ def run_screening_stage(input_data: PatientInput) -> ScreeningResult:
             "age_years": input_data.age_years,
             "is_female": input_data.is_female,
             "activity_level": input_data.activity_level,
+            "renal_disease": input_data.renal_disease,
+            "pregnant": input_data.pregnant,
+            "lactating": input_data.lactating,
+
         }
         res = ps.run_screening(
             input_data.features,
@@ -316,6 +322,10 @@ def run_full_pipeline_json(req: FullPipelineRequest) -> FullPipelineResponse:
             "age_years": req.age_years,
             "is_female": req.is_female,
             "activity_level": req.activity_level,
+            "renal_disease": req.renal_disease,
+            "pregnant": req.pregnant,
+            "lactating": req.lactating,
+
         }
         res = ps.run_full_pipeline(
             req.features,
@@ -340,6 +350,9 @@ async def run_full_pipeline_file(
     height_cm: float | None = Form(None),
     age_years: float | None = Form(None),
     is_female: bool | None = Form(None),
+    renal_disease: bool | None = Form(None),
+    pregnant: bool | None = Form(None),
+    lactating: bool | None = Form(None),
     activity_level: Literal["sedentary", "light", "moderate", "active"] | None = Form("sedentary"),
 ) -> FullPipelineResponse:
     """Execute complete end-to-end 4-stage pipeline directly from an uploaded .txt patient vector file."""
@@ -360,6 +373,12 @@ async def run_full_pipeline_file(
             meta_overrides["is_female"] = is_female
         if activity_level is not None:
             meta_overrides["activity_level"] = activity_level
+
+        for key, value in (("renal_disease", renal_disease), ("pregnant", pregnant), ("lactating", lactating)):
+            if value is not None:
+                if key in meta_overrides and meta_overrides[key] is not None and meta_overrides[key] != value:
+                    raise ValueError(f"Conflicting declarations for {key} between file and form.")
+                meta_overrides[key] = value
 
         res = ps.run_full_pipeline(values, meta_overrides, backend=backend)
         return FullPipelineResponse(**res)

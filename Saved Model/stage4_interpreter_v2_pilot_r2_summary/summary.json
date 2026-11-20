@@ -1,0 +1,93 @@
+{
+  "requests": 6,
+  "structurally_accepted": 4,
+  "correct_full_interpretations": 2,
+  "per_request_correct": [
+    false,
+    false,
+    true,
+    true,
+    false,
+    false
+  ],
+  "first_call_ms_including_load": 31260.897200001637,
+  "warm_calls": 5,
+  "warm_mean_ms": 3338.7217799998325,
+  "warm_median_ms": 3514.9628999988636,
+  "warm_min_ms": 2488.823300000149,
+  "warm_max_ms": 3758.6346000007325,
+  "latency_scope": "Interpreter/backend elapsed; first includes loading, rejected calls include exception-path overhead. Not end-to-end chat latency.",
+  "jsonl_sha256": "8f34153bee25900e09c4fc76cb5a68b22362b1555c2103bffddd376f9bb51bc8",
+  "expected_requests": [
+    {
+      "intent": "nutrient",
+      "food_id": "recipe_moong_dal_tadka",
+      "replacement_id": null,
+      "servings": null,
+      "nutrients": [
+        "DR1TPROT"
+      ],
+      "meal": null,
+      "per_serving": false
+    },
+    {
+      "intent": "nutrient",
+      "food_id": "recipe_moong_dal_tadka",
+      "replacement_id": null,
+      "servings": null,
+      "nutrients": [
+        "DR1TKCAL"
+      ],
+      "meal": null,
+      "per_serving": true
+    },
+    {
+      "intent": "nutrient",
+      "food_id": null,
+      "replacement_id": null,
+      "servings": null,
+      "nutrients": [
+        "DR1TPROT"
+      ],
+      "meal": "lunch",
+      "per_serving": false
+    },
+    {
+      "intent": "remove",
+      "food_id": "recipe_moong_dal_tadka",
+      "replacement_id": null,
+      "servings": null,
+      "nutrients": [],
+      "meal": null,
+      "per_serving": false
+    },
+    {
+      "intent": "replace",
+      "food_id": "recipe_moong_dal_tadka",
+      "replacement_id": "recipe_masoor_dal",
+      "servings": 2,
+      "nutrients": [],
+      "meal": null,
+      "per_serving": false
+    },
+    {
+      "intent": "clarification",
+      "food_id": null,
+      "replacement_id": null,
+      "servings": null,
+      "nutrients": [],
+      "meal": null,
+      "per_serving": false
+    }
+  ],
+  "source_sha256": {
+    "chat_interpreter.py": "8ec3f5d7eb5154fc4dc2e5eb96dede128635a7ac80e0b215d932cbef2eed0a1b",
+    "pilot_stage4_interpreter_v2.py": "2f77e9b6ead52b5e6e2368b537cb3d407a272e08508f044fb15ca453957b4248"
+  },
+  "limitations": [
+    "Six synthetic single-turn requests after inspecting prior failures",
+    "No solver, plan changes or patient data",
+    "No evidence of broad conversational reliability",
+    "One wrong mutation interpretation passed schema; live layer requires confirmation before proposing a change"
+  ]
+}

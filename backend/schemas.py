@@ -18,9 +18,12 @@ class PatientInput(BaseModel):
     named_features: dict[str, float] | None = Field(
         None, description="Optional explicit feature-name -> value map with documented NHANES units"
     )
+    renal_disease: bool | None = Field(None, strict=True)
+    pregnant: bool | None = Field(None, strict=True)
+    lactating: bool | None = Field(None, strict=True)
     weight_kg: float | None = Field(None, gt=0, description="Patient weight in kg")
     height_cm: float | None = Field(None, gt=0, description="Patient height in cm")
-    age_years: float | None = Field(None, ge=0, description="Patient age in years")
+    age_years: float | None = Field(None, ge=18, description="Patient age in years")
     is_female: bool | None = Field(None, description="Biological sex override (true=female, false=male)")
     activity_level: Literal["sedentary", "light", "moderate", "active"] | None = Field(
         "sedentary", description="Physical activity level"
@@ -84,11 +87,15 @@ class ChatRequest(BaseModel):
     dossier: dict[str, Any]
     session_id: str | None = Field(None, description="Optional persistent plan session ID")
     use_llm_explanation: bool = Field(False, description="Optional local Qwen phrasing over backend facts")
+    use_llm_interpretation: bool = Field(False, description="Use local Qwen to interpret natural requests; proposed actions require confirmation")
 
 
 class ChatResponse(BaseModel):
     answer: str
-    intent: Literal["plan", "nutrient", "portion", "risk", "revision", "history", "rollback", "allergy", "unsupported"]
+    intent: Literal["plan", "nutrient", "portion", "risk", "revision", "history", "rollback", "allergy", "unsupported", "clarification"]
+    clarification_options: list[str] = Field(default_factory=list)
+    interpretation_status: str = "deterministic"
+    interpreted_request: str | None = None
     sources: list[str] = Field(default_factory=list)
     tool_calls_used: list[str] = Field(default_factory=list)
     proposed_meal_plan: dict[str, Any] | None = None
@@ -119,9 +126,12 @@ class FullPipelineRequest(BaseModel):
     schema_version: str = Field("nhanes-87-v2", description="Explicit input schema version")
     features: list[float] | None = Field(None, description="Exactly 87 float32 NHANES features")
     named_features: dict[str, float] | None = Field(None, description="Optional named NHANES feature dict")
+    renal_disease: bool | None = Field(None, strict=True)
+    pregnant: bool | None = Field(None, strict=True)
+    lactating: bool | None = Field(None, strict=True)
     weight_kg: float | None = Field(None, gt=0)
     height_cm: float | None = Field(None, gt=0)
-    age_years: float | None = Field(None, ge=0)
+    age_years: float | None = Field(None, ge=18)
     is_female: bool | None = None
     activity_level: Literal["sedentary", "light", "moderate", "active"] | None = "sedentary"
     backend: Literal["transformers", "ollama"] = "transformers"

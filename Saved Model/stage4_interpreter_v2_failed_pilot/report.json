@@ -1,0 +1,20 @@
+{
+  "requests": 6,
+  "accepted_interpretations": 0,
+  "rejected": 6,
+  "errors_in_request_order": [
+    "Unexpected replacement fields",
+    "Unexpected replacement fields",
+    "Unexpected replacement fields",
+    "nutrients was null instead of a list",
+    "Unsupported scope for this action",
+    "Unsupported scope for this action"
+  ],
+  "timing": "Unavailable: exception path discarded timing. Do not infer per-request latency.",
+  "raw_generations": "Not retained by the original exception path; cannot reconstruct exact JSON.",
+  "scope": "Six synthetic requests; no solver calls or plan mutations. Validates neither chat quality nor clinical safety.",
+  "source_sha256": {
+    "chat_interpreter.py": "16c23c236fd7c6196ed5318697a70e662d717c4404d8f9a74ba8cd121ca25e3d",
+    "pilot_stage4_interpreter_v2.py": "1871ec3fb30fed778972fac3a655a3081097a8c71c3de4b2b895230742c4d646"
+  }
+}

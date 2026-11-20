@@ -84,7 +84,8 @@ export const api = {
     message: string,
     dossier: Record<string, any>,
     session_id: string | null,
-  ) => request<ChatResponse>("/chat", { message, dossier, session_id }),
+    use_llm_interpretation = false,
+  ) => request<ChatResponse>("/chat", { message, dossier, session_id, use_llm_interpretation }),
   accept: (
     dossier: Record<string, any>,
     proposal: NonNullable<ChatResponse["proposed_meal_plan"]>,

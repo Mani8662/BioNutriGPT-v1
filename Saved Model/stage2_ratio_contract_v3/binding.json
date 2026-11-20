@@ -1,0 +1,18 @@
+{
+  "hashes": {
+    "Saved Model\\bionutrigpt_stage1_best.pt": "ccb47ba51760335cc56974705ed2e66ca9a45780bc272fb53cd5288b420250ae",
+    "Data\\preprocessing_artifacts.joblib": "04c69228edbf0ac4fb50c7e65f73e2c017b9eb56288f05cb3da091a0562278c4",
+    "Saved Model\\stage1_comparison_v2\\bionutrigpt\\trial_03\\model.pt": "cb000dd1fdf00f17c49d0f64b131c32ec09b4efdac75b13e3fad5287c419938e",
+    "Data\\stage1_repaired_v2\\preprocessing_artifacts.joblib": "35ab8a7d7f28fd6bc1b06dc20a1b6424b1c815696be3d8083d8a6695b2d681ae",
+    "stage2_counterfactual_engine.py": "6c140e03bd1afc9737a2e63a243954c882b38d92f3e0310c76a2f410897f2aa8",
+    "evaluate_stage2_ratio_contract_v3.py": "9fc138f0cb40f879d88ded3b4155403afe880109647cbb334391ed8876011ab8"
+  },
+  "device": "cuda",
+  "cutoffs": [
+    0.617,
+    0.445,
+    0.603
+  ],
+  "calibration": "Production _predict_probabilities applies raw sigmoid, no repaired calibrator.",
+  "scope": "Default production artifacts, not repaired v2. Sample fixture, not a patient cohort."
+}

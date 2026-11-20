@@ -1,0 +1,30 @@
+[
+  {
+    "case": "supplied_ratios",
+    "device": "cuda",
+    "differences": {
+      "diabetes": 0.0,
+      "obesity": 0.0,
+      "cvd": 0.0
+    },
+    "binding_matches": true,
+    "ratio_audit_matches": true,
+    "thresholds_match": true,
+    "seconds": 5.175248100000317,
+    "passed": true
+  },
+  {
+    "case": "canonical_ratios",
+    "device": "cuda",
+    "differences": {
+      "diabetes": 0.0,
+      "obesity": 0.0,
+      "cvd": 0.0
+    },
+    "binding_matches": true,
+    "ratio_audit_matches": true,
+    "thresholds_match": true,
+    "seconds": 1.8661778000000595,
+    "passed": true
+  }
+]

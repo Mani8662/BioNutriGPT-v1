@@ -1,0 +1,80 @@
+{
+  "scope": "One saved Stage 2 case; engineering evaluation, not held-out/general accuracy or clinical evidence.",
+  "selection": "First two non-fish initial basket items by food_id; retain quantities. No retries or alternate food selection.",
+  "cases": [
+    [
+      "nutrient_followup",
+      [
+        "How much protein in Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)?",
+        "And its calories per serving?"
+      ],
+      false
+    ],
+    [
+      "group_exclusion",
+      [
+        "I dont want any fish on my meal plan"
+      ],
+      true
+    ],
+    [
+      "compound",
+      [
+        "Remove fish and include 2 servings of Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji) at Dinner",
+        "Check this interpreted request"
+      ],
+      true
+    ],
+    [
+      "two_placements",
+      [
+        "Include 2 servings of Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji) at Lunch; include 2 servings of Brown rice, cooked (Bhure chawal) at Dinner",
+        "Check this interpreted request"
+      ],
+      true
+    ],
+    [
+      "cancel",
+      [
+        "Include 2 servings of Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji) at Dinner",
+        "Cancel interpreted request",
+        "Check this interpreted request"
+      ],
+      false
+    ],
+    [
+      "extra_condition",
+      [
+        "Include 2 servings of Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji) at Dinner only if it costs less",
+        "Check this interpreted request"
+      ],
+      false
+    ],
+    [
+      "negative_quantity",
+      [
+        "Include -2 servings of Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji) at Dinner",
+        "Check this interpreted request"
+      ],
+      false
+    ],
+    [
+      "natural_plan",
+      [
+        "Could you walk me through what I will be eating today?"
+      ],
+      false
+    ],
+    [
+      "natural_removal",
+      [
+        "Please omit Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji) from the daily basket.",
+        "Check this interpreted request"
+      ],
+      true
+    ]
+  ],
+  "initial_solver_seconds": 20,
+  "revision_solver_seconds": 2,
+  "scoring": "Report model interpretation, completed revisions, independent validity and unchanged-before-acceptance separately. Clarification does not count as completed revision."
+}

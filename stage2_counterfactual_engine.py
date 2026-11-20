@@ -24,6 +24,7 @@ Python 3.10+; dependencies: numpy, pandas, joblib, torch, scikit-learn.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -199,8 +200,14 @@ def _validate_patient_metadata(
     weight = _as_float(patient_metadata["weight_kg"], "weight_kg")
     height = _as_float(patient_metadata["height_cm"], "height_cm")
     age = _as_float(patient_metadata["age_years"], "age_years")
-    if weight <= 0.0 or height <= 0.0 or age < 0.0:
-        raise ValueError("weight_kg and height_cm must be > 0; age_years must be >= 0.")
+    if weight <= 0.0 or height <= 0.0 or age < 18.0:
+        raise ValueError("weight_kg and height_cm must be > 0; Stage 2 supports adults age 18+ only.")
+    for key in ('renal_disease', 'pregnant', 'lactating'):
+        value = patient_metadata.get(key)
+        if value is not None and not isinstance(value, (bool, np.bool_)):
+            raise ValueError(f"{key} must be a boolean or null (unknown).")
+        if value is not None and bool(value):
+            raise ValueError(f"Stage 2 adult reference rules do not support {key}; individual review is required.")
 
     if "is_female" in patient_metadata:
         is_female_value = patient_metadata["is_female"]
@@ -223,6 +230,10 @@ def _validate_patient_metadata(
         "age_years": age,
         "is_female": is_female,
         "activity_level": activity,
+        "eligibility_status": "adult_age_checked_special_population_status_not_verified",
+        "special_population_status": {
+            key: patient_metadata.get(key) for key in ('renal_disease', 'pregnant', 'lactating')
+        },
     }
 
 
@@ -533,7 +544,12 @@ def _build_nutrient_bounds(
 
     put("DR1TKCAL", t_kcal * 0.95, t_kcal * 1.05)
     prot_min = max(0.8 * weight_kg, 46.0 if is_female else 56.0)
-    prot_max = max(2.0 * weight_kg, prot_min + 5.0)
+    prot_max = 2.0 * weight_kg
+    if prot_min > 2.0 * weight_kg:
+        raise Stage2Error(
+            f"Conflicting protein rules: minimum {prot_min:g} g exceeds "
+            f"the filter maximum {2.0 * weight_kg:g} g. No prescription generated."
+        )
     put("DR1TPROT", prot_min, prot_max)
 
     carb_fraction = 0.45 if p_diab_0 >= CUTOFF_DIABETES else 0.60
@@ -585,6 +601,8 @@ def _build_nutrient_bounds(
             )
         low = _as_float(bound[0], f"nutrient_bounds[{name}].lower")
         high = _as_float(bound[1], f"nutrient_bounds[{name}].upper")
+        if low < 0.0 or high < 0.0:
+            raise ArtifactContractError(f"nutrient_bounds[{name}] must be nonnegative.")
         idx = NUTRIENT_INDEX[name]
         lower[idx], upper[idx] = low, high
 
@@ -633,6 +651,39 @@ def _compute_ratios_numpy(n: np.ndarray) -> np.ndarray:
 def _risk_tier(probability: float, cutoff: float) -> str:
     # The brief supplies operating cutoffs, but no multi-level tier taxonomy.
     return "at_or_above_operating_cutoff" if probability >= cutoff else "below_operating_cutoff"
+
+
+def canonicalize_dietary_ratios(vector):
+    """Derive all seven ratios from raw nutrients, retaining an input audit."""
+    raw = _validate_patient_vector(vector).copy()
+    begin = len(BIO_COLS)
+    end = begin + len(DIET_RAW_COLS)
+    ratios = _compute_ratios_numpy(raw[begin:end]).astype(np.float32)
+    if not np.isfinite(ratios).all():
+        raise ValueError('Derived dietary ratios must be finite.')
+    supplied = raw[end:end + len(DIET_RATIO_COLS)].copy()
+    raw[end:end + len(DIET_RATIO_COLS)] = ratios
+    return raw, {
+        'policy': 'recompute_from_raw_nutrients_v1',
+        'changed_fields': [name for name,a,b in zip(DIET_RATIO_COLS,supplied,ratios) if a != b],
+        'supplied': supplied.tolist(), 'derived': ratios.tolist(),
+    }
+
+
+def model_binding(checkpoint_path, preprocessor_path):
+    def digest(path):
+        with Path(path).open('rb') as stream:
+            return hashlib.file_digest(stream, 'sha256').hexdigest()
+    return {
+        'checkpoint_sha256': digest(checkpoint_path),
+        'preprocessor_sha256': digest(preprocessor_path),
+        'architecture': 'train_bionutrigpt_stage1.BioNutriGPTStage1',
+        'feature_order_sha256': hashlib.sha256(json.dumps(FEATURE_COLS).encode()).hexdigest(),
+        'probability_transform': 'raw_sigmoid_no_calibration',
+        'operating_cutoffs': {'diabetes': CUTOFF_DIABETES, 'obesity': CUTOFF_OBESITY, 'cvd': CUTOFF_CVD},
+        'cutoff_provenance': 'legacy_project_constants_not_revalidated_for_repaired_v2',
+        'repaired_v2_equivalence_established': False,
+    }
 
 
 def default_barrier_penalty(
@@ -956,7 +1007,7 @@ def generate_counterfactual_prescription(
     BIONUTRIGPT_PREPROCESSOR_ARTIFACT environment variables. The output JSON
     path can be overridden with BIONUTRIGPT_STAGE2_JSON.
     """
-    raw_vector = _validate_patient_vector(raw_patient_vector_88)
+    raw_vector, ratio_audit = canonicalize_dietary_ratios(raw_patient_vector_88)
     metadata = _validate_patient_metadata(patient_metadata, raw_vector)
 
     checkpoint_path = Path(os.environ.get("BIONUTRIGPT_STAGE1_CHECKPOINT", str(DEFAULT_CHECKPOINT)))
@@ -969,6 +1020,7 @@ def generate_counterfactual_prescription(
     )
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    binding = model_binding(checkpoint_path, preprocessor_path)
 
     # STEP 1: baseline inference and threshold audit.
     artifacts = _load_preprocessing_artifacts(preprocessor_path)
@@ -1140,6 +1192,8 @@ def generate_counterfactual_prescription(
         filter1_final and filter2_final and filter3_final and filter4_passed
     )
     dossier: dict[str, Any] = {
+        "model_binding": binding,
+        "derived_input_audit": ratio_audit,
         "nutrient_ruleset_version": RULESET_VERSION,
         "clinical_prescribing_validated": False,
         "patient_baseline": {

@@ -1,0 +1,11 @@
+{
+  "seed": 20261119,
+  "replicates": 20000,
+  "resampling": "Ordinary unweighted participant bootstrap; same row multiplicities across all models and outcomes",
+  "contrasts": "BioNutriGPT minus each of five comparators; no best-comparator selection",
+  "primary": "Diabetes and CVD: raw AUROC and calibrated Brier; 20 contrasts",
+  "intervals": "Percentile 95% pointwise; Bonferroni 99.75% individual intervals for the 20 primary contrasts (approximate bootstrap family-wise coverage)",
+  "secondary": "Obesity contrasts are exploratory; raw Brier contrasts descriptive only",
+  "limitations": "Post-results analysis, not preregistered. Conditional on fitted models; no training/selection/calibrator uncertainty. Not complex-survey inference. No clinical equivalence margin.",
+  "compute": "Up to 12 independent CPU workers, one BLAS thread each; GPU not used for rank/bootstrap operations"
+}

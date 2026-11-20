@@ -1,11 +1,55 @@
 {
+  "model_binding": {
+    "checkpoint_sha256": "ccb47ba51760335cc56974705ed2e66ca9a45780bc272fb53cd5288b420250ae",
+    "preprocessor_sha256": "04c69228edbf0ac4fb50c7e65f73e2c017b9eb56288f05cb3da091a0562278c4",
+    "architecture": "train_bionutrigpt_stage1.BioNutriGPTStage1",
+    "feature_order_sha256": "2299737c3ed80cb462a7a5716bead6cf515b63e19f6cbec8fe26238377f6e0cf",
+    "probability_transform": "raw_sigmoid_no_calibration",
+    "operating_cutoffs": {
+      "diabetes": 0.617,
+      "obesity": 0.445,
+      "cvd": 0.603
+    },
+    "cutoff_provenance": "legacy_project_constants_not_revalidated_for_repaired_v2",
+    "repaired_v2_equivalence_established": false
+  },
+  "derived_input_audit": {
+    "policy": "recompute_from_raw_nutrients_v1",
+    "changed_fields": [
+      "PROT_PCT_KCAL",
+      "CARB_PCT_KCAL",
+      "FAT_PCT_KCAL",
+      "FIBER_PER_1000_KCAL",
+      "SUGAR_TO_FIBER_RATIO",
+      "SODIUM_POTASSIUM_RATIO",
+      "SAT_TO_UNSAT_FAT_RATIO"
+    ],
+    "supplied": [
+      18.3799991607666,
+      47.56999969482422,
+      26.760000228881836,
+      18.3799991607666,
+      0.9399999976158142,
+      0.41999998688697815,
+      0.30000001192092896
+    ],
+    "derived": [
+      18.37837791442871,
+      47.56756591796875,
+      26.756757736206055,
+      18.37837791442871,
+      0.9142857193946838,
+      0.42094185948371887,
+      0.29925188422203064
+    ]
+  },
   "nutrient_ruleset_version": "adult-food-rule-review-v4-exposure-separated",
   "clinical_prescribing_validated": false,
   "patient_baseline": {
     "probabilities": {
-      "diabetes": 0.3436913788318634,
-      "obesity": 0.2381870299577713,
-      "cvd": 0.03888491168618202
+      "diabetes": 0.02433634176850319,
+      "obesity": 0.07408985495567322,
+      "cvd": 0.006644724868237972
     },
     "clinical_operating_cutoffs": {
       "diabetes": 0.617,
@@ -19,20 +63,20 @@
     }
   },
   "energy_prescription": {
-    "BMR": 1635.0,
-    "TDEE": 1962.0,
-    "PAL_factor": 1.2,
-    "activity_level": "sedentary",
-    "target_calories": 1962.0
+    "BMR": 1287.75,
+    "TDEE": 2221.36875,
+    "PAL_factor": 1.725,
+    "activity_level": "active",
+    "target_calories": 2221.36875
   },
   "nutrient_constraint_envelope": [
     {
       "nutrient": "DR1TKCAL",
-      "baseline": 1990.0,
-      "target": 1989.9293212890625,
-      "min_bound": 1863.9000244140625,
-      "max_bound": 2060.10009765625,
-      "delta": -0.0706787109375,
+      "baseline": 1850.0,
+      "target": 1717.6226425170898,
+      "min_bound": 2110.30029296875,
+      "max_bound": 2332.437255859375,
+      "delta": -132.37735748291016,
       "rule_provenance": {
         "nutrient": "DR1TKCAL",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -45,8 +89,8 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 1863.9000244140625,
-        "numeric_upper": 2060.10009765625,
+        "numeric_lower": 2110.30029296875,
+        "numeric_upper": 2332.437255859375,
         "lower_kind": "project_choice_requires_review",
         "upper_kind": "reference_or_project_bound_see_note",
         "clinical_prescribing_validated": false,
@@ -55,11 +99,11 @@
     },
     {
       "nutrient": "DR1TPROT",
-      "baseline": 90.0,
-      "target": 90.70195007324219,
-      "min_bound": 59.20000076293945,
-      "max_bound": 148.0,
-      "delta": 0.7019500732421875,
+      "baseline": 85.0,
+      "target": 85.2525405883789,
+      "min_bound": 46.0,
+      "max_bound": 114.0,
+      "delta": 0.25254058837890625,
       "rule_provenance": {
         "nutrient": "DR1TPROT",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -72,8 +116,8 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 59.20000076293945,
-        "numeric_upper": 148.0,
+        "numeric_lower": 46.0,
+        "numeric_upper": 114.0,
         "lower_kind": "project_choice_requires_review",
         "upper_kind": "reference_or_project_bound_see_note",
         "clinical_prescribing_validated": false,
@@ -82,11 +126,11 @@
     },
     {
       "nutrient": "DR1TCARB",
-      "baseline": 250.0,
-      "target": 250.67431640625,
+      "baseline": 220.0,
+      "target": 220.27487182617188,
       "min_bound": 130.0,
-      "max_bound": 294.29998779296875,
-      "delta": 0.67431640625,
+      "max_bound": 333.205322265625,
+      "delta": 0.274871826171875,
       "rule_provenance": {
         "nutrient": "DR1TCARB",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -100,7 +144,7 @@
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
         "numeric_lower": 130.0,
-        "numeric_upper": 294.29998779296875,
+        "numeric_upper": 333.205322265625,
         "lower_kind": "project_choice_requires_review",
         "upper_kind": "reference_or_project_bound_see_note",
         "clinical_prescribing_validated": false,
@@ -109,11 +153,11 @@
     },
     {
       "nutrient": "DR1TSUGR",
-      "baseline": 42.0,
-      "target": 42.69023895263672,
+      "baseline": 32.0,
+      "target": 32.129390716552734,
       "min_bound": 0.0,
-      "max_bound": 294.29998779296875,
-      "delta": 0.6902389526367188,
+      "max_bound": 333.205322265625,
+      "delta": 0.12939071655273438,
       "rule_provenance": {
         "nutrient": "DR1TSUGR",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -127,7 +171,7 @@
         "relaxation_policy": "not_enforced_reporting",
         "stage3_enforcement": "none",
         "numeric_lower": 0.0,
-        "numeric_upper": 294.29998779296875,
+        "numeric_upper": 333.205322265625,
         "lower_kind": "not_an_adequacy_minimum",
         "upper_kind": "reference_or_project_bound_see_note",
         "clinical_prescribing_validated": false,
@@ -136,11 +180,11 @@
     },
     {
       "nutrient": "DR1TFIBE",
-      "baseline": 30.0,
-      "target": 30.62239866570369,
-      "min_bound": 28.0,
+      "baseline": 34.0,
+      "target": 33.95115661621094,
+      "min_bound": 31.099163055419922,
       "max_bound": 60.0,
-      "delta": 0.6223986657036917,
+      "delta": -0.0488433837890625,
       "rule_provenance": {
         "nutrient": "DR1TFIBE",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -153,7 +197,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 28.0,
+        "numeric_lower": 31.099163055419922,
         "numeric_upper": 60.0,
         "lower_kind": "project_choice_requires_review",
         "upper_kind": "reference_or_project_bound_see_note",
@@ -163,11 +207,11 @@
     },
     {
       "nutrient": "DR1TTFAT",
-      "baseline": 70.0,
-      "target": 69.3518295288086,
-      "min_bound": 43.599998474121094,
-      "max_bound": 76.30000305175781,
-      "delta": -0.6481704711914062,
+      "baseline": 55.0,
+      "target": 55.05699920654297,
+      "min_bound": 49.36375045776367,
+      "max_bound": 86.38656616210938,
+      "delta": 0.05699920654296875,
       "rule_provenance": {
         "nutrient": "DR1TTFAT",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -180,8 +224,8 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 43.599998474121094,
-        "numeric_upper": 76.30000305175781,
+        "numeric_lower": 49.36375045776367,
+        "numeric_upper": 86.38656616210938,
         "lower_kind": "project_choice_requires_review",
         "upper_kind": "reference_or_project_bound_see_note",
         "clinical_prescribing_validated": false,
@@ -190,11 +234,11 @@
     },
     {
       "nutrient": "DR1TSFAT",
-      "baseline": 18.0,
-      "target": 17.84911346435547,
+      "baseline": 12.0,
+      "target": 11.99528980255127,
       "min_bound": 0.0,
-      "max_bound": 21.799999237060547,
-      "delta": -0.15088653564453125,
+      "max_bound": 24.681875228881836,
+      "delta": -0.004710197448730469,
       "rule_provenance": {
         "nutrient": "DR1TSFAT",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -208,7 +252,7 @@
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
         "numeric_lower": 0.0,
-        "numeric_upper": 21.799999237060547,
+        "numeric_upper": 24.681875228881836,
         "lower_kind": "not_an_adequacy_minimum",
         "upper_kind": "reference_or_project_bound_see_note",
         "clinical_prescribing_validated": false,
@@ -217,11 +261,11 @@
     },
     {
       "nutrient": "DR1TMFAT",
-      "baseline": 28.0,
-      "target": 28.655649185180664,
+      "baseline": 25.0,
+      "target": 25.166378021240234,
       "min_bound": 0.0,
-      "max_bound": 76.30000305175781,
-      "delta": 0.6556491851806641,
+      "max_bound": 86.38656616210938,
+      "delta": 0.16637802124023438,
       "rule_provenance": {
         "nutrient": "DR1TMFAT",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -235,7 +279,7 @@
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
         "numeric_lower": 0.0,
-        "numeric_upper": 76.30000305175781,
+        "numeric_upper": 86.38656616210938,
         "lower_kind": "not_an_adequacy_minimum",
         "upper_kind": "reference_or_project_bound_see_note",
         "clinical_prescribing_validated": false,
@@ -244,11 +288,11 @@
     },
     {
       "nutrient": "DR1TPFAT",
-      "baseline": 17.0,
-      "target": 17.557825088500977,
-      "min_bound": 10.899999618530273,
-      "max_bound": 21.799999237060547,
-      "delta": 0.5578250885009766,
+      "baseline": 15.0,
+      "target": 15.288262367248535,
+      "min_bound": 12.340937614440918,
+      "max_bound": 24.681875228881836,
+      "delta": 0.28826236724853516,
       "rule_provenance": {
         "nutrient": "DR1TPFAT",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -261,8 +305,8 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 10.899999618530273,
-        "numeric_upper": 21.799999237060547,
+        "numeric_lower": 12.340937614440918,
+        "numeric_upper": 24.681875228881836,
         "lower_kind": "project_choice_requires_review",
         "upper_kind": "reference_or_project_bound_see_note",
         "clinical_prescribing_validated": false,
@@ -271,11 +315,11 @@
     },
     {
       "nutrient": "DR1TCHOL",
-      "baseline": 220.0,
-      "target": 219.6491241455078,
+      "baseline": 160.0,
+      "target": 159.9661407470703,
       "min_bound": 0.0,
       "max_bound": 300.0,
-      "delta": -0.3508758544921875,
+      "delta": -0.0338592529296875,
       "rule_provenance": {
         "nutrient": "DR1TCHOL",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -298,11 +342,11 @@
     },
     {
       "nutrient": "DR1TATOC",
-      "baseline": 10.5,
+      "baseline": 12.0,
       "target": 15.0,
       "min_bound": 15.0,
       "max_bound": 1000000.0,
-      "delta": 4.5,
+      "delta": 3.0,
       "rule_provenance": {
         "nutrient": "DR1TATOC",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -325,11 +369,11 @@
     },
     {
       "nutrient": "DR1TRET",
-      "baseline": 350.0,
-      "target": 349.9052734375,
+      "baseline": 420.0,
+      "target": 420.0047607421875,
       "min_bound": 0.0,
       "max_bound": 3000.0,
-      "delta": -0.0947265625,
+      "delta": 0.0047607421875,
       "rule_provenance": {
         "nutrient": "DR1TRET",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -352,11 +396,11 @@
     },
     {
       "nutrient": "DR1TVARA",
-      "baseline": 900.0,
-      "target": 900.0,
-      "min_bound": 900.0,
+      "baseline": 1050.0,
+      "target": 1049.998779296875,
+      "min_bound": 700.0,
       "max_bound": 1000000.0,
-      "delta": 0.0,
+      "delta": -0.001220703125,
       "rule_provenance": {
         "nutrient": "DR1TVARA",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -369,7 +413,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 900.0,
+        "numeric_lower": 700.0,
         "numeric_upper": 1000000.0,
         "lower_kind": "RDA_reference",
         "upper_kind": "numerical_search_cap_not_UL",
@@ -379,11 +423,11 @@
     },
     {
       "nutrient": "DR1TACAR",
-      "baseline": 500.0,
-      "target": 500.00164794921875,
+      "baseline": 650.0,
+      "target": 649.9978637695312,
       "min_bound": 0.0,
       "max_bound": 1000000.0,
-      "delta": 0.00164794921875,
+      "delta": -0.00213623046875,
       "rule_provenance": {
         "nutrient": "DR1TACAR",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -406,11 +450,11 @@
     },
     {
       "nutrient": "DR1TBCAR",
-      "baseline": 3200.0,
-      "target": 3200.000244140625,
+      "baseline": 4200.0,
+      "target": 4199.99755859375,
       "min_bound": 0.0,
       "max_bound": 1000000.0,
-      "delta": 0.000244140625,
+      "delta": -0.00244140625,
       "rule_provenance": {
         "nutrient": "DR1TBCAR",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -433,11 +477,11 @@
     },
     {
       "nutrient": "DR1TLYCO",
-      "baseline": 6000.0,
-      "target": 6000.001953125,
+      "baseline": 7500.0,
+      "target": 7499.9970703125,
       "min_bound": 0.0,
       "max_bound": 1000000.0,
-      "delta": 0.001953125,
+      "delta": -0.0029296875,
       "rule_provenance": {
         "nutrient": "DR1TLYCO",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -460,11 +504,11 @@
     },
     {
       "nutrient": "DR1TLZ",
-      "baseline": 1800.0,
-      "target": 1800.0048828125,
+      "baseline": 2400.0,
+      "target": 2399.997802734375,
       "min_bound": 0.0,
       "max_bound": 1000000.0,
-      "delta": 0.0048828125,
+      "delta": -0.002197265625,
       "rule_provenance": {
         "nutrient": "DR1TLZ",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -487,11 +531,11 @@
     },
     {
       "nutrient": "DR1TVB1",
-      "baseline": 1.399999976158142,
-      "target": 2.191028594970703,
-      "min_bound": 1.2000000476837158,
+      "baseline": 1.600000023841858,
+      "target": 2.208425521850586,
+      "min_bound": 1.100000023841858,
       "max_bound": 1000000.0,
-      "delta": 0.791028618812561,
+      "delta": 0.608425498008728,
       "rule_provenance": {
         "nutrient": "DR1TVB1",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -504,7 +548,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 1.2000000476837158,
+        "numeric_lower": 1.100000023841858,
         "numeric_upper": 1000000.0,
         "lower_kind": "RDA_reference",
         "upper_kind": "numerical_search_cap_not_UL",
@@ -514,11 +558,11 @@
     },
     {
       "nutrient": "DR1TVB2",
-      "baseline": 1.600000023841858,
-      "target": 2.8692798614501953,
-      "min_bound": 1.2999999523162842,
+      "baseline": 1.7999999523162842,
+      "target": 2.0625321865081787,
+      "min_bound": 1.100000023841858,
       "max_bound": 1000000.0,
-      "delta": 1.2692798376083374,
+      "delta": 0.26253223419189453,
       "rule_provenance": {
         "nutrient": "DR1TVB2",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -531,7 +575,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 1.2999999523162842,
+        "numeric_lower": 1.100000023841858,
         "numeric_upper": 1000000.0,
         "lower_kind": "RDA_reference",
         "upper_kind": "numerical_search_cap_not_UL",
@@ -541,11 +585,11 @@
     },
     {
       "nutrient": "DR1TNIAC",
-      "baseline": 18.0,
-      "target": 17.2891845703125,
-      "min_bound": 16.0,
+      "baseline": 20.0,
+      "target": 20.065401077270508,
+      "min_bound": 14.0,
       "max_bound": 1000000.0,
-      "delta": -0.7108154296875,
+      "delta": 0.06540107727050781,
       "rule_provenance": {
         "nutrient": "DR1TNIAC",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -558,7 +602,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 16.0,
+        "numeric_lower": 14.0,
         "numeric_upper": 1000000.0,
         "lower_kind": "RDA_reference_proxy",
         "upper_kind": "numerical_search_cap_not_UL",
@@ -568,11 +612,11 @@
     },
     {
       "nutrient": "DR1TVB6",
-      "baseline": 1.7999999523162842,
-      "target": 2.5475337505340576,
+      "baseline": 2.0999999046325684,
+      "target": 3.0955398082733154,
       "min_bound": 1.2999999523162842,
       "max_bound": 100.0,
-      "delta": 0.7475337982177734,
+      "delta": 0.9955399036407471,
       "rule_provenance": {
         "nutrient": "DR1TVB6",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -595,11 +639,11 @@
     },
     {
       "nutrient": "DR1TFOLA",
-      "baseline": 500.0,
-      "target": 500.0207824707031,
+      "baseline": 580.0,
+      "target": 579.9974365234375,
       "min_bound": 0.0,
       "max_bound": 1000000.0,
-      "delta": 0.020782470703125,
+      "delta": -0.0025634765625,
       "rule_provenance": {
         "nutrient": "DR1TFOLA",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -622,11 +666,11 @@
     },
     {
       "nutrient": "DR1TFA",
-      "baseline": 120.0,
-      "target": 120.55979919433594,
+      "baseline": 140.0,
+      "target": 140.05174255371094,
       "min_bound": 0.0,
       "max_bound": 1000.0,
-      "delta": 0.5597991943359375,
+      "delta": 0.0517425537109375,
       "rule_provenance": {
         "nutrient": "DR1TFA",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -649,11 +693,11 @@
     },
     {
       "nutrient": "DR1TFF",
-      "baseline": 380.0,
-      "target": 379.93505859375,
+      "baseline": 440.0,
+      "target": 439.99676513671875,
       "min_bound": 0.0,
       "max_bound": 1000000.0,
-      "delta": -0.06494140625,
+      "delta": -0.00323486328125,
       "rule_provenance": {
         "nutrient": "DR1TFF",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -676,11 +720,11 @@
     },
     {
       "nutrient": "DR1TFDFE",
-      "baseline": 584.0,
-      "target": 583.9765625,
+      "baseline": 670.0,
+      "target": 669.999755859375,
       "min_bound": 400.0,
       "max_bound": 1000000.0,
-      "delta": -0.0234375,
+      "delta": -0.000244140625,
       "rule_provenance": {
         "nutrient": "DR1TFDFE",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -703,11 +747,11 @@
     },
     {
       "nutrient": "DR1TVB12",
-      "baseline": 4.199999809265137,
-      "target": 3.3104588985443115,
+      "baseline": 4.800000190734863,
+      "target": 3.711810350418091,
       "min_bound": 2.4000000953674316,
       "max_bound": 1000000.0,
-      "delta": -0.8895409107208252,
+      "delta": -1.0881898403167725,
       "rule_provenance": {
         "nutrient": "DR1TVB12",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -730,11 +774,11 @@
     },
     {
       "nutrient": "DR1TVC",
-      "baseline": 100.0,
-      "target": 99.92644500732422,
-      "min_bound": 90.0,
+      "baseline": 130.0,
+      "target": 129.99786376953125,
+      "min_bound": 75.0,
       "max_bound": 2000.0,
-      "delta": -0.07355499267578125,
+      "delta": -0.00213623046875,
       "rule_provenance": {
         "nutrient": "DR1TVC",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -747,7 +791,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 90.0,
+        "numeric_lower": 75.0,
         "numeric_upper": 2000.0,
         "lower_kind": "RDA_reference",
         "upper_kind": "reference_or_project_bound_see_note",
@@ -757,11 +801,11 @@
     },
     {
       "nutrient": "DR1TVK",
-      "baseline": 120.0,
-      "target": 120.38784790039062,
-      "min_bound": 120.0,
+      "baseline": 145.0,
+      "target": 145.0028533935547,
+      "min_bound": 90.0,
       "max_bound": 1000000.0,
-      "delta": 0.387847900390625,
+      "delta": 0.0028533935546875,
       "rule_provenance": {
         "nutrient": "DR1TVK",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -774,7 +818,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 120.0,
+        "numeric_lower": 90.0,
         "numeric_upper": 1000000.0,
         "lower_kind": "AI_reference_proxy",
         "upper_kind": "numerical_search_cap_not_UL",
@@ -784,11 +828,11 @@
     },
     {
       "nutrient": "DR1TCALC",
-      "baseline": 950.0,
-      "target": 1000.0,
+      "baseline": 1100.0,
+      "target": 1099.9925537109375,
       "min_bound": 1000.0,
       "max_bound": 2500.0,
-      "delta": 50.0,
+      "delta": -0.0074462890625,
       "rule_provenance": {
         "nutrient": "DR1TCALC",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -811,11 +855,11 @@
     },
     {
       "nutrient": "DR1TPHOS",
-      "baseline": 1400.0,
-      "target": 1400.0340576171875,
+      "baseline": 1550.0,
+      "target": 1550.0174560546875,
       "min_bound": 700.0,
       "max_bound": 4000.0,
-      "delta": 0.0340576171875,
+      "delta": 0.0174560546875,
       "rule_provenance": {
         "nutrient": "DR1TPHOS",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -838,11 +882,11 @@
     },
     {
       "nutrient": "DR1TMAGN",
-      "baseline": 380.0,
-      "target": 420.0,
-      "min_bound": 420.0,
+      "baseline": 420.0,
+      "target": 419.9986267089844,
+      "min_bound": 310.0,
       "max_bound": 1000000.0,
-      "delta": 40.0,
+      "delta": -0.001373291015625,
       "rule_provenance": {
         "nutrient": "DR1TMAGN",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -855,7 +899,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 420.0,
+        "numeric_lower": 310.0,
         "numeric_upper": 1000000.0,
         "lower_kind": "RDA_reference",
         "upper_kind": "numerical_search_cap_not_UL",
@@ -865,11 +909,11 @@
     },
     {
       "nutrient": "DR1TIRON",
-      "baseline": 14.0,
-      "target": 14.629673957824707,
-      "min_bound": 8.0,
+      "baseline": 16.0,
+      "target": 18.0,
+      "min_bound": 18.0,
       "max_bound": 45.0,
-      "delta": 0.629673957824707,
+      "delta": 2.0,
       "rule_provenance": {
         "nutrient": "DR1TIRON",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -882,7 +926,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 8.0,
+        "numeric_lower": 18.0,
         "numeric_upper": 45.0,
         "lower_kind": "RDA_reference",
         "upper_kind": "reference_or_project_bound_see_note",
@@ -892,11 +936,11 @@
     },
     {
       "nutrient": "DR1TZINC",
-      "baseline": 11.0,
-      "target": 11.0,
-      "min_bound": 11.0,
+      "baseline": 12.5,
+      "target": 11.533073425292969,
+      "min_bound": 8.0,
       "max_bound": 40.0,
-      "delta": 0.0,
+      "delta": -0.9669265747070312,
       "rule_provenance": {
         "nutrient": "DR1TZINC",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -909,7 +953,7 @@
         "hard_or_soft": "hard",
         "relaxation_policy": "protected_no_chat_relaxation",
         "stage3_enforcement": "required_for_acceptance",
-        "numeric_lower": 11.0,
+        "numeric_lower": 8.0,
         "numeric_upper": 40.0,
         "lower_kind": "RDA_reference",
         "upper_kind": "reference_or_project_bound_see_note",
@@ -919,11 +963,11 @@
     },
     {
       "nutrient": "DR1TCOPP",
-      "baseline": 1.2000000476837158,
-      "target": 0.9770922660827637,
+      "baseline": 1.399999976158142,
+      "target": 1.8017499446868896,
       "min_bound": 0.8999999761581421,
       "max_bound": 10.0,
-      "delta": -0.22290778160095215,
+      "delta": 0.40174996852874756,
       "rule_provenance": {
         "nutrient": "DR1TCOPP",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -946,11 +990,11 @@
     },
     {
       "nutrient": "DR1TSODI",
-      "baseline": 1900.0,
-      "target": 1899.9886474609375,
+      "baseline": 1600.0,
+      "target": 1599.99853515625,
       "min_bound": 500.0,
       "max_bound": 2300.0,
-      "delta": -0.0113525390625,
+      "delta": -0.00146484375,
       "rule_provenance": {
         "nutrient": "DR1TSODI",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -973,11 +1017,11 @@
     },
     {
       "nutrient": "DR1TPOTA",
-      "baseline": 3500.0,
-      "target": 3500.008056640625,
+      "baseline": 3800.0,
+      "target": 3799.998046875,
       "min_bound": 2600.0,
       "max_bound": 4700.0,
-      "delta": 0.008056640625,
+      "delta": -0.001953125,
       "rule_provenance": {
         "nutrient": "DR1TPOTA",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -1000,11 +1044,11 @@
     },
     {
       "nutrient": "DR1TSELE",
-      "baseline": 90.0,
-      "target": 89.53597259521484,
+      "baseline": 110.0,
+      "target": 110.03897857666016,
       "min_bound": 55.0,
       "max_bound": 400.0,
-      "delta": -0.46402740478515625,
+      "delta": 0.03897857666015625,
       "rule_provenance": {
         "nutrient": "DR1TSELE",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -1027,11 +1071,11 @@
     },
     {
       "nutrient": "DR1TCAFF",
-      "baseline": 80.0,
-      "target": 79.43426513671875,
+      "baseline": 60.0,
+      "target": 59.9765625,
       "min_bound": 0.0,
       "max_bound": 400.0,
-      "delta": -0.56573486328125,
+      "delta": -0.0234375,
       "rule_provenance": {
         "nutrient": "DR1TCAFF",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -1082,29 +1126,29 @@
   ],
   "projected_risk_reductions": {
     "diabetes": {
-      "initial": 0.3436913788318634,
-      "target": 0.265323668718338,
-      "absolute_drop": -0.07836771011352539
+      "initial": 0.02433634176850319,
+      "target": 0.0212878230959177,
+      "absolute_drop": -0.0030485186725854874
     },
     "obesity": {
-      "initial": 0.2381870299577713,
-      "target": 0.19629338383674622,
-      "absolute_drop": -0.041893646121025085
+      "initial": 0.07408985495567322,
+      "target": 0.0621209479868412,
+      "absolute_drop": -0.011968906968832016
     },
     "cvd": {
-      "initial": 0.03888491168618202,
-      "target": 0.02358897775411606,
-      "absolute_drop": -0.015295933932065964
+      "initial": 0.006644724868237972,
+      "target": 0.006446532905101776,
+      "absolute_drop": -0.00019819196313619614
     }
   },
   "audit_filters": {
     "filter_1_thermodynamic_balance": {
       "passed": true,
-      "adjusted": false,
-      "calculated_kcal": 1989.671531677246,
-      "target_kcal_after_filter": 1989.9293212890625,
-      "relative_error_before": 0.00012954711961800329,
-      "relative_error_after": 0.00012954711961800329,
+      "adjusted": true,
+      "calculated_kcal": 1717.6226425170898,
+      "target_kcal_after_filter": 1717.6226425170898,
+      "relative_error_before": 0.18607666963797131,
+      "relative_error_after": 0.0,
       "passed_after_all_later_filters": true
     },
     "filter_2_iom_safety_clamps": {
@@ -1112,40 +1156,40 @@
       "changes": [],
       "sodium_max": 2300.0,
       "potassium_min": 2600.0,
-      "protein_g_per_kg": 1.2257020280167863,
-      "target_kcal": 1989.9293212890625,
+      "protein_g_per_kg": 1.495658606813665,
+      "target_kcal": 1717.6226425170898,
       "passed_after_all_later_filters": true
     },
     "filter_3_clinical_ratio_coherence": {
-      "passed": true,
-      "changes": [
-        "DR1TFIBE increased to satisfy baseline sugar-to-fiber ratio"
+      "passed": false,
+      "changes": [],
+      "unresolved": [
+        "one or more filter-3 adjustments are outside the nutrient bounds"
       ],
-      "unresolved": [],
       "baseline": {
-        "sugar_to_fiber": 1.350000023841858,
-        "sodium_to_potassium": 0.5400000214576721,
-        "sat_to_unsat_fat": 0.38999998569488525
+        "sugar_to_fiber": 0.9142857193946838,
+        "sodium_to_potassium": 0.42094185948371887,
+        "sat_to_unsat_fat": 0.29925188422203064
       },
       "target": {
-        "sugar_to_fiber": 1.350000023841858,
-        "sodium_to_potassium": 0.5426975935851065,
-        "sat_to_unsat_fat": 0.3853978511497356
+        "sugar_to_fiber": 0.9192654500495294,
+        "sodium_to_potassium": 0.42094168832096424,
+        "sat_to_unsat_fat": 0.29578094362676366
       },
-      "within_nutrient_bounds": true,
-      "passed_after_all_later_filters": true
+      "within_nutrient_bounds": false,
+      "passed_after_all_later_filters": false
     },
     "filter_4_closed_loop_rescoring": {
       "passed": true,
-      "delta_diabetes": -0.07836771011352539,
-      "delta_obesity": -0.041893646121025085,
-      "delta_cvd": -0.015295933932065964,
+      "delta_diabetes": -0.0030485186725854874,
+      "delta_obesity": -0.011968906968832016,
+      "delta_cvd": -0.00019819196313619614,
       "target_probabilities": {
-        "diabetes": 0.265323668718338,
-        "obesity": 0.19629338383674622,
-        "cvd": 0.02358897775411606
+        "diabetes": 0.0212878230959177,
+        "obesity": 0.0621209479868412,
+        "cvd": 0.006446532905101776
       }
     }
   },
-  "certified_for_stage3": true
+  "certified_for_stage3": false
 }

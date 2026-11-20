@@ -11,6 +11,9 @@ export interface FeatureFieldInfo {
 }
 
 export interface PatientMetadata {
+  renal_disease?: boolean | null;
+  pregnant?: boolean | null;
+  lactating?: boolean | null;
   weight_kg: number;
   height_cm: number;
   age_years: number;
@@ -50,7 +53,11 @@ export interface ChatResponse {
     | "history"
     | "rollback"
     | "allergy"
+    | "clarification"
     | "unsupported";
+  clarification_options?: string[];
+  interpretation_status?: string;
+  interpreted_request?: string | null;
   sources: string[];
   tool_calls_used?: string[];
   revision_diff?: RevisionDiff | null;

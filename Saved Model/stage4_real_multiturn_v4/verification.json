@@ -1,0 +1,10 @@
+{
+  "status": "passed_saved_checks",
+  "turns": 9,
+  "validated_proposals": 2,
+  "source_hashes_match": true,
+  "requested_exclusion_and_quantity_match": true,
+  "all_preacceptance_states_unchanged": true,
+  "journal_sha256": "dd2f4c92b8209fc1fab8b203d9a03fde5b7128737ee4b6e760b9ac790cf87684",
+  "limit": "Not all conversational tasks succeeded; scenario 5 failed interpretation."
+}

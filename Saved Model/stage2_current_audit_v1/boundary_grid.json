@@ -1,0 +1,2162 @@
+[
+  {
+    "age": 18,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 18,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 19,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 30,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 31,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 50,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 51,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 70,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 71,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": true
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": false,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 25,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 25,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 25,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 50,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 40,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 40,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 40,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 46.0,
+    "filter_protein_max": 80,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 70,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 70,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 70,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 56.0,
+    "filter_protein_max": 140,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 120,
+    "energy": 1200,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 120,
+    "energy": 2000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  },
+  {
+    "age": 90,
+    "female": true,
+    "weight": 120,
+    "energy": 3000,
+    "finite_ordered": true,
+    "protein_min": 96.0,
+    "filter_protein_max": 240,
+    "protein_filter_conflict": false
+  }
+]

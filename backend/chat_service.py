@@ -30,6 +30,7 @@ from scipy.sparse import coo_matrix, vstack
 
 import pipeline_service as ps
 import plan_store
+import food_groups
 
 
 # ---------------------------------------------------------------------------
@@ -316,7 +317,7 @@ def tool_get_plan(dossier: dict[str, Any], session_record: dict[str, Any] | None
     _, stage3, catalog = _context(dossier)
     basket = stage3["solved_food_basket"]
     lookup = {f.food_id: f for f in catalog}
-    schedule = ps.p14.build_deterministic_schedule(basket)
+    schedule = build_requested_schedule(basket, stage3.get("revision", {}).get("meal_requirements", {}))
     schedule = ps._enrich_schedule_items(schedule, basket)
     total_weight_g = round(sum(int(item["quantity"]) * lookup[item["food_id"]].serving_weight_g for item in basket), 1)
     known_allergens = sorted({
@@ -495,7 +496,7 @@ def tool_explain_constraint_conflict(
         alt = ps.s3.solve_meal_plan(stage2, catalog, time_limit_sec=1.2, revision_spec=unlocked_spec)
         if alt.accepted:
             explanation["permissible_alternatives"].append(
-                "Allowing other meal slots to adjust (removing the meal-slot lock) makes this exclusion feasible."
+                "Allowing fixed food quantities to change makes this exclusion feasible; that would change your requested serving amounts."
             )
 
     # 2) If max_active_dishes was requested, check max_active_dishes + 1
@@ -541,6 +542,40 @@ def _allergy_exclusions(catalog: list[Any], allergies: list[str]) -> list[str]:
     )]
 
 
+def _meal_requirements_met(schedule, requirements):
+    for food_id, meal in requirements.items():
+        if meal not in {"Breakfast", "Lunch", "Dinner", "Mid-Morning Snack", "Evening Snack"}:
+            return False
+        if not any(slot.get("meal") == meal and any(str(item.get("food_id")) == food_id and item.get("quantity", 0) >= 1 for item in slot.get("items", [])) for slot in schedule):
+            return False
+    return True
+
+
+def build_requested_schedule(basket, requirements):
+    """Move whole selected food quantities; preserve every basket serving exactly."""
+    schedule = ps.p14.build_deterministic_schedule(basket)
+    for food_id, meal in requirements.items():
+        destination = next((slot for slot in schedule if slot['meal'] == meal), None)
+        rows = [item for slot in schedule for item in slot['items'] if str(item['food_id']) == food_id]
+        if destination is None or not rows:
+            raise ValueError('Requested meal or food is unavailable in the solved basket.')
+        moved = copy.deepcopy(rows[0]); moved['quantity'] = sum(item['quantity'] for item in rows)
+        moved['clinical_rationale'] = 'User-requested meal placement; daily nutrient checks apply.'
+        for slot in schedule:
+            slot['items'] = [item for item in slot['items'] if str(item['food_id']) != food_id]
+        destination['items'].append(moved)
+    if requirements:
+        for slot in schedule:
+            slot['guidance'] = 'User-adjusted schedule. Daily nutrient validation does not establish meal-specific clinical suitability.'
+    expected = {str(x['food_id']):int(x['quantity']) for x in basket}
+    actual = {}
+    for slot in schedule:
+        for item in slot['items']: actual[str(item['food_id'])] = actual.get(str(item['food_id']),0)+item['quantity']
+    if actual != expected or not _meal_requirements_met(schedule, requirements):
+        raise ValueError('Schedule failed quantity or placement validation.')
+    return schedule
+
+
 def tool_propose_revision(
     stage2: dict[str, Any],
     stage3: dict[str, Any],
@@ -560,9 +595,12 @@ def tool_propose_revision(
 
     record = plan_store.get_session(session_id, store_dir=store_dir) if session_id else None
     prefs = _saved_preferences(stage3, record)
+    meal_requirements = {**prefs.get("meal_requirements", {}), **revision_spec.get("meal_requirements", {})}
+    excluded_groups = sorted(set(prefs.get("excluded_food_groups", [])) | set(revision_spec.get("excluded_food_groups", [])))
     existing_excl = set(prefs.get("excluded_food_ids", []))
     existing_excl.update(_allergy_exclusions(catalog, prefs["reported_allergies"]))
     new_excl = set(revision_spec.get("excluded_food_ids", []))
+    new_excl.update(food_groups.excluded_ids(excluded_groups, catalog))
     all_excl = sorted(existing_excl | new_excl)
     default_mode = "veg_nonveg_combo" if any(f.category == "non_veg_protein" for f in catalog) else "pure_vegetarian"
     dietary_mode = str(
@@ -605,6 +643,13 @@ def tool_propose_revision(
             "summary": "The independent plan validator rejected the solver candidate. Your current plan has not changed.",
         }
 
+    try:
+        schedule = build_requested_schedule(output.solved_food_basket, meal_requirements)
+    except ValueError as exc:
+        return None, None, {"failure_code":"meal_placement_not_met", "summary":str(exc)}
+    if not _meal_requirements_met(schedule, meal_requirements):
+        return None, None, {"failure_code": "meal_placement_not_met", "summary": "The daily basket passed nutrient checks, but the meal schedule did not meet your requested placement. No compliant proposal was found by this scheduling method."}
+
     diff = ps.s3.compute_plan_diff(prev_basket, output.solved_food_basket)
     proposal_id = f"prop_{uuid.uuid4().hex[:10]}"
     proposal = copy.deepcopy(stage3)
@@ -612,9 +657,11 @@ def tool_propose_revision(
     proposal["revision"] = {
         "proposal_id": proposal_id,
         "status": "proposal",
+        "meal_requirements": meal_requirements,
+        "excluded_food_groups": excluded_groups,
         "reason": reason,
         "dietary_mode": dietary_mode,
-        "excluded_food_id": sorted(new_excl)[0] if new_excl else "",
+        "excluded_food_id": next(iter(new_excl)) if len(new_excl) == 1 and not excluded_groups else "",
         "excluded_food_ids": all_excl,
         "locked_food_quantities": merged_spec["locked_food_quantities"],
         "max_active_dishes": merged_spec["max_active_dishes"],
@@ -673,6 +720,8 @@ def accept(
     prefs = _saved_preferences(stage3, session_record)
     existing_excl = set(prefs.get("excluded_food_ids", []))
     existing_excl.update(_allergy_exclusions(catalog, prefs["reported_allergies"]))
+    excluded_groups = sorted(set(prefs.get("excluded_food_groups", [])) | set(revision.get("excluded_food_groups", [])))
+    existing_excl.update(food_groups.excluded_ids(excluded_groups, catalog))
     excluded_id = str(revision.get("excluded_food_id", "") or "")
     if excluded_id:
         if excluded_id not in {row["food_id"] for row in stage3["solved_food_basket"]}:
@@ -721,6 +770,10 @@ def accept(
     if not validation["accepted"]:
         raise ValueError("The proposed basket does not pass the current checks.")
 
+    meal_requirements = {**prefs.get("meal_requirements", {}), **revision.get("meal_requirements", {})}
+    if not _meal_requirements_met(build_requested_schedule(output.solved_food_basket, meal_requirements), meal_requirements):
+        raise ValueError("The proposed schedule does not satisfy saved meal requirements.")
+
     diff = ps.s3.compute_plan_diff(stage3["solved_food_basket"], output.solved_food_basket)
     output.accepted = True
     output.clinical_verification["all_active_checks_passed"] = True
@@ -734,6 +787,8 @@ def accept(
         stage3_new["preferences_applied"] = copy.deepcopy(stage3["preferences_applied"])
         stage3_new["preferences_applied"]["excluded_food_ids"] = expected_excl
     stage3_new["revision"] = {
+        "excluded_food_groups": excluded_groups,
+        "meal_requirements": meal_requirements,
         "dietary_mode": dietary_mode,
         "excluded_food_id": excluded_id,
         "excluded_food_ids": expected_excl,
@@ -754,6 +809,8 @@ def accept(
             diff,
             str(revision.get("reason", "Accepted user revision")),
             updated_preferences={
+                "excluded_food_groups": excluded_groups,
+                "meal_requirements": meal_requirements,
                 "excluded_food_ids": expected_excl,
                 "locked_food_quantities": locked_quantities,
                 "max_active_dishes": max_active_dishes,
@@ -770,7 +827,7 @@ def accept(
         updated["stage3_discrete_meal_synthesis"] = stage3_new
         updated["stage3_meal_plan"] = stage3_new
 
-    schedule = ps.p14.build_deterministic_schedule(output.solved_food_basket)
+    schedule = build_requested_schedule(output.solved_food_basket, meal_requirements)
     schedule = ps._enrich_schedule_items(schedule, output.solved_food_basket)
     return {
         "session_id": session_id,
@@ -801,7 +858,7 @@ def rollback(
     record, target = plan_store.rollback_version(session_id, target_version, store_dir=store_dir)
     updated_dossier = plan_store.build_dossier_from_session(record)
     stage3 = updated_dossier["stage3_discrete_meal_synthesis"]
-    schedule = ps.p14.build_deterministic_schedule(stage3["solved_food_basket"])
+    schedule = build_requested_schedule(stage3["solved_food_basket"], stage3.get("revision", {}).get("meal_requirements", {}))
     schedule = ps._enrich_schedule_items(schedule, stage3["solved_food_basket"])
     return {
         "session_id": session_id,

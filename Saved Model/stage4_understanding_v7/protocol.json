@@ -1,0 +1,47 @@
+{
+  "scope": "One saved Stage 2 case; engineering evaluation, not held-out/general accuracy or clinical evidence.",
+  "selection": "First two non-fish initial basket items by food_id; retain quantities. No retries or alternate food selection.",
+  "cases": [
+    [
+      "description_local",
+      [
+        "Please tell me about the first dish.",
+        "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)"
+      ],
+      false
+    ],
+    [
+      "negated_omission",
+      [
+        "Please never omit Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji).",
+        "Check this interpreted request"
+      ],
+      false
+    ],
+    [
+      "description_model",
+      [
+        "Give me a brief factual overview of Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)."
+      ],
+      false
+    ],
+    [
+      "information_model",
+      [
+        "What details can you share regarding Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)?"
+      ],
+      false
+    ],
+    [
+      "natural_removal",
+      [
+        "Kindly omit Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji) from my daily basket.",
+        "Check this interpreted request"
+      ],
+      true
+    ]
+  ],
+  "initial_solver_seconds": 20,
+  "revision_solver_seconds": 2,
+  "scoring": "Report model interpretation, completed revisions, independent validity and unchanged-before-acceptance separately. Clarification does not count as completed revision."
+}
