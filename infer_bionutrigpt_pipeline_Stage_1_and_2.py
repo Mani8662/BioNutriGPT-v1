@@ -39,15 +39,15 @@ if str(PROJECT_DIR) not in sys.path:
 import train_bionutrigpt_stage1 as s1  # noqa: E402
 import stage2_counterfactual_engine as s2  # noqa: E402
 
-DEFAULT_CHECKPOINT = PROJECT_DIR / "Saved Model" / "bionutrigpt_stage1_best.pt"
-DEFAULT_PREPROCESSOR = PROJECT_DIR / "Data" / "preprocessing_artifacts.joblib"
+DEFAULT_CHECKPOINT = s2.DEFAULT_CHECKPOINT
+DEFAULT_PREPROCESSOR = s2.DEFAULT_PREPROCESSOR
 DEFAULT_PATIENT = PROJECT_DIR / "sample_patient_single_line.txt"
 DEFAULT_OUTPUT = PROJECT_DIR / "bionutrigpt_pipeline_dossier.json"
 
 CLINICAL_THRESHOLDS: dict[str, float] = {
-    "diabetes": 0.617,
-    "obesity": 0.445,
-    "cvd": 0.603,
+    "diabetes": s2.CUTOFF_DIABETES,
+    "obesity": s2.CUTOFF_OBESITY,
+    "cvd": s2.CUTOFF_CVD,
 }
 
 ACTIVITY_LEVELS = ("sedentary", "light", "moderate", "active")
@@ -260,7 +260,7 @@ def run_stage1_diagnostics(
             positive = probability >= threshold
             probabilities[disease] = probability
             classifications[disease] = {
-                "status": "HIGH RISK / POSITIVE" if positive else "NORMAL / LOW RISK",
+                "status": "ABOVE RESEARCH THRESHOLD" if positive else "BELOW RESEARCH THRESHOLD",
                 "threshold": threshold,
                 "positive": bool(positive),
             }

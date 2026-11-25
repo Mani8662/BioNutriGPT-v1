@@ -1,0 +1,63 @@
+{
+  "identity": {
+    "case": 31,
+    "SEQN": 114467,
+    "mode": "pure_non_vegetarian",
+    "scenario": "nutrient_sens_pm10pct"
+  },
+  "variant": "b",
+  "binding": "8dcf499910a3f476b2d1caeb45e4b3541d999fc49ee5777f9c8a59576ba3f4fa",
+  "budget_seconds": 5.0,
+  "exclusions": [],
+  "nominal_hash": "39f5261e0c5a5d7b7a3435852a8cacf5137fdd6eef9e3bd0559fc26179a2bb17",
+  "nominal_accepted": true,
+  "audit": {
+    "valid": false,
+    "first_failure": [
+      "Carbohydrate AMDR violated: 44.88% outside [45%, 65%]"
+    ],
+    "totals": {
+      "DR1TKCAL": 1924.7096343872993,
+      "DR1TPROT": 146.65987109451189,
+      "DR1TCARB": 215.95283326396122,
+      "DR1TSUGR": null,
+      "DR1TFIBE": 40.134773405797496,
+      "DR1TTFAT": 51.912359165943485,
+      "DR1TSFAT": 6.849694142113003,
+      "DR1TMFAT": 24.63385012298625,
+      "DR1TPFAT": 16.13860706045721,
+      "DR1TCHOL": 222.3907195593763,
+      "DR1TATOC": 21.203198070579102,
+      "DR1TRET": 21.74629785616971,
+      "DR1TVARA": 1095.5527629222113,
+      "DR1TACAR": null,
+      "DR1TBCAR": null,
+      "DR1TLYCO": null,
+      "DR1TLZ": null,
+      "DR1TVB1": 1.2550651547433471,
+      "DR1TVB2": 2.093576979089308,
+      "DR1TNIAC": 44.17424092602362,
+      "DR1TVB6": 2.9151529868453716,
+      "DR1TFOLA": 504.96414529573497,
+      "DR1TFA": 0.0,
+      "DR1TFF": null,
+      "DR1TFDFE": 521.5194513894178,
+      "DR1TVB12": 2.8483146646409034,
+      "DR1TVC": 101.4632012467858,
+      "DR1TVK": 267.54380357206304,
+      "DR1TCALC": 1100.828790057364,
+      "DR1TPHOS": 2012.544312867558,
+      "DR1TMAGN": 517.8218574923355,
+      "DR1TIRON": 14.542123408179261,
+      "DR1TZINC": 13.253221512562632,
+      "DR1TCOPP": 2.0660442683307827,
+      "DR1TSODI": 1351.6147804369095,
+      "DR1TPOTA": 3680.4577890894698,
+      "DR1TSELE": 98.41413905624067,
+      "DR1TCAFF": null,
+      "DR1TALCO": null
+    },
+    "target_error": null
+  },
+  "accepted": false
+}

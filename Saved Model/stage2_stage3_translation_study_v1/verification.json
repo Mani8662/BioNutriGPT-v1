@@ -1,0 +1,72 @@
+{
+  "verification_passed": true,
+  "study": "stage2_stage3_translation_study_v1",
+  "cohort_size": 100,
+  "total_checkpoints_verified": 900,
+  "source_hashes_verified": true,
+  "cases_hash_verified": true,
+  "catalog_hash_verified": true,
+  "max_nutrient_accounting_residual": 4.999823572937601e-07,
+  "recomputed_counts": {
+    "by_arm": {
+      "rules_only": {
+        "attempted_solves": 300,
+        "stage2_accepted_participants": 48,
+        "stage2_accepted_pct": 48.0,
+        "stage3_accepted_solves": 298,
+        "stage3_accepted_pct": 99.3,
+        "end_to_end_accepted_solves": 144,
+        "end_to_end_accepted_pct": 48.0,
+        "mean_normalized_target_distance": 23.7991,
+        "median_normalized_target_distance": 22.6989
+      },
+      "minimum_change": {
+        "attempted_solves": 300,
+        "stage2_accepted_participants": 70,
+        "stage2_accepted_pct": 70.0,
+        "stage3_accepted_solves": 297,
+        "stage3_accepted_pct": 99.0,
+        "end_to_end_accepted_solves": 209,
+        "end_to_end_accepted_pct": 69.7,
+        "mean_normalized_target_distance": 23.1534,
+        "median_normalized_target_distance": 22.686
+      },
+      "model_guided": {
+        "attempted_solves": 300,
+        "stage2_accepted_participants": 77,
+        "stage2_accepted_pct": 77.0,
+        "stage3_accepted_solves": 298,
+        "stage3_accepted_pct": 99.3,
+        "end_to_end_accepted_solves": 231,
+        "end_to_end_accepted_pct": 77.0,
+        "mean_normalized_target_distance": 23.2377,
+        "median_normalized_target_distance": 23.4845
+      }
+    },
+    "by_mode": {
+      "pure_vegetarian": {
+        "attempted_solves": 300,
+        "stage3_accepted_solves": 297,
+        "stage3_accepted_pct": 99.0,
+        "end_to_end_accepted_solves": 195,
+        "end_to_end_accepted_pct": 65.0
+      },
+      "veg_nonveg_combo": {
+        "attempted_solves": 300,
+        "stage3_accepted_solves": 296,
+        "stage3_accepted_pct": 98.7,
+        "end_to_end_accepted_solves": 194,
+        "end_to_end_accepted_pct": 64.7
+      },
+      "pure_non_vegetarian": {
+        "attempted_solves": 300,
+        "stage3_accepted_solves": 300,
+        "stage3_accepted_pct": 100.0,
+        "end_to_end_accepted_solves": 195,
+        "end_to_end_accepted_pct": 65.0
+      }
+    }
+  },
+  "verifier_sha256": "668107db8303d49cf3939b7c9e225dc8ee8746acad9d92c38472d33dec88a3de",
+  "scope": "Independent replay of discrete meal arithmetic, category rules, AMDR splits, and paired contrasts; no clinical safety claim"
+}

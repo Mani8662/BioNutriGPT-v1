@@ -1,0 +1,23 @@
+{
+  "completed_cases": 32,
+  "returned_dossiers": 32,
+  "errors": 0,
+  "certified": 25,
+  "false_accepts": 0,
+  "stage_bound_failures": {
+    "optimizer_clipped": 0,
+    "after_projection": 0,
+    "after_filter_1": 0,
+    "after_filter_2": 0,
+    "after_filter_3": 0
+  },
+  "final_energy_failures": 0,
+  "final_ratio_failures": 0,
+  "closed_loop_failures": 7,
+  "linear_feasible": 32,
+  "linear_feasible_but_rejected": 7,
+  "final_violated_nutrients": {},
+  "runtime_seconds": 106.00578919998588,
+  "mean_case_seconds": 3.312680912499559,
+  "source_hashes_unchanged": true
+}

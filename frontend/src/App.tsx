@@ -817,8 +817,9 @@ export default function App() {
                 <>
                   <div className="note">
                     <ShieldCheck size={19} />
-                    These are screening estimates, not a diagnosis. Review them
-                    with your care provider.
+                    These are research estimates, not a diagnosis. The model was
+                    evaluated on US data; prediction accuracy in Indian patients
+                    has not been established.
                   </div>
                   <div className="risk-grid">
                     {(
@@ -850,18 +851,18 @@ export default function App() {
                         >
                           {screening.classifications[r.key].positive
                             ? "Discuss with your care provider"
-                            : "Below screening threshold"}
+                            : "Below research threshold"}
                         </span>
                         <details>
                           <summary>What does this mean?</summary>
                           <p>
                             This is the estimated likelihood returned for this
-                            profile. The screening threshold is{" "}
+                            profile. The research threshold is{" "}
                             {(
                               screening.classifications[r.key].threshold * 100
                             ).toFixed(1)}
-                            %. This number alone cannot establish or rule out a
-                            condition.
+                            %. This is not a clinically validated treatment
+                            threshold and cannot establish or rule out a condition.
                           </p>
                         </details>
                       </article>

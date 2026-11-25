@@ -1,0 +1,16 @@
+{
+  "verified": true,
+  "metric_rows": 324,
+  "model_scenario_pairs": 54,
+  "participant_count": 7004,
+  "checks": [
+    "frozen hashes",
+    "participant alignment",
+    "labels",
+    "finite probability bounds",
+    "AUROC",
+    "AP",
+    "Brier",
+    "decision flip arithmetic"
+  ]
+}

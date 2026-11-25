@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "intervals_verified": 30,
+  "exact_tests_verified": 36,
+  "holm_families": 2,
+  "solver_calls": 0,
+  "original_evidence_unchanged": true,
+  "analysis_sha256": "a605524864c305dadc861fe5e78052db3e06913bd781c1d3da203f86d363d6da",
+  "verifier_sha256": "4d6a82b065527faae6b3beda57c485da453249df5e4992260ec1c1974b6bd2c6"
+}

@@ -1,0 +1,78 @@
+{
+  "audit_version": "v2",
+  "audit_date": "2026-11-20",
+  "study_name": "stage1_downstream_study_v1",
+  "summary": "Methodological, statistical, verification, and provenance corrections applied during Audit v2 to the completed Stage 1 downstream added-value controlled study without rerunning valid optimizer solves.",
+  "items": [
+    {
+      "id": "CORR-01",
+      "target": "Direct Model Comparisons",
+      "claimed_or_prior_state": "Marginal confidence intervals for BioNutriGPT, CatBoost, and FT-Transformer were compared, noting their mutual overlap as informal evidence of comparable performance.",
+      "demonstrated_defect": "Comparing overlapping marginal confidence intervals is statistically invalid for repeated-measures paired data on the same 100 participants. It inflates variance by failing to condition on participant effects and does not quantify direct pairwise differences.",
+      "concrete_evidence": "Paired participant-level bootstrap (2,000 resamples, seed 20261120) recomputed on verified acceptance indicators: BioNutriGPT vs CatBoost = -0.27 pp [-0.60, 0.00] (-4 net solves / 1,500); BioNutriGPT vs FT-Transformer = -0.20 pp [-0.53, +0.13] (-3 net solves / 1,500); CatBoost vs FT-Transformer = +0.07 pp [-0.33, +0.47] (+1 net solve / 1,500).",
+      "correction_applied": "Replaced marginal CI overlap with direct paired contrast point estimates and 2,000 participant-level bootstrap intervals for all 45 cell-specific configurations and 3 overall averages in direct_model_contrasts_audit_v2.json/csv.",
+      "quantitative_impact": "Directly demonstrates that BioNutriGPT provides no detected engineering advantage over CatBoost or FT-Transformer, with intervals spanning zero in 11 of 15 cells and all overall comparisons.",
+      "status": "Post-hoc methodological audit correction"
+    },
+    {
+      "id": "CORR-02",
+      "target": "Valid-Pair Denominators for Plan Quality Metrics",
+      "claimed_or_prior_state": "Plan quality metrics (calorie error, plate mass, dish counts) were averaged across solves without explicit restriction to mutual acceptance.",
+      "demonstrated_defect": "Evaluating plan metrics without conditioning on mutual acceptance introduces selection bias due to differential dropout (e.g., 182 pure_vegetarian infeasibilities). Participants with missing plans on one arm distort unpaired comparative means.",
+      "concrete_evidence": "When evaluating plan differences, cases where only one arm succeeded must not have the failed arm imputed as 0 kcal / 0 dishes or omitted asymmetrically.",
+      "correction_applied": "Enforced strict valid-pair conditioning: inter-model paired metrics are computed only on the subset of participants where both models returned valid plans (N_both); comparisons against rules-only reference are computed only on the three-way intersection (N_three).",
+      "quantitative_impact": "Prevents selection artifacts; confirms calibrated meal plan quality is virtually identical across all three model families when both succeed (calorie errors 0.7%-0.9%, plate mass ~1,070g-1,150g).",
+      "status": "Post-hoc methodological audit correction"
+    },
+    {
+      "id": "CORR-03",
+      "target": "Nutrient Deviation Endpoint Instability",
+      "claimed_or_prior_state": "Relative nutrient deviation from delivered baseline/reference intake was reported, yielding values exceeding 500% to 1,000% (and up to 6,796%).",
+      "demonstrated_defect": "Dividing absolute nutrient shifts by baseline delivered quantities blows up mathematically when baseline intake of trace nutrients (e.g., vitamin B12, caffeine, alcohol, lycopene, vitamin E) approaches zero.",
+      "concrete_evidence": "Inspection of baseline nutrients revealed participants with near-zero baseline intake of micronutrients, producing explosive division artifacts even for clinically minor shifts.",
+      "correction_applied": "Replaced the unstable relative ratio with two robust endpoints: (A) binary verification of active common-reference envelope bound violations (which is 0 for 100% of accepted plans), and (B) normalized nutrient change scaled by standard fixed daily reference values (RDAs/DRVs) as constant non-zero denominators.",
+      "quantitative_impact": "Eliminated explosive percentages; repaired normalized nutrient deviation ranges realistically from 0.8% to 12.6% across arms, reflecting modest plate realignments.",
+      "status": "Post-hoc metric repair"
+    },
+    {
+      "id": "CORR-04",
+      "target": "Failure Classification (Mathematical Infeasibility vs Computational Timeout)",
+      "claimed_or_prior_state": "All 186 unaccepted solves were grouped generically under failure codes such as infeasible_active_rules / failed.",
+      "demonstrated_defect": "Conflating solver-certified mathematical infeasibility with computational time limit expiration (status 13); a 3.0-second timeout does not prove mathematical infeasibility.",
+      "concrete_evidence": "Inspection of HiGHS solver status codes across all 186 rejected cases revealed: 182 cases were Status 8 (presolve/dual simplex mathematically proved infeasibility in <40 ms, all in pure_vegetarian mode due to carbohydrate <= 45% + saturated fat <= 6% + vegetarian variety limits); 4 cases were Status 13 (time limit expired at 3.0 seconds without incumbent, all in veg_nonveg_combo mode). In pure_non_vegetarian mode, 0 failures occurred.",
+      "correction_applied": "Disaggregated all failure reporting into HiGHS-proven infeasibility (182 cases) and computational timeouts (4 cases) in failure_analysis_audit_v2.json and all tables.",
+      "quantitative_impact": "Transparently isolates the structural cause of solver rejections (vegetarian macronutrient-variety conflicts) and separates proved infeasibility from solver timeout.",
+      "status": "Post-hoc evidence classification repair"
+    },
+    {
+      "id": "CORR-05",
+      "target": "Common-Reference Compliance Rate Reporting",
+      "claimed_or_prior_state": "Common-reference compliance was reported as a single rate without distinguishing attempts from accepted plans.",
+      "demonstrated_defect": "Ambiguous denominators could mislead readers into believing accepted plans violated rules-only bounds or that failed runs produced non-compliant plans.",
+      "concrete_evidence": "Replay verification of all 4,318 accepted prediction plans confirmed 0 violations of rules-only bounds (100.0% compliance). However, among all 4,500 attempts, 182 infeasibilities and 4 timeouts produced no plan, yielding an intention-to-treat pass rate of 95.96%.",
+      "correction_applied": "Explicitly report both metrics: (A) compliance among accepted plans = 100.0% (4,318 / 4,318; 95% CI: [100.0%, 100.0%]), and (B) compliance among all attempts = 95.96% (4,318 / 4,500; 95% CI: [94.5%, 97.4%]).",
+      "quantitative_impact": "Prevents conflicting interpretations across different readers and reviewers.",
+      "status": "Post-hoc reporting clarification"
+    },
+    {
+      "id": "CORR-06",
+      "target": "Statistical Unit and Difference Labeling",
+      "claimed_or_prior_state": "Differences in rates between arms were occasionally labeled as '% difference' or '%' rather than percentage points.",
+      "demonstrated_defect": "Ambiguity between relative percentage changes and absolute differences in proportions/percentages.",
+      "concrete_evidence": "BioNutriGPT acceptance (95.80%) minus CatBoost acceptance (96.07%) is -0.27 percentage points, not -0.27%.",
+      "correction_applied": "Standardized all rate differences to explicit percentage points ('pp'), designated all unadjusted intervals as pointwise/exploratory, and affirmed that an interval spanning zero indicates insufficient evidence of difference rather than proved equivalence.",
+      "quantitative_impact": "Ensures statistical precision and prevents misleading claims of equivalence.",
+      "status": "Post-hoc terminology standardization"
+    },
+    {
+      "id": "CORR-07",
+      "target": "Execution Worker Provenance Discrepancy",
+      "claimed_or_prior_state": "protocol.json recorded worker_processes: 8.",
+      "demonstrated_defect": "Execution log indicates the runner pool was scaled to 10 workers during runtime acceleration on the 12-core host.",
+      "concrete_evidence": "ProcessPoolExecutor was initialized with min(10, os.cpu_count()), running 10 parallel worker processes instead of the 8 recorded in the protocol specification.",
+      "correction_applied": "Documented this provenance discrepancy explicitly in the correction log, binding records, and Report. Verified that parallel process count has zero numerical effect on deterministic MILP solutions.",
+      "quantitative_impact": "Complete transparency of execution parameters without compromising reproducibility or case hashes.",
+      "status": "Post-hoc provenance disclosure"
+    }
+  ]
+}

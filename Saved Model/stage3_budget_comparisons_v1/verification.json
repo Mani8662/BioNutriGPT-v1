@@ -1,0 +1,19 @@
+{
+  "status": "VERIFIED_PASSED",
+  "study_name": "stage3_budget_matched_comparisons_v1",
+  "total_solves_verified": 5400,
+  "total_manifest_files_verified": 6,
+  "total_bootstrap_intervals_verified": 504,
+  "total_exact_tests_verified": 162,
+  "multiplicity_families_verified": {
+    "family_a_budget": 54,
+    "family_b_target_source_accepted": 54,
+    "family_c_target_source_e2e": 54
+  },
+  "failure_fixtures_tested": 6,
+  "original_evidence_unchanged": true,
+  "solver_calls": 0,
+  "results_json_sha256": "8951b930357f2a3d1a058fdb8df2cd10d8d3fb309be32cbe923a3ccc97e290a0",
+  "specification_sha256": "8f2ed3457e3d8510805220099687accc34f684db2555741fd607656d038a6dc7",
+  "verifier_script_sha256": "1e1a415f0b8b1a72a1fd76af4ef3f7016ed7732d9644282dec9d9e1ca71a3890"
+}

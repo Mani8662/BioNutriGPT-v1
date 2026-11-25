@@ -1,0 +1,50 @@
+{
+  "protocol_version": "stage2_stage3_translation_study_v1",
+  "created_at": "2026-11-23T11:05:58+0530",
+  "cohort_size": 100,
+  "cases_sha256": "a29ebab45295090df639bdef03151159b28e269e50c2cfae50113247327d2938",
+  "catalog_hash": "a66b145f088f02c82ed9e8f81639a063bf3aed0bc44fcb2aab381e8bda24e64b",
+  "arms": [
+    "rules_only",
+    "minimum_change",
+    "model_guided"
+  ],
+  "dietary_modes": [
+    "pure_vegetarian",
+    "veg_nonveg_combo",
+    "pure_non_vegetarian"
+  ],
+  "total_planned_solves": 900,
+  "time_limit_sec": 3.0,
+  "max_workers": 10,
+  "device": "cpu",
+  "solver_backend": "scipy.optimize.milp (HiGHS)",
+  "hashes": {
+    "food_composition_cooked_sourced.json": "a66b145f088f02c82ed9e8f81639a063bf3aed0bc44fcb2aab381e8bda24e64b",
+    "stage3_milp_solver.py": "5099d28963c07cb417a30da3e4244ef2fcecea22ac60ab894efc93369fad8fe4",
+    "stage2_stage3_adapter.py": "b40d6748dbce603ad06fc5bb8855700a59bd5ecb54c74861472f7220d038bff5",
+    "test_stage2_stage3_translation.py": "e9bf2785ac0133574ced878ff8a36bb35e5cb7fd80db5b3b03d4a63e1954768f",
+    "stage2_counterfactual_engine.py": "19308d87cf2db64010244ddb1a2c1b434186d51da4bed2ab73c826bb13de0d28",
+    "nutrient_rule_policy.py": "98cd05b20980d78961dcce156fb03903e9675f9fe18bf415f6658cc9256fb04d",
+    "stage1_deployment.py": "c50af2f3274fae462937239ac4aabc34854fe0eac11dabf34cff7ec10f8f6708",
+    "Saved Model/stage2_comparison_study_v2/cases_LOCAL.json": "a29ebab45295090df639bdef03151159b28e269e50c2cfae50113247327d2938",
+    "Saved Model/stage2_comparison_study_v2/summary.json": "b1882463f9916600c04382bbe2dd9a9aa57058d25cb173a89d16806357f4f22c",
+    "Saved Model/stage2_comparison_study_v2/verification.json": "be4a154f7579bb5c5026893124af55c2d8f30fdae0fc2ad4044733076a0d1a26",
+    "Saved Model/stage2_comparison_study_v2/audit_complete.json": "93eb0ec2cbe4245c71000a0c408f6ee4f5d26fee31606750f5d74bbdbbf7be60"
+  },
+  "evaluations": {
+    "evaluation_a": "Diagnostic Target-to-Meal Translation (all 100 profiles x 3 arms x 3 modes)",
+    "evaluation_b": "End-to-End Pipeline Acceptance (Stage 2 Accepted AND Stage 3 Accepted)"
+  },
+  "hypothesis_testing": {
+    "primary_contrast": "Model-Guided (C) vs Minimum-Change (B)",
+    "secondary_contrasts": [
+      "Model-Guided (C) vs Rules-Only (A)",
+      "Minimum-Change (B) vs Rules-Only (A)"
+    ],
+    "binary_test": "Exact two-sided paired binomial discordance test (McNemar exact)",
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 20261123,
+    "continuous_estimator": "Paired mean difference bootstrap percentile 95% CI"
+  }
+}

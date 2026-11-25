@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "participants": 100,
+  "records": 800,
+  "independent_intervals": 40,
+  "changed_ci_rejected": true,
+  "changed_identity_rejected": true,
+  "repeat_max_scaled_Linf": 0.0,
+  "manifest_sha256": "9a0487a7d33bc4afb962e48e93ac8c0b8ece1401052948d08cd63b3edf458806",
+  "analysis_sha256": "0e6e1e63dae634a4aac3a71414d086695ea43c4ebe70fbb4f464205ac0cacc3f",
+  "scope": "Shared input transform, numerical auditor and model loader; separate mean/CI formulas. Does not rerun Adam or independently implement production rules."
+}

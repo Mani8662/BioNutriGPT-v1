@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "corruption_checks": 13,
+  "validated_resume_records": 18,
+  "resume_solver_calls": 0,
+  "reference_target_max_differences": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "reference_parity_test": "passed_one_development_case",
+  "full_study_run": false,
+  "script_sha256": "ac1bc45d098863eae5293d638d7cf236b8df3c65858455f8af65421978207d7c"
+}

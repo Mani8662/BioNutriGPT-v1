@@ -1,0 +1,10 @@
+Contrast,Role,Endpoint,Point Diff (pp),95% CI Lower,95% CI Upper,SE (pp),p-value
+Primary: Model-Guided (C) vs Minimum-Change (B),primary,All-Check Acceptance,+7.00,+2.00,+13.00,2.91,0.0154
+Primary: Model-Guided (C) vs Minimum-Change (B),primary,Numerical Feasibility,+1.00,+0.00,+3.00,1.00,0.7334
+Primary: Model-Guided (C) vs Minimum-Change (B),primary,Score-Gate Pass,+7.00,+2.00,+13.00,2.91,0.0154
+Secondary: Model-Guided (C) vs Rules-Only (A),secondary,All-Check Acceptance,+29.00,+19.00,+39.00,5.31,0.0000
+Secondary: Model-Guided (C) vs Rules-Only (A),secondary,Numerical Feasibility,+0.00,+0.00,+0.00,0.00,1.0000
+Secondary: Model-Guided (C) vs Rules-Only (A),secondary,Score-Gate Pass,+29.00,+19.00,+39.00,5.31,0.0000
+Secondary: Minimum-Change (B) vs Rules-Only (A),secondary,All-Check Acceptance,+22.00,+11.00,+33.00,5.38,0.0002
+Secondary: Minimum-Change (B) vs Rules-Only (A),secondary,Numerical Feasibility,-1.00,-3.00,+0.00,1.00,0.7334
+Secondary: Minimum-Change (B) vs Rules-Only (A),secondary,Score-Gate Pass,+22.00,+11.00,+33.00,5.38,0.0002

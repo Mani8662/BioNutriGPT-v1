@@ -1,0 +1,91 @@
+{
+  "version": "stage2_comparison_study_v2",
+  "cohort_size": 100,
+  "total_tasks_attempted": 300,
+  "total_tasks_completed": 300,
+  "total_runtime_seconds": 315.3632903000034,
+  "device": "cuda",
+  "torch_threads": 12,
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "arms": {
+    "rules_only": {
+      "attempted": 100,
+      "completed": 100,
+      "errors": 0,
+      "overall_accepted": 48,
+      "overall_accepted_pct": 48.0,
+      "numerical_pass": 100,
+      "numerical_pass_pct": 100.0,
+      "score_gate_pass": 48,
+      "score_gate_pass_pct": 48.0,
+      "lp_fallbacks": 0,
+      "distance_from_observed": {
+        "mean": 5.838358520594551,
+        "std": 3.6514561846996956,
+        "median": 4.819045388455287,
+        "iqr": 3.7349827307654264,
+        "min": 2.2750566924726487,
+        "max": 20.459352220537752
+      },
+      "runtime_seconds": {
+        "total": 3.1330990999995265,
+        "mean": 0.03133099099999526,
+        "median": 0.030978399998275563,
+        "p95": 0.03758722999846213
+      }
+    },
+    "minimum_change": {
+      "attempted": 100,
+      "completed": 100,
+      "errors": 0,
+      "overall_accepted": 70,
+      "overall_accepted_pct": 70.0,
+      "numerical_pass": 100,
+      "numerical_pass_pct": 100.0,
+      "score_gate_pass": 70,
+      "score_gate_pass_pct": 70.0,
+      "lp_fallbacks": 0,
+      "distance_from_observed": {
+        "mean": 2.5536191709457814,
+        "std": 2.1412009427309076,
+        "median": 1.8494223268172412,
+        "iqr": 1.371971904483944,
+        "min": 0.7599421749295977,
+        "max": 17.365866219682857
+      },
+      "runtime_seconds": {
+        "total": 18.543922900003963,
+        "mean": 0.18543922900003962,
+        "median": 0.18119525000292924,
+        "p95": 0.24460228999996617
+      }
+    },
+    "model_guided": {
+      "attempted": 100,
+      "completed": 100,
+      "errors": 0,
+      "overall_accepted": 77,
+      "overall_accepted_pct": 77.0,
+      "numerical_pass": 100,
+      "numerical_pass_pct": 100.0,
+      "score_gate_pass": 77,
+      "score_gate_pass_pct": 77.0,
+      "lp_fallbacks": 0,
+      "distance_from_observed": {
+        "mean": 2.825367356876841,
+        "std": 2.0863727770502085,
+        "median": 2.199193744144913,
+        "iqr": 1.3024297713487942,
+        "min": 0.8545794454563409,
+        "max": 17.39058279209266
+      },
+      "runtime_seconds": {
+        "total": 292.35796079991997,
+        "mean": 2.9235796079991996,
+        "median": 2.879326399997808,
+        "p95": 3.0172649499996624
+      }
+    }
+  },
+  "source_hashes_verified": true
+}

@@ -1,0 +1,89 @@
+{
+  "task": "BioNutriGPT Stage 1 Repaired Subgroup Evaluation (v1)",
+  "label": "Analysis plan fixed before this subgroup evaluation, after inspection of earlier overall temporal results; not a prospective preregistration.",
+  "dataset": "Data/stage1_repaired_v2/ (temporal partition)",
+  "participant_count": 7004,
+  "models": [
+    "logistic_regression",
+    "hist_gradient_boosting",
+    "catboost",
+    "mlp",
+    "bionutrigpt",
+    "ft_transformer"
+  ],
+  "outcomes": [
+    "TARGET_DIABETES",
+    "TARGET_OBESITY",
+    "TARGET_CVD"
+  ],
+  "primary_outcomes": [
+    "TARGET_DIABETES",
+    "TARGET_CVD"
+  ],
+  "exploratory_outcomes": [
+    "TARGET_OBESITY"
+  ],
+  "probability_variants": [
+    "calibrated",
+    "raw"
+  ],
+  "primary_metrics": [
+    "auroc",
+    "brier"
+  ],
+  "secondary_metrics": [
+    "average_precision",
+    "calibration_in_the_large",
+    "joint_calibration_intercept",
+    "joint_calibration_slope",
+    "sensitivity",
+    "specificity",
+    "ppv",
+    "npv"
+  ],
+  "small_group_warning_policy": {
+    "min_n": 100,
+    "min_positives": 20,
+    "min_negatives": 20,
+    "rule": "Flag warning if N < 100 or positive < 20 or negative < 20."
+  },
+  "bootstrap_settings": {
+    "seed": 20261120,
+    "replicates": 2000,
+    "method": "ordinary participant-level bootstrap, percentile 95% intervals",
+    "paired_difference_definition": "BioNutriGPT minus comparator within identical sampled participant index",
+    "scope": "Unweighted, conditional on fitted models. Does not account for training variability or complex survey design."
+  },
+  "demographic_dimensions": {
+    "Sex": {
+      "source_variable": "RIAGENDR",
+      "coding": {
+        "1.0": "Male",
+        "2.0": "Female"
+      },
+      "missing_count": 0
+    },
+    "Age": {
+      "source_variable": "RIDAGEYR",
+      "age_groups": {
+        "20-40": "20 <= RIDAGEYR <= 40",
+        "41-65": "41 <= RIDAGEYR <= 65",
+        ">65": "RIDAGEYR > 65 (up to top-coded age 80)"
+      },
+      "top_coding_note": "NHANES top-codes age at 80 years; individuals 80+ are recorded as 80.",
+      "missing_count": 0
+    },
+    "Race_Ethnicity": {
+      "source_variable": "RIDRETH1",
+      "coding": {
+        "1.0": "Mexican American",
+        "2.0": "Other Hispanic",
+        "3.0": "Non-Hispanic White",
+        "4.0": "Non-Hispanic Black",
+        "5.0": "Other Race - Including Multi-Racial"
+      },
+      "note": "RIDRETH1 is the documented 5-category variable in survey_metadata_LOCAL.csv. RIDRETH3 is not present.",
+      "missing_count": 0
+    }
+  }
+}

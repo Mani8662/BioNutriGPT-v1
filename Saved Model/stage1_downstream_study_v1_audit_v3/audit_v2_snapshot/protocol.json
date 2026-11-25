@@ -1,0 +1,49 @@
+{
+  "study_name": "stage1_downstream_study_v1",
+  "status": "Frozen forward protocol prior to study execution; not prospective preregistration",
+  "sample_size_participants": 100,
+  "dietary_modes": [
+    "pure_vegetarian",
+    "veg_nonveg_combo",
+    "pure_non_vegetarian"
+  ],
+  "arms": [
+    "rules_only",
+    "bionutrigpt",
+    "catboost",
+    "ft_transformer"
+  ],
+  "thresholds": [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.5
+  ],
+  "total_solves_planned": 4800,
+  "time_limit_sec": 3.0,
+  "solver": "scipy.optimize.milp / HiGHS",
+  "worker_processes": 8,
+  "target_policy": "Baseline clipped into rules-only reference bounds, identical across paired arms; energy target identical.",
+  "objective_policy": "Calorie absolute deviation + food-selection cost. Active slack bounds fixed at zero (no slack penalty in accepted solves).",
+  "endpoints": {
+    "primary": "Paired difference in independently verified feasibility versus rules-only (reported by model, threshold, mode)",
+    "secondary": [
+      "Common-reference compliance rate",
+      "Calorie error fraction",
+      "Changed dish count and total serving change versus rules-only",
+      "Plate dish count and food mass (g)",
+      "Common-reference nutrient deviation",
+      "Solver runtime, termination status, and mip_gap",
+      "Independent replay error categories"
+    ]
+  },
+  "statistical_unit": "Participant (N=100); 2,000 paired participant-level bootstrap resamples with seed 20261120",
+  "disclosures": [
+    "Exploratory sensitivity grid, not clinically validated cutoffs",
+    "Computational engineering study; no claim of clinical efficacy, causal risk reduction, or external Indian clinical validity",
+    "Same-model risk score reduction is descriptive only and not evidence of health benefit",
+    "A 3-second timeout does not prove mathematical infeasibility",
+    "Rules-only arm is solved once per participant/mode and reused as reference"
+  ]
+}

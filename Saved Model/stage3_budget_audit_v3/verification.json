@@ -1,0 +1,14 @@
+{
+  "status": "VERIFIED_PASSED",
+  "audit_version": "stage3_budget_audit_v3",
+  "total_solves_verified": 5400,
+  "total_manifest_files_verified": 3006,
+  "total_bootstrap_intervals_verified": 42,
+  "total_exact_tests_verified": 27,
+  "holm_family_size": 27,
+  "failure_fixtures_tested": 5,
+  "original_evidence_unchanged": true,
+  "solver_calls": 0,
+  "analysis_summary_sha256": "f94574dad31583ec7422566994dde730cb108e041c55a125dd6df50b7c7e091f",
+  "verifier_script_sha256": "9a655c4139e4398e24e6d94ef1ed98124436574c6b95da2fd6da5a23bee393cc"
+}

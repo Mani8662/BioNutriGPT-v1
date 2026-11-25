@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "intervals": 45,
+  "exact_tests": 15,
+  "participants": 100,
+  "changed_ci_rejected": true,
+  "script_sha256": "59e9a81ec2fb2a0437f5dc5eed1681dab946c3b10abdb9fe83dddd19ed8786b6",
+  "analysis_sha256": "51c19f369dc3dbfdd6af2d43f9f6bfa106c371febe1a3b0ccf46471c6f561355",
+  "scope": "Separate statistical formulas; shared deployed preprocessing and numerical audit. Pilot is engineering evidence only."
+}

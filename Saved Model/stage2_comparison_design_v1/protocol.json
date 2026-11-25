@@ -1,0 +1,57 @@
+{
+  "version": "stage2_comparison_design_v1",
+  "status": "sample and scope locked; comparison not executed",
+  "n": 100,
+  "selection_seed": 20261123,
+  "eligible_complete_records": 6033,
+  "eligible_after_exclusions": 5907,
+  "exclusions": {
+    "repair_profiles": 32,
+    "prior_downstream_study": 100,
+    "prior_adapter_pilot": 5,
+    "unique_excluded": 137
+  },
+  "selection": "Random sample without Stage 2 outcome inspection; disjoint from named prior studies, not globally untouched NHANES data",
+  "activity": "sedentary fixed engineering assumption in every arm",
+  "model": "repaired_v1 BioNutriGPT calibrated",
+  "routing_thresholds": {
+    "diabetes": 0.5,
+    "obesity": 0.5,
+    "cvd": 0.5
+  },
+  "comparison_scope": "Common per-participant envelope, calories, routing, ratio limits, acceptance gates and solver settings; prediction routing value itself not the question",
+  "planned_arms": [
+    "deterministic rules-only nutrient targets",
+    "minimum-change joint constrained projection without model-score objective",
+    "50-step model-guided search plus the identical joint projection"
+  ],
+  "primary_control": "Full model-guided versus minimum-change; isolates model-score objective",
+  "required_before_execution": [
+    "Implement and freeze exact rules-only target construction without meaningless midpoints of million-unit search caps",
+    "Test runners on development cases only",
+    "Freeze common downstream optimizer objective and all solver limits",
+    "Version the executable protocol and analysis code before exposing the 100 reserved profiles to outcomes"
+  ],
+  "required_outputs": [
+    "joint numerical feasibility",
+    "score-gate acceptance separately",
+    "normalized dietary-change magnitude with declared fixed scales",
+    "solver convergence versus feasible fallback",
+    "runtime and failures",
+    "paired Stage 3 acceptance if downstream run is included"
+  ],
+  "uncertainty": "Paired participant bootstrap; count all failures; no model or weight tuning on evaluation results",
+  "limits": "Not external Stage 1 validation, a clinical trial, or a journal-tier determination. The 32 repaired cases are development evidence.",
+  "hashes": {
+    "Data\\stage1_repaired_v2\\temporal_clean.csv": "59be953fd3fd10ec20b05ca66b51cf7cdcc68fca574213114c102f848b15823e",
+    "Data\\NHANES_2017_2020_PrePandemic_Raw.csv": "aaad16d8086d6c1ead76053e112755addb0eb96b5ce9b34a00bc82809c4633b4",
+    "Saved Model\\stage2_constraint_audit_repaired_v1\\cases_LOCAL.json": "7b9019620ca755651973a38dbb91d5b1ae5674637b23773eb46924860be19036",
+    "Saved Model\\stage1_downstream_study_v1\\selected_participants_LOCAL.csv": "19979eab3f691fbef9646ac2ef84cf2512b21b24f561f09602623344d6be2bba",
+    "Saved Model\\stage2_research_adapter_pilot_v1\\envelopes_LOCAL.json": "0e2a9ac4929c7657ec42c6cabe726176eadf139b1e2f76cb9b258310210cf432",
+    "reserve_stage2_comparison_v1.py": "2a4644d4c98df33c1024e5668e56a90f725538ba0ad587555e485c08b7be0356",
+    "stage2_counterfactual_engine.py": "19308d87cf2db64010244ddb1a2c1b434186d51da4bed2ab73c826bb13de0d28",
+    "stage1_deployment.py": "c50af2f3274fae462937239ac4aabc34854fe0eac11dabf34cff7ec10f8f6708",
+    "nutrient_rule_policy.py": "98cd05b20980d78961dcce156fb03903e9675f9fe18bf415f6658cc9256fb04d",
+    "Saved Model\\deployment\\repaired_stage1_v1\\manifest.json": "de970b7514f4c62158d3f4f823f7ba5e66a24575e3f2e6d9a7dcafe575298930"
+  }
+}

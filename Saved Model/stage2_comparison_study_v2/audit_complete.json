@@ -1,0 +1,87 @@
+{
+  "passed": true,
+  "n_records": 300,
+  "statistics_recomputed": true,
+  "all_contrasts": [
+    {
+      "contrast": "Primary: Model-Guided (C) vs Minimum-Change (B)",
+      "wins": 8,
+      "losses": 1,
+      "difference_pp": 7.000000000000001,
+      "ci_pp": [
+        2.0,
+        13.0
+      ],
+      "exact_p": 0.0390625,
+      "secondary_bonferroni_p": null
+    },
+    {
+      "contrast": "Secondary: Model-Guided (C) vs Rules-Only (A)",
+      "wins": 33,
+      "losses": 4,
+      "difference_pp": 28.999999999999996,
+      "ci_pp": [
+        19.0,
+        39.0
+      ],
+      "exact_p": 1.0843941709026694e-06,
+      "secondary_bonferroni_p": 2.168788341805339e-06
+    },
+    {
+      "contrast": "Secondary: Minimum-Change (B) vs Rules-Only (A)",
+      "wins": 28,
+      "losses": 6,
+      "difference_pp": 22.0,
+      "ci_pp": [
+        11.0,
+        33.0
+      ],
+      "exact_p": 0.00019512558355927467,
+      "secondary_bonferroni_p": 0.00039025116711854935
+    }
+  ],
+  "max_target_difference_from_v1": 0.0,
+  "acceptance_changes_from_v1": 0,
+  "fresh_model_replay": {
+    "verification_passed": true,
+    "study_version": "stage2_comparison_study_v2",
+    "sample_size": 100,
+    "total_checkpoints_verified": 300,
+    "max_neural_rescoring_error": 0.0,
+    "disjointness_confirmed": true,
+    "source_hashes_verified": true,
+    "recomputed_counts": {
+      "rules_only": {
+        "attempted": 100,
+        "completed": 100,
+        "numerical_pass": 100,
+        "score_gate_pass": 48,
+        "overall_accepted": 48
+      },
+      "minimum_change": {
+        "attempted": 100,
+        "completed": 100,
+        "numerical_pass": 100,
+        "score_gate_pass": 70,
+        "overall_accepted": 70
+      },
+      "model_guided": {
+        "attempted": 100,
+        "completed": 100,
+        "numerical_pass": 100,
+        "score_gate_pass": 77,
+        "overall_accepted": 77
+      }
+    },
+    "verifier_sha256": "1f7503af354e087d44b6f92a4c6d00c9b20e7b713476f1eff0f941722bc8f0e0",
+    "verification_scope": "Fresh model rescoring and numerical/count verification; full statistics verified separately in audit_complete.json"
+  },
+  "scope": "Post-result correction, shared preprocessing/numerical helper, separate arithmetic/bootstrap implementation; no clinical efficacy claim",
+  "hashes": {
+    "analysis_summary.json": "4e981c2d12960ae4a4f126f238e329fe5741032f452946f7c66c3f85507489e8",
+    "protocol.json": "5e0b987ef3b9473c70ec9cc43cb80c6541ce9b4505eb293794a01fdc9b5cf89f",
+    "analyze_stage2_comparison_study_v2.py": "77a83e01d3de2dff22f3b5a97abf468ac9a7993baf82b940ef719929b1e47649",
+    "verify_stage2_comparison_study_v2.py": "1f7503af354e087d44b6f92a4c6d00c9b20e7b713476f1eff0f941722bc8f0e0",
+    "audit_stage2_comparison_statistics_v2.py": "b3d9db0a1e44558ae10f688e578b9471b5ef949dd7f3cff2fdb05402c085b8ec"
+  }
+}

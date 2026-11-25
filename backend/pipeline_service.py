@@ -44,6 +44,7 @@ import infer_bionutrigpt_pipeline_Stage_1_to_4 as p14
 import nutrient_rule_policy as nrp
 import stage3_milp_solver as s3
 import train_bionutrigpt_stage1 as s1
+import stage1_deployment as deployment
 
 # Locks for thread safety
 _MODEL_LOCK = threading.Lock()
@@ -327,10 +328,16 @@ def run_screening(
 ) -> dict[str, Any]:
     """Execute Stage 1 (Diagnostics) and Stage 2 (Counterfactual Optimization)."""
     with _MODEL_LOCK:
+        if schema_version != 'nhanes-87-v2':
+            raise ValueError('Unsupported input schema; expected nhanes-87-v2.')
         resolved_values, input_audit = resolve_feature_vector(
             features=features, named_features=named_features, schema_version=schema_version
         )
-        raw_vector = np.asarray(resolved_values, dtype=np.float32)
+        if deployment.REPAIRED and input_audit.get('imputed_default_features'):
+            raise ValueError('Repaired deployment requires complete inputs; sample defaults cannot replace missing measurements.')
+        raw_vector = np.asarray(resolved_values, dtype=np.float64 if deployment.REPAIRED else np.float32)
+        raw_vector, derived_audit = p12.s2.canonicalize_dietary_ratios(raw_vector)
+        input_audit['derived_feature_audit'] = derived_audit
 
         # Build dummy CLI args namespace for resolve_patient_metadata
         overrides = metadata_overrides or {}
@@ -351,13 +358,8 @@ def run_screening(
         stage1_assessment, _ = p12.run_stage1_diagnostics(raw_vector)
         dt_s1_ms = (time.perf_counter() - t0) * 1000.0
         stage1_assessment["model_metadata"] = {
-            "model_version": "BioNutriGPT-Stage1-CrossAttention-v2",
+            **deployment.metadata(),
             "schema_version": schema_version,
-            "calibration_status": "internal_nhanes_test_only_not_externally_calibrated",
-            "intended_population": (
-                "US NHANES 2013-2018 adult cohort; outputs estimate prevalent cross-sectional "
-                "status in the study setting, not clinical diagnosis or prospective disease probability."
-            ),
             "input_audit": input_audit,
         }
 

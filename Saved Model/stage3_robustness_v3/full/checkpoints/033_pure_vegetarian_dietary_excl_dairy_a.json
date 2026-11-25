@@ -1,0 +1,166 @@
+{
+  "identity": {
+    "case": 33,
+    "SEQN": 114910,
+    "mode": "pure_vegetarian",
+    "scenario": "dietary_excl_dairy"
+  },
+  "variant": "a",
+  "binding": "f8a27263d6a609277ea4d96c8555bf9c3acffce7f029ef3e146123b7ff9b74d5",
+  "budget_seconds": 5.0,
+  "exclusions": [
+    "recipe_greek_yogurt_nonfat",
+    "recipe_lowfat_curd",
+    "recipe_lowfat_milk_1pct",
+    "recipe_skim_curd",
+    "recipe_skim_milk"
+  ],
+  "runtime": 0.06025189999490976,
+  "basket": [],
+  "delivered": [],
+  "solver_metadata": {
+    "backend": "scipy.optimize.milp / HiGHS",
+    "objective_variant": "current",
+    "target_weight": 0.0,
+    "time_limit_sec": 5.0,
+    "requested_time_limit_sec": 5.0,
+    "effective_time_limit_sec": 5.0,
+    "budget_seconds": 5.0,
+    "solve_time_ms": 4.807,
+    "candidate_validation": [
+      {
+        "origin": "heuristic",
+        "accepted": false,
+        "structural_errors": [],
+        "unknown_active_nutrients": [],
+        "failed_active_nutrients": [
+          "DR1TPROT",
+          "DR1TPFAT",
+          "DR1TVARA",
+          "DR1TVB2",
+          "DR1TNIAC",
+          "DR1TVB12",
+          "DR1TCALC",
+          "DR1TIRON",
+          "DR1TZINC",
+          "DR1TSELE"
+        ],
+        "failed_post_checks": [
+          "sodium_to_potassium_ratio"
+        ],
+        "active_nutrient_count": 30,
+        "complete_39_field_data": false,
+        "clinical_validation_established": false,
+        "scope": "Acceptance means active arithmetic/portion checks passed, not clinical certification."
+      }
+    ],
+    "revision_controls": {
+      "dietary_mode": "pure_vegetarian",
+      "excluded_food_ids": [
+        "recipe_greek_yogurt_nonfat",
+        "recipe_lowfat_curd",
+        "recipe_lowfat_milk_1pct",
+        "recipe_skim_curd",
+        "recipe_skim_milk"
+      ],
+      "excluded_ingredient_codes": [],
+      "preferred_food_ids": [],
+      "locked_food_quantities": {},
+      "max_active_dishes": null,
+      "change_penalty": 0.0
+    },
+    "solver_status_code": 2,
+    "status_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+    "solver_incumbent_available": false,
+    "variable_count": 144,
+    "constraint_count": 110,
+    "status": "infeasible_active_rules",
+    "optimality_proven": false,
+    "heuristic_fallback_used": false
+  },
+  "failure": {
+    "code": "infeasible_active_rules",
+    "message": "No candidate passed all active nutrient, portion and post-check rules. No plan was accepted.",
+    "details": {
+      "solver_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+      "candidate_validation": [
+        {
+          "origin": "heuristic",
+          "accepted": false,
+          "structural_errors": [],
+          "unknown_active_nutrients": [],
+          "failed_active_nutrients": [
+            "DR1TPROT",
+            "DR1TPFAT",
+            "DR1TVARA",
+            "DR1TVB2",
+            "DR1TNIAC",
+            "DR1TVB12",
+            "DR1TCALC",
+            "DR1TIRON",
+            "DR1TZINC",
+            "DR1TSELE"
+          ],
+          "failed_post_checks": [
+            "sodium_to_potassium_ratio"
+          ],
+          "active_nutrient_count": 30,
+          "complete_39_field_data": false,
+          "clinical_validation_established": false,
+          "scope": "Acceptance means active arithmetic/portion checks passed, not clinical certification."
+        }
+      ]
+    }
+  },
+  "solver_accepted": false,
+  "audit": {
+    "valid": false,
+    "first_failure": [
+      "empty_food_basket"
+    ],
+    "totals": {
+      "DR1TKCAL": 0,
+      "DR1TPROT": 0,
+      "DR1TCARB": 0,
+      "DR1TSUGR": 0,
+      "DR1TFIBE": 0,
+      "DR1TTFAT": 0,
+      "DR1TSFAT": 0,
+      "DR1TMFAT": 0,
+      "DR1TPFAT": 0,
+      "DR1TCHOL": 0,
+      "DR1TATOC": 0,
+      "DR1TRET": 0,
+      "DR1TVARA": 0,
+      "DR1TACAR": 0,
+      "DR1TBCAR": 0,
+      "DR1TLYCO": 0,
+      "DR1TLZ": 0,
+      "DR1TVB1": 0,
+      "DR1TVB2": 0,
+      "DR1TNIAC": 0,
+      "DR1TVB6": 0,
+      "DR1TFOLA": 0,
+      "DR1TFA": 0,
+      "DR1TFF": 0,
+      "DR1TFDFE": 0,
+      "DR1TVB12": 0,
+      "DR1TVC": 0,
+      "DR1TVK": 0,
+      "DR1TCALC": 0,
+      "DR1TPHOS": 0,
+      "DR1TMAGN": 0,
+      "DR1TIRON": 0,
+      "DR1TZINC": 0,
+      "DR1TCOPP": 0,
+      "DR1TSODI": 0,
+      "DR1TPOTA": 0,
+      "DR1TSELE": 0,
+      "DR1TCAFF": 0,
+      "DR1TALCO": 0
+    },
+    "target_error": null
+  },
+  "validation_seconds": 0.03320279999752529,
+  "accepted": false
+}

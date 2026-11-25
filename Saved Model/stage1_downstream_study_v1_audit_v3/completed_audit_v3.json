@@ -1,0 +1,11 @@
+{
+  "status": "AUDIT_V3_COMPLETED",
+  "study": "stage1_downstream_study_v1_audit_v3",
+  "total_cases": 4800,
+  "accepted_cases": 4614,
+  "prediction_assisted_accepted": 4318,
+  "failures_infeasible": 182,
+  "failures_timeout": 4,
+  "verified_all_pass": true,
+  "timestamp": "2026-11-21T07:56:29.240823"
+}

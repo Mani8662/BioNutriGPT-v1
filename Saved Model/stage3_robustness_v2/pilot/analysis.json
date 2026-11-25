@@ -1,0 +1,339 @@
+{
+  "dietary_excl_dairy": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "runtime_all_attempts": {
+        "n": 1,
+        "mean": 0.004065633334297066,
+        "ci95": [
+          0.004065633334297066,
+          0.004065633334297066
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 2,
+      "b": 2
+    }
+  },
+  "dietary_excl_legume": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "runtime_all_attempts": {
+        "n": 1,
+        "mean": -9.620000006786238e-05,
+        "ci95": [
+          -9.620000006786238e-05,
+          -9.620000006786238e-05
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 1,
+      "b": 1
+    }
+  },
+  "food_avail_10pct": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "runtime_all_attempts": {
+        "n": 1,
+        "mean": 0.37051883333091,
+        "ci95": [
+          0.37051883333091,
+          0.37051883333091
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 3,
+      "b": 3
+    }
+  },
+  "food_avail_20pct": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "runtime_all_attempts": {
+        "n": 1,
+        "mean": -0.025374400007422082,
+        "ci95": [
+          -0.025374400007422082,
+          -0.025374400007422082
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 2,
+      "b": 2
+    }
+  },
+  "nominal_baseline": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 1,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "runtime_all_attempts": {
+        "n": 1,
+        "mean": 0.004868966663101067,
+        "ci95": [
+          0.004868966663101067,
+          0.004868966663101067
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 3,
+      "b": 3
+    }
+  },
+  "nutrient_sens_pm10pct": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 1,
+        "mean": -33.333333333333336,
+        "ci95": [
+          -33.333333333333336,
+          -33.333333333333336
+        ]
+      },
+      "target_error_joint": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "runtime_all_attempts": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 1,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 3,
+      "b": 2
+    }
+  },
+  "nutrient_sens_pm5pct": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 1,
+        "mean": -33.333333333333336,
+        "ci95": [
+          -33.333333333333336,
+          -33.333333333333336
+        ]
+      },
+      "target_error_joint": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      },
+      "runtime_all_attempts": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 1,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 3,
+      "b": 2
+    }
+  }
+}

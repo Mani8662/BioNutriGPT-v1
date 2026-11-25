@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "fresh_constraint_checks": 900,
+  "input_fingerprints_matched": 900,
+  "max_accounting_residual": 4.999823572937601e-07,
+  "acceptance_mismatches": 0,
+  "original_artifacts_unchanged": true,
+  "solver_calls": 0,
+  "audit_source_sha256": "da216de1de5a3ec139062390e30c5d41c36e23876dbd4b500867b98e1dd4531a",
+  "limitations": [
+    "Historical protocol was rewritable; this audit cannot retroactively prove pre-run freezing.",
+    "Solver status/gap are archived solver reports, not independent optimality or infeasibility proofs.",
+    "Food loader and Stage 2 bounds builder are shared dependencies."
+  ]
+}

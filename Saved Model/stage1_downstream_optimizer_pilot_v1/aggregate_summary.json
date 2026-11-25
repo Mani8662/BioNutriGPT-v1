@@ -1,0 +1,34 @@
+[
+  {
+    "arm": "rules_only",
+    "cases": 5,
+    "accepted": 5,
+    "changed_baskets": 0,
+    "median_seconds": 3.01354199999696,
+    "mean_dishes": 7.6
+  },
+  {
+    "arm": "bionutrigpt",
+    "cases": 25,
+    "accepted": 25,
+    "changed_baskets": 11,
+    "median_seconds": 3.014357000000018,
+    "mean_dishes": 7.72
+  },
+  {
+    "arm": "catboost",
+    "cases": 25,
+    "accepted": 25,
+    "changed_baskets": 13,
+    "median_seconds": 3.014370799999597,
+    "mean_dishes": 7.72
+  },
+  {
+    "arm": "ft_transformer",
+    "cases": 25,
+    "accepted": 25,
+    "changed_baskets": 12,
+    "median_seconds": 3.0127236000007542,
+    "mean_dishes": 7.72
+  }
+]

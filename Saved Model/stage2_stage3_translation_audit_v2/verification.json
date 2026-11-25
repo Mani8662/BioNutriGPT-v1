@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "original_artifacts_unchanged": true,
+  "solver_calls": 0,
+  "records": 900,
+  "intervals_recomputed": 27,
+  "exact_tests_recomputed": 18,
+  "holm_families": 2,
+  "source_sha256": "32908c7b77e1498bf6044df3a6e921d6880381c13e071508cd320ecbc8cb69c8",
+  "analysis_sha256": "98e589d8ede2acf3179bcb3275b6014091be092ea52e3e682aae66a952487296",
+  "replay_sha256": "d497fe00e44e6007337bac0230dd6541c7df3de8b9769f1b372f203f906d032f",
+  "note": "Independent statistics implementation; model predictions inherited from verified Stage 2, not rerun."
+}

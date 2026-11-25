@@ -1,0 +1,44 @@
+================================================================================
+Independent Verifier: Stage 3 Solver-Budget Matched Comparisons (v2)
+================================================================================
+
+[Step 1] Auditing input manifest SHA-256 hashes...
+  All 6 input files verified byte-for-byte.
+
+[Step 2] Auditing Budget Comparisons (5s vs 3s, 10s vs 5s, 10s vs 3s)...
+  Verified 18 budget comparison series and Family A Holm adjustment (54 tests).
+
+[Step 3] Auditing Common-Success Sensitivity Analysis...
+  Verified all common-success sensitivity analyses across budgets.
+
+[Step 4] Auditing Target-Source Comparisons (MG vs MC, MG vs RO, MC vs RO)...
+  Verified all 18 target-source comparisons, gate decompositions, and Holm adjustments.
+
+[Step 5] Testing synthetic failure fixtures against verifier...
+
+[Step 2] Auditing Budget Comparisons (5s vs 3s, 10s vs 5s, 10s vs 3s)...
+
+[Step 2] Auditing Budget Comparisons (5s vs 3s, 10s vs 5s, 10s vs 3s)...
+
+[Step 2] Auditing Budget Comparisons (5s vs 3s, 10s vs 5s, 10s vs 3s)...
+
+[Step 2] Auditing Budget Comparisons (5s vs 3s, 10s vs 5s, 10s vs 3s)...
+  Verified 18 budget comparison series and Family A Holm adjustment (54 tests).
+
+[Step 3] Auditing Common-Success Sensitivity Analysis...
+  Verified all common-success sensitivity analyses across budgets.
+
+[Step 4] Auditing Target-Source Comparisons (MG vs MC, MG vs RO, MC vs RO)...
+  Verified all 18 target-source comparisons, gate decompositions, and Holm adjustments.
+  [PASS] {'fixture': 'missing_record', 'rejection': 'Missing or extra record'}
+  [PASS] {'fixture': 'swapped_mode', 'rejection': 'Index/record identity mismatch'}
+  [PASS] {'fixture': 'invalid_budget', 'rejection': 'Invalid or duplicate record keys'}
+  [PASS] {'fixture': 'changed_acceptance', 'rejection': 'Mean diff mismatch: 0.33333333333333337 != 0.6666666666666667'}
+  [PASS] {'fixture': 'changed_target_error', 'rejection': 'Mean diff mismatch: -0.018120901259097908 != 0.015212432074235425'}
+  [PASS] {'fixture': 'changed_ci', 'rejection': 'CI mismatch: [-0.12425071666651752, -0.012924392545030229] != [-0.02425071666651751, -0.012924392545030229]'}
+
+Saved verification.json receipt: {'status': 'VERIFIED_PASSED', 'study_name': 'stage3_budget_matched_comparisons_v1', 'total_solves_verified': 5400, 'total_manifest_files_verified': 6, 'total_bootstrap_intervals_verified': 504, 'total_exact_tests_verified': 162, 'multiplicity_families_verified': {'family_a_budget': 54, 'family_b_target_source_accepted': 54, 'family_c_target_source_e2e': 54}, 'failure_fixtures_tested': 6, 'failure_fixture_details': [{'fixture': 'missing_record', 'rejection': 'Missing or extra record'}, {'fixture': 'swapped_mode', 'rejection': 'Index/record identity mismatch'}, {'fixture': 'invalid_budget', 'rejection': 'Invalid or duplicate record keys'}, {'fixture': 'changed_acceptance', 'rejection': 'Mean diff mismatch: 0.33333333333333337 != 0.6666666666666667'}, {'fixture': 'changed_target_error', 'rejection': 'Mean diff mismatch: -0.018120901259097908 != 0.015212432074235425'}, {'fixture': 'changed_ci', 'rejection': 'CI mismatch: [-0.12425071666651752, -0.012924392545030229] != [-0.02425071666651751, -0.012924392545030229]'}], 'scope': 'Statistical replay of existing reconstructed rows; not a fresh catalog or solver audit.', 'original_evidence_unchanged': True, 'solver_calls': 0, 'results_json_sha256': '8951b930357f2a3d1a058fdb8df2cd10d8d3fb309be32cbe923a3ccc97e290a0', 'specification_sha256': '8f2ed3457e3d8510805220099687accc34f684db2555741fd607656d038a6dc7', 'verifier_script_sha256': '3f4286211919e5ec8147a424c9c3a4b7cb7050867faaf287461cbc5a9d01a168'}
+
+================================================================================
+ALL MATCHED COMPARISON VERIFICATION CHECKS PASSED WITH ZERO DISCREPANCIES.
+================================================================================

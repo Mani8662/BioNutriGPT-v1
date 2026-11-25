@@ -1,0 +1,234 @@
+{
+  "dietary_excl_dairy": {
+    "a": {
+      "records": 300,
+      "plans_available": 200,
+      "valid": 200,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "infeasible_active_rules": 100
+      }
+    },
+    "b": {
+      "records": 300,
+      "plans_available": 200,
+      "valid": 200,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "infeasible_active_rules": 100
+      }
+    }
+  },
+  "dietary_excl_legume": {
+    "a": {
+      "records": 300,
+      "plans_available": 100,
+      "valid": 100,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "insufficient_nutrient_data": 200
+      }
+    },
+    "b": {
+      "records": 300,
+      "plans_available": 100,
+      "valid": 100,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "insufficient_nutrient_data": 200
+      }
+    }
+  },
+  "food_avail_10pct": {
+    "a": {
+      "records": 300,
+      "plans_available": 296,
+      "valid": 296,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "infeasible_active_rules": 4
+      }
+    },
+    "b": {
+      "records": 300,
+      "plans_available": 296,
+      "valid": 296,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "infeasible_active_rules": 4
+      }
+    }
+  },
+  "food_avail_20pct": {
+    "a": {
+      "records": 300,
+      "plans_available": 224,
+      "valid": 224,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "infeasible_active_rules": 76
+      }
+    },
+    "b": {
+      "records": 300,
+      "plans_available": 224,
+      "valid": 224,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "infeasible_active_rules": 76
+      }
+    }
+  },
+  "nominal_baseline": {
+    "a": {
+      "records": 300,
+      "plans_available": 299,
+      "valid": 299,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "infeasible_active_rules": 1
+      }
+    },
+    "b": {
+      "records": 300,
+      "plans_available": 299,
+      "valid": 299,
+      "violations_all_rules": {},
+      "solver_failure_codes": {
+        "infeasible_active_rules": 1
+      }
+    }
+  },
+  "nutrient_sens_pm10pct": {
+    "a": {
+      "records": 300,
+      "plans_available": 299,
+      "valid": 192,
+      "violations_all_rules": {
+        "nutrient_DR1TPOTA:upper": 21,
+        "nutrient_DR1TPFAT:upper": 19,
+        "nutrient_DR1TCARB:upper": 15,
+        "nutrient_DR1TNIAC:lower": 9,
+        "nutrient_DR1TCALC:lower": 9,
+        "nutrient_DR1TZINC:lower": 8,
+        "nutrient_DR1TFIBE:upper": 8,
+        "carb_pct:lower": 8,
+        "nutrient_DR1TATOC:lower": 7,
+        "nutrient_DR1TTFAT:upper": 5,
+        "nutrient_DR1TTFAT:lower": 5,
+        "nutrient_DR1TPROT:lower": 4,
+        "fat_pct:upper": 4,
+        "fat_pct:lower": 4,
+        "nutrient_DR1TSODI:upper": 4,
+        "nutrient_DR1TPROT:upper": 3,
+        "nutrient_DR1TKCAL:upper": 2,
+        "energy:upper": 2,
+        "nutrient_DR1TVB1:lower": 2,
+        "nutrient_DR1TCHOL:upper": 2,
+        "nutrient_DR1TVB12:lower": 1,
+        "nutrient_DR1TSFAT:upper": 1,
+        "nutrient_DR1TVC:lower": 1,
+        "nutrient_DR1TKCAL:lower": 1,
+        "energy:lower": 1,
+        "nutrient_DR1TFIBE:lower": 1,
+        "nutrient_DR1TFDFE:lower": 1
+      },
+      "solver_failure_codes": {}
+    },
+    "b": {
+      "records": 300,
+      "plans_available": 299,
+      "valid": 159,
+      "violations_all_rules": {
+        "nutrient_DR1TPFAT:upper": 39,
+        "nutrient_DR1TCARB:upper": 20,
+        "carb_pct:lower": 18,
+        "nutrient_DR1TFDFE:lower": 16,
+        "nutrient_DR1TNIAC:lower": 16,
+        "nutrient_DR1TKCAL:upper": 14,
+        "energy:upper": 14,
+        "nutrient_DR1TIRON:lower": 12,
+        "nutrient_DR1TCALC:lower": 10,
+        "nutrient_DR1TVC:lower": 10,
+        "nutrient_DR1TZINC:lower": 7,
+        "nutrient_DR1TATOC:lower": 6,
+        "nutrient_DR1TVB1:lower": 5,
+        "nutrient_DR1TPROT:upper": 3,
+        "nutrient_DR1TCHOL:upper": 3,
+        "nutrient_DR1TPOTA:upper": 3,
+        "nutrient_DR1TTFAT:upper": 3,
+        "nutrient_DR1TVB12:lower": 3,
+        "nutrient_DR1TPROT:lower": 2,
+        "nutrient_DR1TVB6:lower": 2,
+        "fat_pct:upper": 2,
+        "nutrient_DR1TFIBE:upper": 1,
+        "nutrient_DR1TVK:lower": 1,
+        "nutrient_DR1TMAGN:lower": 1,
+        "nutrient_DR1TSODI:upper": 1,
+        "nutrient_DR1TSODI:lower": 1
+      },
+      "solver_failure_codes": {}
+    }
+  },
+  "nutrient_sens_pm5pct": {
+    "a": {
+      "records": 300,
+      "plans_available": 299,
+      "valid": 236,
+      "violations_all_rules": {
+        "nutrient_DR1TCARB:upper": 9,
+        "nutrient_DR1TPFAT:upper": 8,
+        "nutrient_DR1TPOTA:upper": 8,
+        "nutrient_DR1TCALC:lower": 7,
+        "nutrient_DR1TATOC:lower": 7,
+        "nutrient_DR1TNIAC:lower": 5,
+        "nutrient_DR1TFIBE:upper": 4,
+        "fat_pct:upper": 4,
+        "nutrient_DR1TPROT:lower": 3,
+        "fat_pct:lower": 3,
+        "nutrient_DR1TZINC:lower": 3,
+        "carb_pct:lower": 3,
+        "nutrient_DR1TTFAT:upper": 2,
+        "nutrient_DR1TPROT:upper": 2,
+        "nutrient_DR1TVB1:lower": 2,
+        "nutrient_DR1TTFAT:lower": 2,
+        "nutrient_DR1TVB12:lower": 1,
+        "nutrient_DR1TSFAT:upper": 1,
+        "nutrient_DR1TSODI:upper": 1,
+        "nutrient_DR1TFDFE:lower": 1,
+        "nutrient_DR1TCHOL:upper": 1
+      },
+      "solver_failure_codes": {}
+    },
+    "b": {
+      "records": 300,
+      "plans_available": 299,
+      "valid": 215,
+      "violations_all_rules": {
+        "nutrient_DR1TPFAT:upper": 26,
+        "nutrient_DR1TCARB:upper": 14,
+        "nutrient_DR1TFDFE:lower": 11,
+        "nutrient_DR1TNIAC:lower": 10,
+        "nutrient_DR1TIRON:lower": 5,
+        "carb_pct:lower": 5,
+        "nutrient_DR1TZINC:lower": 4,
+        "nutrient_DR1TVC:lower": 4,
+        "nutrient_DR1TCALC:lower": 4,
+        "nutrient_DR1TATOC:lower": 4,
+        "nutrient_DR1TVB12:lower": 3,
+        "nutrient_DR1TVB1:lower": 3,
+        "nutrient_DR1TPROT:upper": 2,
+        "nutrient_DR1TVK:lower": 1,
+        "nutrient_DR1TMAGN:lower": 1,
+        "nutrient_DR1TTFAT:upper": 1,
+        "nutrient_DR1TCHOL:upper": 1,
+        "nutrient_DR1TSODI:upper": 1,
+        "nutrient_DR1TPOTA:upper": 1,
+        "nutrient_DR1TSODI:lower": 1,
+        "nutrient_DR1TKCAL:upper": 1,
+        "energy:upper": 1
+      },
+      "solver_failure_codes": {}
+    }
+  }
+}

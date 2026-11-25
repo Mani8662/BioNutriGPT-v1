@@ -1,0 +1,23 @@
+{
+  "completed_cases": 32,
+  "returned_dossiers": 32,
+  "errors": 0,
+  "certified": 3,
+  "false_accepts": 0,
+  "stage_bound_failures": {
+    "optimizer_clipped": 0,
+    "after_filter_1": 28,
+    "after_filter_2": 28,
+    "after_filter_3": 28
+  },
+  "final_energy_failures": 0,
+  "final_ratio_failures": 0,
+  "closed_loop_failures": 7,
+  "linear_feasible": 32,
+  "linear_feasible_but_rejected": 29,
+  "final_violated_nutrients": {
+    "DR1TKCAL": 28
+  },
+  "runtime_seconds": 236.84955360000095,
+  "source_hashes_unchanged": true
+}

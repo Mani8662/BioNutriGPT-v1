@@ -1,0 +1,7 @@
+# Stage 2 cross-model check: preparation only
+
+The ablation report has been corrected: cohort-specific findings replace universal necessity/redundancy claims; execution timing excludes model loading; dietary displacement uses fixed engineering scales, not IQR. Unverified marginal distance intervals were removed while verified paired intervals were retained. The barrier-penalty distance result is now distinguished from the adjusted binary acceptance test.
+
+New files: stage2_cross_model_v1.py and verify_stage2_cross_model_v1.py. These reuse the 100 participants and 600 saved ablation proposals, score BioNutriGPT/CatBoost/FT-Transformer with frozen assets, retain all proposals and stratify numerical validity/source acceptance. Primary interpretation concerns the full reference method; other variants and contrasts are secondary. Score changes are observational-model behavior, not causal health estimates. Comparators share training data, so architectural independence is not independent-cohort validation.
+
+Status: Python syntax parsed only. No new inference, runtime tests, bootstrap analyses, benchmarks or comparison runs were performed. The code remains runtime-unverified. Gemini must prepare/freeze manifests, run inference and execute the separate statistical/inference verifier. See Gemini_Stage2_Cross_Model_v1_Prompt.txt for the handoff. Existing source ablation evidence is preserved; original documents are archived under Saved Model/stage2_cross_model_v1/original_documents/.

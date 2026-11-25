@@ -1,0 +1,32 @@
+{
+  "verdict": "Numerical repair supported on the frozen 32 regression cases; original report and verifier contain errors and overclaims.",
+  "unit_tests_rerun": "10/10 passed",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "verify_stage2_joint_constraint_repair_v1.py",
+      "issue": "Hard-coded originally accepted cases [7,21,27] are wrong; source baseline cases are [7,14,19]. Verifier fails to derive this list from baseline."
+    },
+    {
+      "severity": "high",
+      "file": "Pasted completion report",
+      "issue": "Prediabetes endpoint does not exist. Remaining-case score values and endpoint labels do not match saved outputs. Use independent_review.json rows for recomputed values."
+    },
+    {
+      "severity": "medium",
+      "file": "verify_stage2_joint_constraint_repair_v1.py",
+      "issue": "Claims model rescoring and per-case immutable-feature verification but only subtracts saved probabilities and compares saved nutrient vectors. Fresh review replays all 32 through frozen research model; this is new evidence."
+    },
+    {
+      "severity": "medium",
+      "file": "Research Paper/Stage2_Joint_Constraint_Repair_v1.md",
+      "issue": "Equations use legacy CVD cutoff 0.603 although repaired execution uses 0.5. Claims mathematically exact projection exceed numerical SLSQP evidence."
+    },
+    {
+      "severity": "medium",
+      "file": "stage2_counterfactual_engine.py",
+      "issue": "Projection emits passed=True and projected_successfully even if SLSQP does not converge; feasible LP fallback not separately labelled. Feasibility does not establish minimum-distance optimality. All 32 observed SLSQP runs report success; this is an untested failure-path weakness."
+    }
+  ],
+  "next_step": "Correct report/verifier and solver-status handling, document scale provenance and target-change magnitude, then freeze implementation and reserve a new evaluation sample for rules-only/minimum-change/model-guided comparisons. Do not reclassify the 32 development cases as independent validation."
+}

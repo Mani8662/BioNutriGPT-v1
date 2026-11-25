@@ -1,3 +1,83 @@
+STAGE 3 BUDGET REPORTING CORRECTION v3 — 2026-11-24
+At five seconds, both objectives returned 897/900 valid plans with no discordant cells in this sample. This is identical observed acceptance, not demonstrated equivalence or noninferiority. The [0, 0] empirical bootstrap interval occurs because every sampled paired difference is zero; it does not establish zero population difference. Each budget contains nine repeated target-source/mode cells for each of 100 participants. Pooled McNemar p-values have been removed; participant-cluster intervals and the 27 within-cell exact tests with their Holm adjustments are retained.
+The corrected statistical verifier reproduced 42 confidence intervals and 27 valid within-cell exact tests and checked all 3,006 input manifest hashes. Three invalid pooled exact tests were withdrawn. This correction reused the existing reconstructed records and prior arithmetic audit; it did not rerun meal optimization or repeat the full basket reconstruction. Existing verifier fixture checks are retained without treating them as new end-to-end corruption tests. Original v2 evidence remains unchanged.
+Report: Research Paper/Stage3_Budget_Audit_v3.md.
+
+## Controlled Stage 3 Solver-Budget Evaluation (3.0s, 5.0s, 10.0s) — 24 November 2026
+
+Evaluated Variant A (current bounds-based) vs. Variant B (target-aware) across 3.0s, 5.0s, and 10.0s on a fresh cohort of 100 adult temporal NHANES participants (seed 20261124; strictly disjoint from all 237 previously evaluated participants: 32 repair, 100 downstream, 5 pilot, 100 comparison; SHA-256: fed1ab71134c26586a4b55af1ab64eb995c9912f4269e3ce0e91214c25f869bf).
+
+Addressed implementation clamping in stage3_budget_solver.py with RESEARCH_MAX_TIME_LIMIT_SEC = 15.0, passing exact un-clamped budgets to HiGHS while preserving production defaults. Common Stage 2 targets were cached once across 3 arms (rules-only, minimum-change, model-guided). All 2,700 paired tasks (5,400 solves) completed from independent cold starts with randomized execution.
+
+Key Empirical Findings:
+Budget acceptance reporting corrected: see Stage3_Budget_Audit_v3.md. Pooled exact tests withdrawn; participant-cluster intervals retained.
+2. Target Attainment Advantage Widens with Budget: Variant B reduces mean normalized L1 target error by 49.49% at 3.0s (0.9520 vs 0.4808), 52.11% at 5.0s (0.9722 vs 0.4655), and 54.34% at 10.0s (0.9918 vs 0.4529).
+At ten seconds, the target-aware solver recorded status 0 for 501/900 tasks under a configured 1% relative-gap tolerance. Describe this as solver termination within that tolerance, not mathematical proof of an exact integer optimum. The three common failures per budget are solver-reported infeasibilities; additional no-plan timeouts exist at three seconds and for one target-aware task at ten seconds. Their cause must not be generalized as proven extreme-calorie infeasibility without further evidence.
+4. Basket Composition: Over 99.6% of jointly successful meal plans yielded distinct food baskets while maintaining identical dish counts (~7.9 dishes) and total servings (~14.8 servings).
+
+Independent read-only verification audited all 15 source hashes and all 2,700 checkpoints from raw disk bytes with 0 discrepancies. Report: Research Paper/Stage3_Budget_Experiment_v1.md. Evidence: Saved Model/stage3_budget_experiment_v1/. Production solver defaults remain untouched; this is a computational evaluation, not evidence of clinical efficacy.
+
+## Corrected target-aware experiment
+
+The target-aware experimental optimizer reduced target error among jointly successful pairs, but produced fewer valid plans under the tested three-second budget. Acceptance counts were unchanged by fresh constraint verification. These are exploratory results on the reused 100-participant cohort, which also appeared in development tests; they are not independent validation.
+
+Fresh replay reconstructed all 900 input fingerprints, checked 1,800 outputs against food quantities, serving/category rules, dietary exclusions, active nutrient coverage/bounds, energy, macro fractions, fiber density and sodium/potassium rules. Target errors were recomputed from catalog totals and upstream targets. Four corruption checks passed. A separate implementation verified 30 confidence intervals, 36 exact paired tests, multiplicity adjustments and summary counts/timings. Food parsing, bound construction and the earlier independent arithmetic checker are shared dependencies; neither production acceptance flags nor saved replay flags determine audit decisions. Original records remained unchanged and no solver was called.
+
+See Stage3_Target_Aware_Audit_v2.md.
+
+## Corrected translation audit — 23 November 2026
+
+Reanalysis of 900 existing records (100 participants, three arms and three dietary modes) changed no acceptance decisions. Model-guided versus minimum-change end-to-end acceptance differed by 7.33 percentage points (participant-cluster bootstrap 95% CI 2.00 to 13.33). The earlier pooled exact p-value was invalid because dietary modes were treated as independent people; it is withdrawn. No pooled exact p-value is reported.
+Archived solver metadata show 881 time-limited solves with independently verified plans, 12 solver-status-0 results, three solver-reported infeasibilities and four timeouts without a verified plan. Status 0 is interpreted under the configured solver gap tolerance (1%), not as an independently proven exact optimum. The audit does not rerun or independently certify infeasibility. All 893 returned baskets passed fresh arithmetic and structural checks.
+Fresh checks verified all 900 records; 27 intervals and 18 exact tests were independently recomputed. Five corruption checks passed. No solver rerun or architecture change. Report: Research Paper/Stage2_Stage3_Translation_Audit_v2.md. Evidence: Saved Model/stage2_stage3_translation_audit_v2/. Historical v1 pooled p-values and optimality claims are superseded.
+
+## Corrected Stage 2 comparison — 23 November 2026
+
+Model-guided search accepted 77/100 profiles versus 70/100 with minimum-change projection and 48/100 with rules-only construction. The primary paired difference was +7.00 percentage points (10,000-resample percentile bootstrap 95% CI +2.00 to +13.00); the exact two-sided discordance test gave p=0.0390625 (8 wins, 1 losses). This is a model-score acceptance result, not demonstrated health improvement.
+The paired mean additional normalized displacement for model-guided search was 0.2717 (bootstrap 95% CI 0.2325 to 0.3153). The scales are fixed engineering weights; this does not measure meal acceptability.
+All 300 corrected executions completed; full model and statistical verification passed. Numerical acceptance uses the documented tolerance. Timings are from a single-search rerun; see the v2 report for measured values. Earlier v1 runtime/p-value claims are superseded. Original study artifacts are retained. Report: Research Paper/Stage2_Comparison_Study_v2.md. Evidence: Saved Model/stage2_comparison_study_v2/.
+
+## Stage 2 repair correction — 22 November 2026
+
+The corrected solver distinguishes numerical SLSQP convergence, a verified feasible LP fallback (minimum-distance optimality not established), infeasible constraints, and solver failures. Fixed engineering normalization scales are not uniformly FDA/DRI values. Clinical thresholds and model assets were not changed. All 16 tests passed, including six solver-failure tests. The corrected 32-profile regression reproduced all original repair targets and decisions: 25 accepted, seven rejected by the model-score gate, zero final nutrient-bound, energy or ratio violations. The original three accepted cases are 7, 14 and 19. Independent frozen-model rescoring verified all 32 cases (maximum probability discrepancy 5.74e-8). These are development/regression findings, not clinical efficacy or population generalization evidence. A disjoint 100-profile comparison sample is reserved; no comparison outcomes have been run. The rules-only construction and executable analysis protocol still need freezing before that study. Evidence: Saved Model/stage2_joint_repair_correction_v2/ and Saved Model/stage2_joint_constraint_repair_v2/. Report: Research Paper/Stage2_Joint_Constraint_Repair_v1.md.
+
+STAGE 2 JOINT CONSTRAINT REPAIR & 32-PROFILE VERIFICATION COMPLETE — 2026-11-22
+Repaired Stage 2 counterfactual optimization by replacing fragile sequential overwrites with a mathematically exact scale-normalized convex quadratic projection (SLSQP with continuous HiGHS LP feasibility witness warm-start). Objective minimizes weighted squared deviation from Adam candidate normalized by US FDA Daily Reference Values across 39 nutrients, subject to tightened component bounds (including Filter 2 invariants: KCAL >= 1200, 0.8W <= PROT <= 2.0W, SODI <= 1500/2300, POTA >= 3500/2600), thermodynamic energy balance (+-0.99% margin), and 3 clinical ratio envelopes. Re-evaluated across all 32 frozen audit profiles on GPU without modifying production models, clinical rules, or thresholds. Calorie-bound violations were reduced from 28 to 0 (100% elimination); all 39 nutrient bound violations reduced to 0; energy inconsistencies and ratio violations remained 0. Certification increased from 3/32 (9.4%) to 25/32 (78.1%) (+22 cases, +733% relative gain). All 3 originally accepted cases remained certified (0 false rejects among valid cases). Zero false accepts occurred (independently verified). The 7 uncertified cases were rejected solely due to the closed-loop Stage 1 model-score gate (Delta p > 0.0015 on one or more outcomes), which was preserved without relaxation. All 10 unit tests passed in test_stage2_joint_repair.py; legacy contracts passed in verify_stage2_contracts.py. Independent replay verification passed in verify_stage2_joint_constraint_repair_v1.py. Report: Research Paper/Stage2_Joint_Constraint_Repair_v1.md. Evidence: Saved Model/stage2_joint_constraint_repair_v1/. Diagnostic engineering evaluation; does not establish clinical efficacy.
+
+STAGE 2 REPAIRED RELEASE CONSTRAINT AUDIT — 2026-11-22
+Completed a fixed 32-profile engineering pilot sampled from 6,033 complete repaired temporal records with measured anthropometry; sedentary activity was assumed. GPU execution with 12 CPU threads, 50 optimization steps per case; no production engine changes or Stage 1 training. All cases returned dossiers. Three passed all programmed checks; 28 developed calorie-envelope violations first introduced by filter 1, and seven failed the score gate (six overlap). No accepted case failed independent checks. Independent linear feasibility found nutrient-space witnesses for all 32, excluding model-score/food feasibility. All snapshots and witnesses were replayed independently. Next: jointly enforce energy consistency and nutrient bounds; regression-test on this pilot, then evaluate baselines/ablations on a separately locked sample. Report: Research Paper/Stage2_Constraint_Audit_Repaired_v1.md. Evidence: Saved Model/stage2_constraint_audit_repaired_v1/. This is not population or clinical validation.
+
+REPAIRED STAGE 1 APPLICATION MIGRATION — 2026-11-22
+The backend and combined pipeline now default to repaired_v1: selected BioNutriGPT comparison trial 03 plus matching repaired preprocessing and reserved-set calibration. Both Stage 1 and Stage 2 use this hash-verified bundle. Selection preserves the existing architecture/interface and does not assert superiority. Thresholds are fixed descriptive research 0.5, not clinically validated; legacy cutoffs are not reused. Incomplete inputs are rejected; no sample-default filling. All 7,004 saved calibrated predictions matched; 128 complete raw-input records had exact preprocessing parity; Stage 1/2 probabilities and bindings matched. FastAPI valid/incomplete requests returned 200/422, six negative checks passed, separate-process legacy rollback passed, and frontend build passed. One integration profile was correctly blocked by Stage 2 bounds; a second passed and yielded an accepted Stage 3 plan. No LLM/browser evaluation was rerun. No backend was listening on port 8000; the release activates on the next normal startup. Older deployment-pending/legacy-current statements below are historical and superseded, while historical benchmark numbers retain their original release provenance. Indian validation remains pending. Report: Research Paper/Stage1_Deployment_v1.md; receipt: Saved Model/stage1_deployment_verification_v1/verification.json.
+
+CURRENT STATUS — 2026-11-21
+STAGE 1 ROBUSTNESS UNCERTAINTY EVALUATION & REMAINING AUDIT REPAIRS COMPLETE — 2026-11-21
+- Closed Downstream Audit Gaps: Added canonical input fingerprinting (synchronizing reference targets before hashing, hashing bounds, targets, baselines, and solver settings) in run_stage1_downstream_study_v2.py; added output pre-validation before resume; reconciled 49-item sourced catalog (20 INDB + 29 USDA proxies; 6 incomplete INDB excluded; 43 eligible in combo/non-veg, 37 in pure-veg) in Saved Model/stage1_downstream_study_v1_audit_v3/catalog_wording_reconciliation.md. All 20 runner safeguard tests passed in test_real_runner_safeguards.py.
+- Robustness Paired Uncertainty Evaluation: 10,000 participant-level bootstrap resamples (seed 20261121) across 6 models, 8 stress scenarios, 3 outcomes, 2 probability variants, and 2 metrics on 7,004 temporal participants.
+  - Dominant stress: Missing lipids causes +0.0500 [+0.0419, +0.0578] AUROC loss for BioNutriGPT calibrated diabetes.
+  - Missing diet: Causes +0.0099 [+0.0061, +0.0137] AUROC loss for diabetes, but +0.0015 [-0.0017, +0.0049] for CVD (interval spans zero).
+  - Noise: Modest noise causes <= +0.0013 AUROC deterioration.
+  - Inter-model contrasts: AUROC: 32 contrasts; 2 intervals exclude zero (2 favour BioNutriGPT; 0 favour the comparator). BRIER: 32 contrasts; 8 intervals exclude zero (3 favour BioNutriGPT; 5 favour the comparator). These are exploratory, unadjusted pointwise intervals. Scenario-specific findings do not establish an overall robustness advantage or equivalence.
+  - Verification: All 2,688 interval pairs independently reproduced; see Saved Model/stage1_robustness_endpoint_audit_v2/verification.json. The prior mean-only check did not verify endpoints.
+
+STAGE 1 DOWNSTREAM ADDED-VALUE STUDY AUDIT V3 COMPLETE - 2026-11-21
+Comprehensive methodological, statistical, timing, provenance, reporting, and safeguard audit completed for the 4,800-case downstream added-value study (100 temporal NHANES adults, seed 20261120, strictly disjoint from 5 pilot cases; 3 dietary modes; 16 arms: 1 rules-only reference + 3 models x 5 thresholds: 0.05, 0.10, 0.20, 0.30, 0.50). Original v1 and Audit v2 artifacts preserved.
+Key Verified Findings:
+- Feasibility finding: Stage 1 predictive rule branches exclusively tighten nutritional constraints and did NOT improve meal planning feasibility over rules-only baseline (98.67% feasibility, 296/300 pairs). Across 1,500 solves each, feasibility was 95.80% for BioNutriGPT (-2.87 pp paired difference vs rules-only [95% CI: -4.33, -1.53]), 96.07% for CatBoost (-2.60 pp [-4.00, -1.33]), and 96.00% for FT-Transformer (-2.67 pp [-4.07, -1.33]). In model-vs-rules contrasts, exactly 12 of 45 cell intervals exclude zero (all pure_vegetarian at thresholds 0.05–0.30, where model plans had strictly lower feasibility). In zero cases did prediction-assisted planning make an infeasible profile feasible.
+- Direct Paired Model Contrasts: Replaced overlapping marginal CIs with direct participant-level paired contrasts (2,000 bootstrap resamples with seed 20261120). Across all 1,500 solve pairs: BioNutriGPT vs CatBoost = -0.27 pp [-0.60 pp, 0.00 pp] (-4 net solves); BioNutriGPT vs FT-Transformer = -0.20 pp [-0.53 pp, +0.13 pp] (-3 net solves); CatBoost vs FT-Transformer = +0.07 pp [-0.33 pp, +0.47 pp] (+1 net solve). Exactly 0 of 45 cell-specific direct model-vs-model bootstrap intervals exclude zero (all contain zero). An interval containing zero indicates insufficient evidence of difference, not proof of equivalence. BioNutriGPT demonstrates no detected engineering advantage over competitive tabular comparators.
+- Failure Diagnostics & Timing: Reconciled all 186 unaccepted solves: 182 are solver-certified mathematical infeasibilities (Status 8, solver code 2, all pure_vegetarian); 4 are computational timeouts (Status 13, solver code 1, all veg_nonveg_combo). Recomputed timing shows 33 infeasibilities exceeded 40 ms solver time (median 24.03 ms, mean 128.57 ms, max 965.96 ms). Four rules-only cases also failed with infeasibility in pure_vegetarian mode (cases 864, 2640, 3408, 3984).
+- Common-Reference Compliance: Distinguished compliance among accepted plans (100.0%, 4,318/4,318; 0 violations) from compliance among all attempted solves (95.96%, 4,318/4,500; 4.04% deficit due to 182 infeasibilities and 4 timeouts having no plan).
+- Normalized Nutrient Deviation: Scaled by standard Daily Values as non-zero descriptive references to avoid near-zero division, yielding shifts of 0.83% to 12.56%. Basket shifts reflect optimization displacement, not proven nutritional improvement.
+- Real Runner Safeguards: Implemented run_stage1_downstream_study_v2.py with canonical SHA-256 fingerprinting and atomic persistence. All 9 real runner safeguard tests passed in test_real_runner_safeguards.py.
+- Provenance Disclosure: protocol.json recorded 8 workers; execution ran with 10 workers (min(10, os.cpu_count() or 1)) on 12-core host; CPU scheduling contention impact on borderline 3.0-second timeouts disclosed as unmeasured.
+- Programmatic Reporting & Overclaim Removal: 100% of report tables generated programmatically from CSVs (pure_vegetarian BioNutriGPT 0.50 confirmed at 95 accepted). Clinical trial terms, causal claims, and future certainty claims stripped.
+Artifacts: Saved Model/stage1_downstream_study_v1_audit_v3/ (correction_log.json, correction_log.md, direct_model_contrasts_audit_v3.json/csv, aggregate_summary_audit_v3.json/csv, failure_analysis_audit_v3.json, timing_analysis_audit_v3.json, case_level_paired_eval_audit_v3_LOCAL.csv, inter_model_contrasts_audit_v3_LOCAL.csv, verification_audit_v3.json, completed_audit_v3.json, Report.md) and Research Paper/Stage1_Downstream_Added_Value_Results_v1.md. Production unchanged.
+
+Repaired Stage1 research evaluation: six models on N=7,004, paired uncertainty, five-seed architecture ablations, and demographic subgroup evaluations completed.
+
+STAGE 1 SUBGROUP EVALUATION COMPLETE — 2026-11-20
+Evaluated all six repaired Stage 1 models across demographic subgroups (Sex: Female N=3,599, Male N=3,405; Age: 20–40 N=2,257, 41–65 N=3,173, >65 N=1,574; Race/Ethnicity: Mexican American N=840, Other Hispanic N=723, Non-Hispanic White N=2,564, Non-Hispanic Black N=1,784, Other Race/Multi-Racial N=1,093) on 7,004 temporal evaluation participants. 2,000 participant-level bootstrap replicates were computed for uncertainty and paired BioNutriGPT-minus-comparator differences. Calibrated age-stratified AUROC ranges across six models are 0.706–0.778 for diabetes and 0.710–0.764 for CVD. Of 120 primary-outcome AUROC/Brier contrasts against CatBoost, histogram boosting and FT-Transformer, 12 pointwise intervals exclude zero, with mixed directions. These exploratory comparisons are unadjusted; neither overall architectural superiority nor equivalence is established. The causes of subgroup differences and clinical fairness were not tested. See Research Paper/Stage1_Subgroup_Results_v1.md and Saved Model/stage1_subgroups_v1/. Production remains a separately identified legacy model. Subsequent Stage2 and chatbot checks are engineering evidence, not broad/clinical validation. The working manuscript in this folder now reflects this distinction; packaged derivatives/ZIP remain stale. See Implementation_Verification_20261120.md. Older dated entries below are retained as history and their pending statements are superseded where later evidence exists.
+
 STAGE 1 ARCHITECTURE ABLATION COMPLETE — 2026-11-19
 A controlled five-variant, five-seed architecture ablation study on 7,004 temporal evaluation participants (20,000 two-axis bootstrap resamples across participants and seed pairs) demonstrates that BioNutriGPT\'s bespoke components do not provide statistically significant advantages over simpler designs on this benchmark. Crucially, replacing the 4-expert sparse MoE with a standard dense feed-forward network reduces parameters by 45.9% (1,295,623 to 700,675) with negligible impact on performance (diabetes AUROC difference +0.0004 [-0.0032, +0.0039]; CVD AUROC difference +0.0002 [-0.0030, +0.0032]). Attention pooling, modality embeddings, and head shortcuts show modest positive trends (~0.0011 to 0.0016 AUROC) but span zero across all 16 primary contrasts after Bonferroni adjustment. See Research Paper/Stage1_Ablation_v2_Results.md and Saved Model/stage1_ablation_v2/.
 
@@ -146,3 +226,204 @@ Ten Stage2 contract tests passed. Two CUDA Stage2 runs had identical targets/bin
 
 STAGE 1 / STAGE 2 GPU AGREEMENT VERIFIED — 2026-11-20
 Ran verify_stage12_gpu_agreement.py on the existing sample with supplied versus canonical dietary ratios, using explicit production assets and isolated temporary output destinations under Saved Model/stage12_agreement_v1. Baseline diabetes/obesity/CVD probabilities matched exactly across stages in both cases; model/preprocessor identity, operating cutoffs and ratio audits matched. Final nutrient envelopes identical between cases. Two cases ran on CUDA (5.18 s and 1.87 s). No production code, model or dossier changed in this step. Scope is single-fixture shared-normalization/inference agreement, not repaired-v2 model validation or broad robustness. Report, protocol/hashes and raw per-stage outputs saved. Remaining: multi-profile stability/guideline comparator, Stage3 realization, model-migration compatibility, CLI defaults and threshold policy review.
+
+
+STAGE 1 ROBUSTNESS STUDY COMPLETED — 2026-11-20
+Frozen repaired six-model comparison extended to nine prespecified engineering scenarios on the same 7,004 temporal participants. Whole diet/lipid/both missingness, 20% dietary-cell loss at two seeds, +/-10% dietary and +/-5% lipid perturbations plus joint perturbation use frozen preprocessing/calibrators and derived-feature recomputation. No training or temporal tuning. 54 prediction artifacts/324 metric rows completed and independently checked; neural inference CUDA, classical inference CPU. BioNutriGPT calibrated diabetes AUROC: baseline .810722, missing diet .800802, missing lipids .760739, missing both .744079, joint noise .809445. No overall custom-Transformer robustness advantage established. These are descriptive engineering stresses, not clinically established measurement-error rates, observed missingness or significance evidence; paired robustness uncertainty remains unfinished. V1/v2 failed exports retained as incomplete; v3 verified complete. Research Paper/Stage1_Robustness_v3_Results.md and Saved Model/stage1_robustness_v3 contain reports/protocol/hashes/predictions. Production unchanged.
+
+SUBGROUP AUDIT CORRECTIONS — 2026-11-20
+Corrected numerical ranges and unsupported causal/equivalence claims in subgroup summaries. Independently reproduced 360 calibration rows and all 660 bootstrap intervals; source demographics checked. Repaired shuffled-ID verifier test. Numerical result files, trained models and production behavior unchanged. Extended evidence: Saved Model/stage1_subgroups_v1/extended_verification.json. Complex survey-design evaluation remains pending.
+
+STAGE 1 SURVEY SENSITIVITY — 2026-11-20
+Overall six-model WTDRD1PP-weighted analysis completed on 7,004 participants, 24 strata/49 masked PSUs. Stratified delete-PSU jackknife with 25 degrees of freedom; 54 metric rows and 45 exploratory paired contrasts. Independent weighted AUROC/Brier and replicate interval arithmetic checked. External survey-package validation and survey-aware subgroup analyses remain pending. Selection bias is not removed by these weights. See Research Paper/Stage1_Survey_v1_Results.md. Production unchanged.
+
+SURVEY REFERENCE AND SUBGROUP EVALUATION VERIFIED — 2026-11-20
+R survey 4.5 independently matched the Python overall survey estimates, uncertainty and paired contrasts (54 metric rows/45 contrast rows). Domain evaluation completed for sex, age and RIDRETH1 groups while retaining the full 24-stratum/49-PSU design: 594 total metric rows and 495 paired rows including overall. All 594 point estimates independently checked. Conditional-on-model, unadjusted exploratory contrasts; selection bias, Indian validity and clinical benefit remain unresolved. Weighted calibration diagnostics and clinical-utility analysis are outside this run. See Research Paper/Stage1_Survey_Reference_v1_Results.md and Saved Model/stage1_survey_reference_v1/verification.json. Earlier pending statements about reference-package/subgroup survey evaluation are superseded by this entry. Production unchanged.
+
+WEIGHTED CALIBRATION AND EXPLORATORY DCA VERIFIED — 2026-11-20
+Six frozen models, N=7,004, WTDRD1PP and JKn survey uncertainty. Verified 108 calibration point estimates, 360 bins, 736 net-benefit rows and 644 paired contrasts. BioNutriGPT calibrated offset intercepts: diabetes 0.0512, CVD 0.0273 (intervals include zero), obesity 0.2447 [0.1265,0.3628] indicating average underprediction. DCA is hypothetical further assessment on a cohort including known disease, not established screening/treatment/nutrition utility. No overall Transformer superiority or optimal threshold claim. Calibration SEs from R survey; Python independently checked DCA SEs. See Research Paper/Stage1_Calibration_DCA_v1_Results.md. Production unchanged.
+
+DOWNSTREAM ADDED-VALUE DESIGN AUDIT — 2026-11-20
+Prepared protocol and source coverage audit in Saved Model/stage1_downstream_design_v1/. No optimizer comparison completed. Production Stage2 uses legacy raw probabilities/cutoffs; repaired calibrated predictions require a separate explicit action-policy adapter. Study separates prediction-driven rule branching from counterfactual optimization; measured BMI and known diagnoses take precedence. Outcome-derived labels must not be substituted for reported clinical history. See Research Paper/Stage1_Downstream_Added_Value_Protocol_v1.md.
+
+RESEARCH STAGE 2 RULE ADAPTER IMPLEMENTED — 2026-11-20
+Separate explicit-flag module connects saved repaired calibrated probabilities to reviewed nutrient-bound branches. Rules-only rejects predictions; measured BMI and known diagnoses take precedence; unknown history retained. Eight legacy branch parity checks plus contract checks passed. Five deterministic real temporal records produced 80 valid research envelopes over three models and five exploratory thresholds; no solver or counterfactual study run. Envelopes remain uncertified pending solver target/objective integration and independent nutrient replay. Production unchanged. See Research Paper/Stage2_Research_Adapter_Verification_v1.md.
+
+DOWNSTREAM OPTIMIZER CONNECTION PILOT COMPLETE — 2026-11-20
+Five real temporal profiles, 80 paired arm/threshold solves using identical catalog, mixed mode, fixed rules-only targets and three-second limit. All 80 plans accepted and independently replayed against assigned and common reference constraints. Rules-only feasible 5/5; no added feasibility benefit demonstrated. This is a connection pilot, not the full cohort or clinical added-value study. Report: Research Paper/Stage1_Downstream_Optimizer_Pilot_v1.md. Production unchanged.
+
+ROBUSTNESS INTERVAL AUDIT COMPLETE — 2026-11-22
+Independently reproduced all 2,688 percentile intervals from 10,000 shared participant resamples and checked point estimates. Original numerical CSVs unchanged. AUROC: 32 contrasts; 2 intervals exclude zero (2 favour BioNutriGPT; 0 favour the comparator). BRIER: 32 contrasts; 8 intervals exclude zero (3 favour BioNutriGPT; 5 favour the comparator). These are exploratory, unadjusted pointwise intervals. Scenario-specific findings do not establish an overall robustness advantage or equivalence. Prior interval-verification claims based on a mean-only spot check are superseded. See Saved Model/stage1_robustness_endpoint_audit_v2/verification.json. Indian external prediction validation and production migration remain unfinished.
+
+INDIAN PREDICTION VALIDATION COMPATIBILITY AUDIT — 2026-11-22
+Audited the local LASI archive and all 87 current research-model features. The individual file has 73,396 records and biomarker file 66,859; unique-ID one-to-one join yields 66,859. Availability filters (age 20–100 and valid sex) yield 66,839; these are not final validation-cohort counts. Missing measured HDL/total cholesterol and individual nutrient totals prevent like-for-like full-model input mapping. No HbA1c assay is present in the inspected local participant files, so the primary diabetes phenotype cannot be reproduced. Broad LASI chronic heart disease/stroke differs from the NHANES five-component CVD endpoint. Measured BMI permits the obesity label only; predictor gaps remain. CARRS participant data/dictionary were not located in the repository. Community-file metadata parsing crashed and is documented as uninspected. No inference or retraining performed; Indian external prediction validation remains NOT COMPLETED. Next: obtain a compatible biomarker/cohort release and dictionary, or separately design a shared-feature, harmonized-endpoint study. Report: Research Paper/Indian_Validation_Compatibility_v1.md; machine-readable evidence: Saved Model/indian_validation_compatibility_v1/.
+
+STAGE 3 SOLVER-BUDGET EXPERIMENT & RECONSTRUCTIVE AUDIT V2 COMPLETE — 2026-11-24
+Completed the controlled solver-budget experiment and its independent reconstructive audit (audit_stage3_budget_v2.py and verify_stage3_budget_statistics_v2.py) across 100 adult temporal NHANES participants (seed 20261124, strictly disjoint from 237 prior exclusions).
+
+Factorial Design: 100 participants x 3 Stage 2 arms (rules_only, minimum_change, model_guided) x 3 dietary modes (pure_vegetarian, veg_nonveg_combo, pure_non_vegetarian) x 3 time budgets (3.0s, 5.0s, 10.0s) x 2 objective variants (Variant A: bounds-based vs Variant B: target-aware) = 2,700 paired tasks (5,400 individual MILP solves).
+
+Key Verified Findings:
+1. Valid-Plan Feasibility Parity Recovered at 5.0s:
+Budget acceptance reporting corrected: see Stage3_Budget_Audit_v3.md. Pooled exact tests withdrawn; participant-cluster intervals retained.
+Budget acceptance reporting corrected: see Stage3_Budget_Audit_v3.md. Pooled exact tests withdrawn; participant-cluster intervals retained.
+Budget acceptance reporting corrected: see Stage3_Budget_Audit_v3.md. Pooled exact tests withdrawn; participant-cluster intervals retained.
+   - Remaining unaccepted cases (3/900 in each budget) are proven mathematical infeasibilities in pure vegetarian mode under extreme caloric bounds (Case 025, SEQN 113943).
+2. Target Attainment Error Advantage Widens with Runtime:
+   - 3.0s: Mean NTE_L1 0.9520 (Var A) vs 0.4808 (Var B) — 49.49% error reduction (diff: -0.4711, 95% CI [-0.4984, -0.4439]).
+   - 5.0s: Mean NTE_L1 0.9722 (Var A) vs 0.4655 (Var B) — 52.11% error reduction (diff: -0.5066, 95% CI [-0.5340, -0.4793]).
+   - 10.0s: Mean NTE_L1 0.9918 (Var A) vs 0.4529 (Var B) — 54.34% error reduction (diff: -0.5389, 95% CI [-0.5663, -0.5115]).
+3. Integer Optimality Proved for Majority at 10.0s:
+   - Variant B time-outs fall from 808 at 3s to 663 at 5s to 395 at 10s.
+At ten seconds, the target-aware solver recorded status 0 for 501/900 tasks under a configured 1% relative-gap tolerance. Describe this as solver termination within that tolerance, not mathematical proof of an exact integer optimum. The three common failures per budget are solver-reported infeasibilities; additional no-plan timeouts exist at three seconds and for one target-aware task at ten seconds. Their cause must not be generalized as proven extreme-calorie infeasibility without further evidence.
+At ten seconds, recorded mean runtime was approximately 7.214 seconds for target-aware and 9.091 seconds for current-objective solves. This is an observed timing difference. No experiment established earlier branch-and-bound pruning as its cause. No causal explanation for the runtime difference is claimed.
+4. Food Basket Diversity:
+   - >99.6% of jointly successful plans select distinct food baskets (886/889 at 3s, 894/897 at 5s, 893/896 at 10s), while maintaining identical dish counts (~7.92) and serving volumes (~14.87).
+5. Comprehensive Reconstructive Verification (Saved Model/stage3_budget_audit_v2/):
+   - All 3,006 input files verified via SHA-256 manifest.
+   - Scratch recomputation of all 5,400 food baskets from raw catalog values without trusting saved flags.
+   - 5 deliberate corruption fixtures passed.
+   - 42 bootstrap intervals (10,000 resamples) and 27 within-cell exact tests verified.
+   - Holm adjustment across all 27 factorial cells verified.
+   - Production code (stage3_milp_solver.py, backend/pipeline_service.py) remains 100% untouched.
+Artifacts: Saved Model/stage3_budget_audit_v2/ (input_manifest.json, recomputed_LOCAL.json, analysis_summary.json, replay_verification.json, verification.json); Research Paper/Stage3_Budget_Audit_v2.md, Stage3_Budget_Experiment_v1.md.
+
+### Corrected matched budget and target-source interpretation (24 November 2026)
+
+Retrospective analysis uses 5,400 existing solve records from 100 participants, not 5,400 independent participants. No new optimization or training was performed. Five seconds is a candidate engineering setting on this sample, not an established clinical operating point or user-latency preference.
+
+For the target-aware objective, observed valid plans were 891/900 at three seconds, 897/900 at five seconds and 896/900 at ten seconds. At five seconds both objectives accepted the same 897 cells; this does not establish population equivalence. At ten seconds, target-source success rates are not all identical. Across arms, the matched five-minus-three-second target-error differences were -0.0181 to -0.0145, with mean runtime differences +1.66 to +1.69 seconds. Ten-minus-five-second target-error differences were -0.0141 to -0.0115, at +2.79 to +2.92 seconds. These continuous comparisons condition on joint success. Common-success sensitivity retained the direction of lower target error; this does not establish clinical benefit. Normalization uses engineering reference scales, not a verified FDA nutrient standard. Recorded status 0 indicates termination under the configured 1% relative MIP-gap tolerance, not exact integer optimality.
+
+At five seconds with the target-aware objective, model-guided versus minimum-change end-to-end acceptance differed by +7.67 percentage points (exploratory participant-bootstrap 95% CI [1.33, 14.33]). However, the per-mode exact tests have Holm-adjusted p=0.6943359375 across the declared 54-test end-to-end family. An advantage over minimum-change is therefore not established after multiplicity correction. The unadjusted bootstrap interval and adjusted tests answer different inferential questions. The prior claim that all 54 adjusted tests had p<0.001 was incorrect.
+
+Saved Stage 2 flags distinguish numerical constraint checks from the model-score gate: rules-only 99/100 numerical, 49/100 score-gate and 48/100 overall; minimum-change 100/100, 69/100 and 69/100; model-guided 100/100, 77/100 and 77/100. These are counts of saved flags, not freshly recomputed Stage 2 predictions. The higher model-guided overall acceptance is principally associated with the model-score gate, not evidence of uniquely resolving clinical-rule conflicts. No external clinical benefit, target-source independence, practical equivalence or clinical superiority is demonstrated. Comparing error to different sources' own targets cannot rank their clinical quality.
+
+Verification v2 replays statistical calculations from the existing reconstructed records; it is not a fresh food-catalog or solver audit. Six corruption fixtures now invoke the same validator used for clean data, and unexpected acceptance raises an uncaught failure. The original v1 fixture harness could catch its own failure sentinel and was not adequate evidence of rejection. Original results and historical artifacts are retained. See Stage3_Budget_Matched_Comparisons_v2.md and Saved Model/stage3_budget_comparisons_v2/verification.json. Production behavior remains unchanged by this repair.
+
+### Stage 3 robustness preparation repaired (24 November 2026)
+
+V1 preparation claims are superseded by v3. A complete sequential runner and reconstructed replay/resume validation are implemented; the full 100-participant benchmark is NOT run. One reused real-participant pilot produced 30 measured solves and 12 replays. V3 corrects the pilot target-error accounting using preserved solver outputs; all 42 records passed, with 19 nonempty interval calculations and 21 exact tests reproduced by a separate statistical verifier. These one-person checks are engineering evidence only. Corruption, unknown-value, perturbation-bound and resume checks passed; 42 records resumed with solver calls disabled and unchanged bytes. Fixed proportional per-food perturbations preserve nominal calorie relationships; these are hypothetical stresses, not measured nutrient uncertainty. Shared constraint helpers and first-failure reporting are disclosed. Production behavior, model assets and Stage 2 targets were not changed. Next: the frozen full sequential benchmark, not further training. See Research Paper/Stage3_Robustness_Repair_v3.md and Saved Model/stage3_robustness_v3/.
+
+### Stage 3 Robustness Benchmark Completed and Verified (24 November 2026)
+
+The full 100-participant Stage 3 robustness benchmark (v3) has been executed sequentially and independently verified without discrepancies.
+
+Scope and Workload:
+- Reused 100-participant cohort, model-guided Stage 2 targets, 3 dietary modes, 2 objectives (Variant A bounds-based vs Variant B target-aware, lambda=1.0), 5.0-second un-clamped solver limit.
+- 100 participants x 3 modes x 5 solver scenarios x 2 objectives = 3,000 optimization solve attempts.
+- 100 participants x 3 modes x 2 replay scenarios x 2 objectives = 1,200 nutrient sensitivity replay records.
+- Exactly 4,200 checkpoint records generated and independently reconstructed from raw food IDs and catalog values.
+
+Key Findings:
+1. Structural Robustness: Across all 5 solver scenarios (nominal baseline, 10% food removal, 20% food removal, dairy exclusion, legume exclusion), Variant A and Variant B achieved identical plan acceptance rates: 299/300 (99.7%), 296/300 (98.7%), 224/300 (74.7%), 200/300 (66.7%), and 100/300 (33.3%) respectively (0.00 percentage points difference in all five scenarios).
+2. Target Attainment: Variant B achieved substantially lower normalized L1 target error across all jointly valid plans (reductions of -0.4370 to -0.5719; exploratory confidence intervals, not a calculated p-value).
+3. Nutrient Sensitivity Replay: Under hypothetical +/-5% and +/-10% uniform catalog perturbations, available compliant plan rates were 78.7% vs 71.7% (diff: -7.00 pp [95% CI: -14.00, -0.00]) and 64.0% vs 53.0% (diff: -11.00 pp [95% CI: -19.67, -2.33]). Within-mode exact paired tests were not statistically significant after Holm adjustment across the declared 21-test family (all Holm p >= 0.2789). Among compliant plans, Variant B retained its lower target error (-0.5014 and -0.5185).
+4. Runtime: Observed solver wall time for Variant B was slightly faster than Variant A (-0.25s to -0.61s across scenarios); no branch-and-bound pruning causality is claimed.
+
+Verification:
+- Independent reconstructive verifier (stage3_robustness_v3.py verify()) verified all 4,200 checkpoints byte-for-byte.
+- Separate independent statistical verifier (verify_stage3_robustness_v3.py) reproduced all 19 bootstrap confidence intervals (10,000 resamples, seed 20261124), 21 exact paired binomial tests, and Holm adjustments, and confirmed rejection of altered confidence intervals.
+- Zero quarantines, zero missing records, zero duplicate records.
+- Production code, model weights, and Stage 2 targets remain 100% untouched.
+
+Artifacts: Saved Model/stage3_robustness_v3/full/ (checkpoints/, analysis.json, verification.json, independent_statistics_verification.json); Research Paper/Stage3_Robustness_v3_Results.md.
+
+### Stage 3 retrospective failure/margin audit — 24 November 2026
+
+Completed all-rule audit of 4,200 saved records without solver/model reruns: zero acceptance disagreements; checkpoint hashes unchanged; 94 paired margin intervals independently reproduced from rule rows. Under fixed 10% nutrient perturbation, PUFA upper-bound violations A/B=19/39, folate DFE lower-bound violations=1/16, potassium upper-bound violations=21/3. Target-aware nominal PUFA/folate margins were smaller, potassium margins larger: evidence of rule-specific vulnerability, not universal boundary proximity or clinical harm. Violation counts overlap. Nominal rejected plans were coded infeasible, not timeout; dairy-exclusion failures were pure-vegetarian, not non-vegetarian; legume exclusions conflict with mandatory pulse categories in vegetarian/mixed modes. Removed unsupported target-error p<0.001 and exact 4P+4C+9F=E claims. Full benchmark remains completed; this is additional retrospective analysis, not a new trial. See Research Paper/Stage3_Robustness_Failure_Margin_Audit_v1.md. No production changes.
+
+### Stage 2 ablation preparation repaired — v2, 24 November 2026
+
+Full execution/verifier paths implemented, but 100-participant/600-task study NOT run. Fresh 3-case/18-variant-task GPU pilot passed. Separate formulas reproduced 45 confidence intervals and 15 exact tests. Thirteen corruption checks and optimization-disabled resume of all 18 records passed; reference target parity confirmed. Full cohort has no overlap with checked prior cohorts or the development sample. Balanced variant order, synchronized timings and fail-closed bindings/resume are implemented. Primary Holm family=5 overall-acceptance contrasts; secondary family=10 numerical/score-gate contrasts. Pilot observations do not prove universal filter redundancy or component necessity; normalized distance is not percentage points. Joint removal of filters does not isolate individual filters. No full experiment, training or production change. Details: Research Paper/Stage2_Ablation_Repair_v2.md. Full execution is delegated to Gemini using Research Paper/Gemini_Stage2_Ablation_v2_Full_Run_Prompt.txt.
+
+### Stage 2 Component Ablation Full Study Completed and Verified (v2) — 24 November 2026
+
+The full 100-participant Stage 2 component ablation experiment (v2) has been executed sequentially on GPU and independently verified without discrepancies.
+
+Scope and Workload:
+- 100 adult temporal NHANES participants (seed 20261125; strictly disjoint from all 337 participants in earlier studies and 3 pilot participants).
+- 6 variants: reference, no model objective, no dietary-change penalty, no barrier penalty, no joint projection, no sequential filters.
+- Exactly 600 counterfactual optimization tasks completed on GPU (reported session timing excludes model loading) (CUDA) in 1,159.98 seconds session wall time (~19.33 min).
+
+Key Verified Findings (N=100 paired participants):
+1. Model-Score Objective: Adding neural model risk gradients increased overall acceptance from 49.0% to 62.0% (+13.00 pp [95% CI: 7.00, 20.00]; 0 wins, 13 losses, exact paired p = 2.44e-4, Holm-adjusted p = 9.77e-4 across 5 primary contrasts). Target risk was lower across all 3 disease outcomes (paired diffs: diabetes -0.0055, obesity -0.0051, CVD -0.0067).
+2. Joint Constraint Projection: Strong numerical-consistency benefit in these 100 cases. Without joint projection, numerical pass rate dropped from 100.0% to 8.0% (-92.00 pp; Holm p = 4.04e-27) and overall acceptance dropped from 62.0% to 7.0% (-55.00 pp; Holm p = 2.78e-16). Unprojected Adam outputs violate thermodynamic energy balance and ratio constraints (linear residuals up to 400+ kcal).
+3. Sequential Filters (Filters 1-3): No output changes observed after joint projection in this 100-case sample. Bypassing downstream filters produced bit-for-bit identical final targets, probabilities, and residuals across all 100 participants (diff: 0.00 pp overall acceptance, 0.0000 L1 distance, 0.0000 across all probability deltas; Holm p = 1.00).
+4. Dietary-Change Penalty: Omitting the 0.001 ||delta_N||^2 regularizer did not significantly change overall acceptance (64.0% vs 62.0%, diff +2.00 pp, Holm p = 1.00), but caused optimization to drift significantly farther from observed intake (mean L1 normalized distance increased from 8.64 to 9.56, paired diff +0.9164 [95% CI: 0.6847, 1.1650]).
+5. Differentiable Barrier: Omitting the in-loop soft barrier produced no statistically significant difference in overall acceptance (65.0% vs 62.0%, diff +3.00 pp, Holm p = 0.75) or distance. Post-Adam box clamping and joint projection adequately enforce boundaries.
+
+Verification:
+- Independent reconstructive verifier audited all 600 checkpoints from raw disk bytes without trusting saved flags.
+- Separate statistical verifier reproduced 45 paired bootstrap intervals (10,000 resamples, seed 20261124) and 15 exact paired tests; confirmed active rejection of altered confidence intervals.
+- Production code, model weights, preprocessors, and Stage 2 targets remain 100% untouched.
+
+Artifacts: Saved Model/stage2_ablation_v2/full/ (checkpoints/, analysis.json, run_receipt.json, verification.json, independent_statistics_verification.json); Research Paper/Stage2_Ablation_v2_Results.md.
+
+### Stage 2 Cross-Model Consistency Evaluation Completed and Verified (v1) — 24 November 2026
+
+The frozen-model cross-architecture evaluation of the 600 saved Stage 2 counterfactual proposals across BioNutriGPT (source replay control), CatBoost (gradient-boosted trees), and FT-Transformer (tabular transformer) has been executed, independently verified, and recorded with zero discrepancies.
+
+Scope and Workload:
+- 100 adult temporal NHANES participants x 6 ablation variants = 600 saved nutrient proposals evaluated across 3 frozen models.
+- Exactly 700 feature rows per model (100 baseline profiles + 600 proposals), predicting 3 clinical outcomes (diabetes, obesity, CVD).
+- Execution timing: runner wall time 23.0s, verifier wall time 19.0s.
+
+Key Verified Findings:
+1. Primary Reference Variant (all 100 participants):
+   - BioNutriGPT: diabetes -0.0098 [-0.0143, -0.0054], obesity -0.0414 [-0.0490, -0.0341], CVD -0.0068 [-0.0100, -0.0037]; gate pass 62/100 (62.0%).
+   - CatBoost: diabetes +0.0132 [+0.0061, +0.0207] (38 dec / 62 inc), obesity -0.0317 [-0.0381, -0.0258] (88 dec / 12 inc), CVD -0.0051 [-0.0069, -0.0033] (83 dec / 16 inc); gate pass 42/100 (42.0%).
+   - FT-Transformer: diabetes -0.0024 [-0.0113, +0.0067] (48 dec / 52 inc, spans zero), obesity -0.0345 [-0.0448, -0.0245] (81 dec / 19 inc), CVD -0.0083 [-0.0123, -0.0045] (74 dec / 26 inc); gate pass 53/100 (53.0%).
+2. Outcome-Specific Consistency:
+   - Mean obesity and CVD scores decrease across all three architectures in these cases; participant-level agreement is not established by marginal counts.
+   - Diabetes diverges on the full unstratified cohort (BioNutriGPT assigns reductions, FT-Transformer spans zero, CatBoost assigns an increase).
+3. Source-Accepted Strata (N=62):
+   - Among proposals accepted by the source model, CatBoost's diabetes score increase attenuates to +0.0031 [-0.0044, +0.0113] (spans zero; gate pass 35/62, 56.5%).
+   - FT-Transformer's diabetes score reduction strengthens to -0.0139 [-0.0238, -0.0047] (gate pass 42/62, 67.7%).
+4. Full vs No-Model-Objective Contrasts (v0 minus v1, N=100):
+   - Model guidance produces lower risk scores in FT-Transformer across all three endpoints (diabetes -0.0150, obesity -0.0040, CVD -0.0071).
+   - In CatBoost, model guidance reduces diabetes risk relative to unguided search (-0.0021 [-0.0036, -0.0007]) with uncertain obesity (+0.0003) and CVD (-0.0000) differences; equivalence was not tested.
+
+Verification:
+- Baseline reproducibility confirmed across all three models (max abs error <= 1.16e-7).
+- Zero-change repeated inference confirmed (max abs error <= 7.94e-8).
+- Source candidate parity confirmed for BioNutriGPT (max abs error <= 1.14e-7).
+- Separate statistical verifier independently reproduced all 171 paired bootstrap confidence intervals (10,000 resamples, seed 20261124), prediction reproduction confirmed with error 0.0, and corrupted CI rejected.
+- Production code, model weights, preprocessors, and Stage 2 targets remain 100% untouched.
+
+Artifacts: Saved Model/stage2_cross_model_v1/ (protocol.json, input_manifest.json, completed.json, controls.json, analysis.json, verification.json); Research Paper/Stage2_Cross_Model_v1_Results.md.
+
+
+Reporting clarification (24 November 2026): Cross-model intervals are exploratory pointwise intervals, without multiplicity correction. Model development used NHANES 2007–2016; 2017–March 2020 is the temporal evaluation cohort, not the training/calibration cohort. Source parity is within numerical tolerance, not byte-for-byte equality. A confidence interval spanning zero does not establish equivalence. Shared-data model agreement does not demonstrate clinical benefit or exclude model exploitation. Reported 23/19-second session times are transcript timings, not independently verified benchmark latency receipts.
+
+### Stage 2 Repaired-Model Stability Benchmark Completed and Verified (v1) — 24 November 2026
+
+The full engineering stability benchmark evaluating the Stage 2 counterfactual prescription engine under input perturbations has been executed on GPU, independently verified, and recorded with zero discrepancies. Item 6 of the evidence plan is completed for this defined dietary and lipid perturbation scope only; broader anthropometric error, missingness, and forced boundary robustness remain pending.
+
+Scope and Workload:
+- Hardware: NVIDIA GeForce RTX 3050 Laptop GPU, PyTorch 2.14.0+cu130, 12 CPU threads.
+- Pilot: 3 development participants x 8 scenarios = 24 optimization tasks.
+- Full: 100 evaluation participants (reused from ablation cohort; strictly disjoint from development participants) x 8 scenarios = 800 optimization tasks.
+- Scenarios: baseline, identical-input repeat, dietary nutrients scaled by -1%, +1%, -5%, +5%, and measured serum lipids (HDL, total cholesterol) scaled by -5%, +5%.
+
+Key Verified Findings:
+1. Exact Repeatability: Repeat execution under identical inputs and fixed optimizer seed produced 0.0000 displacement across all 100 participants (max scaled Linf = 0.0, L1 = 0.0). The optimizer is fully deterministic.
+2. Proportional Dietary Scaling Displacements:
+   - +/-1% dietary scaling displaced targets by mean scaled L1 = 0.3294 [0.2775, 0.3888] (-1%) and 0.2978 [0.2585, 0.3418] (+1%); Linf = 0.0953 and 0.0753; acceptance delta = +0.0200 and 0.0000; energy delta = 0.0 kcal.
+   - +/-5% dietary scaling displaced targets by mean scaled L1 = 1.3066 [1.1546, 1.4677] (-5%) and 1.3518 [1.2023, 1.5089] (+5%); Linf = 0.2452 and 0.2858; acceptance delta = +0.0600 and +0.0200; energy delta = 0.0 kcal.
+   - Scaling is roughly linear (~4.2x displacement increase for 5x input perturbation). Numerical pass remained 100/100 across all dietary scenarios.
+3. Biomarker Shifts & Clinical Routing Threshold Crossings:
+   - 11 participants had baseline predicted probabilities within 0.02 of a clinical disease cutoff.
+   - +/-5% lipid scaling caused 6 routing crossings (lipid_minus5) and 5 routing crossings (lipid_plus5).
+   - Profiles crossing cutoffs exhibited substantially larger mean L1 displacement (0.8851 in lipid_minus5, 1.3940 in lipid_plus5) compared to noncrossing profiles (0.2152 in lipid_minus5, 0.2432 in lipid_plus5), reflecting discrete rule boundary shifts.
+   - Mean energy delta was -10.99 kcal [-26.98, 0.00] in lipid_minus5 and +15.80 kcal [+2.76, +32.87] in lipid_plus5 (max +500.0 kcal). Numerical pass remained 100/100.
+
+Verification:
+- Pilot and full execution receipts verified via SHA-256 manifest.
+- Independent reconstructive verifier audited all 800 full checkpoints from raw disk bytes against neural model inference on GPU.
+- Separate statistical formulas reproduced all 40 participant-bootstrap intervals (10,000 resamples, seed 20261124).
+- Active rejection of corrupted confidence intervals and corrupted study identities confirmed.
+- Production code, model weights, and deployed targets remain 100% untouched.
+
+Artifacts: Saved Model/stage2_stability_repaired_v1/ (manifest.json, protocol.json, pilot/ [execution.json, verification.json, analysis.json], full/ [execution.json, verification.json, analysis.json]); Research Paper/Stage2_Stability_Repaired_v1_Results.md.
+
+Stage 2 stability reporting correction (24 November 2026): The 800-record stability study passed saved numerical checks and identical-input repeats matched in this environment. However, target sensitivity remains: the largest single-nutrient differences in each perturbation scenario occurred without routing crossings or solver fallback and were already present in the saved post-Adam, box-clipped vectors. Projection was not their primary origin. Exact gradient-level causes require a separate diagnostic experiment; saved records do not include optimizer trajectories. Fixed research routing cutoffs are 0.5 for all outcomes; 39 nutrient targets enter displacement metrics. These are not diagnostic thresholds or clinical benefit estimates. See Research Paper/Stage2_Stability_Retrospective_Audit_v1.md. No model inference or new optimization was performed during this retrospective audit. Historical timing claims are not independently verified session latency evidence.

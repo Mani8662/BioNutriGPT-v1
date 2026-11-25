@@ -1,0 +1,63 @@
+{
+  "identity": {
+    "case": 80,
+    "SEQN": 122047,
+    "mode": "veg_nonveg_combo",
+    "scenario": "nutrient_sens_pm10pct"
+  },
+  "variant": "a",
+  "binding": "7939df93a11c79316fb13f9fec98f795551908c9a94e1817d9889315bb8596b9",
+  "budget_seconds": 5.0,
+  "exclusions": [],
+  "nominal_hash": "a99ed6fedf663d1c0aac45ead8cb1db978364d14ba2b5ca70eec7571c2708ceb",
+  "nominal_accepted": true,
+  "audit": {
+    "valid": false,
+    "first_failure": [
+      "Hard bound violated for 'DR1TPOTA': delivered=4708.1003, bound=[2600.0000, 4700.0000]"
+    ],
+    "totals": {
+      "DR1TKCAL": 1219.471256740904,
+      "DR1TPROT": 76.57318707392892,
+      "DR1TCARB": 171.2317755921696,
+      "DR1TSUGR": null,
+      "DR1TFIBE": 34.994234967701594,
+      "DR1TTFAT": 27.7445164547131,
+      "DR1TSFAT": 6.703639661648295,
+      "DR1TMFAT": 5.943439618511276,
+      "DR1TPFAT": 12.718946773187037,
+      "DR1TCHOL": 56.02271049765057,
+      "DR1TATOC": 17.849399207589265,
+      "DR1TRET": 63.144257468307416,
+      "DR1TVARA": 2146.167322745484,
+      "DR1TACAR": null,
+      "DR1TBCAR": null,
+      "DR1TLYCO": null,
+      "DR1TLZ": null,
+      "DR1TVB1": 1.4507305403426654,
+      "DR1TVB2": 2.200533291612587,
+      "DR1TNIAC": 23.658362993543403,
+      "DR1TVB6": 2.3680975276216683,
+      "DR1TFOLA": 1007.9805108869704,
+      "DR1TFA": 0.0,
+      "DR1TFF": null,
+      "DR1TFDFE": 1059.1156165681398,
+      "DR1TVB12": 4.41182998040912,
+      "DR1TVC": 158.45076799302424,
+      "DR1TVK": 2012.3318510680347,
+      "DR1TCALC": 1311.401265344552,
+      "DR1TPHOS": 1575.36854406564,
+      "DR1TMAGN": 711.7790719364792,
+      "DR1TIRON": 24.116801614540044,
+      "DR1TZINC": 11.647030252448731,
+      "DR1TCOPP": 1.8861551329221895,
+      "DR1TSODI": 1858.8715408826572,
+      "DR1TPOTA": 4708.100258842676,
+      "DR1TSELE": 123.98780339822427,
+      "DR1TCAFF": null,
+      "DR1TALCO": 0.0
+    },
+    "target_error": null
+  },
+  "accepted": false
+}

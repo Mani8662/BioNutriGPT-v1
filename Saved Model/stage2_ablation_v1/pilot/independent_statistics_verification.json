@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "date": "2026-11-24",
+  "pilot_contrasts_verified": 5,
+  "pilot_variants_verified": 6,
+  "unit_of_inference": "participant",
+  "pilot_sample_n": 3,
+  "reconstructed_means_match": true,
+  "changed_estimate_rejected": true,
+  "scope": "Mechanical engineering validation on N=3 pilot cases. Not population evidence.",
+  "analysis_sha256": "906d1f4005239ff24f3724db0560cda98c86f1ec34e58c98c36e34469b92f7cc"
+}

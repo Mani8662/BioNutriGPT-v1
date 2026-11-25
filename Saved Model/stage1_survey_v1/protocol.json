@@ -1,0 +1,8 @@
+{
+  "weight": "WTDRD1PP",
+  "reason": "39 DR1T nutrient predictors and reliable day-one recall selection; no fasting subsample predictor in primary model",
+  "source": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_DR1TOT.htm",
+  "scope": "Overall six frozen models; calibrated probabilities; diabetes/CVD primary, obesity exploratory. Unweighted comparison on identical participants. No retraining.",
+  "variance": "Stratified delete-one-PSU jackknife; surviving PSU weights in deleted stratum multiplied by nh/(nh-1). Variance sum_h (nh-1)/nh sum_i (estimate_hi-estimate_full)^2. Student t intervals with PSU-minus-strata degrees of freedom, no finite population correction; intervals untruncated.",
+  "limitations": "Sensitivity analysis of selected complete-outcome/recall/laboratory cohort; weights do not correct additional analytic selection. Conditional on fitted models. Not Indian validation. Exploratory paired intervals without multiplicity adjustment. Subgroup survey evaluation remains pending."
+}

@@ -1,0 +1,302 @@
+[
+  {
+    "dimension": "Sex",
+    "subgroup": "Female",
+    "outcome": "TARGET_DIABETES",
+    "n": 3599,
+    "positive": 603,
+    "negative": 2996,
+    "prevalence": 0.1675465407057516,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Sex",
+    "subgroup": "Female",
+    "outcome": "TARGET_OBESITY",
+    "n": 3599,
+    "positive": 1679,
+    "negative": 1920,
+    "prevalence": 0.46651847735482077,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Sex",
+    "subgroup": "Female",
+    "outcome": "TARGET_CVD",
+    "n": 3599,
+    "positive": 346,
+    "negative": 3253,
+    "prevalence": 0.09613781606001667,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Sex",
+    "subgroup": "Male",
+    "outcome": "TARGET_DIABETES",
+    "n": 3405,
+    "positive": 698,
+    "negative": 2707,
+    "prevalence": 0.20499265785609397,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Sex",
+    "subgroup": "Male",
+    "outcome": "TARGET_OBESITY",
+    "n": 3405,
+    "positive": 1378,
+    "negative": 2027,
+    "prevalence": 0.40469897209985317,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Sex",
+    "subgroup": "Male",
+    "outcome": "TARGET_CVD",
+    "n": 3405,
+    "positive": 499,
+    "negative": 2906,
+    "prevalence": 0.14654919236417033,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": "20-40",
+    "outcome": "TARGET_DIABETES",
+    "n": 2257,
+    "positive": 86,
+    "negative": 2171,
+    "prevalence": 0.03810367744793974,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": "20-40",
+    "outcome": "TARGET_OBESITY",
+    "n": 2257,
+    "positive": 930,
+    "negative": 1327,
+    "prevalence": 0.412051395657953,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": "20-40",
+    "outcome": "TARGET_CVD",
+    "n": 2257,
+    "positive": 37,
+    "negative": 2220,
+    "prevalence": 0.01639344262295082,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": "41-65",
+    "outcome": "TARGET_DIABETES",
+    "n": 3173,
+    "positive": 699,
+    "negative": 2474,
+    "prevalence": 0.22029624960605104,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": "41-65",
+    "outcome": "TARGET_OBESITY",
+    "n": 3173,
+    "positive": 1491,
+    "negative": 1682,
+    "prevalence": 0.46990230066183425,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": "41-65",
+    "outcome": "TARGET_CVD",
+    "n": 3173,
+    "positive": 359,
+    "negative": 2814,
+    "prevalence": 0.11314213677907344,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": ">65",
+    "outcome": "TARGET_DIABETES",
+    "n": 1574,
+    "positive": 516,
+    "negative": 1058,
+    "prevalence": 0.3278271918678526,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": ">65",
+    "outcome": "TARGET_OBESITY",
+    "n": 1574,
+    "positive": 636,
+    "negative": 938,
+    "prevalence": 0.4040660736975858,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Age",
+    "subgroup": ">65",
+    "outcome": "TARGET_CVD",
+    "n": 1574,
+    "positive": 449,
+    "negative": 1125,
+    "prevalence": 0.2852604828462516,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Mexican American",
+    "outcome": "TARGET_DIABETES",
+    "n": 840,
+    "positive": 182,
+    "negative": 658,
+    "prevalence": 0.21666666666666667,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Mexican American",
+    "outcome": "TARGET_OBESITY",
+    "n": 840,
+    "positive": 428,
+    "negative": 412,
+    "prevalence": 0.5095238095238095,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Mexican American",
+    "outcome": "TARGET_CVD",
+    "n": 840,
+    "positive": 60,
+    "negative": 780,
+    "prevalence": 0.07142857142857142,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Other Hispanic",
+    "outcome": "TARGET_DIABETES",
+    "n": 723,
+    "positive": 136,
+    "negative": 587,
+    "prevalence": 0.18810511756569848,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Other Hispanic",
+    "outcome": "TARGET_OBESITY",
+    "n": 723,
+    "positive": 309,
+    "negative": 414,
+    "prevalence": 0.42738589211618255,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Other Hispanic",
+    "outcome": "TARGET_CVD",
+    "n": 723,
+    "positive": 67,
+    "negative": 656,
+    "prevalence": 0.09266943291839558,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Non-Hispanic White",
+    "outcome": "TARGET_DIABETES",
+    "n": 2564,
+    "positive": 408,
+    "negative": 2156,
+    "prevalence": 0.15912636505460218,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Non-Hispanic White",
+    "outcome": "TARGET_OBESITY",
+    "n": 2564,
+    "positive": 1104,
+    "negative": 1460,
+    "prevalence": 0.43057722308892354,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Non-Hispanic White",
+    "outcome": "TARGET_CVD",
+    "n": 2564,
+    "positive": 425,
+    "negative": 2139,
+    "prevalence": 0.16575663026521062,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Non-Hispanic Black",
+    "outcome": "TARGET_DIABETES",
+    "n": 1784,
+    "positive": 374,
+    "negative": 1410,
+    "prevalence": 0.20964125560538116,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Non-Hispanic Black",
+    "outcome": "TARGET_OBESITY",
+    "n": 1784,
+    "positive": 937,
+    "negative": 847,
+    "prevalence": 0.5252242152466368,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Non-Hispanic Black",
+    "outcome": "TARGET_CVD",
+    "n": 1784,
+    "positive": 210,
+    "negative": 1574,
+    "prevalence": 0.11771300448430494,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Other Race - Including Multi-Racial",
+    "outcome": "TARGET_DIABETES",
+    "n": 1093,
+    "positive": 201,
+    "negative": 892,
+    "prevalence": 0.1838975297346752,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Other Race - Including Multi-Racial",
+    "outcome": "TARGET_OBESITY",
+    "n": 1093,
+    "positive": 279,
+    "negative": 814,
+    "prevalence": 0.2552607502287283,
+    "small_group_warning": false
+  },
+  {
+    "dimension": "Race_Ethnicity",
+    "subgroup": "Other Race - Including Multi-Racial",
+    "outcome": "TARGET_CVD",
+    "n": 1093,
+    "positive": 83,
+    "negative": 1010,
+    "prevalence": 0.07593778591033852,
+    "small_group_warning": false
+  }
+]

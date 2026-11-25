@@ -1,0 +1,7 @@
+Frozen calibrated predictions; no fitting or threshold selection.
+WTDRD1PP; stratified JKn, mse=TRUE; t intervals with design degrees of freedom.
+Calibration diagnostics only: offset intercept and joint intercept/slope, raw and frozen calibrated probabilities; epsilon 1e-7. No recalibration deployment.
+Fixed probability bins [0,.1),...,[.9,1]; descriptive observed versus predicted; bin N<100 or events/non-events<20 flagged.
+DCA calibrated diabetes/CVD only: thresholds .05 to .50 step .01, hypothetical further assessment, not treatment or nutrition benefit. Existing diagnoses are included; no undiagnosed-only utility claim.
+Paired net-benefit contrasts versus all, none and every competing model use shared JKn replicates; pointwise unadjusted intervals. No threshold selected from temporal outcomes.
+Complete-case selection is not corrected by survey weights; no national or Indian validation claim.

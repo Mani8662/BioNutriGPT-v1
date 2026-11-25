@@ -1,0 +1,16 @@
+dietary_mode,threshold,participants,bionutrigpt_vs_catboost_diff,bionutrigpt_vs_catboost_ci_lo,bionutrigpt_vs_catboost_ci_hi,bionutrigpt_vs_ft_transformer_diff,bionutrigpt_vs_ft_transformer_ci_lo,bionutrigpt_vs_ft_transformer_ci_hi,catboost_vs_ft_transformer_diff,catboost_vs_ft_transformer_ci_lo,catboost_vs_ft_transformer_ci_hi
+pure_non_vegetarian,0.05,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+pure_non_vegetarian,0.1,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+pure_non_vegetarian,0.2,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+pure_non_vegetarian,0.3,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+pure_non_vegetarian,0.5,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+pure_vegetarian,0.05,100,0.0,0.0,0.0,-0.02,-0.04999999701976776,0.0,-0.02,-0.04999999701976776,0.0
+pure_vegetarian,0.1,100,-0.01,-0.029999999329447746,0.0,0.0,0.0,0.0,0.01,0.0,0.029999999329447746
+pure_vegetarian,0.2,100,-0.03,-0.07000000029802322,0.0,-0.01,-0.04999999701976776,0.019999999552965164,0.02,-0.019999999552965164,0.05999999865889549
+pure_vegetarian,0.3,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+pure_vegetarian,0.5,100,0.01,0.0,0.029999999329447746,0.01,0.0,0.029999999329447746,0.0,-0.029999999329447746,0.029999999329447746
+veg_nonveg_combo,0.05,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+veg_nonveg_combo,0.1,100,-0.01,-0.029999999329447746,0.0,-0.01,-0.029999999329447746,0.0,0.0,0.0,0.0
+veg_nonveg_combo,0.2,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+veg_nonveg_combo,0.3,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+veg_nonveg_combo,0.5,100,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

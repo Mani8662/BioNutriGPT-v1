@@ -1,0 +1,4002 @@
+[
+  {
+    "SEQN": 109342,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 109495,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 109568,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 109764,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 109994,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 110088,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 110114,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 110135,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 110508,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 110573,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 110629,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 110673,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 110888,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 111095,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 111363,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 111536,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 111783,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 111999,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 112080,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 112285,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 112639,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 112968,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113010,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113027,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113060,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113197,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113231,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113470,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113509,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113715,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113734,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113750,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113828,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113860,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 113872,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114179,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114403,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114578,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114688,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114818,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114849,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114890,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114907,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 114912,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 115156,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 115304,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 115323,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 115398,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 115675,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 115782,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 116076,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 116114,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 116118,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 116569,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 116680,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 116706,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 116881,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 117107,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 117364,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 117400,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 117991,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 118114,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 118147,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 118352,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 118520,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 118926,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 119265,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 119277,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 119507,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 119552,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 119626,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 119675,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 119854,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 120279,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 120521,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 120523,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 121171,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 121203,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 121259,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 121436,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 121484,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 121607,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 122265,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123077,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123142,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123197,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123496,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123574,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123609,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123654,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123662,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123713,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123854,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 123993,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 124238,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 124529,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 124533,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 124701,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 124712,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 124742,
+    "variant": "baseline"
+  },
+  {
+    "SEQN": 109342,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109495,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109568,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109764,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109994,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110088,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110114,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110135,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110508,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110573,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110629,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110673,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110888,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111095,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111363,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111536,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111783,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111999,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112080,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112285,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112639,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 112968,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113010,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113027,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113060,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113197,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113231,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113470,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113509,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113715,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113734,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113750,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113828,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113860,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113872,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114179,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114403,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114578,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114688,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114818,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114849,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114890,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114907,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114912,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115156,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115304,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115323,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115398,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115675,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115782,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116076,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116114,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116118,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116569,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116680,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116706,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116881,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117107,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117364,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117400,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117991,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118114,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118147,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118352,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118520,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118926,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119265,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119277,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119507,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119552,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119626,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119675,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119854,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120279,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120521,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120523,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121171,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121203,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121259,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121436,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121484,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121607,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 122265,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123077,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123142,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123197,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123496,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123574,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123609,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123654,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123662,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123713,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123854,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123993,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124238,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124529,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124533,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124701,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124712,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124742,
+    "variant": "variant_0_reference",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109342,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109495,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109568,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109764,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109994,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110088,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110114,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110135,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110508,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110573,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110629,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110673,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110888,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111095,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111363,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111536,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111783,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111999,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112080,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112285,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112639,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 112968,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113010,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113027,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113060,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113197,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113231,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113470,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113509,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113715,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113734,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113750,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113828,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113860,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113872,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114179,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114403,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114578,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114688,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114818,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114849,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114890,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114907,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114912,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115156,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115304,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115323,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115398,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115675,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115782,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116076,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116114,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116118,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116569,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116680,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116706,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116881,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117107,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117364,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117400,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117991,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118114,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118147,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118352,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118520,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118926,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119265,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119277,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119507,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119552,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119626,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119675,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119854,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120279,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120521,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120523,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121171,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121203,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121259,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121436,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121484,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121607,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 122265,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123077,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123142,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123197,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123496,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123574,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123609,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123654,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123662,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123713,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123854,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123993,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124238,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124529,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124533,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124701,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124712,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124742,
+    "variant": "variant_1_no_model_objective",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109342,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109495,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109568,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109764,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109994,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110088,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110114,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110135,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110508,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110573,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110629,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110673,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110888,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111095,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111363,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111536,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111783,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111999,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112080,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112285,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112639,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 112968,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113010,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113027,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113060,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113197,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113231,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113470,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113509,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113715,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113734,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113750,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113828,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113860,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113872,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114179,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114403,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114578,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114688,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114818,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114849,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114890,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114907,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114912,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115156,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115304,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115323,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115398,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115675,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115782,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116076,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116114,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116118,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116569,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116680,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116706,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116881,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117107,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117364,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117400,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117991,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118114,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118147,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118352,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118520,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118926,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119265,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119277,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119507,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119552,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119626,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119675,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119854,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120279,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120521,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120523,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121171,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121203,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121259,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121436,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121484,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121607,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 122265,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123077,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123142,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123197,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123496,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123574,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123609,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123654,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123662,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123713,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123854,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123993,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124238,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124529,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124533,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124701,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124712,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124742,
+    "variant": "variant_2_no_change_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109342,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109495,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109568,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109764,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109994,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110088,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110114,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110135,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110508,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110573,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110629,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110673,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110888,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111095,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111363,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111536,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111783,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111999,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112080,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112285,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112639,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 112968,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113010,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113027,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113060,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113197,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113231,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113470,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113509,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113715,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113734,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113750,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113828,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113860,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113872,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114179,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114403,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114578,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114688,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114818,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114849,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114890,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114907,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114912,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115156,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115304,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115323,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115398,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115675,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115782,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116076,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116114,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116118,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116569,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116680,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116706,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116881,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117107,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117364,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117400,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117991,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118114,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118147,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118352,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118520,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118926,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119265,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119277,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119507,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119552,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119626,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119675,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119854,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120279,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120521,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120523,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121171,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121203,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121259,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121436,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121484,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121607,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 122265,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123077,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123142,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123197,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123496,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123574,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123609,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123654,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123662,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123713,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123854,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123993,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124238,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124529,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124533,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124701,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124712,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124742,
+    "variant": "variant_3_no_barrier_penalty",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109342,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109495,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109568,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109764,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109994,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110088,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110114,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110135,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110508,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110573,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110629,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110673,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110888,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111095,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111363,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111536,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111783,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111999,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 112080,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 112285,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112639,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 112968,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113010,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113027,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113060,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113197,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113231,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113470,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113509,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113715,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113734,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113750,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113828,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113860,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113872,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114179,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114403,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114578,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114688,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114818,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114849,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114890,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114907,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114912,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115156,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115304,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115323,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115398,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115675,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115782,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116076,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116114,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116118,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116569,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116680,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116706,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116881,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117107,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117364,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117400,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117991,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118114,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118147,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118352,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118520,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118926,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119265,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119277,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119507,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119552,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119626,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119675,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119854,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120279,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120521,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120523,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121171,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121203,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121259,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121436,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121484,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121607,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 122265,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123077,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123142,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123197,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123496,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123574,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123609,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123654,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123662,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123713,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123854,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123993,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124238,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124529,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124533,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124701,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124712,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124742,
+    "variant": "variant_4_no_joint_projection",
+    "numerical_pass": false,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 109342,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109495,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109568,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109764,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 109994,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110088,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110114,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110135,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110508,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110573,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 110629,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110673,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 110888,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111095,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111363,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111536,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 111783,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 111999,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112080,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112285,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 112639,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 112968,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113010,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113027,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113060,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113197,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113231,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113470,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113509,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113715,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113734,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113750,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113828,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 113860,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 113872,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114179,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114403,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114578,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114688,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114818,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114849,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114890,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 114907,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 114912,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115156,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115304,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 115323,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115398,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115675,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 115782,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116076,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116114,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116118,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116569,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116680,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 116706,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 116881,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117107,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 117364,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117400,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 117991,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118114,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118147,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118352,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 118520,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 118926,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119265,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119277,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119507,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119552,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119626,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 119675,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 119854,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 120279,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120521,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 120523,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121171,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121203,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121259,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121436,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 121484,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 121607,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 122265,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123077,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123142,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123197,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123496,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123574,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123609,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123654,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 123662,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123713,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123854,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 123993,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  },
+  {
+    "SEQN": 124238,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124529,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124533,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124701,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124712,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": true
+  },
+  {
+    "SEQN": 124742,
+    "variant": "variant_5_no_sequential_filters",
+    "numerical_pass": true,
+    "source_accepted": false
+  }
+]

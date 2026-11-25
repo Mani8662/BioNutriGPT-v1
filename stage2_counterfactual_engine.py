@@ -56,14 +56,15 @@ _MODEL_CACHE: dict[tuple[str, str], nn.Module] = {}
 # Paths and fixed values explicitly supplied by the Stage 2 specification.
 # ---------------------------------------------------------------------------
 PROJECT_DIR = Path(__file__).resolve().parent
-DEFAULT_CHECKPOINT = PROJECT_DIR / "Saved Model" / "bionutrigpt_stage1_best.pt"
-DEFAULT_PREPROCESSOR = PROJECT_DIR / "Data" / "preprocessing_artifacts.joblib"
+import stage1_deployment as deployment
+DEFAULT_CHECKPOINT = deployment.CHECKPOINT
+DEFAULT_PREPROCESSOR = deployment.PREPROCESSOR
 DEFAULT_OUTPUT = PROJECT_DIR / "stage2_counterfactual_prescription.json"
 DEFAULT_PATIENT = PROJECT_DIR / "sample_patient_single_line.txt"
 
-CUTOFF_DIABETES = 0.617
-CUTOFF_OBESITY = 0.445
-CUTOFF_CVD = 0.603
+CUTOFF_DIABETES = deployment.THRESHOLDS['diabetes']
+CUTOFF_OBESITY = deployment.THRESHOLDS['obesity']
+CUTOFF_CVD = deployment.THRESHOLDS['cvd']
 
 PAL_FACTORS: dict[str, float] = {
     "sedentary": 1.20,
@@ -158,6 +159,10 @@ class ArtifactContractError(Stage2Error):
     """Raised when a preprocessing/model artifact is missing required data."""
 
 
+class Stage2InfeasibleConstraintsError(Stage2Error):
+    """Raised when the joint nutrient constraint polytope is mathematically empty."""
+
+
 def _as_float(value: Any, name: str) -> float:
     try:
         result = float(value)
@@ -181,7 +186,7 @@ def _validate_patient_vector(raw_patient_vector_88: Sequence[float] | np.ndarray
             "raw_patient_vector_88 contains non-finite values at indices "
             f"{bad}. The supplied brief does not define an imputation rule."
         )
-    return vector.astype(np.float32, copy=True)
+    return vector.astype(np.float64 if deployment.REPAIRED else np.float32, copy=True)
 
 
 def _validate_patient_metadata(
@@ -239,6 +244,7 @@ def _validate_patient_metadata(
 
 def _load_preprocessing_artifacts(path: Path) -> dict[str, Any]:
     path = Path(path)
+    deployment.verify_bundle(preprocessor=path)
     cache_key = str(path.resolve())
     if cache_key in _ARTIFACT_CACHE:
         return _ARTIFACT_CACHE[cache_key]
@@ -348,7 +354,7 @@ def _normalize_numpy(raw_vector: np.ndarray, artifacts: Mapping[str, Any]) -> np
             "Scaler returned an unexpected shape: "
             f"{transformed.shape}; expected {(1, len(indices))}."
         )
-    x[0, indices] = transformed[0]
+    x[0, indices] = np.round(transformed[0], 6) if deployment.REPAIRED else transformed[0]
     if not np.isfinite(x).all():
         raise Stage2Error("Stage 1 normalization produced non-finite values.")
     return x.astype(np.float32)
@@ -358,7 +364,7 @@ def _normalize_torch(raw_vector_1x88: torch.Tensor, artifacts: Mapping[str, Any]
     """Differentiable counterpart of _normalize_numpy for the supported scalers."""
     if raw_vector_1x88.shape != (1, len(FEATURE_COLS)):
         raise ValueError(f"Expected a (1, {len(FEATURE_COLS)}) tensor, got {tuple(raw_vector_1x88.shape)}.")
-    x = raw_vector_1x88.clone()
+    x = raw_vector_1x88.double() if deployment.REPAIRED else raw_vector_1x88.clone()
 
     for name in artifacts["_log1p_cols_resolved"]:
         idx = FEATURE_COLS.index(name)
@@ -409,10 +415,13 @@ def _normalize_torch(raw_vector_1x88: torch.Tensor, artifacts: Mapping[str, Any]
             f"{scaler_name!r}; refusing to approximate its transform."
         )
 
+    if deployment.REPAIRED:
+        # Exact rounded forward values; straight-through gradients for exploratory optimization.
+        selected = selected + (torch.round(selected * 1e6) / 1e6 - selected).detach()
     # Reconstruct without mutating a tensor needed by autograd.
     pieces: list[torch.Tensor] = []
     index_to_selected = {feature_index: position for position, feature_index in enumerate(indices)}
-    for feature_index in range(88):
+    for feature_index in range(len(FEATURE_COLS)):
         if feature_index in index_to_selected:
             pieces.append(selected[:, index_to_selected[feature_index] : index_to_selected[feature_index] + 1])
         else:
@@ -420,7 +429,7 @@ def _normalize_torch(raw_vector_1x88: torch.Tensor, artifacts: Mapping[str, Any]
     result = torch.cat(pieces, dim=1)
     if not torch.isfinite(result).all():
         raise Stage2Error("Differentiable Stage 1 normalization produced non-finite values.")
-    return result
+    return result.float() if deployment.REPAIRED else result
 
 
 def _load_stage1_model(
@@ -428,6 +437,7 @@ def _load_stage1_model(
 ) -> nn.Module:
     """Instantiate the canonical Stage 1 architecture and load its state dict."""
     checkpoint_path = Path(checkpoint_path)
+    deployment.verify_bundle(checkpoint=checkpoint_path)
     cache_key = (str(checkpoint_path.resolve()), str(device))
     if cache_key in _MODEL_CACHE:
         return _MODEL_CACHE[cache_key]
@@ -437,6 +447,8 @@ def _load_stage1_model(
 
     model = s1.BioNutriGPTStage1().to(device)
     s1.load_state_dict_checkpoint(model, checkpoint_path, device)
+    if deployment.REPAIRED:
+        model = deployment.wrap_model(model, device)
     model.eval()
     for parameter in model.parameters():
         parameter.requires_grad_(False)
@@ -656,9 +668,33 @@ def _risk_tier(probability: float, cutoff: float) -> str:
 def canonicalize_dietary_ratios(vector):
     """Derive all seven ratios from raw nutrients, retaining an input audit."""
     raw = _validate_patient_vector(vector).copy()
+    original = raw.copy()
+    if deployment.REPAIRED:
+        flags = [name for name in FEATURE_COLS if name.endswith('_MISS') and raw[FEATURE_COLS.index(name)] != 0]
+        if flags:
+            raise ValueError(f'Repaired deployment requires complete observed inputs; missingness flags set: {flags}')
+        if raw[FEATURE_COLS.index('RIDAGEYR')] < 20:
+            raise ValueError('Repaired research deployment supports age 20+ only.')
+        binary = ['SEX_FEMALE','SLQ050','PAQ605','PAQ620','PAQ635','PAQ650','PAQ665']
+        groups = [[n for n in FEATURE_COLS if n.startswith('SMOKE_')], [n for n in FEATURE_COLS if n.startswith('RACE_')],
+                  [n for n in FEATURE_COLS if n.startswith('MARITAL_')]]
+        for group in groups:
+            values = raw[[FEATURE_COLS.index(n) for n in group]]
+            if not np.isin(values, [0,1]).all() or values.sum()!=1:
+                raise ValueError(f'Exactly one category must be selected: {group}')
+        if any(raw[FEATURE_COLS.index(n)] not in (0,1) for n in binary):
+            raise ValueError('Binary features must be encoded as 0 or 1.')
+        hdl = raw[FEATURE_COLS.index('LBDHDD')]
+        tc = raw[FEATURE_COLS.index('LBXTC')]
+        if hdl <= 0 or tc < hdl:
+            raise ValueError('Lipid inputs require total cholesterol >= HDL > 0.')
+        raw[FEATURE_COLS.index('NON_HDL_CHOL')] = tc - hdl
+        raw[FEATURE_COLS.index('CHOL_HDL_RATIO')] = tc / hdl
+        raw[FEATURE_COLS.index('NON_HDL_TO_HDL_RATIO')] = (tc - hdl) / hdl
+        raw[FEATURE_COLS.index('SLEEP_DEV_FROM_7_5')] = abs(raw[FEATURE_COLS.index('SLEEP_HOURS')] - 7.5)
     begin = len(BIO_COLS)
     end = begin + len(DIET_RAW_COLS)
-    ratios = _compute_ratios_numpy(raw[begin:end]).astype(np.float32)
+    ratios = _compute_ratios_numpy(raw[begin:end]).astype(np.float64 if deployment.REPAIRED else np.float32)
     if not np.isfinite(ratios).all():
         raise ValueError('Derived dietary ratios must be finite.')
     supplied = raw[end:end + len(DIET_RATIO_COLS)].copy()
@@ -667,10 +703,14 @@ def canonicalize_dietary_ratios(vector):
         'policy': 'recompute_from_raw_nutrients_v1',
         'changed_fields': [name for name,a,b in zip(DIET_RATIO_COLS,supplied,ratios) if a != b],
         'supplied': supplied.tolist(), 'derived': ratios.tolist(),
+        'other_derived_changes': {name: {'supplied': float(original[FEATURE_COLS.index(name)]), 'derived': float(raw[FEATURE_COLS.index(name)])}
+                                  for name in ['NON_HDL_CHOL','CHOL_HDL_RATIO','NON_HDL_TO_HDL_RATIO','SLEEP_DEV_FROM_7_5']
+                                  if original[FEATURE_COLS.index(name)] != raw[FEATURE_COLS.index(name)]},
     }
 
 
 def model_binding(checkpoint_path, preprocessor_path):
+    manifest = deployment.verify_bundle(checkpoint_path, preprocessor_path)
     def digest(path):
         with Path(path).open('rb') as stream:
             return hashlib.file_digest(stream, 'sha256').hexdigest()
@@ -679,10 +719,12 @@ def model_binding(checkpoint_path, preprocessor_path):
         'preprocessor_sha256': digest(preprocessor_path),
         'architecture': 'train_bionutrigpt_stage1.BioNutriGPTStage1',
         'feature_order_sha256': hashlib.sha256(json.dumps(FEATURE_COLS).encode()).hexdigest(),
-        'probability_transform': 'raw_sigmoid_no_calibration',
+        'probability_transform': 'reserved_set_logit_Platt' if deployment.REPAIRED else 'raw_sigmoid_no_calibration',
+        'release': deployment.RELEASE,
+        'calibrator_sha256': manifest.get('hashes', {}).get('calibrators.joblib'),
         'operating_cutoffs': {'diabetes': CUTOFF_DIABETES, 'obesity': CUTOFF_OBESITY, 'cvd': CUTOFF_CVD},
-        'cutoff_provenance': 'legacy_project_constants_not_revalidated_for_repaired_v2',
-        'repaired_v2_equivalence_established': False,
+        'cutoff_provenance': deployment.metadata()['threshold_policy'],
+        'research_equivalence_scope': 'See Saved Model/stage1_deployment_verification_v1/verification.json; complete-input parity only.' if deployment.REPAIRED else 'Not established for legacy release',
     }
 
 
@@ -801,6 +843,232 @@ def _run_counterfactual_optimization(
     return n_target.detach().cpu().numpy().astype(np.float64), *target_probabilities
 
 
+# Fixed engineering normalization scales, retained for regression comparability.
+# Some match dietary reference values; the entire table is NOT an official
+# FDA/DRI table (e.g. carotenoids, caffeine, alcohol and fat subtypes).
+# These weights are not nutrient recommendations or acceptance bounds.
+DAILY_REFERENCE_SCALES: dict[str, float] = {
+    "DR1TKCAL": 2000.0, "DR1TPROT": 50.0, "DR1TCARB": 275.0, "DR1TSUGR": 50.0, "DR1TFIBE": 28.0,
+    "DR1TTFAT": 78.0, "DR1TSFAT": 20.0, "DR1TMFAT": 30.0, "DR1TPFAT": 20.0, "DR1TCHOL": 300.0,
+    "DR1TATOC": 15.0, "DR1TRET": 900.0, "DR1TVARA": 900.0, "DR1TACAR": 1000.0, "DR1TBCAR": 3000.0,
+    "DR1TLYCO": 5000.0, "DR1TLZ": 6000.0, "DR1TVB1": 1.2, "DR1TVB2": 1.3, "DR1TNIAC": 16.0,
+    "DR1TVB6": 1.7, "DR1TFOLA": 400.0, "DR1TFA": 400.0, "DR1TFF": 400.0, "DR1TFDFE": 400.0,
+    "DR1TVB12": 2.4, "DR1TVC": 90.0, "DR1TVK": 120.0, "DR1TCALC": 1300.0, "DR1TPHOS": 1250.0,
+    "DR1TMAGN": 420.0, "DR1TIRON": 18.0, "DR1TZINC": 11.0, "DR1TCOPP": 0.9, "DR1TSODI": 2300.0,
+    "DR1TPOTA": 4700.0, "DR1TSELE": 55.0, "DR1TCAFF": 200.0, "DR1TALCO": 14.0,
+}
+
+
+def _build_tightened_joint_bounds(
+    lower: np.ndarray,
+    upper: np.ndarray,
+    metadata: Mapping[str, Any],
+    p_cvd_0: float,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Tighten component nutrient bounds with Filter 2 clinical invariants.
+
+    Invariants incorporated into the bounding box:
+    - DR1TKCAL >= 1200.0
+    - 0.8 * weight_kg <= DR1TPROT <= 2.0 * weight_kg
+    - DR1TSODI <= 1500.0 if p_cvd_0 >= CUTOFF_CVD else 2300.0
+    - DR1TPOTA >= 3500.0 if p_cvd_0 >= CUTOFF_CVD else 2600.0
+    """
+    low_tight = np.asarray(lower, dtype=np.float64).copy()
+    up_tight = np.asarray(upper, dtype=np.float64).copy()
+
+    weight_kg = float(metadata["weight_kg"])
+    low_tight[KCAL] = max(low_tight[KCAL], 1200.0)
+    low_tight[PROT] = max(low_tight[PROT], 0.8 * weight_kg)
+    up_tight[PROT] = min(up_tight[PROT], 2.0 * weight_kg)
+
+    sodium_ceiling = 1500.0 if p_cvd_0 >= CUTOFF_CVD else 2300.0
+    up_tight[SODI] = min(up_tight[SODI], sodium_ceiling)
+
+    potassium_floor = 3500.0 if p_cvd_0 >= CUTOFF_CVD else 2600.0
+    low_tight[POTA] = max(low_tight[POTA], potassium_floor)
+
+    return low_tight, up_tight
+
+
+def _build_linear_constraint_matrices(
+    raw_vector: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Build A_ub and b_ub for energy balance and clinical ratio envelopes."""
+    A: list[np.ndarray] = []
+    b: list[float] = []
+
+    def add_row(terms: dict[str, float], rhs: float) -> None:
+        row = np.zeros(39, dtype=np.float64)
+        for k, v in terms.items():
+            row[NUTRIENT_INDEX[k]] = float(v)
+        A.append(row)
+        b.append(float(rhs))
+
+    # Energy thermodynamic balance: 4*PROT + 4*CARB + 9*TFAT + 7*ALCO ~ KCAL (+- 1%)
+    # Tightened to +-0.99% margin (1.0099 / 0.9901) so floating point boundary precision strictly satisfies the 1.00% rule.
+    add_row({'DR1TPROT': 4.0, 'DR1TCARB': 4.0, 'DR1TTFAT': 9.0, 'DR1TALCO': 7.0, 'DR1TKCAL': -1.0099}, 0.0)
+    add_row({'DR1TPROT': -4.0, 'DR1TCARB': -4.0, 'DR1TTFAT': -9.0, 'DR1TALCO': -7.0, 'DR1TKCAL': 0.9901}, 0.0)
+
+    # Clinical ratios relative to baseline features:
+    base_sf = float(raw_vector[FEATURE_COLS.index('SUGAR_TO_FIBER_RATIO')])
+    base_nk = float(raw_vector[FEATURE_COLS.index('SODIUM_POTASSIUM_RATIO')])
+    base_su = float(raw_vector[FEATURE_COLS.index('SAT_TO_UNSAT_FAT_RATIO')])
+
+    a_sf = max(base_sf, 1.0)
+    a_nk = max(base_nk, 1.0)
+    a_su = max(base_su, 0.4)
+
+    # SUGAR / (FIBER + 1) <= a_sf  <=>  SUGAR - a_sf * FIBER <= a_sf
+    add_row({'DR1TSUGR': 1.0, 'DR1TFIBE': -a_sf}, a_sf)
+    # SODIUM / (POTASSIUM + 1) <= a_nk  <=>  SODIUM - a_nk * POTASSIUM <= a_nk
+    add_row({'DR1TSODI': 1.0, 'DR1TPOTA': -a_nk}, a_nk)
+    # SFAT / (MFAT + PFAT + 0.1) <= a_su  <=>  SFAT - a_su * MFAT - a_su * PFAT <= 0.1 * a_su
+    add_row({'DR1TSFAT': 1.0, 'DR1TMFAT': -a_su, 'DR1TPFAT': -a_su}, 0.1 * a_su)
+
+    return np.asarray(A, dtype=np.float64), np.asarray(b, dtype=np.float64)
+
+
+def _project_to_joint_feasible_polytope(
+    n_candidate: np.ndarray,
+    lower: np.ndarray,
+    upper: np.ndarray,
+    raw_vector: np.ndarray,
+    metadata: Mapping[str, Any],
+    p_cvd_0: float,
+    *,
+    raise_on_infeasible: bool = True,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Convex quadratic projection of candidate nutrient targets onto the joint feasible polytope.
+
+    Solves:
+        min_{n} 1/2 sum_{i=0}^{38} ((n_i - n_cand_i) / s_i)^2
+        s.t.  lower_tight <= n <= upper_tight
+              A_ub @ n <= b_ub
+
+    where s_i are fixed engineering scales (DAILY_REFERENCE_SCALES).
+    This numerical post-processing step is detached from gradient optimization.
+    """
+    import time
+    from scipy.optimize import linprog, minimize
+
+    t0 = time.perf_counter()
+
+    n_cand = np.asarray(n_candidate, dtype=np.float64).copy()
+    if n_cand.shape != (39,) or not np.isfinite(n_cand).all():
+        raise Stage2Error("Candidate nutrient target contains non-finite values prior to projection.")
+
+    low_tight, up_tight = _build_tightened_joint_bounds(lower, upper, metadata, p_cvd_0)
+    if not np.isfinite(low_tight).all() or not np.isfinite(up_tight).all():
+        raise Stage2Error("Nutrient bounds contain non-finite values.")
+
+    if np.any(low_tight > up_tight + 1e-9):
+        bad = [DIET_RAW_COLS[i] for i in range(39) if low_tight[i] > up_tight[i] + 1e-9]
+        if raise_on_infeasible:
+            raise Stage2InfeasibleConstraintsError(
+                f"Conflicting nutrient bounds for fields {bad}: lower exceeds upper. Refusing to emit an invalid target."
+            )
+        return n_cand, {'passed': False, 'feasible': False, 'status': 'infeasible_bounds', 'conflicting_fields': bad}
+
+    A_ub, b_ub = _build_linear_constraint_matrices(raw_vector)
+    if not np.isfinite(A_ub).all() or not np.isfinite(b_ub).all():
+        raise Stage2Error('Joint constraint coefficients must be finite.')
+
+    def residuals(values):
+        values = np.asarray(values, dtype=np.float64)
+        if values.shape != (39,) or not np.isfinite(values).all():
+            return None
+        return (float(np.max(np.maximum(0, np.maximum(low_tight-values, values-up_tight)))),
+                float(np.max(np.maximum(0, A_ub @ values-b_ub))))
+
+    # Check if n_cand is already strictly feasible
+    tol = 1e-6
+    in_bounds = np.all(n_cand >= low_tight - tol) and np.all(n_cand <= up_tight + tol)
+    in_ineq = np.all(A_ub @ n_cand <= b_ub + tol)
+    if in_bounds and in_ineq:
+        dt = time.perf_counter() - t0
+        return n_cand, {
+            'passed': True,
+            'feasible': True,
+            'status': 'already_feasible',
+            'nit': 0,
+            'objective_value': 0.0,
+            'projection_distance_normalized': 0.0,
+            'runtime_ms': dt * 1000.0,
+            'max_bound_residual': residuals(n_cand)[0],
+            'max_linear_residual': residuals(n_cand)[1],
+            'fallback_used': False,
+            'optimization_status': 'zero_distance_feasible_within_tolerance',
+        }
+
+    scales = np.array([DAILY_REFERENCE_SCALES[k] for k in DIET_RAW_COLS], dtype=np.float64)
+    weights = 1.0 / (scales ** 2)
+
+    # Step 1: LP witness to verify feasibility and provide guaranteed feasible warm start
+    c_lp = weights * (np.clip(n_cand, low_tight, up_tight) - n_cand)
+    lp = linprog(c=c_lp, A_ub=A_ub, b_ub=b_ub, bounds=list(zip(low_tight, up_tight)), method='highs')
+    if not lp.success:
+        infeasible = int(lp.status) == 2
+        status = 'infeasible_linear_constraints' if infeasible else 'feasibility_solver_failure'
+        if raise_on_infeasible:
+            error = Stage2InfeasibleConstraintsError if infeasible else Stage2Error
+            raise error(f'{status}: {lp.message}. No verified target returned.')
+        return n_cand, {'passed': False, 'feasible': False if infeasible else None,
+                       'status': status, 'lp_status': int(lp.status), 'message': lp.message}
+
+    x0 = np.asarray(lp.x, dtype=np.float64)
+    lp_residuals = residuals(x0)
+    if lp_residuals is None or max(lp_residuals) > tol:
+        raise Stage2Error('Feasibility solver returned an invalid witness; no target returned.')
+
+    # Step 2: SLSQP quadratic projection
+    solver_exception = None
+    try:
+        res = minimize(
+        lambda x: 0.5 * np.sum(weights * ((x - n_cand) ** 2)),
+        x0,
+        jac=lambda x: weights * (x - n_cand),
+        method='SLSQP',
+        bounds=list(zip(low_tight, up_tight)),
+        constraints={'type': 'ineq', 'fun': lambda x: b_ub - A_ub @ x, 'jac': lambda x: -A_ub},
+        options={'ftol': 1e-12, 'maxiter': 500}
+        )
+    except Exception as exc:
+        res = None
+        solver_exception = f'{type(exc).__name__}: {exc}'
+
+    candidate = np.asarray(res.x, dtype=np.float64) if res is not None else np.array([])
+    candidate_valid = residuals(candidate)
+    clipped = np.clip(candidate, low_tight, up_tight) if candidate_valid is not None else None
+    clipped_residuals = residuals(clipped) if clipped is not None else None
+    converged = bool(res is not None and res.success)
+    use_slsqp = converged and candidate_valid is not None and max(candidate_valid) <= tol and clipped_residuals is not None and max(clipped_residuals) <= tol
+    x_star = clipped if use_slsqp else np.clip(x0, low_tight, up_tight)
+    final_residuals = residuals(x_star)
+    if final_residuals is None or max(final_residuals) > tol:
+        raise Stage2Error('Final projection/fallback failed independent residual checks.')
+
+    dt = time.perf_counter() - t0
+    dist = float(np.sqrt(np.sum(((x_star - n_cand) / scales) ** 2)))
+    obj = float(0.5 * np.sum(weights * ((x_star - n_cand) ** 2)))
+
+    audit = {
+        'passed': True,
+        'feasible': True,
+        'status': 'projected_successfully' if use_slsqp else 'feasible_lp_fallback',
+        'nit': int(getattr(res, 'nit', 0)),
+        'slsqp_success': converged,
+        'slsqp_status': int(res.status) if res is not None else None,
+        'slsqp_message': str(res.message) if res is not None else solver_exception,
+        'fallback_used': not use_slsqp,
+        'optimization_status': 'numerical_solver_converged' if use_slsqp else 'minimum_distance_not_established',
+        'objective_value': obj,
+        'projection_distance_normalized': dist,
+        'runtime_ms': dt * 1000.0,
+        'max_bound_residual': final_residuals[0],
+        'max_linear_residual': final_residuals[1],
+    }
+    return x_star, audit
+
 def _apply_filter_1_thermodynamic_balance(n: np.ndarray) -> dict[str, Any]:
     calculated_kcal = (
         4.0 * n[PROT]
@@ -811,15 +1079,15 @@ def _apply_filter_1_thermodynamic_balance(n: np.ndarray) -> dict[str, Any]:
     if n[KCAL] <= 0.0:
         raise Stage2Error("Filter 1 cannot evaluate a non-positive target calorie value.")
     relative_error_before = abs(calculated_kcal - n[KCAL]) / n[KCAL]
-    adjusted = relative_error_before > 0.01
-    if adjusted:
-        # Exact remediation stated in the brief.
+    adjusted = relative_error_before > (0.01 + 1e-9)
+    if adjusted and not deployment.REPAIRED:
+        # Legacy remediation only; in repaired deployment, joint projection strictly guarantees joint feasibility.
         n[KCAL] = calculated_kcal
     relative_error_after = (
         abs(calculated_kcal - n[KCAL]) / n[KCAL] if n[KCAL] > 0.0 else math.inf
     )
     return {
-        "passed": bool(relative_error_after <= 0.01),
+        "passed": bool(relative_error_after <= 0.01 + 1e-9),
         "adjusted": bool(adjusted),
         "calculated_kcal": float(calculated_kcal),
         "target_kcal_after_filter": float(n[KCAL]),
@@ -1094,6 +1362,27 @@ def generate_counterfactual_prescription(
         )
     )
 
+    # STEP 4.5: Joint constraint projection.
+    # Replace fragile sequential overwrites with numerical convex quadratic projection onto the
+    # joint feasible polytope defined by component bounds, Filter 2 clinical invariants,
+    # thermodynamic energy balance, and clinical ratio envelopes.
+    if deployment.REPAIRED:
+        target_nutrients, projection_audit = _project_to_joint_feasible_polytope(
+            n_candidate=target_nutrients,
+            lower=lower,
+            upper=upper,
+            raw_vector=raw_vector,
+            metadata=metadata,
+            p_cvd_0=p_cvd_0,
+            raise_on_infeasible=True,
+        )
+    else:
+        projection_audit = {
+            'status': 'legacy_bypass',
+            'passed': True,
+            'feasible': True,
+        }
+
     # STEP 5: four sequential verification filters.
     filter1 = _apply_filter_1_thermodynamic_balance(target_nutrients)
     filter2 = _apply_filter_2_iom_safety(
@@ -1142,6 +1431,7 @@ def generate_counterfactual_prescription(
     )
 
     audit_filters = {
+        "joint_projection": projection_audit,
         "filter_1_thermodynamic_balance": {
             **filter1,
             "passed_after_all_later_filters": filter1_final,
@@ -1189,13 +1479,15 @@ def generate_counterfactual_prescription(
         )
 
     certified = bool(
-        filter1_final and filter2_final and filter3_final and filter4_passed
+        filter1_final and filter2_final and filter3_final and filter4_passed and projection_audit.get('passed', True)
     )
     dossier: dict[str, Any] = {
         "model_binding": binding,
         "derived_input_audit": ratio_audit,
         "nutrient_ruleset_version": RULESET_VERSION,
         "clinical_prescribing_validated": False,
+        "deployment_policy": deployment.metadata(),
+        "counterfactual_gradient_scope": "Exploratory surrogate gradients through six-decimal forward rounding; not a causal intervention model." if deployment.REPAIRED else "Legacy exploratory optimization",
         "patient_baseline": {
             "probabilities": {
                 "diabetes": p_diab_0,
@@ -1239,6 +1531,7 @@ def generate_counterfactual_prescription(
             },
         },
         "audit_filters": audit_filters,
+        "audit_projection": projection_audit,
         "certified_for_stage3": certified,
     }
 

@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "date": "2026-11-24",
+  "pilot_checkpoints_verified": 18,
+  "manifest_files_verified": 20,
+  "rejection_fixtures_passed": 4,
+  "rejections": [
+    "negative_bound_violation_rejected",
+    "tampered_score_gate_flag_rejected",
+    "unknown_seqn_rejected",
+    "tampered_probability_rejected"
+  ],
+  "input_manifest_sha256": "b421482b39098be81278b1b4c43d7eca25a745fa78e3845faef33efc023aeea5",
+  "analysis_sha256": "906d1f4005239ff24f3724db0560cda98c86f1ec34e58c98c36e34469b92f7cc",
+  "checkpoint_hashes": {
+    "case_000_116727_variant_0_reference.json": "9c6e126834837ed0de9302d941feaf54d709daf8e3f57138be3386e0331fded1",
+    "case_000_116727_variant_1_no_model_objective.json": "4063c49c947d26b83d24c1c5683ed6d11ad6c6454cda0957636f430d0cb3ae8e",
+    "case_000_116727_variant_2_no_change_penalty.json": "4f50b9dd13d126065354f85ef26cbeef36693edb51b72f831da32234e897931d",
+    "case_000_116727_variant_3_no_barrier_penalty.json": "fb2d8219ac907f7d002b307549483abc0dfa04042a8587e229b7d0b4d448d902",
+    "case_000_116727_variant_4_no_joint_projection.json": "5c746a5e09f0207c3b1c6a9bb2b24108eef5c9688d8e7aa2c592a873afd7519d",
+    "case_000_116727_variant_5_no_sequential_filters.json": "3fe7db4955a713453337f2f15114d9e9a0b12bf62211d0d11d68d2dfe6f23163",
+    "case_001_117285_variant_0_reference.json": "e0c023bfa74a0011044eb848241101c08e47ea6a54f77cb5be16b540e04b652a",
+    "case_001_117285_variant_1_no_model_objective.json": "e94de7ca26d6c131d2962bd76f02bd138b24338ea7fb99c9705f74f533f60f5c",
+    "case_001_117285_variant_2_no_change_penalty.json": "0fe5e35eddbbca23196ba05a90ad5b8399e49d2fd42d44b26ed23a5c60991413",
+    "case_001_117285_variant_3_no_barrier_penalty.json": "68b311c19135ff76c068a6bca0892f71532748756355f5b9bf02dde7e3a0db52",
+    "case_001_117285_variant_4_no_joint_projection.json": "1d15afeb4d216ae8973733d23d341164bdb9cf2af21756eacc66669c86284d61",
+    "case_001_117285_variant_5_no_sequential_filters.json": "e476cbcc4071e0a5c3fbe12840409be7322d54b831501463edfba6dd337e6128",
+    "case_002_118239_variant_0_reference.json": "c6c2c17a15a670ee8d7d8723fa64db806aab206a4f3bf1aec1bf4c1758dcc17a",
+    "case_002_118239_variant_1_no_model_objective.json": "3fbfdd6f1db66069f6f6e165101e7c10242273382ffa74b104c2b098fa488981",
+    "case_002_118239_variant_2_no_change_penalty.json": "c756cea7e3c401193669f5e1cf353404b22009413eefd2353f81c80085a22a74",
+    "case_002_118239_variant_3_no_barrier_penalty.json": "1d100a152b2dd6762dea4f720353f2bce9345b6184e9771361ac08c74373563f",
+    "case_002_118239_variant_4_no_joint_projection.json": "b39bc211e4a43c68774fde412525bd0c0fb64e48de6fb99f9f84a9d61a5118ca",
+    "case_002_118239_variant_5_no_sequential_filters.json": "85cb6e06eebd1f05eb0b9a282312d0bb852682f7f28e35a168cb1efb8a0a26ce"
+  }
+}

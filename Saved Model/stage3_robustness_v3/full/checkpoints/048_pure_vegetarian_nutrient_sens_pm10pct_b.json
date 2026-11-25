@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "case": 48,
+    "SEQN": 117420,
+    "mode": "pure_vegetarian",
+    "scenario": "nutrient_sens_pm10pct"
+  },
+  "variant": "b",
+  "binding": "30113ccf6c526211aa4cea99a1369bc3e7fb887c327c95513e2a663eb1fd40f1",
+  "budget_seconds": 5.0,
+  "exclusions": [],
+  "nominal_hash": "076279b226cb8dcae278f603356d50d637a34daea4628ad0f948e2846eb2c3fe",
+  "nominal_accepted": false,
+  "audit": null,
+  "accepted": false
+}

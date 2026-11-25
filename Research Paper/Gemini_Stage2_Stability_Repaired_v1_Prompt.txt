@@ -1,0 +1,23 @@
+TASK: Execute and verify the prepared Stage 2 repaired-model stability study. Do not implement another study or silently change this protocol.
+
+Workspace: C:\Users\MANI KUMAR\CURRENT\GitHub\BioNutriGPT\Models\Less Data
+Read applicable AGENTS.md, Research Paper/Stage2_Stability_Repaired_v1_Preparation.md, stage2_stability_repaired_v1.py, verify_stage2_stability_repaired_v1.py and the imported ablation reference engine/verifier.
+
+STATUS: Prepared with static checks only. No pilot/full inference has run. Do not claim tests passed from this prompt. Use the project's working CUDA Python environment; record its executable and installed torch/CUDA version. Use RTX GPU and the runner's CPU thread policy. Do not start concurrent GPU tasks.
+
+1. Inspect git status and existing study directory. Preserve unrelated changes and all earlier evidence. Check participant IDs are 100 distinct evaluation IDs, three distinct development IDs, no overlap. Cohort reuse from ablations is intentional; never call this a fresh independent cohort.
+2. Run python stage2_stability_repaired_v1.py --prepare exactly once. This is a manifest-freeze step, not inference. If manifest already exists, verify it rather than replacing it. If any dependency mismatch occurs, STOP and report the exact file; do not weaken checks or update hashes to hide changes.
+3. Run python stage2_stability_repaired_v1.py --run pilot
+4. Run python verify_stage2_stability_repaired_v1.py --verify pilot
+5. Inspect all 24 records, transformed inputs, bound/score verification, repeat differences and CUDA use. A passed verifier does not prove stability. If repeat results differ, investigate and report; do not erase them. If code/runtime failure occurs, stop and provide traceback and affected files. Do not silently modify frozen code. Failed numerical feasibility or score gates alone are study findings, not reasons to exclude participants.
+6. Only after pilot verification passes, run python stage2_stability_repaired_v1.py --run full
+7. Run python verify_stage2_stability_repaired_v1.py --verify full
+
+Use checkpoint resume if interrupted before execution.json exists. Never rerun completed optimization just to obtain better results. Preserve failures/logs. No training, fitting, tuning, model replacement, production changes or changing acceptance tolerances. No synthetic placeholder timings or success flags. Do not use a giant shell script that continues after errors. Capture each command exit code and stdout/stderr.
+
+REPORT ONLY AFTER ACTUAL VERIFICATION:
+Create Research Paper/Stage2_Stability_Repaired_v1_Results.md. Link exact receipts/hashes and describe hardware. Include all eight scenarios, full N=100 and pilot separately, all five metrics/intervals and counts. Report mean/median/p95/max displacement, repeat result, routing-crossing counts, near-threshold baseline count and crossing/noncrossing summaries. Show failures without dropping them. No cohort-wide confidence conclusion based only on pilot. No clinical efficacy/safety or Q1/Q2 guarantee. Confidence interval spanning zero is not equivalence. Distinguish verified integrity from favorable performance. No claims about anthropometric error, missingness or forced boundaries, which were not tested. No measured optimizer timings unless supported by saved actual records; separate model loading, solving and verification.
+
+Update Progress.txt, Current_Model_Explanation.txt and Research Paper/Readiness_and_Evidence.md accurately, retaining historical evidence. Item 6 becomes completed for this defined dietary/lipid perturbation scope only; broader boundary/anthropometry robustness remains pending. Do not edit manuscript numerical claims from memory.
+
+FINAL: commands/exit codes; number completed/expected; device; verification and analysis hashes; factual findings; failures/limits; changed files. If blocked or incomplete, explicitly say so. Never manufacture completion receipts.

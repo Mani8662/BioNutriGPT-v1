@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "tests": {
+    "tests_run": 16,
+    "passed": true,
+    "failures": 0,
+    "errors": 0
+  },
+  "historical_verifier_hash_current": true,
+  "regression_model_replay_passed": true,
+  "comparison_sample": {
+    "passed": true,
+    "n": 100,
+    "unique_ids": 100,
+    "overlap_repair": 0,
+    "overlap_previous_study": 0,
+    "overlap_previous_pilot": 0,
+    "selected_ids_sha256": "8be8ae24cc66269b57cf49d1f70e049cbb46f6703a219f97255e05c1aa85193c",
+    "no_comparison_run": true
+  },
+  "target_changes": {
+    "observed_to_final": {
+      "median": 2.3795895064800803,
+      "min": 1.230162313245901,
+      "max": 9.527954951960767
+    },
+    "optimizer_clipped_to_final": {
+      "median": 0.16558005512825894,
+      "min": 0.006258298557247234,
+      "max": 0.6428133755563392
+    }
+  },
+  "comparison_executed": false,
+  "document_hashes": {
+    "Progress.txt": "7710ad16ac7feeaf49b65b16ccdd2f3c22eec5d4d2cd89ebb3640da44b9a8441",
+    "Current_Model_Explanation.txt": "a6f7b97aea7037a3993b44b2993f6ada14330fa9a076d12396808fc6a0b40fea",
+    "Research Paper\\Stage2_Joint_Constraint_Repair_v1.md": "17333c7cfbcafab431ac5cfeae399043ca7219ed397c9d1d520e6f41d1bd82dc",
+    "Research Paper\\Readiness_and_Evidence.md": "8ccf27ca8f8e268825e2dc2543c44448c4b8376a48666ba8bd1da256a6f82b0c",
+    "Research Paper\\BioNutriGPT_Manuscript_v2.md": "9b792fd1208ea4d8d18248822aec025ce5c43c64ed747c8665214d65ca858703"
+  }
+}

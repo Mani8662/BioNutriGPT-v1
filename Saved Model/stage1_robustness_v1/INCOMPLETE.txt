@@ -1,0 +1,1 @@
+Run interrupted while exporting FT-Transformer predictions: OSError 22. Metrics/partial files are diagnostic only, not a completed study. Rerun uses distinct per-scenario NPZ files in stage1_robustness_v2.

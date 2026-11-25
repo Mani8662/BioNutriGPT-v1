@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "resumed_records": 42,
+  "solver_calls": 0,
+  "checkpoint_bytes_unchanged": true,
+  "corrupt_checkpoint_refused_without_overwrite": true,
+  "modified_bound_file_rejected": true,
+  "excluded_food_rejected": true,
+  "script_sha256": "eb591fcc4f01b2409e54284d34956ab037b8d0e308b0763c80cc59c4be9a6fdf"
+}

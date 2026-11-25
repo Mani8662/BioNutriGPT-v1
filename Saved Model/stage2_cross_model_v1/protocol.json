@@ -1,0 +1,23 @@
+{
+  "status": "prepared_no_inference",
+  "date": "2026-11-24",
+  "models": [
+    "bionutrigpt",
+    "catboost",
+    "ft_transformer"
+  ],
+  "selected_trials": {
+    "bionutrigpt": 3,
+    "catboost": 0,
+    "ft_transformer": 2
+  },
+  "participants": 100,
+  "variants": 6,
+  "unique_rows_per_model": 700,
+  "primary": "Reference-variant nutrient changes rescored on all 100 participants. Assess per-outcome calibrated score changes and all-outcome nonincrease gate (delta<=0.0015).",
+  "secondary": "All six variants; all outputs retained including numerically invalid proposals, with separate numerical-pass and source-accepted strata. Compare full versus no-model-objective within each frozen scorer.",
+  "statistics": "Paired participant bootstrap seed 20261124, 10000 draws. Exploratory pointwise intervals, no p-values or clinical claims. Positive delta means score increase. Gates are engineering diagnostics, not clinical thresholds.",
+  "controls": "Reproduce historical baseline predictions; reproduce source-model candidate predictions; exact zero-change control; repeat selected inference in independent verifier.",
+  "limitations": "Independent architectures, not independent training data or clinical validation. Off-manifold changes possible. Obesity/BMI linkage may confound score interpretation. No outcomes under dietary intervention observed.",
+  "execution": "FT-Transformer and reference neural inference CUDA; CatBoost CPU with available CPU parallelism. No fitting, recalibration, target regeneration or counterfactual optimization."
+}

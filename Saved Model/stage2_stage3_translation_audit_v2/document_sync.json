@@ -1,0 +1,13 @@
+{
+  "completed": true,
+  "solver_calls": 0,
+  "verification_sha256": "3fe1d709d7adea7da2c75e713906b688da7f635aa4449eabb84c1b7801303a92",
+  "documents": {
+    "Progress.txt": "7e6a365333d588c192db06252a00f452f7ca59bc80157132eebc95dc42bc69b4",
+    "Current_Model_Explanation.txt": "c9046a11b6156659a48a2820e33668087f0aecbed8f413d4ffd910af3a482092",
+    "Research Paper/Readiness_and_Evidence.md": "abdf50830cf6c03464578a97cf834b7d6f5dd2f259c89264360137e0e130a8b4",
+    "Research Paper/BioNutriGPT_Manuscript_v2.md": "cd3064175631ee7030d6f51af62142915c26df7bbda8184c6082d28e05466548",
+    "Research Paper/Stage2_Stage3_Translation_Study_v1.md": "1a0a5877814d22c3a30e43c92c3028640a083e057cfcbd55e40728c3f181844a",
+    "Research Paper/Stage2_Stage3_Translation_Audit_v2.md": "8079e863607eb29b6c2f999df000732d93fa5903714b9fee5dffe4dce0933b5c"
+  }
+}

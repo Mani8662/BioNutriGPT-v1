@@ -1,0 +1,154 @@
+{
+  "study": "stage2_stage3_translation_study_v1",
+  "cohort_size": 100,
+  "total_tasks_attempted": 900,
+  "total_tasks_completed": 900,
+  "total_wallclock_seconds": 589.23,
+  "max_workers": 10,
+  "hardware": {
+    "device": "cpu",
+    "cpu_cores": 12,
+    "solver": "scipy.optimize.milp / HiGHS"
+  },
+  "by_arm": {
+    "rules_only": {
+      "attempted_solves": 300,
+      "stage2_accepted_participants": 48,
+      "stage2_accepted_pct": 48.0,
+      "stage3_accepted_solves": 298,
+      "stage3_accepted_pct": 99.3,
+      "end_to_end_accepted_solves": 144,
+      "end_to_end_accepted_pct": 48.0,
+      "mean_normalized_target_distance": 23.7991,
+      "median_normalized_target_distance": 22.6989
+    },
+    "minimum_change": {
+      "attempted_solves": 300,
+      "stage2_accepted_participants": 70,
+      "stage2_accepted_pct": 70.0,
+      "stage3_accepted_solves": 297,
+      "stage3_accepted_pct": 99.0,
+      "end_to_end_accepted_solves": 209,
+      "end_to_end_accepted_pct": 69.7,
+      "mean_normalized_target_distance": 23.1534,
+      "median_normalized_target_distance": 22.686
+    },
+    "model_guided": {
+      "attempted_solves": 300,
+      "stage2_accepted_participants": 77,
+      "stage2_accepted_pct": 77.0,
+      "stage3_accepted_solves": 298,
+      "stage3_accepted_pct": 99.3,
+      "end_to_end_accepted_solves": 231,
+      "end_to_end_accepted_pct": 77.0,
+      "mean_normalized_target_distance": 23.2377,
+      "median_normalized_target_distance": 23.4845
+    }
+  },
+  "by_mode": {
+    "pure_vegetarian": {
+      "attempted_solves": 300,
+      "stage3_accepted_solves": 297,
+      "stage3_accepted_pct": 99.0,
+      "end_to_end_accepted_solves": 195,
+      "end_to_end_accepted_pct": 65.0
+    },
+    "veg_nonveg_combo": {
+      "attempted_solves": 300,
+      "stage3_accepted_solves": 296,
+      "stage3_accepted_pct": 98.7,
+      "end_to_end_accepted_solves": 194,
+      "end_to_end_accepted_pct": 64.7
+    },
+    "pure_non_vegetarian": {
+      "attempted_solves": 300,
+      "stage3_accepted_solves": 300,
+      "stage3_accepted_pct": 100.0,
+      "end_to_end_accepted_solves": 195,
+      "end_to_end_accepted_pct": 65.0
+    }
+  },
+  "by_arm_mode": {
+    "rules_only__pure_vegetarian": {
+      "n_cases": 100,
+      "stage2_accepted": 48,
+      "stage3_accepted": 99,
+      "end_to_end_accepted": 48,
+      "end_to_end_pct": 48.0,
+      "median_runtime_seconds": 3.03,
+      "median_target_distance": 22.5636
+    },
+    "rules_only__veg_nonveg_combo": {
+      "n_cases": 100,
+      "stage2_accepted": 48,
+      "stage3_accepted": 99,
+      "end_to_end_accepted": 48,
+      "end_to_end_pct": 48.0,
+      "median_runtime_seconds": 3.032,
+      "median_target_distance": 21.5914
+    },
+    "rules_only__pure_non_vegetarian": {
+      "n_cases": 100,
+      "stage2_accepted": 48,
+      "stage3_accepted": 100,
+      "end_to_end_accepted": 48,
+      "end_to_end_pct": 48.0,
+      "median_runtime_seconds": 3.032,
+      "median_target_distance": 30.2737
+    },
+    "minimum_change__pure_vegetarian": {
+      "n_cases": 100,
+      "stage2_accepted": 70,
+      "stage3_accepted": 99,
+      "end_to_end_accepted": 70,
+      "end_to_end_pct": 70.0,
+      "median_runtime_seconds": 3.03,
+      "median_target_distance": 21.6933
+    },
+    "minimum_change__veg_nonveg_combo": {
+      "n_cases": 100,
+      "stage2_accepted": 70,
+      "stage3_accepted": 98,
+      "end_to_end_accepted": 69,
+      "end_to_end_pct": 69.0,
+      "median_runtime_seconds": 3.031,
+      "median_target_distance": 21.1352
+    },
+    "minimum_change__pure_non_vegetarian": {
+      "n_cases": 100,
+      "stage2_accepted": 70,
+      "stage3_accepted": 100,
+      "end_to_end_accepted": 70,
+      "end_to_end_pct": 70.0,
+      "median_runtime_seconds": 3.033,
+      "median_target_distance": 27.4723
+    },
+    "model_guided__pure_vegetarian": {
+      "n_cases": 100,
+      "stage2_accepted": 77,
+      "stage3_accepted": 99,
+      "end_to_end_accepted": 77,
+      "end_to_end_pct": 77.0,
+      "median_runtime_seconds": 3.032,
+      "median_target_distance": 21.6892
+    },
+    "model_guided__veg_nonveg_combo": {
+      "n_cases": 100,
+      "stage2_accepted": 77,
+      "stage3_accepted": 99,
+      "end_to_end_accepted": 77,
+      "end_to_end_pct": 77.0,
+      "median_runtime_seconds": 3.031,
+      "median_target_distance": 21.6374
+    },
+    "model_guided__pure_non_vegetarian": {
+      "n_cases": 100,
+      "stage2_accepted": 77,
+      "stage3_accepted": 100,
+      "end_to_end_accepted": 77,
+      "end_to_end_pct": 77.0,
+      "median_runtime_seconds": 3.032,
+      "median_target_distance": 27.9161
+    }
+  }
+}

@@ -1,0 +1,363 @@
+{
+  "study": "stage2_comparison_study_v1",
+  "sample_size": 100,
+  "bootstrap_resamples": 10000,
+  "seed": 20261123,
+  "arm_statistics": {
+    "rules_only": {
+      "attempted": 100,
+      "completed": 100,
+      "errors": 0,
+      "overall_accepted": 48,
+      "overall_accepted_pct": 48.0,
+      "numerical_pass": 100,
+      "numerical_pass_pct": 100.0,
+      "score_gate_pass": 48,
+      "score_gate_pass_pct": 48.0,
+      "lp_fallbacks": 0,
+      "distance_from_observed": {
+        "median": 4.819045388455287,
+        "iqr": 3.7349827307654264,
+        "mean": 5.838358520594551,
+        "std": 3.6514561846996956,
+        "min": 2.2750566924726487,
+        "max": 20.459352220537752
+      },
+      "runtime_seconds": {
+        "total": 3.7044056999802706,
+        "median": 0.031203250000544358,
+        "p95": 0.03918057500195573
+      },
+      "score_deltas": {
+        "diabetes_mean": -0.012313321261532647,
+        "obesity_mean": -0.04453967975741323,
+        "cvd_mean": -0.0027812881187182278
+      }
+    },
+    "minimum_change": {
+      "attempted": 100,
+      "completed": 100,
+      "errors": 0,
+      "overall_accepted": 70,
+      "overall_accepted_pct": 70.0,
+      "numerical_pass": 99,
+      "numerical_pass_pct": 99.0,
+      "score_gate_pass": 70,
+      "score_gate_pass_pct": 70.0,
+      "lp_fallbacks": 0,
+      "distance_from_observed": {
+        "median": 1.8494223268172412,
+        "iqr": 1.371971904483944,
+        "mean": 2.5536191709457814,
+        "std": 2.1412009427309076,
+        "min": 0.7599421749295977,
+        "max": 17.365866219682857
+      },
+      "runtime_seconds": {
+        "total": 20.437957799957076,
+        "median": 0.19924840000021504,
+        "p95": 0.2708044400027575
+      },
+      "score_deltas": {
+        "diabetes_mean": -0.007417821008625063,
+        "obesity_mean": -0.04286452938830767,
+        "cvd_mean": -0.0026606933861554024
+      }
+    },
+    "model_guided": {
+      "attempted": 100,
+      "completed": 100,
+      "errors": 0,
+      "overall_accepted": 77,
+      "overall_accepted_pct": 77.0,
+      "numerical_pass": 100,
+      "numerical_pass_pct": 100.0,
+      "score_gate_pass": 77,
+      "score_gate_pass_pct": 77.0,
+      "lp_fallbacks": 0,
+      "distance_from_observed": {
+        "median": 2.199193744144913,
+        "iqr": 1.3024297713487942,
+        "mean": 2.825367356876841,
+        "std": 2.0863727770502085,
+        "min": 0.8545794454563409,
+        "max": 17.39058279209266
+      },
+      "runtime_seconds": {
+        "total": 581.9941790999801,
+        "median": 5.7354306999986875,
+        "p95": 6.2605339500019905
+      },
+      "score_deltas": {
+        "diabetes_mean": -0.013652789497232858,
+        "obesity_mean": -0.053626460688001226,
+        "cvd_mean": -0.005631262745773623
+      }
+    }
+  },
+  "paired_contrasts": [
+    {
+      "contrast_label": "Primary: Model-Guided (C) vs Minimum-Change (B)",
+      "role": "primary",
+      "arm_1": "model_guided",
+      "arm_2": "minimum_change",
+      "acceptance": {
+        "point_diff": 0.07,
+        "point_diff_pct": 7.000000000000001,
+        "ci_lower_pct": 2.0,
+        "ci_upper_pct": 13.0,
+        "std_error_pct": 2.9143843609963946,
+        "two_sided_p": 0.0154
+      },
+      "numerical_feasibility": {
+        "point_diff": 0.01,
+        "point_diff_pct": 1.0,
+        "ci_lower_pct": 0.0,
+        "ci_upper_pct": 3.0,
+        "std_error_pct": 0.9951837162368092,
+        "two_sided_p": 0.7334
+      },
+      "score_gate": {
+        "point_diff": 0.07,
+        "point_diff_pct": 7.000000000000001,
+        "ci_lower_pct": 2.0,
+        "ci_upper_pct": 13.0,
+        "std_error_pct": 2.9143843609963946,
+        "two_sided_p": 0.0154
+      },
+      "distance_difference": {
+        "point_diff": 0.27174818593105965,
+        "ci_lower": 0.0439531952773994,
+        "ci_upper": 0.8665630687120689
+      }
+    },
+    {
+      "contrast_label": "Secondary: Model-Guided (C) vs Rules-Only (A)",
+      "role": "secondary",
+      "arm_1": "model_guided",
+      "arm_2": "rules_only",
+      "acceptance": {
+        "point_diff": 0.29,
+        "point_diff_pct": 28.999999999999996,
+        "ci_lower_pct": 19.0,
+        "ci_upper_pct": 39.0,
+        "std_error_pct": 5.312493705307978,
+        "two_sided_p": 0.0
+      },
+      "numerical_feasibility": {
+        "point_diff": 0.0,
+        "point_diff_pct": 0.0,
+        "ci_lower_pct": 0.0,
+        "ci_upper_pct": 0.0,
+        "std_error_pct": 0.0,
+        "two_sided_p": 1.0
+      },
+      "score_gate": {
+        "point_diff": 0.29,
+        "point_diff_pct": 28.999999999999996,
+        "ci_lower_pct": 19.0,
+        "ci_upper_pct": 39.0,
+        "std_error_pct": 5.312493705307978,
+        "two_sided_p": 0.0
+      },
+      "distance_difference": {
+        "point_diff": -3.0129911637177083,
+        "ci_lower": -10.334688027015916,
+        "ci_upper": -0.29976873541299415
+      }
+    },
+    {
+      "contrast_label": "Secondary: Minimum-Change (B) vs Rules-Only (A)",
+      "role": "secondary",
+      "arm_1": "minimum_change",
+      "arm_2": "rules_only",
+      "acceptance": {
+        "point_diff": 0.22,
+        "point_diff_pct": 22.0,
+        "ci_lower_pct": 11.0,
+        "ci_upper_pct": 33.0,
+        "std_error_pct": 5.3798381551732195,
+        "two_sided_p": 0.0002
+      },
+      "numerical_feasibility": {
+        "point_diff": -0.01,
+        "point_diff_pct": -1.0,
+        "ci_lower_pct": -3.0,
+        "ci_upper_pct": 0.0,
+        "std_error_pct": 0.9951837162368092,
+        "two_sided_p": 0.7334
+      },
+      "score_gate": {
+        "point_diff": 0.22,
+        "point_diff_pct": 22.0,
+        "ci_lower_pct": 11.0,
+        "ci_upper_pct": 33.0,
+        "std_error_pct": 5.3798381551732195,
+        "two_sided_p": 0.0002
+      },
+      "distance_difference": {
+        "point_diff": -3.2847393496487687,
+        "ci_lower": -10.431334748648514,
+        "ci_upper": -0.5581740097632913
+      }
+    }
+  ],
+  "major_nutrient_shifts": {
+    "KCAL": {
+      "rules_only": {
+        "unit": "kcal",
+        "observed_mean": 2212.06,
+        "target_mean": 1661.686512451172,
+        "delta_mean": -550.3734875488282,
+        "delta_median": -323.9749755859375,
+        "delta_iqr": 959.4624938964844
+      },
+      "minimum_change": {
+        "unit": "kcal",
+        "observed_mean": 2212.06,
+        "target_mean": 1687.671104788612,
+        "delta_mean": -524.388895211388,
+        "delta_median": -244.7987060546875,
+        "delta_iqr": 818.9461192283267
+      },
+      "model_guided": {
+        "unit": "kcal",
+        "observed_mean": 2212.06,
+        "target_mean": 1685.0313529975485,
+        "delta_mean": -527.0286470024512,
+        "delta_median": -244.79873360443605,
+        "delta_iqr": 818.4572032431956
+      }
+    },
+    "PROT": {
+      "rules_only": {
+        "unit": "g",
+        "observed_mean": 80.4847,
+        "target_mean": 84.94300000000001,
+        "delta_mean": 4.4582999999999995,
+        "delta_median": 9.630000000000006,
+        "delta_iqr": 41.88499999999999
+      },
+      "minimum_change": {
+        "unit": "g",
+        "observed_mean": 80.4847,
+        "target_mean": 84.2593533477456,
+        "delta_mean": 3.774653347745612,
+        "delta_median": 0.4996705252907958,
+        "delta_iqr": 17.47016857745755
+      },
+      "model_guided": {
+        "unit": "g",
+        "observed_mean": 80.4847,
+        "target_mean": 85.63745797903502,
+        "delta_mean": 5.152757979035036,
+        "delta_median": 0.766581401911651,
+        "delta_iqr": 15.844178466345218
+      }
+    },
+    "CARB": {
+      "rules_only": {
+        "unit": "g",
+        "observed_mean": 255.6408,
+        "target_mean": 225.4395336303711,
+        "delta_mean": -30.201266369628915,
+        "delta_median": -8.991555633544948,
+        "delta_iqr": 126.33157051086428
+      },
+      "minimum_change": {
+        "unit": "g",
+        "observed_mean": 255.6408,
+        "target_mean": 201.83292567088378,
+        "delta_mean": -53.80787432911626,
+        "delta_median": -19.024728668232072,
+        "delta_iqr": 106.80016305159972
+      },
+      "model_guided": {
+        "unit": "g",
+        "observed_mean": 255.6408,
+        "target_mean": 203.98654020311747,
+        "delta_mean": -51.65425979688255,
+        "delta_median": -16.64313012433354,
+        "delta_iqr": 98.67488766703312
+      }
+    },
+    "TFAT": {
+      "rules_only": {
+        "unit": "g",
+        "observed_mean": 91.28670000000002,
+        "target_mean": 46.684041992187495,
+        "delta_mean": -44.60265800781251,
+        "delta_median": -31.56763753255208,
+        "delta_iqr": 61.44729183620875
+      },
+      "minimum_change": {
+        "unit": "g",
+        "observed_mean": 91.28670000000002,
+        "target_mean": 58.909974892616376,
+        "delta_mean": -32.376725107383635,
+        "delta_median": -15.304724121093763,
+        "delta_iqr": 54.67260325226968
+      },
+      "model_guided": {
+        "unit": "g",
+        "observed_mean": 91.28670000000002,
+        "target_mean": 57.07087605690841,
+        "delta_mean": -34.21582394309159,
+        "delta_median": -14.504306564331074,
+        "delta_iqr": 54.42522704496439
+      }
+    },
+    "SODI": {
+      "rules_only": {
+        "unit": "mg",
+        "observed_mean": 3465.41,
+        "target_mean": 1990.0,
+        "delta_mean": -1475.41,
+        "delta_median": -1245.5,
+        "delta_iqr": 2070.0
+      },
+      "minimum_change": {
+        "unit": "mg",
+        "observed_mean": 3465.41,
+        "target_mean": 2119.9601531468493,
+        "delta_mean": -1345.4498468531508,
+        "delta_median": -948.5,
+        "delta_iqr": 1862.4998766283852
+      },
+      "model_guided": {
+        "unit": "mg",
+        "observed_mean": 3465.41,
+        "target_mean": 2119.9534328797063,
+        "delta_mean": -1345.4565671202936,
+        "delta_median": -948.5000665987004,
+        "delta_iqr": 1862.4375468157052
+      }
+    },
+    "POTA": {
+      "rules_only": {
+        "unit": "mg",
+        "observed_mean": 2625.23,
+        "target_mean": 2618.0,
+        "delta_mean": -7.23,
+        "delta_median": 116.5,
+        "delta_iqr": 1312.25
+      },
+      "minimum_change": {
+        "unit": "mg",
+        "observed_mean": 2625.23,
+        "target_mean": 3031.379079985607,
+        "delta_mean": 406.1490799856071,
+        "delta_median": 116.5,
+        "delta_iqr": 780.003553752816
+      },
+      "model_guided": {
+        "unit": "mg",
+        "observed_mean": 2625.23,
+        "target_mean": 3031.266143241831,
+        "delta_mean": 406.0361432418309,
+        "delta_median": 116.5,
+        "delta_iqr": 780.2224708473007
+      }
+    }
+  }
+}

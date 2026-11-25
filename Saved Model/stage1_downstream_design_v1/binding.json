@@ -1,0 +1,6 @@
+{
+  "Data\\NHANES_2017_2020_PrePandemic_Raw.csv": "aaad16d8086d6c1ead76053e112755addb0eb96b5ce9b34a00bc82809c4633b4",
+  "stage2_counterfactual_engine.py": "6c140e03bd1afc9737a2e63a243954c882b38d92f3e0310c76a2f410897f2aa8",
+  "stage3_milp_solver.py": "5099d28963c07cb417a30da3e4244ef2fcecea22ac60ab894efc93369fad8fe4",
+  "nutrient_rule_policy.py": "98cd05b20980d78961dcce156fb03903e9675f9fe18bf415f6658cc9256fb04d"
+}

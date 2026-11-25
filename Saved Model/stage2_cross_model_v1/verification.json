@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "participants": 100,
+  "proposals": 600,
+  "models": 3,
+  "summary_intervals_reproduced": 171,
+  "prediction_max_errors": {
+    "bionutrigpt": 0.0,
+    "catboost": 0.0,
+    "ft_transformer": 0.0
+  },
+  "changed_ci_rejected": true,
+  "analysis_sha256": "7dd72d0a7c5b5a77297fc917ff4c41c175698f5839ef9d8d466500812d3abfaa",
+  "scope": "Repeated frozen inference and separate statistical formulas; shared preprocessing/model loaders. No independent training cohort or clinical intervention validation."
+}

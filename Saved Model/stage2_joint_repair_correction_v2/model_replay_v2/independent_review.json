@@ -1,0 +1,375 @@
+{
+  "passed": true,
+  "n": 32,
+  "device": "cuda",
+  "source_hashes_match": true,
+  "same_cases_bounds_and_energy_prescriptions": true,
+  "all_numeric_constraints_pass": true,
+  "baseline_accepted": [
+    7,
+    14,
+    19
+  ],
+  "preserved": [
+    7,
+    14,
+    19
+  ],
+  "accepted_after": 25,
+  "max_score_replay_error": 5.736912367382274e-08,
+  "model_score_gate_replayed_all_32": true,
+  "rows": [
+    {
+      "case": 0,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.00010820484892660846,
+        "obesity": -0.014295290959616284,
+        "cvd": 0.000985143667030705
+      }
+    },
+    {
+      "case": 1,
+      "before_accepted": false,
+      "after_accepted": false,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": 0.009430795117342114,
+        "obesity": -0.05868393205248659,
+        "cvd": -0.0010997854968290977
+      }
+    },
+    {
+      "case": 2,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.007560633176022902,
+        "obesity": -0.14486237095210996,
+        "cvd": -0.0010062649994752515
+      }
+    },
+    {
+      "case": 3,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.039108764379066935,
+        "obesity": -0.04295833881897192,
+        "cvd": -0.0027417756634186344
+      }
+    },
+    {
+      "case": 4,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.040296274348855576,
+        "obesity": -0.058447082792631944,
+        "cvd": -0.0010419273241052962
+      }
+    },
+    {
+      "case": 5,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.00824653972725219,
+        "obesity": -0.04199493151829231,
+        "cvd": -0.0013594765511005871
+      }
+    },
+    {
+      "case": 6,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0021862634290303884,
+        "obesity": -0.03731826958690204,
+        "cvd": -0.015533684511144119
+      }
+    },
+    {
+      "case": 7,
+      "before_accepted": true,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.00037088390705120045,
+        "obesity": -0.02243123568424088,
+        "cvd": -0.025453684115806063
+      }
+    },
+    {
+      "case": 8,
+      "before_accepted": false,
+      "after_accepted": false,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0026137805627929403,
+        "obesity": -0.03399213842146076,
+        "cvd": 0.0022392288175895614
+      }
+    },
+    {
+      "case": 9,
+      "before_accepted": false,
+      "after_accepted": false,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.01755298962678853,
+        "obesity": -0.07023553988746739,
+        "cvd": 0.024775841822871014
+      }
+    },
+    {
+      "case": 10,
+      "before_accepted": false,
+      "after_accepted": false,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": 0.019930946297527036,
+        "obesity": -0.03962880039962574,
+        "cvd": 0.05215658420262059
+      }
+    },
+    {
+      "case": 11,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0014810272787542343,
+        "obesity": -0.015872881897278673,
+        "cvd": 0.00014981722078803977
+      }
+    },
+    {
+      "case": 12,
+      "before_accepted": false,
+      "after_accepted": false,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": 0.019523029710884293,
+        "obesity": 0.0028445142882478625,
+        "cvd": 0.014060893442151216
+      }
+    },
+    {
+      "case": 13,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.000652678025691994,
+        "obesity": -0.019081832081232444,
+        "cvd": 2.1932620747188575e-06
+      }
+    },
+    {
+      "case": 14,
+      "before_accepted": true,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.002689301314410735,
+        "obesity": -0.01913491227274336,
+        "cvd": -0.00026471053455888113
+      }
+    },
+    {
+      "case": 15,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.003729128622503561,
+        "obesity": -0.07210318191767429,
+        "cvd": -0.00015711429652770764
+      }
+    },
+    {
+      "case": 16,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.001494560398905307,
+        "obesity": -0.04580919501343194,
+        "cvd": 0.0013730355215540915
+      }
+    },
+    {
+      "case": 17,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.009948855663863082,
+        "obesity": -0.02747928738608979,
+        "cvd": -0.006108324683747198
+      }
+    },
+    {
+      "case": 18,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.009443585079553014,
+        "obesity": -0.1351407197863818,
+        "cvd": -0.0015589103715247616
+      }
+    },
+    {
+      "case": 19,
+      "before_accepted": true,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.022969355079974774,
+        "obesity": -0.0329572585536827,
+        "cvd": -0.0033865167133533824
+      }
+    },
+    {
+      "case": 20,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.059232340791353366,
+        "obesity": -0.07931612127460097,
+        "cvd": -0.00045217884407733333
+      }
+    },
+    {
+      "case": 21,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.009969334824007792,
+        "obesity": -0.14384109676705348,
+        "cvd": -0.0015666020342673384
+      }
+    },
+    {
+      "case": 22,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0006259207387985626,
+        "obesity": -0.005933711680766077,
+        "cvd": 0.00012100593665568052
+      }
+    },
+    {
+      "case": 23,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0068331629473606485,
+        "obesity": -0.2255284321005953,
+        "cvd": -0.0017377841713837995
+      }
+    },
+    {
+      "case": 24,
+      "before_accepted": false,
+      "after_accepted": false,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.034341005560805604,
+        "obesity": 0.017384522213335973,
+        "cvd": -0.013408796902594958
+      }
+    },
+    {
+      "case": 25,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.010642970559070188,
+        "obesity": -0.046613716326173615,
+        "cvd": -0.0021630460279929292
+      }
+    },
+    {
+      "case": 26,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0017409499411337095,
+        "obesity": -0.10502615084637495,
+        "cvd": -0.00017165758832368792
+      }
+    },
+    {
+      "case": 27,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0025903881014357876,
+        "obesity": -0.1068987601549313,
+        "cvd": -0.00031816945510996977
+      }
+    },
+    {
+      "case": 28,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.026420965745889036,
+        "obesity": -0.059922224139585534,
+        "cvd": -0.0383124415196453
+      }
+    },
+    {
+      "case": 29,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0033486262179607852,
+        "obesity": -0.04164169708116876,
+        "cvd": -0.0001717069229686028
+      }
+    },
+    {
+      "case": 30,
+      "before_accepted": false,
+      "after_accepted": true,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.0054261844466558865,
+        "obesity": -0.020400197913436863,
+        "cvd": -0.0008642185552463124
+      }
+    },
+    {
+      "case": 31,
+      "before_accepted": false,
+      "after_accepted": false,
+      "numeric_constraints_pass": true,
+      "rescored_deltas": {
+        "diabetes": -0.07827426614379518,
+        "obesity": -0.09940336784383924,
+        "cvd": 0.013094332295812194
+      }
+    }
+  ]
+}

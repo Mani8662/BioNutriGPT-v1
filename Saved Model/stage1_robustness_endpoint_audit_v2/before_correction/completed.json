@@ -1,0 +1,10 @@
+{
+  "stage": "stage1_robustness_uncertainty_v1",
+  "completed_at": "2026-11-21T09:13:40+0530",
+  "status": "COMPLETED_VERIFIED",
+  "n_within_records": 576,
+  "n_between_records": 480,
+  "bootstrap_seed": 20261121,
+  "bootstrap_replicates": 10000,
+  "verification_hash": "7066fe503c738507a57719baec8ad774c527e82c9a5662f148e4bc5662ce139c"
+}

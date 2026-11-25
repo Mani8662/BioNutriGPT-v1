@@ -1,0 +1,78 @@
+{
+  "audit_version": "v3",
+  "audit_date": "2026-11-21",
+  "study_name": "stage1_downstream_study_v1",
+  "summary": "Methodological, statistical, timing, provenance, and safeguard corrections applied during Audit v3 to the completed Stage 1 downstream added-value study without rerunning valid optimizer solves.",
+  "items": [
+    {
+      "id": "CORR-01",
+      "target": "Report Table Discrepancy with CSV Results",
+      "claimed_or_prior_state": "Report table listed pure_vegetarian BioNutriGPT at threshold 0.50 as having 94 accepted plans, whereas the underlying aggregate CSV had 95 accepted plans.",
+      "demonstrated_defect": "Discrepancy between manually composed narrative tables and machine-generated CSVs undermines reporting integrity.",
+      "concrete_evidence": "Inspection of case files confirmed 95 accepted cases out of 100 attempts for pure_vegetarian BioNutriGPT threshold 0.50. The aggregate CSV recorded 95 accepted plans, valid pairs = 95, and feasibility diff = -1.00 pp [-3.00, 0.00], but the Audit v2 Report table incorrectly printed 94.",
+      "correction_applied": "Implemented generate_audit_v3_report.py to generate 100% of markdown report tables programmatically directly from verified CSVs and case files, with zero manual number transcription.",
+      "quantitative_impact": "Completely reconciles Report.md and Stage1_Downstream_Added_Value_Results_v1.md with aggregate_summary_audit_v3.csv and case files across all 45 cells and all summary tables.",
+      "status": "Resolved programmatically"
+    },
+    {
+      "id": "CORR-02",
+      "target": "Direct Model Contrast Zero-Exclusion Count and Summary",
+      "claimed_or_prior_state": "Audit v2 report narrative stated that four cell-specific comparisons exclude zero.",
+      "demonstrated_defect": "Conflated model-vs-rules-only contrasts with direct model-vs-model contrasts. In reality, exactly 0 of 45 cell-specific direct model-vs-model feasibility contrasts exclude zero.",
+      "concrete_evidence": "Recomputation of direct pairwise contrasts across all 45 cells (15 per model pair) reveals that all 45 95% bootstrap confidence intervals contain zero. In contrast, 12 of 45 model-vs-rules-only contrasts exclude zero (all in pure_vegetarian mode at thresholds 0.05-0.30, where model plans had strictly lower feasibility).",
+      "correction_applied": "Generated contrast summaries programmatically. Clarified the distinct contrast types (model-vs-model: 0/45 exclude zero; model-vs-rules-only: 12/45 exclude zero), separated feasibility from basket shifts, and explicitly affirmed that a confidence interval containing zero indicates insufficient evidence of difference rather than proof of equivalence.",
+      "quantitative_impact": "Direct pairwise contrasts confirm BioNutriGPT shows no detected engineering advantage over CatBoost or FT-Transformer in meal-plan feasibility or quality, while avoiding false claims of equivalence.",
+      "status": "Resolved programmatically"
+    },
+    {
+      "id": "CORR-03",
+      "target": "Resume Safeguards Implementation in Real Runner",
+      "claimed_or_prior_state": "Audit v2 tested resume safeguards using a standalone mock test script (test_audit_v2_safeguards.py), leaving the actual execution runner unhardened.",
+      "demonstrated_defect": "Testing mock workers does not protect actual runner execution from silent cache corruption, partial writes, or altered upstream inputs.",
+      "concrete_evidence": "run_stage1_downstream_study_v1.py lacked canonical fingerprint checks across rule decisions, envelopes, targets, baselines, and bindings during resume.",
+      "correction_applied": "Implemented run_stage1_downstream_study_v2.py featuring canonical SHA-256 fingerprinting across SEQN, arm, mode, threshold, patient metadata, rule decisions, bounds, targets, baselines, model/catalog bindings, and solver configurations. Atomic file writes (.tmp rename) and strict failure preservation were integrated directly into execute_study_worker. Created and executed test_real_runner_safeguards.py testing the actual runner across 9 required scenarios.",
+      "quantitative_impact": "All 9 real runner safeguard tests passed, ensuring robust provenance and tamper-evident resume validation for future executions.",
+      "status": "Implemented and verified"
+    },
+    {
+      "id": "CORR-04",
+      "target": "Failure Classification, Timing Distribution, and Infeasibility Attribution",
+      "claimed_or_prior_state": "All infeasible cases were reported to resolve in <40 ms via dual simplex presolve due to carbohydrate <= 45% and saturated fat <= 6% constraints.",
+      "demonstrated_defect": "Averaging / underreporting solver times obscured long solves. Claiming specific conflicting constraints without Irreducible Infeasible Subsystem (IIS) diagnostics or mathematical proof is unsupported. HiGHS solver status 8 does not specify which constraints caused infeasibility.",
+      "concrete_evidence": "Recomputation of solver execution times across all 182 infeasible cases revealed: min = 13.68 ms, median = 24.03 ms, mean = 128.57 ms, max = 965.96 ms. Exactly 33 cases had solver times exceeding 40 ms (44 cases with wall time > 40 ms). Furthermore, 4 rules-only cases also failed with infeasibility in pure_vegetarian mode (cases 864, 2640, 3408, 3984), proving infeasibility is not solely due to prediction tightening.",
+      "correction_applied": "Recomputed timing distributions using both solver time and wall-clock time in timing_analysis_audit_v3.json. Disaggregated 182 solver-certified infeasibilities from 4 timeouts. Removed unsupported claims regarding 'dual simplex presolve' and specific constraint attribution. Documented rules-only infeasibilities.",
+      "quantitative_impact": "Accurate, defensible failure characterization matching verified empirical logs.",
+      "status": "Resolved with empirical evidence"
+    },
+    {
+      "id": "CORR-05",
+      "target": "Worker Concurrency Provenance and Impact Disclosure",
+      "claimed_or_prior_state": "Worker pool scaling from 8 workers (in protocol.json) to 10 workers (in execution) was asserted to have 'zero numerical impact'.",
+      "demonstrated_defect": "Asserting zero numerical impact of worker count across 4,800 runs without controlled multi-core contention benchmarks is unverified, particularly for solves near the 3.0-second timeout limit.",
+      "concrete_evidence": "Protocol specified 8 workers, but runner used min(10, os.cpu_count() or 1). Four cases reached computational timeouts at 3013-3018 ms. Whether CPU scheduling under 10 concurrent processes affected these borderline timeouts cannot be conclusively ruled out without controlled re-execution.",
+      "correction_applied": "Removed the assertion of 'zero numerical impact'. Documented the protocol vs execution concurrency difference as a known provenance discrepancy, noting that MILP mathematical branch-and-cut logic itself is deterministic given identical thread budgets, but OS process contention could affect wall-clock timeouts.",
+      "quantitative_impact": "Transparent, scientifically defensible provenance reporting.",
+      "status": "Provenance disclosed"
+    },
+    {
+      "id": "CORR-06",
+      "target": "Overclaim and Terminology Removal",
+      "claimed_or_prior_state": "Use of clinical trial terminology ('intention-to-treat'), causal claims ('unbiased', 'clinically meaningful'), certainty of future performance ('100% [100%, 100%]'), and nutrient shift benefit assertions.",
+      "demonstrated_defect": "Applying clinical trial terms to in-silico mathematical optimization is misleading. In-sample 100% compliance does not guarantee zero violations in unseen populations. Normalized nutrient shifts reflect optimization displacements, not proven clinical benefit.",
+      "concrete_evidence": "The study evaluates an in-silico MILP solver on 100 NHANES participants under synthetic scenarios. FDA Daily Values are descriptive population references, not individualized clinical targets or Indian RDA standards.",
+      "correction_applied": "Replaced 'intention-to-treat' with 'all attempted solves'. Replaced 'unbiased' with descriptive subpopulation analysis on mutually accepted pairs (N_both, N_three). Replaced 'clinically meaningful' with descriptive normalized shift ranges (0.83% to 12.56%). Replaced certainty claims with empirical sample-specific compliance (0 violations observed among 4,614 accepted plans; does not guarantee 100% compliance for all future unseen patients). Documented FDA DVs as descriptive normalization scales to avoid division by near-zero baselines.",
+      "quantitative_impact": "Aligns narrative strictly with empirical evidence and mathematical optimization realities.",
+      "status": "Overclaims removed"
+    },
+    {
+      "id": "CORR-07",
+      "target": "Catalog Wording and Counts Reconciliation",
+      "claimed_or_prior_state": "Downstream reports loosely referred to a '44-dish Indian composite food catalog', while historical optimizer benchmarks referenced 29 or 44 items.",
+      "demonstrated_defect": "Conflation between retired synthetic 44-dish catalog, intermediate 29-dish catalog, and active bound 49-entry catalog (food_composition_cooked_sourced.json).",
+      "concrete_evidence": "Direct audit of food_composition_cooked_sourced.json confirms 49 total entries (20 INDB recipe variants + 29 USDA SR Legacy single-food proxies); 6 foods excluded for missing active data; 43 eligible in combo/non-veg; 37 eligible in pure vegetarian.",
+      "correction_applied": "Saved catalog_wording_reconciliation.md and updated Report.md and Stage1_Downstream_Added_Value_Results_v1.md. Reconciled loaded (49), excluded (6), and mode-eligible (37/43) counts. Removed claims that all 49 items are independently validated Indian recipes.",
+      "quantitative_impact": "Eliminates terminology and count discrepancies across historical and current reports.",
+      "status": "Resolved with empirical audit"
+    }
+  ]
+}

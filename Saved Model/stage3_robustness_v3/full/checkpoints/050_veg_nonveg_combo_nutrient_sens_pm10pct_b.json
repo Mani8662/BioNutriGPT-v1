@@ -1,0 +1,63 @@
+{
+  "identity": {
+    "case": 50,
+    "SEQN": 117540,
+    "mode": "veg_nonveg_combo",
+    "scenario": "nutrient_sens_pm10pct"
+  },
+  "variant": "b",
+  "binding": "13eaeb5890d7f68d453a0fcbe163207da3f8db99fb05b507c7934dfc47c2fbcb",
+  "budget_seconds": 5.0,
+  "exclusions": [],
+  "nominal_hash": "2a9c324424d6d4a894334e70d2103dbe479ef755f66cc0f7aa3f98e93f3d97cb",
+  "nominal_accepted": true,
+  "audit": {
+    "valid": false,
+    "first_failure": [
+      "Carbohydrate AMDR violated: 44.62% outside [45%, 65%]"
+    ],
+    "totals": {
+      "DR1TKCAL": 1636.541971581651,
+      "DR1TPROT": 115.67885604463864,
+      "DR1TCARB": 182.53802545563428,
+      "DR1TSUGR": 43.62280667405308,
+      "DR1TFIBE": 34.9549488624947,
+      "DR1TTFAT": 52.22868262741187,
+      "DR1TSFAT": 9.068015456337847,
+      "DR1TMFAT": 25.068476139150764,
+      "DR1TPFAT": 13.192112637526117,
+      "DR1TCHOL": 183.64093983196125,
+      "DR1TATOC": 21.635028170015858,
+      "DR1TRET": 70.92236454313043,
+      "DR1TVARA": 2186.3776844647655,
+      "DR1TACAR": 8950.602275401747,
+      "DR1TBCAR": 20920.058135382136,
+      "DR1TLYCO": 0.0,
+      "DR1TLZ": 2952.5511032734944,
+      "DR1TVB1": 1.3220328064474698,
+      "DR1TVB2": 2.2731749050289327,
+      "DR1TNIAC": 37.27134273002064,
+      "DR1TVB6": 2.497354473115544,
+      "DR1TFOLA": 536.7419609072141,
+      "DR1TFA": 0.0,
+      "DR1TFF": 536.7419609072141,
+      "DR1TFDFE": 536.7419609072141,
+      "DR1TVB12": 6.750559324052212,
+      "DR1TVC": 92.67087276269669,
+      "DR1TVK": 213.61462571646385,
+      "DR1TCALC": 1203.182343752294,
+      "DR1TPHOS": 2109.541241531233,
+      "DR1TMAGN": 523.3968030809729,
+      "DR1TIRON": 12.145127589058932,
+      "DR1TZINC": 12.30564887388917,
+      "DR1TCOPP": 1.7575622826469723,
+      "DR1TSODI": 945.1289251392683,
+      "DR1TPOTA": 3497.208148033653,
+      "DR1TSELE": 108.74142702465842,
+      "DR1TCAFF": 0.0,
+      "DR1TALCO": 0.0
+    },
+    "target_error": null
+  },
+  "accepted": false
+}

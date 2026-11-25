@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "session_wall_seconds_including_checkpoint_checks": 1159.9804822000006,
+  "participants": 100,
+  "tasks": 600,
+  "device": "cuda",
+  "cpu_threads": 12,
+  "platform": "Windows-11-10.0.26300-SP0",
+  "torch": "2.14.0+cu130",
+  "timing_note": "Session duration includes resumes; individual wall_ms is original measured execution. No model loading included."
+}

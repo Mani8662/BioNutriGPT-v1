@@ -1,0 +1,14 @@
+Authors and order:
+Affiliations:
+Corresponding author and email:
+Funding and grant identifiers (or confirmed none):
+Competing interests (or confirmed none):
+CRediT contributions for each author:
+Institutional ethics determination and reference if applicable:
+LASI access and acknowledgement requirements:
+Public code release URL/DOI:
+AI assistance disclosure approved by authors:
+Target journal:
+All-author approval date:
+
+These administrative details are deliberately separate from the scientific manuscript. They must be confirmed by the authors, including ethics/access determinations, before journal submission. No identities, approvals, funding or conflicts have been invented.

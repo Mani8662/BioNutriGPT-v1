@@ -1,0 +1,7 @@
+{
+  "scope": "Saved-record descriptive audit only; no inference/optimization",
+  "comparisons": 600,
+  "diagnostics_sha256": "2518c80a67c6091fdc0413ee492b1cf016c3014b71ff75e694ad6ffacbe2e05b",
+  "source_execution_sha256": "8bca76dee9df7dfe6ec4989b0b2785e5bd1b8d63bb08b7160c3a38ac12a5bba9",
+  "source_verification_sha256": "a9fc4d1c48f15440d33e63833ef45c8697191377c32a19ce040cbe9dacbb3df0"
+}

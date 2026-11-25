@@ -1,0 +1,16 @@
+Arm,Metric,Variant_A_Mean,Variant_B_Mean,Difference_B_minus_A,CI95_Lower,CI95_Upper,Unit
+rules_only,Stage3_Feasibility_Rate,98.0,87.0,-11.0,-15.3333,-7.0,percentage_points
+rules_only,End_to_End_Acceptance_Rate,47.67,42.33,-5.3333,-8.3333,-2.6667,percentage_points
+rules_only,Mean_Normalized_L1_Target_Error,0.909501,0.487057,-0.422443,-0.453555,-0.390858,normalized_fraction
+rules_only,Normalized_L2_Target_Distance,13.049386,4.812216,-8.23717,-8.893952,-7.633493,dimensionless_distance
+rules_only,Solve_Time_Seconds,3.11455,3.121471,0.006921,-0.001893,0.014162,seconds
+minimum_change,Stage3_Feasibility_Rate,97.33,87.0,-10.3333,-14.6667,-6.3333,percentage_points
+minimum_change,End_to_End_Acceptance_Rate,68.67,64.0,-4.6667,-8.3333,-1.6667,percentage_points
+minimum_change,Mean_Normalized_L1_Target_Error,0.944465,0.531656,-0.412808,-0.439524,-0.3776,normalized_fraction
+minimum_change,Normalized_L2_Target_Distance,13.013674,4.985196,-8.028478,-8.635082,-7.295429,dimensionless_distance
+minimum_change,Solve_Time_Seconds,3.109197,3.119191,0.009995,0.003889,0.015311,seconds
+model_guided,Stage3_Feasibility_Rate,98.0,86.67,-11.3333,-15.6667,-7.3333,percentage_points
+model_guided,End_to_End_Acceptance_Rate,76.0,68.67,-7.3333,-11.3333,-4.0,percentage_points
+model_guided,Mean_Normalized_L1_Target_Error,0.925614,0.519364,-0.40625,-0.437785,-0.376101,normalized_fraction
+model_guided,Normalized_L2_Target_Distance,12.85826,4.931296,-7.926964,-8.630351,-7.30415,dimensionless_distance
+model_guided,Solve_Time_Seconds,3.11327,3.121789,0.008519,0.00196,0.014419,seconds

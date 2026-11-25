@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "scope": "Metadata/schema mapping and aggregate consistency checks only; not prediction validation",
+  "features": 87,
+  "checks": [
+    "Archive hash matches earlier extraction",
+    "All 87 current features mapped exactly once",
+    "Metadata column counts consistent",
+    "Aggregate outcome counts reconcile",
+    "Unique identifiers and one-to-one merge checked during extraction"
+  ],
+  "limitations": [
+    "Community file metadata reader access violation",
+    "No CARRS participant file/dictionary",
+    "No outcome or predictor questionnaire-level harmonization completed"
+  ],
+  "artifact_hashes": {
+    "Saved Model\\indian_validation_compatibility_v1\\lasi_metadata.json": "70303200913c2322e051635a757b41beb2619f79db7734cd55717506d27134ba",
+    "Saved Model\\indian_validation_compatibility_v1\\feature_mapping.json": "f0bcfa713c8643eb32f1e23abd58c8d29d2dd02190428979bd37e682c0669fd6",
+    "Research Paper\\Indian_Validation_Compatibility_v1.md": "b288dc37bbf81ee9f4f380249a98e9cdab7795e0ff1ddd83375852c9d1a2ad61",
+    "audit_indian_validation_compatibility_v1.py": "15c7025ad077173c16e37517c5b98c009b34eb3edb6b1ccaedc6580836f3be80",
+    "report_indian_validation_compatibility_v1.py": "58e0190cea498eaf9166940624a06ba610c30ad8f6d1c3ae7237ffc93bbd09c6"
+  }
+}

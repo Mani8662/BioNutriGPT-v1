@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "overall_metric_rows_matched": 54,
+  "overall_paired_rows_matched": 45,
+  "independent_subgroup_and_overall_point_checks": 594,
+  "reference": "R survey JKn mse=TRUE",
+  "hashes": {
+    "metrics.csv": "a58c71aa0b614893e9063984390995fe44e5f0b54ad483fc86da6b308a6b98e8",
+    "paired_differences.csv": "63b16e7a550b049afdd7285784135cb400090ef2a18f456cc4e7693e48d76b1e",
+    "protocol.txt": "567f4cd42660747d17cac4ea6297654c6e692d7fc8d355a013f05fcac6981504",
+    "sessionInfo.txt": "07cfa0b08c325d1f7c5b31f5331294a8905aee7cf40d447d8134ea29169e5bec"
+  },
+  "runner_sha256": "edfb3a84392173396dda5ae0d2fd5cd1783c199be7a894e4e066b9b4949b6e46",
+  "verifier_sha256": "0ab205685e3ef96e4c04ced2aa4271ce5f0b9057505c9196d4353d070ee41c57",
+  "completed": true,
+  "source_hashes": {
+    "Data\\stage1_repaired_v2\\survey_metadata_LOCAL.csv": "0d2be20114b4ca65cf7a74f89d32fd3337afa61a5fd1ecc50fde63f4c20e8e0d",
+    "Data\\stage1_repaired_v2\\temporal_ml_ready.csv": "fd53dcc5bb6c9d252b0c687007c4281599028a6e791e52b12e58d5230cdacaeb",
+    "Saved Model\\stage1_comparison_v2\\bionutrigpt\\temporal_predictions_LOCAL.csv": "6c9d2f13634f2d03c749add742abf9d1326f66eff805a1e65c06a11e186cd96b",
+    "Saved Model\\stage1_comparison_v2\\catboost\\temporal_predictions_LOCAL.csv": "d845c80ab8022a048e086ce1b373f4950050ac3ca4acb53917e110493f8485ee",
+    "Saved Model\\stage1_comparison_v2\\ft_transformer\\temporal_predictions_LOCAL.csv": "808296e8fe8f7e2edcde5b748533a56c3a127248da0b40c1ef2e1e06ecacb2d4",
+    "Saved Model\\stage1_comparison_v2\\hist_gradient_boosting\\temporal_predictions_LOCAL.csv": "a35486dfae194d4be82ace54d74dc7f8220a5f6abd3b31e01f911dd3ee774e8c",
+    "Saved Model\\stage1_comparison_v2\\logistic_regression\\temporal_predictions_LOCAL.csv": "b2ff0e948059e73d26952b4f8d15de496edf6a4242c1bbab0df360902d38f435",
+    "Saved Model\\stage1_comparison_v2\\mlp\\temporal_predictions_LOCAL.csv": "f40f441fcf3693c009b0570357b24d6f2f124e731e99a49f3595a34291ca9a48"
+  }
+}

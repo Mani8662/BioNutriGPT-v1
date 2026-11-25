@@ -1,0 +1,17 @@
+{
+  "task": "Stage 1 - Stage 2 baseline prediction agreement verification",
+  "scope": "Single standard backend fixture; three frozen cases (supplied ratios, canonical recomputed ratios, and repeat of canonical recomputed ratios); CUDA hardware execution; baseline probabilities only, not counterfactual targets.",
+  "tolerance": 1e-07,
+  "cases": [
+    "supplied_ratios",
+    "canonical_ratios",
+    "repeat_canonical_ratios"
+  ],
+  "source_sha256": {
+    "stage2_counterfactual_engine.py": "6c140e03bd1afc9737a2e63a243954c882b38d92f3e0310c76a2f410897f2aa8",
+    "infer_bionutrigpt_pipeline_Stage_1_and_2.py": "3280b87f79d99ea5c02191a248ad72bc902559bc9e2a3ff2e06df9cb704a1a8b",
+    "backend/pipeline_service.py": "8edfd3f0fca7ed17cb8ad114945f6f749dc21742d9feb0281657ff90a89f95a6",
+    "verify_stage12_gpu_agreement.py": "213f6dcf6ebd23670647a2449131375538421027d9e875d68848de6f377d349b",
+    "verify_stage12_agreement_v2.py": "b926cddb1cc143bfc5f131a418d0e3af090837cfaaddd3c12de5d07d45f1e570"
+  }
+}

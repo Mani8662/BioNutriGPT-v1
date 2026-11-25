@@ -1,0 +1,360 @@
+{
+  "dietary_excl_dairy": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 100,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 100,
+        "mean": -0.5719253613225086,
+        "ci95": [
+          -0.5998376504811525,
+          -0.5420553910369853
+        ]
+      },
+      "runtime_all_attempts": {
+        "n": 100,
+        "mean": -0.6106794493335959,
+        "ci95": [
+          -0.7731861017500075,
+          -0.4593906704421642
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 200,
+      "b": 200
+    }
+  },
+  "dietary_excl_legume": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 100,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 100,
+        "mean": -0.5417172626320694,
+        "ci95": [
+          -0.5780124612193879,
+          -0.5049880704851406
+        ]
+      },
+      "runtime_all_attempts": {
+        "n": 100,
+        "mean": -0.254784751667224,
+        "ci95": [
+          -0.3351159002333395,
+          -0.17597374863364046
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 100,
+      "b": 100
+    }
+  },
+  "food_avail_10pct": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 100,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 100,
+        "mean": -0.43699767452710986,
+        "ci95": [
+          -0.46071180414888835,
+          -0.41297000549314233
+        ]
+      },
+      "runtime_all_attempts": {
+        "n": 100,
+        "mean": -0.3448098816659088,
+        "ci95": [
+          -0.4696416782242813,
+          -0.2235344116916652
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 296,
+      "b": 296
+    }
+  },
+  "food_avail_20pct": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 100,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 100,
+        "mean": -0.46568456158745564,
+        "ci95": [
+          -0.4971792945281779,
+          -0.433127278907272
+        ]
+      },
+      "runtime_all_attempts": {
+        "n": 100,
+        "mean": -0.3366356443330975,
+        "ci95": [
+          -0.48055258295814807,
+          -0.2011750498739481
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 224,
+      "b": 224
+    }
+  },
+  "nominal_baseline": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 100,
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "target_error_joint": {
+        "n": 100,
+        "mean": -0.48766736793976817,
+        "ci95": [
+          -0.5122197051226015,
+          -0.46289106932437696
+        ]
+      },
+      "runtime_all_attempts": {
+        "n": 100,
+        "mean": -0.5216645216665833,
+        "ci95": [
+          -0.6613367949666475,
+          -0.3889012350090416
+        ]
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "veg_nonveg_combo": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 0,
+        "losses": 0,
+        "p": 1.0,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 299,
+      "b": 299
+    }
+  },
+  "nutrient_sens_pm10pct": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 100,
+        "mean": -11.000000000000002,
+        "ci95": [
+          -19.666666666666668,
+          -2.3333333333333335
+        ]
+      },
+      "target_error_joint": {
+        "n": 75,
+        "mean": -0.5185307442356298,
+        "ci95": [
+          -0.5586000683793174,
+          -0.47968586361863996
+        ]
+      },
+      "runtime_all_attempts": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 19,
+        "losses": 38,
+        "p": 0.016348103897376145,
+        "holm_p": 0.3269620779475229
+      },
+      "veg_nonveg_combo": {
+        "wins": 21,
+        "losses": 21,
+        "p": 1.0,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 15,
+        "losses": 29,
+        "p": 0.048766765904474596,
+        "holm_p": 0.9265685521850173
+      }
+    },
+    "accepted": {
+      "a": 192,
+      "b": 159
+    }
+  },
+  "nutrient_sens_pm5pct": {
+    "contrasts": {
+      "accepted_pp": {
+        "n": 100,
+        "mean": -7.0,
+        "ci95": [
+          -14.0,
+          -1.3855583347327123e-16
+        ]
+      },
+      "target_error_joint": {
+        "n": 90,
+        "mean": -0.5013595440279828,
+        "ci95": [
+          -0.5338679704125342,
+          -0.4683561543196525
+        ]
+      },
+      "runtime_all_attempts": {
+        "n": 0,
+        "mean": null,
+        "ci95": null
+      }
+    },
+    "tests": {
+      "pure_vegetarian": {
+        "wins": 15,
+        "losses": 33,
+        "p": 0.01328328156224501,
+        "holm_p": 0.27894891280714523
+      },
+      "veg_nonveg_combo": {
+        "wins": 20,
+        "losses": 15,
+        "p": 0.4995598332025112,
+        "holm_p": 1.0
+      },
+      "pure_non_vegetarian": {
+        "wins": 12,
+        "losses": 20,
+        "p": 0.21532714972272515,
+        "holm_p": 1.0
+      }
+    },
+    "accepted": {
+      "a": 236,
+      "b": 215
+    }
+  }
+}

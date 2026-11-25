@@ -1,0 +1,26 @@
+{
+  "stage2_constraint_audit_repaired_v1/cases_LOCAL.json": {
+    "prior_ids": 32,
+    "overlap": []
+  },
+  "stage2_comparison_study_v2/cases_LOCAL.json": {
+    "prior_ids": 100,
+    "overlap": []
+  },
+  "stage3_budget_experiment_v1/cases_LOCAL.json": {
+    "prior_ids": 100,
+    "overlap": []
+  },
+  "stage2_research_adapter_pilot_v1/envelopes_LOCAL.json": {
+    "prior_ids": 5,
+    "overlap": []
+  },
+  "stage2_ablation_v2/development_participants_LOCAL.json": {
+    "prior_ids": 3,
+    "overlap": []
+  },
+  "Saved Model\\stage1_downstream_study_v1\\selected_participants_LOCAL.csv": {
+    "prior_ids": 100,
+    "overlap": []
+  }
+}

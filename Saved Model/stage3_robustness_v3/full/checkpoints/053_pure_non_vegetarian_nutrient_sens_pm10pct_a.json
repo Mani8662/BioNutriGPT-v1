@@ -1,0 +1,63 @@
+{
+  "identity": {
+    "case": 53,
+    "SEQN": 117793,
+    "mode": "pure_non_vegetarian",
+    "scenario": "nutrient_sens_pm10pct"
+  },
+  "variant": "a",
+  "binding": "506f169a120dd7b0413dfe6030a952bcd1626b66f8b71cd62d995d3b9f1fbc1a",
+  "budget_seconds": 5.0,
+  "exclusions": [],
+  "nominal_hash": "c725fd2e2edd60bac0025517bba2c098dcdb8fd014c4d6abf2b598af86caad10",
+  "nominal_accepted": true,
+  "audit": {
+    "valid": false,
+    "first_failure": [
+      "Carbohydrate AMDR violated: 44.90% outside [45%, 65%]"
+    ],
+    "totals": {
+      "DR1TKCAL": 1230.0696584567681,
+      "DR1TPROT": 92.902375422907,
+      "DR1TCARB": 138.07009104485152,
+      "DR1TSUGR": 29.106649725553506,
+      "DR1TFIBE": 32.31488485541747,
+      "DR1TTFAT": 38.977814806886585,
+      "DR1TSFAT": 5.345158863670232,
+      "DR1TMFAT": 14.650086381250969,
+      "DR1TPFAT": 11.382569513172283,
+      "DR1TCHOL": 167.95734121811932,
+      "DR1TATOC": 20.695819327860605,
+      "DR1TRET": 51.914087285600516,
+      "DR1TVARA": 1730.020637708943,
+      "DR1TACAR": 28.509456506843225,
+      "DR1TBCAR": 20077.706884537896,
+      "DR1TLYCO": 0.0,
+      "DR1TLZ": 41437.87488259695,
+      "DR1TVB1": 1.1834261391200256,
+      "DR1TVB2": 2.168952983430027,
+      "DR1TNIAC": 31.672536691497502,
+      "DR1TVB6": 2.2116171382866687,
+      "DR1TFOLA": 685.6099186622033,
+      "DR1TFA": 0.0,
+      "DR1TFF": 685.6099186622033,
+      "DR1TFDFE": 685.6099186622033,
+      "DR1TVB12": 13.436587297449549,
+      "DR1TVC": 91.21441792540938,
+      "DR1TVK": 2411.0279442209644,
+      "DR1TCALC": 1517.427670606513,
+      "DR1TPHOS": 1795.0115267525314,
+      "DR1TMAGN": 589.4938729447774,
+      "DR1TIRON": 16.224997858954065,
+      "DR1TZINC": 8.555368974260238,
+      "DR1TCOPP": 1.7067449066130087,
+      "DR1TSODI": 1462.0888850122851,
+      "DR1TPOTA": 3449.5013582801794,
+      "DR1TSELE": 126.97626670834433,
+      "DR1TCAFF": 0.0,
+      "DR1TALCO": 0.0
+    },
+    "target_error": null
+  },
+  "accepted": false
+}

@@ -1,0 +1,63 @@
+{
+  "identity": {
+    "case": 47,
+    "SEQN": 117354,
+    "mode": "pure_non_vegetarian",
+    "scenario": "nutrient_sens_pm10pct"
+  },
+  "variant": "a",
+  "binding": "71b0cefb20c94758c363bf1ce00dd04fbd3bc3076dc812b80d9220a865d4f739",
+  "budget_seconds": 5.0,
+  "exclusions": [],
+  "nominal_hash": "7124e4f46146ba4e63844112d393aaffac190c114200d0cf2834d9ee225ac85e",
+  "nominal_accepted": true,
+  "audit": {
+    "valid": false,
+    "first_failure": [
+      "Hard bound violated for 'DR1TPFAT': delivered=14.7917, bound=[7.2508, 14.5017]"
+    ],
+    "totals": {
+      "DR1TKCAL": 1356.1764596330634,
+      "DR1TPROT": 84.74061584413597,
+      "DR1TCARB": 160.33274244557794,
+      "DR1TSUGR": 36.925731638036275,
+      "DR1TFIBE": 47.06051767320098,
+      "DR1TTFAT": 49.97216896988715,
+      "DR1TSFAT": 6.291002572470354,
+      "DR1TMFAT": 22.960349180466856,
+      "DR1TPFAT": 14.791687348913504,
+      "DR1TCHOL": 111.97156081207956,
+      "DR1TATOC": 29.07722426331904,
+      "DR1TRET": 34.60939152373368,
+      "DR1TVARA": 1813.9465115841524,
+      "DR1TACAR": 28.509456506843225,
+      "DR1TBCAR": 21299.30286279768,
+      "DR1TLYCO": 16993.67369004338,
+      "DR1TLZ": 41438.17302071911,
+      "DR1TVB1": 1.329122871413871,
+      "DR1TVB2": 2.361874348822218,
+      "DR1TNIAC": 29.15332376596317,
+      "DR1TVB6": 2.18226271459804,
+      "DR1TFOLA": 780.6281014318614,
+      "DR1TFA": 0.0,
+      "DR1TFF": 780.6281014318614,
+      "DR1TFDFE": 780.6281014318614,
+      "DR1TVB12": 8.957724864966366,
+      "DR1TVC": 819.8608258781278,
+      "DR1TVK": 2391.8885844796046,
+      "DR1TCALC": 1421.015346078098,
+      "DR1TPHOS": 1666.462655410675,
+      "DR1TMAGN": 691.4500994245255,
+      "DR1TIRON": 17.032539538967878,
+      "DR1TZINC": 8.884208228205862,
+      "DR1TCOPP": 2.4336692902293176,
+      "DR1TSODI": 1053.7338413632951,
+      "DR1TPOTA": 4289.311885663496,
+      "DR1TSELE": 95.53603072741059,
+      "DR1TCAFF": 0.0,
+      "DR1TALCO": 0.0
+    },
+    "target_error": null
+  },
+  "accepted": false
+}

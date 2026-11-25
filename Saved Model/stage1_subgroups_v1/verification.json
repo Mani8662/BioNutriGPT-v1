@@ -1,0 +1,20 @@
+{
+  "verified": true,
+  "verification_timestamp_utc": "2026-11-20 12:41:27",
+  "elapsed_seconds": 49.90117180000016,
+  "checks_passed": [
+    "Source and prediction SHA-256 hashes",
+    "Participant alignment (N=7,004)",
+    "Demographic group membership and complete coverage",
+    "Subgroup sample counts and disease prevalence",
+    "Direct recomputation of all 360 subgroup metrics within 1e-6",
+    "Paired difference directions and point estimate arithmetic",
+    "All 360 calibration rows and 660 bootstrap interval endpoints independently recomputed",
+    "Synthetic test: shuffled participant rows",
+    "Synthetic test: duplicate IDs",
+    "Synthetic test: unknown demographic codes",
+    "Synthetic test: one-class subgroup NaN handling",
+    "Synthetic test: zero denominator handling in threshold metrics",
+    "Synthetic test: identical model paired differences produce zero"
+  ]
+}

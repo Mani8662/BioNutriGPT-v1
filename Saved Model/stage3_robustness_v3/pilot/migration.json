@@ -1,0 +1,157 @@
+{
+  "solver_calls": 0,
+  "reused_measured_solves": 30,
+  "sources": [
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_nominal_baseline_a.json",
+      "sha256": "06a1623be7ee59c22d3ef746899477c1bc89ce89da2a83929b09003921215a16",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_nominal_baseline_b.json",
+      "sha256": "90d5dc896dae5c5b34247b5d30c3f3f8d89c98a4bc2abb3555283f087b0c7e08",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_food_avail_10pct_a.json",
+      "sha256": "eb2e16fead6ddd142054496f5e56a26dbcfe5d21b2acd098fe4638035ccd286e",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_food_avail_10pct_b.json",
+      "sha256": "b8be07510c95b3529219e3c5d4dcec344cb096b97a2a330cefab1ec0efbbd2ee",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_food_avail_20pct_a.json",
+      "sha256": "6885c9daaca0119bc05fc026a67c4eddc466fd64060a64411e011762d74acf64",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_food_avail_20pct_b.json",
+      "sha256": "2659827b51185b884ea837bb3a3f6193f450f4a8b9ce6396e3dff64f365f6594",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_dietary_excl_dairy_a.json",
+      "sha256": "aa0589a5a224a20904cce6b33a9a98b028e8ed470e1a34393c4c42d5c0e004e1",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_dietary_excl_dairy_b.json",
+      "sha256": "56d7df4080c029e76c20426491b9d91c12d04fc495c9568063ea8e163875a388",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_dietary_excl_legume_a.json",
+      "sha256": "323ceab5dc0f9d1ad863bbc6b5a108beaf6ccabdf146326adb219e183ea70332",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_vegetarian_dietary_excl_legume_b.json",
+      "sha256": "35748c121f24b62574499e021aff78b78a3d58307044976456473c5408e93631",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_nominal_baseline_a.json",
+      "sha256": "a1cbce800e5bf222f6aa1c033410d2627e962630530d57085445d87d2e75ca2a",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_nominal_baseline_b.json",
+      "sha256": "18cf09b007fbca62e50fbd251994304bd0b6b6e386ea62b03a6c48922e430c4d",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_food_avail_10pct_a.json",
+      "sha256": "f1f5f72ebf77b269321f7133d65af96437f94665ec8a50aaa7efd90c4b5edfaf",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_food_avail_10pct_b.json",
+      "sha256": "909b1551f73d9b8d7e92460e5ffae9f4eb03af6f3d2730dd32f2d0de2e831119",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_food_avail_20pct_a.json",
+      "sha256": "85e339c30e792c22965c8494d985c875536266f604024ad4bfc3e52b3b0387a3",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_food_avail_20pct_b.json",
+      "sha256": "09314abb5893f2fe8d3b2e319d77baa182d360b2e39f2fb14370568e2a046167",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_dietary_excl_dairy_a.json",
+      "sha256": "f733af818c414c8c03ff530916ee8725acac9d3629c3bf0364fb7fabd141c040",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_dietary_excl_dairy_b.json",
+      "sha256": "4963d579638ab4ccbf76a5779e0516b7388fa62b5232ccb0f254e05cc3c56c57",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_dietary_excl_legume_a.json",
+      "sha256": "bce3b0e291d614403f2d28abe6a62a351406d682d98151cb81678ccff1664e8e",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_veg_nonveg_combo_dietary_excl_legume_b.json",
+      "sha256": "144ddf41c0134a2aebd4e39fcaae94f2f06d8857f3bb109b18036cb05070d8fe",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_nominal_baseline_a.json",
+      "sha256": "22ec2efb2305e587d725520e006952590240e06e449a425ae0fb7b123aa1d2ca",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_nominal_baseline_b.json",
+      "sha256": "62e10b4c2206ac3b5e612d9008f163a33131af97fd304479c1d0348604e188d5",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_food_avail_10pct_a.json",
+      "sha256": "35d168e623a7ab67f1421c3ef4316a1dcacc427a59fd1144ee7391673d94a181",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_food_avail_10pct_b.json",
+      "sha256": "f0607363a38198e2bbc63c0c60016a519741bce9fadf0779973fcc8afa492883",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_food_avail_20pct_a.json",
+      "sha256": "89034181429e3e232183702dfc261f0c09de59149e37065028410df3a379a664",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_food_avail_20pct_b.json",
+      "sha256": "660bb212565f88aca4951434b82e65c4583041cde7cf1ebaa20aa62bd8a5cdb0",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_dietary_excl_dairy_a.json",
+      "sha256": "17d5acc931f9e2f468cf08d615a49b44c536ac2ab9843e704888cfde6e269765",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_dietary_excl_dairy_b.json",
+      "sha256": "38aaabdf25762559e817ff963332bf159b5c7e659fb6b22a023ca0fabe58b0a7",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_dietary_excl_legume_a.json",
+      "sha256": "dc9ac028319b9de715438c8db6cf75a7b9e8ebeefca1daf6d26a221760d6aa76",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    },
+    {
+      "path": "Saved Model\\stage3_robustness_v2\\pilot\\checkpoints\\000_pure_non_vegetarian_dietary_excl_legume_b.json",
+      "sha256": "5a587005054be826d260f05f4c88a69714262caea079384569496156ebb8fb5e",
+      "reason": "Target-error audit excludes report-only unknowns; measured solve unchanged"
+    }
+  ],
+  "script_sha256": "ac63a2c6d4e419bdb30f8068eb473cdda96bf41ef3e6525c35ff2cfb62e3d466"
+}

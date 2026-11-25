@@ -1,0 +1,5 @@
+An auditable pipeline separates screening, nutrient targets, meal solving and chat state.
+Joint constraint projection improved numerical feasibility in component ablations.
+Independent model scoring revealed outcome-specific disagreement.
+Input sensitivity exposed target changes despite preserved numerical feasibility.
+Versioned conversational evaluation distinguishes valid revisions from refusals.

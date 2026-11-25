@@ -1,0 +1,36 @@
+{
+  "version": "stage2_joint_constraint_repair_v2",
+  "n": 32,
+  "sample_source": "Frozen 32 cases from Saved Model/stage2_constraint_audit_repaired_v1/cases_LOCAL.json",
+  "sample_sha256": "7b9019620ca755651973a38dbb91d5b1ae5674637b23773eb46924860be19036",
+  "comparator_audit_version": "stage2_constraint_audit_repaired_v1",
+  "method": "50-step Adam counterfactual search followed by scale-normalized convex quadratic projection onto the joint feasible polytope",
+  "projection_solver": "SLSQP with HiGHS LP feasibility witness warm start",
+  "scale_normalization": "Fixed engineering normalization scales retained from v1; not uniformly official dietary reference values",
+  "tightened_bounds_scope": "Nutrient component box tightened with Filter 2 invariants (KCAL >= 1200, 0.8W <= PROT <= 2.0W, SODI <= 1500/2300, POTA >= 3500/2600)",
+  "joint_linear_inequalities": "Thermodynamic energy balance (+- 1%) and 3 clinical ratio envelopes (sugar/fiber, sodium/potassium, sat/unsat fat)",
+  "closed_loop_gate": "Delta p <= 0.0015 for diabetes, obesity, cvd rescored through calibrated Stage 1 model",
+  "bound_tolerance": 1e-06,
+  "energy_tolerance": 0.01,
+  "release": "repaired_v1",
+  "thresholds": {
+    "diabetes": 0.5,
+    "obesity": 0.5,
+    "cvd": 0.5
+  },
+  "device": "cuda",
+  "torch_threads": 12,
+  "scope": "Regression repair of Stage 2 joint mathematical constraints across 32 frozen profiles; diagnostic engineering evaluation, not clinical trial or causal claim",
+  "hashes": {
+    "Saved Model\\stage2_constraint_audit_repaired_v1\\cases_LOCAL.json": "7b9019620ca755651973a38dbb91d5b1ae5674637b23773eb46924860be19036",
+    "stage2_counterfactual_engine.py": "19308d87cf2db64010244ddb1a2c1b434186d51da4bed2ab73c826bb13de0d28",
+    "stage1_deployment.py": "c50af2f3274fae462937239ac4aabc34854fe0eac11dabf34cff7ec10f8f6708",
+    "nutrient_rule_policy.py": "98cd05b20980d78961dcce156fb03903e9675f9fe18bf415f6658cc9256fb04d",
+    "Saved Model\\deployment\\repaired_stage1_v1\\manifest.json": "de970b7514f4c62158d3f4f823f7ba5e66a24575e3f2e6d9a7dcafe575298930",
+    "Saved Model\\deployment\\repaired_stage1_v1\\model.pt": "cb000dd1fdf00f17c49d0f64b131c32ec09b4efdac75b13e3fad5287c419938e",
+    "Saved Model\\deployment\\repaired_stage1_v1\\preprocessing_artifacts.joblib": "35ab8a7d7f28fd6bc1b06dc20a1b6424b1c815696be3d8083d8a6695b2d681ae",
+    "Saved Model\\deployment\\repaired_stage1_v1\\calibrators.joblib": "4be6b7afa46d00b461f6d65e4e076220ceb16ebe7cbe8e77ad2b33fdd2bf3d4f",
+    "Data\\preprocess_for_training.py": "351c3f1011141c7b7da234df8c311abb786f352f98f5ac1414921d398b5706a6",
+    "run_stage2_joint_constraint_repair_v2.py": "8f9cc44e35547bdec4e70a95a12b0fca47821799ac6e203079d8e4530f6e8fb2"
+  }
+}

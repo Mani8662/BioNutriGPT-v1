@@ -1,0 +1,10 @@
+{
+  "task": "BioNutriGPT Stage 1 Repaired Subgroup Evaluation (v1)",
+  "completed": true,
+  "completed_at_utc": "2026-11-20 12:41:27",
+  "status": "Verified passing",
+  "subgroup_metrics_sha256": "45810efba5127e07c067cf4612cba57c2e5c47ec1204566d441ad35ed3137d47",
+  "subgroup_counts_sha256": "2994c81a1541902f16e449b6d48053947383e570e8693ae3b2b34fd32eae15fd",
+  "bootstrap_intervals_sha256": "8140f51faabf1ce3d1d639d3d7776281aeffc0758c7da783ee299b1904e0cd7e",
+  "paired_differences_sha256": "e8a0fbdc03cfbba5b0f1412ef2fb47c07b155ba62e46f4c12d5c1ee71d43cac9"
+}
