@@ -1,0 +1,14 @@
+# Restricted IIPS LASI Wave 1 microdata and participant-derived files
+# Stored externally outside the repository per IIPS data-use terms (do not commit).
+*.sav
+*.dta
+Data/65dc53fced0231708938236.zip
+Data/lasi_w1_indian_cohort_100.json
+Saved Model/lasi_stage3_indian_cohort_report.json
+Saved Model/stage4_lasi_conversational_benchmark_report.json
+Saved Model/stage4_lasi_conversational_benchmark_v3_report.json
+Saved Model/stage4_lasi_conversational_benchmark_v4_report.json
+Saved Model/stage4_lasi_v3_frozen_scenarios.json
+Saved Model/stage4_lasi_v4_frozen_scenarios.json
+Saved Model/stage4_v4_failed_export_attempt/stage4_lasi_v4_frozen_scenarios.json
+Saved Model/stage4_lasi_v4_checkpoints/
