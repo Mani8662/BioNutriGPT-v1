@@ -1,0 +1,30 @@
+{
+  "scenarios": [
+    "Nominal",
+    "10% removed",
+    "20% removed",
+    "No dairy",
+    "No legumes",
+    "5% composition",
+    "10% composition"
+  ],
+  "bounds_based": [
+    299,
+    296,
+    224,
+    200,
+    100,
+    236,
+    192
+  ],
+  "target_aware": [
+    299,
+    296,
+    224,
+    200,
+    100,
+    215,
+    159
+  ],
+  "denominator": 300
+}

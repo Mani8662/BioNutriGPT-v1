@@ -1,0 +1,150 @@
+{
+  "updated": "2026-11-26",
+  "scope": "Documentation-only review of saved evidence and current code",
+  "experiments_run": false,
+  "sources": [
+    {
+      "path": "Research Paper/Stage1_Comparison_v2_Current_Results.md",
+      "sha256": "a40909c609ce2911ccb82587e55f9b24a17831532f9d506c59d79edd75fefeee",
+      "table_blocks": 3
+    },
+    {
+      "path": "Research Paper/Stage1_Paired_Uncertainty_v2/Report.md",
+      "sha256": "822ca31e1d28221ce15118f35c6b8d8f9a7bdb69ec65e7765cccd298104af51d",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage1_Ablation_v2_Results.md",
+      "sha256": "8664d94c4ce283485a5b1cf550181d0e714cc1e4940861b3511c10c103c9099c",
+      "table_blocks": 2
+    },
+    {
+      "path": "Research Paper/Stage1_Robustness_v3_Results.md",
+      "sha256": "c0bfee945e571cd423089d45b4de7e0b779d8290249cb1e9213fd0171795231c",
+      "table_blocks": 4
+    },
+    {
+      "path": "Research Paper/Stage1_Subgroup_Results_v1.md",
+      "sha256": "4cfd3d0b4e9828e40eb714e6b21a17846cc249566bc077c711ec4924e333d359",
+      "table_blocks": 5
+    },
+    {
+      "path": "Research Paper/Stage1_Survey_Reference_v1_Results.md",
+      "sha256": "2003faabc5030c58f48f0536424acf4fb1c4d85b50e695e3fe1ed94711f91f17",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage1_Calibration_DCA_v1_Results.md",
+      "sha256": "a7910ca9b884f4471284ab5a3dcb75b314633a5a1dcf51e944d666b9f2b1a095",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage1_Downstream_Added_Value_Results_v1.md",
+      "sha256": "7c2a0181644d40a0ad3c646259f79656d7f810d3015c15bc30e32acc76eb2e1c",
+      "table_blocks": 5
+    },
+    {
+      "path": "Research Paper/Stage1_Deployment_v1.md",
+      "sha256": "ea64b8e91a6c0bfdd9a1f1ca620c794a59e3d6f3b8794774afcd5a770b4f4a5a",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage2_Constraint_Audit_Repaired_v1.md",
+      "sha256": "b3b645a8536a9319a6748324dc8173a489f0758a33bf1ffbce3362ba13807c9f",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage2_Joint_Constraint_Repair_v1.md",
+      "sha256": "17333c7cfbcafab431ac5cfeae399043ca7219ed397c9d1d520e6f41d1bd82dc",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage2_Comparison_Study_v2.md",
+      "sha256": "42c3dfb9c17ed64288155a09da783f4915ecafa67d4792dc57dd1988d97dd4a6",
+      "table_blocks": 2
+    },
+    {
+      "path": "Research Paper/Stage2_Ablation_v2_Results.md",
+      "sha256": "ab638bb11bcac111d75bdd89b9937e3f8cb3e0cf793f0a012137620cd34169d0",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage2_Cross_Model_v1_Results.md",
+      "sha256": "3bb02b79046b07ff40d51d750e3e5e5783f9f0f3d5709ffe83ca20c0a3558c77",
+      "table_blocks": 4
+    },
+    {
+      "path": "Research Paper/Stage2_Stability_Repaired_v1_Results.md",
+      "sha256": "a2b3cd91021434c770a053a83e907da098f978ec82d76637638ddaf6b6df137f",
+      "table_blocks": 3
+    },
+    {
+      "path": "Research Paper/Stage2_Stability_Retrospective_Audit_v1.md",
+      "sha256": "f2649a72fc64a17bf23521cfb0d1ef3ff69e164daa752a907d434506b9fe0325",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage2_Stage3_Translation_Audit_v2.md",
+      "sha256": "8079e863607eb29b6c2f999df000732d93fa5903714b9fee5dffe4dce0933b5c",
+      "table_blocks": 2
+    },
+    {
+      "path": "Research Paper/Stage3_Target_Aware_Audit_v2.md",
+      "sha256": "a84ffc64132b0b95386af2064c589ca650cfffb314b6a8a4696456f2d3285c5e",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage3_Budget_Audit_v3.md",
+      "sha256": "47727cff69e6b3f2cdb6deec230f43b2ec0e215ce6c503f3ec9072f7f02b50e5",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage3_Budget_Matched_Comparisons_v2.md",
+      "sha256": "5cb9c6cb79cb3c33c63a8f6438e105ad6024c36088236320e3ee3c2ba89b5b20",
+      "table_blocks": 3
+    },
+    {
+      "path": "Research Paper/Stage3_Robustness_v3_Results.md",
+      "sha256": "8b9ceeeb361256576c5a94133902904b740e8c75a1061cbb49ae1e8cd99da5bc",
+      "table_blocks": 1
+    },
+    {
+      "path": "Research Paper/Stage3_Robustness_Failure_Margin_Audit_v1.md",
+      "sha256": "761b8d467f226e3789282c6a7b07ca1e73a461a393552505783cefe0dcfaec4b",
+      "table_blocks": 2
+    },
+    {
+      "path": "Saved Model/stage4_lasi_v4_verified_summary.md",
+      "sha256": "af6efe5ec3f2b6f834d7597e0159e7580f874be0352629a441a17551408d0a93",
+      "table_blocks": 0
+    },
+    {
+      "path": "Saved Model/stage4_real_multiturn_v4/Report.md",
+      "sha256": "f992850f5bede7e0f6a0bd37542011107b77db7af6678a24b5f1f0d57ba25eea",
+      "table_blocks": 0
+    },
+    {
+      "path": "Saved Model/stage4_dialogues_v5/Report.md",
+      "sha256": "8db76f5c7efb64351c6ab6b9973f24541adff70721d9f0d22ede38734049d212",
+      "table_blocks": 1
+    },
+    {
+      "path": "Saved Model/stage4_structured_v6/Report.md",
+      "sha256": "09fb9765c6ec1560b5834ca939832f6b506b6a5a799b9ca4dfef714e10a82f4c",
+      "table_blocks": 1
+    },
+    {
+      "path": "Saved Model/stage4_understanding_v7/Report.md",
+      "sha256": "a089c731f1f360da7e872022fb17b2cf1fb0f9c859bf19b0cc4e2aaa9f394833",
+      "table_blocks": 1
+    }
+  ],
+  "outputs": [
+    "Current_Model_Explanation.txt",
+    "Progress.txt",
+    "Challenges faced and how we solved them.txt",
+    "challenges_faced_and_how_we_solved_them.txt",
+    "Stage 3 Challenges.txt"
+  ],
+  "historical_backup": "Documentation_History\\2026-11-26_before_sync"
+}

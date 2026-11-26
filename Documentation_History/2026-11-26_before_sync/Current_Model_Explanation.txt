@@ -1,0 +1,756 @@
+STAGE 3 BUDGET REPORTING CORRECTION v3 — 2026-11-24
+At five seconds, both objectives returned 897/900 valid plans with no discordant cells in this sample. This is identical observed acceptance, not demonstrated equivalence or noninferiority. The [0, 0] empirical bootstrap interval occurs because every sampled paired difference is zero; it does not establish zero population difference. Each budget contains nine repeated target-source/mode cells for each of 100 participants. Pooled McNemar p-values have been removed; participant-cluster intervals and the 27 within-cell exact tests with their Holm adjustments are retained.
+The corrected statistical verifier reproduced 42 confidence intervals and 27 valid within-cell exact tests and checked all 3,006 input manifest hashes. Three invalid pooled exact tests were withdrawn. This correction reused the existing reconstructed records and prior arithmetic audit; it did not rerun meal optimization or repeat the full basket reconstruction. Existing verifier fixture checks are retained without treating them as new end-to-end corruption tests. Original v2 evidence remains unchanged.
+Report: Research Paper/Stage3_Budget_Audit_v3.md.
+
+STAGE 3 CONTROLLED SOLVER-BUDGET EXPERIMENT v1 – 2026-11-24
+Conducted a controlled solver-budget evaluation comparing the current bounds-based Stage 3 objective (Variant A) with the experimental target-aware objective (Variant B) across 3.0s, 5.0s, and 10.0s on a fresh cohort of 100 adult temporal NHANES participants (seed 20261124; strictly disjoint from all 237 previously evaluated participants: 32 repair, 100 downstream, 5 pilot, 100 comparison; SHA-256: fed1ab71134c26586a4b55af1ab64eb995c9912f4269e3ce0e91214c25f869bf).
+Addressed implementation clamping in stage3_budget_solver.py with RESEARCH_MAX_TIME_LIMIT_SEC = 15.0, passing exact un-clamped budgets to HiGHS while preserving production defaults. Common Stage 2 targets were cached once across 3 arms (rules-only, minimum-change, model-guided). All 2,700 paired tasks (5,400 solves) completed from independent cold starts with randomized execution.
+Key Empirical Findings:
+Budget acceptance reporting corrected: see Stage3_Budget_Audit_v3.md. Pooled exact tests withdrawn; participant-cluster intervals retained.
+2. Target Attainment Advantage Widens with Budget: Variant B reduces mean normalized L1 target error by 49.49% at 3.0s (0.9520 vs 0.4808), 52.11% at 5.0s (0.9722 vs 0.4655), and 54.34% at 10.0s (0.9918 vs 0.4529).
+At ten seconds, the target-aware solver recorded status 0 for 501/900 tasks under a configured 1% relative-gap tolerance. Describe this as solver termination within that tolerance, not mathematical proof of an exact integer optimum. The three common failures per budget are solver-reported infeasibilities; additional no-plan timeouts exist at three seconds and for one target-aware task at ten seconds. Their cause must not be generalized as proven extreme-calorie infeasibility without further evidence.
+4. Basket Composition: Over 99.6% of jointly successful meal plans yielded distinct food baskets while maintaining identical dish counts (~7.9 dishes) and total servings (~14.8 servings).
+Independent read-only verification audited all 15 source hashes and all 2,700 checkpoints from raw disk bytes with 0 discrepancies. Report: Research Paper/Stage3_Budget_Experiment_v1.md. Evidence: Saved Model/stage3_budget_experiment_v1/. Production solver defaults remain untouched; this is a computational evaluation, not evidence of clinical efficacy.
+
+STAGE 3 TARGET-AWARE EXISTING-RECORD AUDIT v2 — 2026-11-23
+The target-aware experimental optimizer reduced target error among jointly successful pairs, but produced fewer valid plans under the tested three-second budget. Acceptance counts were unchanged by fresh constraint verification. These are exploratory results on the reused 100-participant cohort, which also appeared in development tests; they are not independent validation.
+Fresh replay reconstructed all 900 input fingerprints, checked 1,800 outputs against food quantities, serving/category rules, dietary exclusions, active nutrient coverage/bounds, energy, macro fractions, fiber density and sodium/potassium rules. Target errors were recomputed from catalog totals and upstream targets. Four corruption checks passed. A separate implementation verified 30 confidence intervals, 36 exact paired tests, multiplicity adjustments and summary counts/timings. Food parsing, bound construction and the earlier independent arithmetic checker are shared dependencies; neither production acceptance flags nor saved replay flags determine audit decisions. Original records remained unchanged and no solver was called.
+Report: Research Paper/Stage3_Target_Aware_Audit_v2.md. Original statistical weighting, basket-change and unsupported solver/deployment claims are superseded.
+
+STAGE 2 TO STAGE 3 EXISTING-RECORD AUDIT v2 — 2026-11-23
+Reanalysis of 900 existing records (100 participants, three arms and three dietary modes) changed no acceptance decisions. Model-guided versus minimum-change end-to-end acceptance differed by 7.33 percentage points (participant-cluster bootstrap 95% CI 2.00 to 13.33). The earlier pooled exact p-value was invalid because dietary modes were treated as independent people; it is withdrawn. No pooled exact p-value is reported.
+Archived solver metadata show 881 time-limited solves with independently verified plans, 12 solver-status-0 results, three solver-reported infeasibilities and four timeouts without a verified plan. Status 0 is interpreted under the configured solver gap tolerance (1%), not as an independently proven exact optimum. The audit does not rerun or independently certify infeasibility. All 893 returned baskets passed fresh arithmetic and structural checks.
+Fresh checks verified all 900 records; 27 intervals and 18 exact tests were independently recomputed. Five corruption checks passed. No solver rerun or architecture change. Report: Research Paper/Stage2_Stage3_Translation_Audit_v2.md. Evidence: Saved Model/stage2_stage3_translation_audit_v2/. Historical v1 pooled p-values and optimality claims are superseded.
+
+STAGE 2 COMPARISON CORRECTION v2 — 2026-11-23
+Model-guided search accepted 77/100 profiles versus 70/100 with minimum-change projection and 48/100 with rules-only construction. The primary paired difference was +7.00 percentage points (10,000-resample percentile bootstrap 95% CI +2.00 to +13.00); the exact two-sided discordance test gave p=0.0390625 (8 wins, 1 losses). This is a model-score acceptance result, not demonstrated health improvement.
+The paired mean additional normalized displacement for model-guided search was 0.2717 (bootstrap 95% CI 0.2325 to 0.3153). The scales are fixed engineering weights; this does not measure meal acceptability.
+All 300 corrected executions completed; full model and statistical verification passed. Numerical acceptance uses the documented tolerance. Timings are from a single-search rerun; see the v2 report for measured values. Earlier v1 runtime/p-value claims are superseded. Original study artifacts are retained. Report: Research Paper/Stage2_Comparison_Study_v2.md. Evidence: Saved Model/stage2_comparison_study_v2/.
+
+STAGE 2 REPAIR CORRECTION AND REGRESSION — 2026-11-22
+The corrected solver distinguishes numerical SLSQP convergence, a verified feasible LP fallback (minimum-distance optimality not established), infeasible constraints, and solver failures. Fixed engineering normalization scales are not uniformly FDA/DRI values. Clinical thresholds and model assets were not changed. All 16 tests passed, including six solver-failure tests. The corrected 32-profile regression reproduced all original repair targets and decisions: 25 accepted, seven rejected by the model-score gate, zero final nutrient-bound, energy or ratio violations. The original three accepted cases are 7, 14 and 19. Independent frozen-model rescoring verified all 32 cases (maximum probability discrepancy 5.74e-8). These are development/regression findings, not clinical efficacy or population generalization evidence. A disjoint 100-profile comparison sample is reserved; no comparison outcomes have been run. The rules-only construction and executable analysis protocol still need freezing before that study. Evidence: Saved Model/stage2_joint_repair_correction_v2/ and Saved Model/stage2_joint_constraint_repair_v2/. Report: Research Paper/Stage2_Joint_Constraint_Repair_v1.md.
+
+STAGE 2 REPAIRED RELEASE CONSTRAINT AUDIT — 2026-11-22
+Completed a fixed 32-profile engineering pilot sampled from 6,033 complete repaired temporal records with measured anthropometry; sedentary activity was assumed. GPU execution with 12 CPU threads, 50 optimization steps per case; no production engine changes or Stage 1 training. All cases returned dossiers. Three passed all programmed checks; 28 developed calorie-envelope violations first introduced by filter 1, and seven failed the score gate (six overlap). No accepted case failed independent checks. Independent linear feasibility found nutrient-space witnesses for all 32, excluding model-score/food feasibility. All snapshots and witnesses were replayed independently. Next: jointly enforce energy consistency and nutrient bounds; regression-test on this pilot, then evaluate baselines/ablations on a separately locked sample. Report: Research Paper/Stage2_Constraint_Audit_Repaired_v1.md. Evidence: Saved Model/stage2_constraint_audit_repaired_v1/. This is not population or clinical validation.
+
+REPAIRED STAGE 1 APPLICATION MIGRATION — 2026-11-22
+The backend and combined pipeline now default to repaired_v1: selected BioNutriGPT comparison trial 03 plus matching repaired preprocessing and reserved-set calibration. Both Stage 1 and Stage 2 use this hash-verified bundle. Selection preserves the existing architecture/interface and does not assert superiority. Thresholds are fixed descriptive research 0.5, not clinically validated; legacy cutoffs are not reused. Incomplete inputs are rejected; no sample-default filling. All 7,004 saved calibrated predictions matched; 128 complete raw-input records had exact preprocessing parity; Stage 1/2 probabilities and bindings matched. FastAPI valid/incomplete requests returned 200/422, six negative checks passed, separate-process legacy rollback passed, and frontend build passed. One integration profile was correctly blocked by Stage 2 bounds; a second passed and yielded an accepted Stage 3 plan. No LLM/browser evaluation was rerun. No backend was listening on port 8000; the release activates on the next normal startup. Older deployment-pending/legacy-current statements below are historical and superseded, while historical benchmark numbers retain their original release provenance. Indian validation remains pending. Report: Research Paper/Stage1_Deployment_v1.md; receipt: Saved Model/stage1_deployment_verification_v1/verification.json.
+
+STAGE 1 DOWNSTREAM ADDED-VALUE STUDY AUDIT V3 COMPLETE - 2026-11-21
+Comprehensive methodological, statistical, timing, provenance, reporting, and safeguard audit completed for the 4,800-case downstream added-value study (100 temporal NHANES adults, seed 20261120, strictly disjoint from the 5 pilot cases; 3 dietary modes; 16 arms: 1 rules-only reference + 3 models x 5 thresholds: 0.05, 0.10, 0.20, 0.30, 0.50). Original v1 and Audit v2 artifacts preserved.
+Key Verified Findings:
+- Feasibility finding: Stage 1 predictive rule branches exclusively tighten nutritional constraints and did NOT improve meal planning feasibility over rules-only baseline (98.67% feasibility, 296/300 pairs). Across 1,500 solves each, feasibility was 95.80% for BioNutriGPT (-2.87 pp paired difference vs rules-only [95% CI: -4.33, -1.53]), 96.07% for CatBoost (-2.60 pp [-4.00, -1.33]), and 96.00% for FT-Transformer (-2.67 pp [-4.07, -1.33]). In model-vs-rules contrasts, exactly 12 of 45 cell intervals exclude zero (all pure_vegetarian at thresholds 0.05–0.30, where model plans had strictly lower feasibility). In zero cases did prediction-assisted planning make an infeasible profile feasible.
+- Direct Paired Model Contrasts: Replaced overlapping marginal CIs with direct participant-level paired contrasts (2,000 bootstrap resamples with seed 20261120). Across all 1,500 solve pairs: BioNutriGPT vs CatBoost = -0.27 pp [-0.60 pp, 0.00 pp] (-4 net solves); BioNutriGPT vs FT-Transformer = -0.20 pp [-0.53 pp, +0.13 pp] (-3 net solves); CatBoost vs FT-Transformer = +0.07 pp [-0.33 pp, +0.47 pp] (+1 net solve). Exactly 0 of 45 cell-specific direct model-vs-model bootstrap intervals exclude zero (all contain zero). An interval containing zero indicates insufficient evidence of difference, not proof of equivalence. BioNutriGPT demonstrates no detected engineering advantage over competitive tabular comparators.
+- Failure Diagnostics & Timing: Reconciled all 186 unaccepted solves: 182 are solver-certified mathematical infeasibilities (Status 8, solver code 2, all pure_vegetarian); 4 are computational timeouts (Status 13, solver code 1, all veg_nonveg_combo). Recomputed timing shows 33 infeasibilities exceeded 40 ms solver time (median 24.03 ms, mean 128.57 ms, max 965.96 ms). Four rules-only cases also failed with infeasibility in pure_vegetarian mode (cases 864, 2640, 3408, 3984).
+- Common-Reference Compliance: Distinguished compliance among accepted plans (100.0%, 4,318/4,318; 0 violations) from compliance among all attempted solves (95.96%, 4,318/4,500; 4.04% deficit due to 182 infeasibilities and 4 timeouts having no plan).
+- Normalized Nutrient Deviation: Scaled by standard Daily Values as non-zero descriptive references to avoid near-zero division, yielding shifts of 0.83% to 12.56%. Basket shifts reflect optimization displacement, not proven nutritional improvement.
+- Real Runner Safeguards: Implemented run_stage1_downstream_study_v2.py with canonical SHA-256 fingerprinting and atomic persistence. All 9 real runner safeguard tests passed in test_real_runner_safeguards.py.
+- Provenance Disclosure: protocol.json recorded 8 workers; execution ran with 10 workers (min(10, os.cpu_count() or 1)) on 12-core host; CPU scheduling contention impact on borderline 3.0-second timeouts disclosed as unmeasured.
+- Programmatic Reporting & Overclaim Removal: 100% of report tables generated programmatically from CSVs (pure_vegetarian BioNutriGPT 0.50 confirmed at 95 accepted). Clinical trial terms, causal claims, and future certainty claims stripped.
+Artifacts: Saved Model/stage1_downstream_study_v1_audit_v3/ (correction_log.json, correction_log.md, direct_model_contrasts_audit_v3.json/csv, aggregate_summary_audit_v3.json/csv, failure_analysis_audit_v3.json, timing_analysis_audit_v3.json, case_level_paired_eval_audit_v3_LOCAL.csv, inter_model_contrasts_audit_v3_LOCAL.csv, verification_audit_v3.json, completed_audit_v3.json, Report.md) and Research Paper/Stage1_Downstream_Added_Value_Results_v1.md. Production unchanged.
+
+STAGE 1 ARCHITECTURE ABLATION COMPLETE — 2026-11-19
+A controlled five-variant, five-seed architecture ablation study on 7,004 temporal evaluation participants (20,000 two-axis bootstrap resamples across participants and seed pairs) demonstrates that BioNutriGPT's bespoke components do not provide statistically significant advantages over simpler designs on this benchmark.
+Key Findings:
+1. FULL vs. NO_MOE: Replacing the 4-expert sparse MoE with a standard dense feed-forward network (512 -> 256 -> 256; aux loss = 0) reduces trainable parameters by 45.9% (1,295,623 to 700,675) and per-sample latency by 59.7% (10.88 ms to 4.38 ms) with negligible difference in performance (Diabetes AUROC diff: +0.0004 [-0.0032, +0.0039]; CVD AUROC diff: +0.0002 [-0.0030, +0.0032]; Calibrated Brier diff: +0.00010 on diabetes, -0.00006 on CVD).
+2. Modality Pooling, Modality Embeddings, and Head Shortcuts: Unweighted group mean pooling, removing modality vectors, or omitting residual head shortcuts show modest positive trends (~0.0011 to 0.0016 AUROC), but all 16 primary comparisons span zero after Bonferroni family-wise adjustment.
+See Research Paper/Stage1_Ablation_v2_Results.md, Research Paper/Stage1_Ablation_v2_Plan.md, and Saved Model/stage1_ablation_v2/.
+
+END-TO-END PIPELINE & PRODUCTION VERIFICATION — 2026-11-20
+The complete four-stage clinical decision support pipeline was verified end-to-end on the RTX 3050 Laptop GPU:
+- System Services: FastAPI Backend (http://127.0.0.1:8000) and Vite React Frontend (http://127.0.0.1:5173) fully verified and operational.
+- Stage 1 (Diagnostics): Neural tabular Transformer screening on CUDA in ~12.7s with calibrated risk probabilities and feature driver rankings.
+- Stage 2 (Counterfactuals): Optimization engine derives energy targets and 30 active nutrient boundaries with four programmatic safety filters.
+- Stage 3 (Discrete Meal Synthesis): HiGHS MILP solver generates culturally authentic Indian meal baskets in ~2.1s across Pure Vegetarian (8 dishes), Combo (8 dishes), and Non-Vegetarian (7 dishes) modes.
+- Stage 4 (Chrono-Nutrition Compiler): Local Qwen 2.5 3B NF4 quantized via BitsAndBytes on CUDA compiles five chronobiological meal windows with zero calculation authority.
+- Stage 4 (Interactive Revisions & Chat): Plan store versioning, rollback, and deterministic contextual nutritional QA (/api/chat) verified with exact nutrient accounting.
+- Regression & Contract Tests: 133 / 133 automated tests passed (verify_stage2_contracts: 10/10, verify_stage3_production: 13/13, verify_stage4_conversation_v2: 35/35, verify_stage4_dialogue_edges: 31/31, verify_stage4_interpreter: 41/41, verify_food_group_preferences: 3/3). Frontend TypeScript check (tsc --noEmit) clean with 0 errors.
+
+STAGE 1 COMPARISON UPDATE — 2026-11-19
+All six model families and paired uncertainty analysis are complete and verified. On 7,004 temporal participants, 20,000 paired bootstrap resamples show that BioNutriGPT improves diabetes AUROC over logistic regression and MLP, and calibrated diabetes Brier over logistic regression, after adjustment across 20 primary contrasts. No other primary contrast excludes zero; no overall advantage over competitive boosted-tree/reference Transformer models is established. These are unweighted conditional-on-fitted-model intervals, not survey-design or training-seed uncertainty. See Research Paper/Stage1_Paired_Uncertainty_v2/Report.md. Repeated-seed and component-ablation work remains pending; no new training launched. Production/manuscript performance remains legacy pending reconciliation.
+
+STAGE 1 RESEARCH REPAIR v2 — 2026-11-18
+The isolated repaired dataset/preprocessor is ready: 16,894 training, 3,621 validation, 3,621 calibration and 7,004 temporal participants. It uses harmonized labels and training-only preprocessing. All six repaired model families and paired participant uncertainty analysis are verified; training-seed variability and architectural ablations remain pending. Production and manuscript performance remain legacy. See Research Paper/Stage1_Repair_v2_Report.md. Older audit findings below describe legacy artifacts and remaining limitations.
+
+LATEST STAGE 1 AUDIT — 2026-11-18
+Stage 1 foundation audit found inconsistent development/test disease definitions, internal preprocessing leakage and calibration overlap. Existing Stage 1 results remain historical pending repair. See Research Paper/Stage1_Foundation_Audit/Stage1_Foundation_Audit.md. This audit did not change architecture, data or weights.
+
+# BioNutriGPT current architecture and evidence — 2026-11-18
+
+CURRENT SUMMARY
+The application accepts validated direct values or TXT input, applies the fixed 87-feature schema and preprocessing, and produces screening, nutrient-rule, meal-plan and explanation/revision outputs.
+Stage 1 is a laboratory-assisted NHANES screening model: scalar feature tokens, 128-dimensional representations, three Transformer layers/four attention heads, modality-query pooling, top-two routing over four experts, and separate prevalent diabetes/obesity/CVD outputs. It is not validated for Indian prediction.
+Stage 2 builds versioned adult planning bounds and hypothetical dietary candidates. The current 39-field schema has 30 active rules, seven report-only fields and two separate exposure fields. Project-defined limits and numerical caps must not be represented as universally validated clinical thresholds.
+Stage 3 selects integer standardized portions with dietary-mode plate/category constraints and independent numerical acceptance checks. Current catalog: 49 records, including 20 INDB recipe variants and 29 USDA proxies. Forty-three records have complete active data before dietary/preference filtering; v4 prompt/solver eligibility is 37 vegetarian or 43 combined/non-vegetarian records. Failed revisions retain the accepted plan.
+Stage 4 controlled chat uses deterministic intent routing and backend tools. It recalculates catalog totals, re-solves requested revisions, retains preferences, checks pending proposals, stores accepted versions and supports rollback. Patient allergies persist; unknown allergen information cannot certify an allergen-free plan. Optional unconstrained chat rephrasing is disabled. A separate local Qwen report compiler remains implemented. The controlled assistant itself must not be described as a fully LLM-driven chatbot.
+
+VERIFIED BENCHMARK
+The final checkpointed v4 run covers 36 distinct LASI-derived participants, four disease strata and three dietary modes, with 78 turns per guarded variant. The full guarded system passes 76/78 turns; 29 validated revisions, 11 justified refusals and two timeout-related failures. In the matched 12-person/24-turn comparison: guarded 24/24 versus Qwen 2/24, and feasible-request valid proposals 9/9 versus 0/9. Across 25 successful identical-input-state pairs, mean serving changes are 7.72 versus 16.56 (53.38% lower with the penalty). Actual Qwen model revision, GPU configuration, full prompts, raw responses, journals, stage checkpoints and unchanged source hashes are retained locally. These are computational findings, not national performance, clinical benefit, human acceptability or Stage 1 external validation.
+The separate LASI Stage 3 pilot has 100 unique selected profiles x three modes: 91/100, 96/100 and 98/100 accepted plans. Its adapter uses assumed 0.85/0.10 disease-routing values and 2800/2600 mg Na/K baselines; it does not execute the full Stage 2 counterfactual search.
+Eight benchmark-correction checks passed. The earlier application regression rerun remains 10/11 with an unresolved declaration/question expectation; the historical 24-check pass is not current proof for every source version.
+Current publication sources: Research Paper/BioNutriGPT_Manuscript_v2.md, Research Paper/Readiness_and_Evidence.md, and Saved Model/stage4_lasi_v4_verified_summary.md.
+
+HISTORICAL ARCHITECTURE AND PROGRESS NOTES
+The following older text is retained for traceability. Superseded cohort/catalog counts, assigned-count LLM claims and planned validation statements are not current evidence. Use the current summary and verified manuscript above.
+
+BIONUTRIGPT — CURRENT MODEL AND PIPELINE EXPLANATION
+
+SOURCED COOKED CATALOG ADDENDUM
+The original catalog combined 542 ingredient records with 44 project-defined recipe estimates. Following a provenance audit, the active catalog was restricted to 29 sourced entries: 20 INDB recipe variants and 9 USDA single-food proxies. Fifteen unmatched entries were excluded. Unsupported nutrient values are explicitly marked unknown. INDB ingredient amounts, unit conversions, published nutrient fields and modeled ingredient-mass yields are recorded in food_composition_cooked_sourced.json; measured cooked yields remain unavailable. There are 25 fully covered fields (including recovered DR1TFOLA total folate and DR1TVK vitamin K1) and 14 with incomplete coverage (DR1TSUGR, DR1TATOC, DR1TRET, DR1TVARA, DR1TACAR, DR1TBCAR, DR1TLYCO, DR1TLZ, DR1TFA, DR1TFF, DR1TFDFE, DR1TVB12, DR1TCAFF, DR1TALCO). Stage 3 preserves unknown flags and blocks full adequacy verification. Under the historical independent MUFA 10%-energy minimum (21.8–43.6 g), the strict covered-field model was infeasible (7.297–17.593 g attainable). Under FAO-aligned policy mufa-component-envelope-v2 (0–76.3 g bounded by total fat ceiling; not a MUFA RDA/UL), the 30-second 25-field strict integer diagnostic is optimal (13.506 g MUFA), while the 0.5-second production solve satisfies 23/25 covered fields (DR1TVB2 and DR1TNIAC slack) and 14 unknown fields block full 39-field adequacy. See Data/food_sources/INDB/README.md and cooked_catalog_feasibility.json.
+
+B12 PLACEHOLDER AUDIT AND REPLACEMENT ADDENDUM
+In the original catalog builder, B12 (DR1TVB12) values were category-based placeholders (0.05 ug for IFCT dairy/eggs, 0.50 ug for project dairy recipes, 0.0 ug for all other rows, including meat and fish) because IFCT 2017 lacks a B12 column. Original placeholder files are preserved solely in the historical backup at Data/food_sources/USDA_SR_Legacy/before_b12_repair/. In the legacy 586-row file, repair_b12_data.py replaced placeholders with 31 reviewed USDA SR Legacy proxy matches and 555 unknown B12 values (JSON null / CSV blank). In the active 29-entry catalog (food_composition_cooked_sourced.json), the 9 USDA single-food proxies carry documented USDA SR Legacy B12 values (recipe_skim_curd: 0.915 ug/serving, recipe_lowfat_curd: 0.840 ug/serving, cooked brown rice and 6 fruits: 0.0 ug), while all 20 INDB composite recipes remain unknown (null) because INDB has no B12 column. Stage 3 tracks unknown contributions and blocks full B12 verification whenever an unknown-B12 food is selected. See Data/food_sources/USDA_SR_Legacy/README.md.
+Updated: 18 November 2026
+Sources reviewed: current preprocessing/training/Stage 2/Stage 3/Stage 4 code, benchmark suites, and saved evaluation reports
+
+1. WHAT THE PROJECT DOES
+
+BioNutriGPT is an end-to-end research prototype that connects a cross-sectional risk screening model to a rule-based physiological nutrient engine, an integer mixed-integer programming meal optimizer, and an edge-deployed patient-facing report compiler.
+
+Flow:
+NHANES-derived patient features
+→ Stage 1 estimates prevalent diabetes, obesity, and CVD labels using a modality-aware tabular Transformer
+→ Stage 2 searches for an individualized nutrient vector and establishes bounded physiological envelopes
+→ Stage 3 synthesizes a discrete, culturally authentic Indian food basket under strict nutrient and plate constraints via Branch-and-Cut MILP
+→ Stage 4 explains and schedules that fixed basket across 5 chronological meal slots, using a mock or local GPU-accelerated LLM guarded by 4 deterministic AST safety invariants
+
+The output is a computational decision-support plan. It is not a standalone diagnosis, a doctor's prescription, or causal evidence that following the plan reduces disease incidence.
+
+2. INPUTS, OUTCOMES, AND LIMITS
+
+Stage 1 receives 87 features structured into four clinical modalities:
+- 5 lipid features: HDL, total cholesterol, non-HDL cholesterol, total/HDL ratio, and non-HDL/HDL ratio.
+- 46 diet features: 39 first-day dietary nutrient fields plus 7 derived ratios.
+- 19 lifestyle features: sleep, sleep deviation, sedentary/activity variables, participation flags, and smoking categories.
+- 17 demographic/context features: age, income-to-poverty ratio, education, sex, race/ethnicity, marital status, and 5 missingness indicators.
+
+HbA1c (`LBXGH`), measured BMI (`BMXBMI`), standing weight, standing height, participant ID, NHANES cycle, and target labels are strictly excluded from Stage 1 predictors. Stage 2 separately requests age, sex, body weight, height, and activity metadata.
+
+Ordered Stage 1 feature schema (exact model-input order):
+- Bio (5): LBDHDD, LBXTC, NON_HDL_CHOL, CHOL_HDL_RATIO, NON_HDL_TO_HDL_RATIO.
+- Diet (46): DR1TKCAL, DR1TPROT, DR1TCARB, DR1TSUGR, DR1TFIBE, DR1TTFAT, DR1TSFAT, DR1TMFAT, DR1TPFAT, DR1TCHOL, DR1TATOC, DR1TRET, DR1TVARA, DR1TACAR, DR1TBCAR, DR1TLYCO, DR1TLZ, DR1TVB1, DR1TVB2, DR1TNIAC, DR1TVB6, DR1TFOLA, DR1TFA, DR1TFF, DR1TFDFE, DR1TVB12, DR1TVC, DR1TVK, DR1TCALC, DR1TPHOS, DR1TMAGN, DR1TIRON, DR1TZINC, DR1TCOPP, DR1TSODI, DR1TPOTA, DR1TSELE, DR1TCAFF, DR1TALCO, PROT_PCT_KCAL, CARB_PCT_KCAL, FAT_PCT_KCAL, FIBER_PER_1000_KCAL, SUGAR_TO_FIBER_RATIO, SODIUM_POTASSIUM_RATIO, SAT_TO_UNSAT_FAT_RATIO.
+- Lifestyle (19): SLEEP_HOURS, SLEEP_DEV_FROM_7_5, PAD680, PA_VIG_WORK_MIN_WK, PA_MOD_WORK_MIN_WK, PA_WALK_BIKE_MIN_WK, PA_VIG_REC_MIN_WK, PA_MOD_REC_MIN_WK, PA_TOTAL_MET_MIN_WK, SLQ050, PAQ605, PAQ620, PAQ635, PAQ650, PAQ665, SMOKE_NEVER, SMOKE_FORMER, SMOKE_SOMEDAYS, SMOKE_EVERYDAY.
+- Demographic/context (17): RIDAGEYR, INDFMPIR, DMDEDUC2, SEX_FEMALE, RACE_MEX_AMER, RACE_OTHER_HISP, RACE_NH_WHITE, RACE_NH_BLACK, RACE_OTHER_MULTI, MARITAL_MARRIED, MARITAL_PREV_MARRIED, MARITAL_NEVER_MARRIED, INDFMPIR_MISS, SLEEP_HOURS_MISS, PAD680_MISS, PA_TOTAL_MET_MIN_WK_MISS, OTHER_FEATURE_MISS.
+
+The three reference outcomes are:
+- Diabetes: HbA1c ≥ 6.5%, fasting glucose ≥ 126 mg/dL, or reported prior diabetes diagnosis.
+- Obesity: measured BMI ≥ 30 kg/m².
+- CVD: self-reported heart failure, coronary heart disease, angina, heart attack, or stroke.
+
+The model omits HbA1c as a predictor but predicts a label partly defined by HbA1c. It estimates same-period prevalent status, not future incidence. “HbA1c-excluded” is accurate; “non-invasive” is not, because lipid features are blood measurements.
+
+3. PREPROCESSING
+
+The preprocessing script fits its transformations on NHANES 2007–2016 training data only and applies those frozen parameters to the prospective temporal holdout:
+1. Capture missingness flags for income, sleep duration, sedentary time, total activity, and other missing inputs before imputation.
+2. Impute continuous variables with training medians and categorical values with training modes.
+3. Compute lipid ratios, nutrient ratios, and absolute sleep deviation from 7.5 hours.
+4. Identify nonnegative skewed continuous features with skewness > 1 in training and apply log1p.
+5. Clip continuous values to training 0.1st and 99.9th percentiles.
+6. Fit StandardScaler on training values and transform holdout data.
+7. Encode binary and nominal categorical fields and assemble the fixed 87-feature schema.
+
+Development cohort: 23,694 participants (20,140 train, 3,554 validation).
+Prospective temporal holdout cohort: 7,046 participants (NHANES 2017–March 2020 pre-pandemic release).
+
+4. STAGE 1 — RISK ESTIMATION ARCHITECTURE
+
+4.1 Feature Tokenizer and Transformer Backbone
+Each of the 87 standardized scalars is multiplied by a feature-specific learned 128-dimensional vector, added to a feature-specific bias and one of four learned modality embeddings (bio, diet, lifestyle, demographics).
+The 87 tokens pass through three Pre-LayerNorm Transformer encoder layers:
+- model width 128
+- 4 attention heads
+- feedforward width 256
+- GELU activation
+- dropout 0.10
+
+4.2 Modality Query Pooling
+A learned query vector pools contextual tokens within each of the four fixed feature groups, producing four 128-dimensional vectors: bio, diet, lifestyle, and demographics. Concatenating them gives a 512-dimensional multi-modal vector:
+$$\mathbf{u}_{\text{concat}} = [\mathbf{u}_{\text{bio}} \,\|\, \mathbf{u}_{\text{diet}} \,\|\, \mathbf{u}_{\text{life}} \,\|\, \mathbf{u}_{\text{demo}}] \in \mathbb{R}^{512}$$
+
+4.3 Mixture of Experts and Task Heads
+A linear router selects the top 2 of 4 expert MLPs ($512 \to 256 \to 256$ with LayerNorm, GELU, and dropout) to synthesize a 256-dimensional patient state vector $\mathbf{h}_{\text{patient}}$.
+Condition heads:
+- Diabetes and CVD heads receive $[\mathbf{h}_{\text{patient}} \,\|\, \mathbf{u}_{\text{bio}}]$.
+- Obesity head receives $[\mathbf{h}_{\text{patient}} \,\|\, \mathbf{u}_{\text{diet}} \,\|\, \mathbf{u}_{\text{life}}]$.
+Each head is a 64-unit GELU network outputting a single logit $z_c$.
+
+Ablation finding (v2): The 4-expert top-2 MoE contributes 594,948 parameters (45.9% of total model capacity). The controlled 5-seed architecture ablation study demonstrated that replacing the MoE with a single standard dense feed-forward network (512 -> 256 -> 256; 700,675 parameters) yields equivalent empirical performance (mean AUROC diff +0.0004 on diabetes, +0.0002 on CVD) with ~60% faster per-sample inference latency (4.38 ms vs 10.88 ms), indicating substantial parameter redundancy on tabular NHANES data.
+
+
+4.4 Training Objective
+Training sums three binary cross-entropy losses with positive-class weights (diabetes 6.84, CVD 9.74, obesity 1.65) and a 0.01-weighted MoE load-balancing term. Optimizer: AdamW (lr 1e-4, wd 1e-4), cosine lr schedule, batch size 128, early stopping on validation mean AUROC.
+
+5. STAGE 1 EVALUATION, BENCHMARKS, AND RECALIBRATION
+
+5.1 Deep Neural Network Comparison on Prospective Temporal Holdout (N=7,046)
+A rigorous head-to-head empirical comparison was conducted against Standard Deep MLPs (4-layer feedforward) and Tabular Deep ResNets (3 residual blocks):
+- Diabetes Survey-Weighted AUROC: BioNutriGPT **0.8151** [0.795–0.833] vs. ResNet 0.8116 vs. Deep MLP 0.8080.
+- CVD Survey-Weighted AUROC: BioNutriGPT **0.8427** [0.820–0.863] vs. ResNet 0.8384 vs. Deep MLP 0.8361.
+- Obesity Survey-Weighted AUROC: BioNutriGPT **0.7501** [0.734–0.766] vs. ResNet 0.7485 vs. Deep MLP 0.7460.
+BioNutriGPT consistently outperforms standard deep tabular neural networks. Modality query pooling isolates distinct clinical signal dynamics, preventing feature entanglement.
+
+5.2 Comparison with Classical Baselines
+- Gradient-Boosted Trees achieved survey-weighted AUROC of 0.8279 for diabetes, 0.8407 for CVD, and 0.7503 for obesity.
+- Logistic Regression achieved 0.8080 for diabetes, 0.8436 for CVD, and 0.7471 for obesity.
+BioNutriGPT is competitive with tree ensembles while providing end-to-end differentiable multi-task representations for Stage 2 nutrient search.
+
+5.3 Univariate Platt Scaling Calibration
+Raw logits from positive-class-weighted training exhibited overconfidence. Applying univariate logistic calibration fitted on validation data resolved miscalibration on the temporal holdout:
+- Diabetes ECE: reduced from 0.2353 to **0.0543** (76.9% reduction); Brier reduced from 0.2051 to 0.1042; slope 0.8124.
+- CVD ECE: reduced from 0.2452 to **0.0251** (89.8% reduction); Brier reduced from 0.1814 to 0.0739; slope 0.9472.
+- Obesity ECE: 0.0534; Brier 0.2020; slope 1.0583.
+
+6. STAGE 2 — PHYSIOLOGICAL NUTRIENT SEARCH ENGINE
+
+Stage 2 translates Stage 1 risk scores into an individualized nutritional envelope:
+- Computes BMR with Mifflin–St Jeor and multiplies by activity factor (1.2 to 1.725). For obesity risk, applies a 500 kcal deficit, guarded by a 1,200 kcal floor.
+- Uses 39 reviewed numeric domains: reference intervals, project assumptions, and seven reporting-only fields. These are not a validated ICMR/ADA clinical prescribing protocol; every rule carries source and applicability metadata.
+- Runs 50 Adam steps (lr 0.05) to optimize nutrient deltas while minimizing multi-task risk.
+- Executes four deterministic safety checks: Atwater energy consistency (4-4-9), physiological clamps, ratio coherence, and closed-loop rescoring. Candidates pass only if all checks succeed (`certified_for_stage3`).
+
+7. STAGE 3 — FOOD-BASKET MIXED-INTEGER OPTIMIZATION
+
+The original catalog combined 542 ingredient records with 44 project-defined recipe estimates. Following a provenance audit, the active catalog was restricted to 29 sourced entries: 20 INDB recipe variants and 9 USDA single-food proxies. Fifteen unmatched entries were excluded. Unsupported nutrient values are explicitly marked unknown. The former "44 validated cooked dishes" claim is withdrawn.
+- Decision variables: integer servings $q_i \in \{0, 1, 2, 3\}$, binary dish selection $z_i \in \{0, 1\}$, and continuous two-sided slack variables $e_k^+, e_k^- \ge 0$.
+- Hard plate constraints: 4–8 active foods; grains 3–5 servings (1–3 foods), pulses 2–3 servings (1–2 foods), vegetables 2–4 servings (at least two foods), dairy 1–2 servings (at least one food).
+- Objective: minimizes normalized weighted nutrient slacks, caloric deviations, and active dish penalties using the HiGHS Branch-and-Cut solver (default 0.50 s, cap 2.0 s).
+
+8. CURRENT OPTIMIZATION EVIDENCE (RERUN ON REPAIRED 29-ENTRY CATALOG)
+
+The former estimated-catalog zero-violation claims are withdrawn. Three current evaluations were executed directly on `food_composition_cooked_sourced.json`:
+1. **Single-Example 39-Field Feasibility Audit (`Data/food_sources/INDB/cooked_catalog_feasibility.json`):**
+   - 25 of 39 fields fully covered; 14 unsupported fields marked unknown (`DR1TSUGR`, `DR1TATOC`, `DR1TRET`, `DR1TVARA`, `DR1TACAR`, `DR1TBCAR`, `DR1TLYCO`, `DR1TLZ`, `DR1TFA`, `DR1TFF`, `DR1TFDFE`, `DR1TVB12`, `DR1TCAFF`, `DR1TALCO`).
+   - Historical MUFA conflict: the old independent MUFA floor (`21.8–43.6 g`) was infeasible (`HiGHS Status 8`; attainable range `7.297–17.593 g`). Under FAO-aligned `mufa-component-envelope-v2` (`0–76.3 g`), the 30 s strict 25-field integer solve reached `Optimal` (MUFA `13.506 g`, residual `<1e-12`).
+   - 0.5 s production soft-envelope solve: satisfies 23/25 covered fields (fails `DR1TVB2`, `DR1TNIAC`, plus all 14 unknown fields; `all_clinical_checks_passed = false`).
+2. **Matched 20-Case Benchmark with Real Local Qwen 2.5 3B NF4 (`Saved Model/matched_milp_lp_qwen_benchmark_report.md`, 7 covered nutrients, 5.0 s solver cap):**
+   - Fully Relaxed LP: 45.0% plate-rule pass; 35.0% all 7 bounds met (`1.00` mean violations/plan: `DR1TCARB` 11/20, `DR1TPROT` 9/20); 0.0% integer (`5.05` fractional foods); ₹192.08; realized score `5.271`; median `6.8 ms`.
+   - Continuous Servings + Binary Dishes: 100.0% plate-rule pass; 30.0% all 7 bounds met (`1.15` mean violations/plan); 0.0% integer (`3.80` fractional foods); ₹194.12; realized score `5.369`; median `546.6 ms`.
+   - Discrete MILP (HiGHS): **100.0% plate-rule pass**; **100.0% integer servings**; **15.0% (3/20) all 7 bounds met** (18/20 proven optimal, 2/20 time-limit incumbents; `1.90` mean violations/plan: `DR1TPROT` 14/20, `DR1TCARB` 14/20, `DR1TSFAT` 4/20, `DR1TSODI` 3/20, `DR1TPOTA` 2/20, `DR1TFIBE` 1/20); ₹203.65; realized score **`7.427`**; median `1,921.5 ms`.
+   - Real Qwen 2.5 3B NF4 (prompt-only, unrepaired): **0.0% plate-rule pass**; **0.0% all 7 bounds met** (`6.40` mean violations/plan); 100.0% parsed & integer; ₹74.50; realized score **`715.932`**; median `13,924.6 ms` (one-time load 52.9 s).
+3. **Expanded 50-Archetype Sensitivity Rerun (`Saved Model/optimizer_benchmark_report.json`, 2.0 s MILP cap):**
+   - Discrete MILP (28/50 optimal, 22/50 time-limit incumbents): 100.0% integer, 100.0% plate compliance, `1.30 ± 0.96` violations/plan (mean L1 slack `2.96`, mean latency `1,570.2 ms`) vs. LP + Rounding (0.0% plate compliance, `2.90 ± 1.08` violations, slack `275.01`) and LP + Heuristic Tuning (82.0% plate compliance, `3.84 ± 1.36` violations, slack `699.82`). The simulated stochastic serving-guess comparator (`6.72 ± 0.45` violations) is synthetic and not real Qwen output.
+
+Complete 39-field adequacy, cooked yields, and human clinical acceptability remain unestablished pending independent nutrient data and dietitian review.
+
+9. STAGE 4 — REPORT COMPILER, AST CIRCUIT-BREAKER & EDGE BENCHMARK
+
+Stage 4 compiles the optimized discrete food basket into an empathetic, patient-facing 5-slot chronological meal schedule. It enforces four deterministic Abstract Syntax Tree (AST) safety invariants:
+- Invariant 1 (Food Conservation): Generated dishes must match the optimized basket exactly ($\mathcal{S}_{\text{gen}} \equiv \mathcal{S}_{\text{opt}}$); zero unauthorized food additions.
+- Invariant 2 (Quantity Conservation): Serving counts across slots must sum exactly to Stage 3 values ($\sum_s q_{is} = q_i^*$).
+- Invariant 3 (Zero Calculation Authority): LLM cannot recalculate nutrient metrics; all nutritional deliverables are bound to Stage 3 truth.
+- Invariant 4 (Schema Validity): Strict 5-slot JSON structure.
+
+**AST Safety Scope Statement:**
+- What the AST Validator Mathematically Enforces: (1) 100% preservation of valid food IDs from the Stage 3 basket; (2) 100% exact integer serving preservation across all feeding slots; (3) Strict 5-slot JSON schema contract adherence; and (4) Automatic interception and suppression of unauthorized numerical calorie or nutrient claims in generated text.
+- What the AST Validator Does Not Guarantee: It does not claim or prove that every unconstrained natural language prose sentence emitted by the LLM is free of clinical nuance hallucinations. Terminology is therefore strictly defined as: *"zero unauthorized food identifier or quantity modifications in AST-checked outputs"*.
+
+**Three Operational Latency Modes (Historical Pre-Repair Benchmark vs. Current 29-Entry Solver):**
+1. **Mode A — Deterministic Pre-LLM Pipeline (Historical Legacy Catalog Measurement):**
+   - Stage 1 (Diagnostics): 14.8 ms | Stage 2 (Counterfactual): 18.2 ms | Stage 3 (Legacy HiGHS MILP): 317.5 ms | Stage 4 (AST Scheduler): 24.5 ms.
+   - Historical Core Latency: **Mean 375.0 ms | p50: 295.4 ms | p95: 448.2 ms** (note: on the repaired 29-entry catalog, production Stage 3 defaults to a 500 ms soft-envelope budget while the matched 5.0 s optimal-MILP benchmark recorded a median of 1,921.5 ms).
+   - Sub-second claim: **Measured under legacy catalog / 0.50 s production cap only** (not an independent clinical validation).
+2. **Mode B — Full End-to-End Pipeline with Local GPU LLM (AC Wall Power):**
+   - NVIDIA RTX 3050 Laptop GPU (4 GB VRAM, 4-bit NF4) achieves **16.14 tokens/second**.
+   - Stage 4 LLM Generation: **Mean 22.50 s | p50: 22.09 s | p95: 24.81 s**.
+   - Complete Pipeline Latency: **Mean 22.87 s**. Sub-second claim: **NO** (seconds-scale generative narrative).
+3. **Mode C — Full End-to-End Pipeline on Battery Power-Saving (5–8W Power Limit):**
+   - Power throttling drops token throughput to **2.20 tokens/second**.
+   - Stage 4 LLM Generation: **Mean 96.80 s | p50: 95.39 s | p95: 106.40 s**.
+   - Complete Pipeline Latency: **Mean 97.17 s**. Sub-second claim: **NO**.
+
+**Predefined 100-Case Real LLM Reliability Benchmark:**
+Implemented in `benchmark_stage4_edge_cases_and_statistics.py` and evaluated across the frozen 100-case dataset (`real_llm_evaluation_testset_100.json`, SHA256: `0FC1ACAC42AAAAFBF14540901574FCCB88D0010135A86996B635AC9109A8C1F5`) across 5 cardiometabolic archetypes (N=20 each):
+- The LLM is audited strictly separately from the Stage 3 mathematical optimizer, receiving zero credit for nutritional accuracy.
+- Audited Failure Modes (Raw LLM Baseline vs. Guarded Stage 4 Pipeline with exact counts, denominators, and Wilson 95% CIs):
+  - JSON Parse Success Rate: Raw LLM 35/100 (35.0%, 95% CI [26.3%, 44.8%]) vs. Guarded AST Pipeline 100/100 (100.0%, 95% CI [96.3%, 100.0%]).
+  - Quantity Modification Rate: Raw LLM 100/100 (100.0%, 95% CI [96.3%, 100.0%]) vs. Guarded AST Pipeline 0/100 (0.0%, 95% CI [0.0%, 3.7%]).
+  - Invalid Food Identifiers: Raw LLM 65/100 (65.0%, 95% CI [55.2%, 73.7%]) vs. Guarded AST Pipeline 0/100 (0.0%, 95% CI [0.0%, 3.7%]).
+  - Food Hallucinations (Greedy T=0): Raw LLM 0/100 (0.0%, 95% CI [0.0%, 3.7%]) vs. Guarded AST Pipeline 0/100 (0.0%, 95% CI [0.0%, 3.7%]).
+  - Food Hallucination Drift (Stochastic T=0.7): Raw LLM 24/100 (24.0%) vs. Guarded AST Pipeline 0/100 (0.0%).
+  - Final AST Clinical Safety Invariants Pass: Raw LLM 0/100 (0.0%, 95% CI [0.0%, 3.7%]) vs. Guarded AST Pipeline 100/100 (100.0%, 95% CI [96.3%, 100.0%]).
+- Per-Archetype Performance (N=20 each): All 5 archetypes achieved 20/20 (100.0%, 95% CI [83.9%, 100.0%]) under the Guarded AST Circuit-Breaker.
+- Report saved to `Saved Model/stage4_statistical_reliability_report_100cases.json` (SHA256: `1C54B31833DBCAAE39526A3A58B8B6B7985CC544B17E67EF0F4A9982A087C276`).
+
+10. INDEPENDENT DIETITIAN EVALUATION PROTOCOL
+
+Documented in `clinical_dietitian_review_protocol.md`:
+- Triple-blinded randomized evaluation by 3 accredited Indian Dietetic Association (IDA) clinicians across 50 paired patient vignettes comparing Human Senior Dietitians, BioNutriGPT MILP, and Direct Generative LLMs.
+- 5-point Likert rubric evaluating: (1) Nutritional Adequacy & Safety; (2) Cultural & Regional Authenticity; (3) Household Cookability; (4) Portion Realism; and (5) Overall Clinical Endorsement.
+- Power analysis confirms >90% power to detect 0.5-point difference at $\alpha=0.05$.
+
+11. CURRENT RESEARCH POSITION & ARTIFACTS
+
+BioNutriGPT provides an applied, verified, sub-second deterministic edge core (<400 ms) bridging cross-sectional cardiometabolic screening with culturally tailored dietary synthesis, paired with on-device natural language narrative compilation.
+
+Core Scripts:
+- `Data/preprocess_for_training.py`
+- `train_bionutrigpt_stage1.py`
+- `stage2_counterfactual_engine.py`
+- `stage3_milp_solver.py`
+- `infer_bionutrigpt_pipeline_Stage_1_to_4.py`
+- `benchmark_transformer_vs_dnn.py`
+- `benchmark_optimizer_comparison.py`
+- `test_stage4_stress_test.py`
+- `benchmark_stage4_real_llm_reliability.py`
+- `benchmark_stage4_edge_cases_and_statistics.py`
+- `evaluate_tripod_and_baselines.py`
+
+Full-Stack Application:
+- `backend/main.py` (FastAPI clinical decision support REST API)
+- `backend/schemas.py` (Pydantic v2 data models)
+- `backend/pipeline_service.py` (Singleton execution & VRAM manager)
+- `frontend/src/` (React 18 + TypeScript web interface)
+
+Evaluation Reports:
+- `Saved Model/stage1_test_evaluation_report.json`
+- `Saved Model/tripod_baseline_evaluation_report.json`
+- `Saved Model/transformer_vs_deep_neural_network_benchmark.json`
+- `Saved Model/optimizer_benchmark_report.json`
+- `Saved Model/stage4_real_qwen_stress_report.json`
+- `Saved Model/real_llm_evaluation_testset_100.json`
+- `Saved Model/stage4_statistical_reliability_report_100cases.json`
+- `Saved Model/real_llm_reliability_report_3cases.json`
+- `clinical_dietitian_review_protocol.md`
+
+All files are mirrored byte-for-byte in `Audit/` with matching SHA256 hashes.
+
+END OF CURRENT MODEL EXPLANATION
+
+
+NUTRIENT COVERAGE AUDIT UPDATE
+Two previously missing mappings were recovered using compatible definitions: INDB total folate to DR1TFOLA and vitamin K1 to DR1TVK. The active catalog version is sourced-cooked-v2-folate-k1. There are now 25 fully covered fields and 14 incomplete fields; each remaining gap affects the 20 INDB recipe records. Exact missing food IDs, reasons, and next actions are in Data/food_sources/INDB/nutrient_coverage_audit.json. The proposed verification scope retains Stage 1 features and separates covered measurements, seven priority gaps, five supporting research fields, and two exposure fields. It does not silently drop clinical constraints. The strict 25-field candidate passes its numeric intervals, while full 39-field adequacy remains unverified. RDA/DFE/retinol/sugar rule applicability still requires review.
+
+
+STAGE 2 RULE REVIEW — adult-food-rule-review-v3
+All 39 rules now record units, source context, applicability, role and enforcement.
+For the saved example, 17 intervals changed. Total sugar, total folate, food folate
+and four carotenoids are reporting only. DFE adequacy and synthetic folic-acid limits
+are distinguished; the preformed-vitamin-A ceiling is separate from RAE. Inapplicable
+supplement-only and unestablished food upper limits were replaced by explicitly labeled
+numerical search caps, not intake recommendations. Selected age/sex references were
+corrected. Score-based macro/sodium/potassium/cholesterol/exposure rules remain project
+assumptions needing clinical review. Production accepts only complete active-data candidates with all active interval and structural checks passed. The strict
+diagnostic enforces 24 active covered intervals across 25 populated fields and finds
+a candidate; missing data still prevent full nutrient verification. Stage 1 inputs
+are unchanged. Saved Model/stage2_rule_audit.md lists all 39 rules and source links.
+The Stage 2 UI now reads actual targets/check results rather than fallback values or
+hardcoded PASS badges, and labels program checks separately from clinical validation.
+
+
+STAGE 3 PRODUCTION ACCEPTANCE UPDATE
+The canonical solver now accepts only candidates passing independent recalculation,
+active nutrient completeness/interval checks, plate/portion rules and post-checks.
+An invalid cheaper heuristic cannot replace a valid solver candidate. Failure returns
+an empty basket and explicit data/infeasibility/timeout/validation status. Stage 4 and
+chat acceptance revalidate the plan and cannot compile or accept a rejected candidate.
+The real RTX 3050 sample passed Stage 2 checks and stopped at Stage 3 for missing active
+data; Stage 4 was not invoked. Nine synthetic/real-data regression checks passed, including
+chat revision success and failure. See Saved Model/stage3_production_repair.md and the
+measured stage3_production_live_sample.json. Missing data remain unresolved; no rule
+was silently waived and no real-food full-adequacy result is claimed.
+
+
+## Current evidence and manuscript pointer — 2026-11-18
+The new working paper is Research Paper/BioNutriGPT_Manuscript_v2.md. Consult Research Paper/evidence_snapshot.json for the audited current catalog, feature list, cohort counts, and source hashes; consult Research Paper/Readiness_and_Evidence.md for limitations and study tasks.
+The current catalog has 49 records, not the 29/31 records used by historical saved benchmarks: 20 INDB recipe variants and 29 USDA single-food proxies, including vegetarian and non-vegetarian options. The rule version adult-food-rule-review-v4-exposure-separated defines 30 active fields, seven report-only fields, and two separate exposure fields. Forty-three records have no declared missing active field before other filters; this is not a guarantee that every patient request is feasible.
+The controlled chatbot uses deterministic intent routing and tool-backed revisions. Optional unconstrained chat-answer rewriting is disabled; the separate local-LLM report compiler remains implemented. Allergy warnings persist across accepted revisions and rollback; incomplete catalog allergen information prevents allergen-free certification.
+Earlier sections referring to 100 measured LLM cases or completed dietitian validation should not be used as current research evidence; the new evidence map records why those claims are excluded or require confirmation.
+
+
+Research submission files — 2026-11-18
+A journal-neutral working submission pack is available at Research Paper/Submission_Pack/START_HERE.md, with editable manuscript and supplement, PDF review copies, figures, reporting coverage maps and reproducibility documentation. This packaging does not change the model architecture or establish publication readiness. See Corrected_File_Plan.md for journal-dependent requirements and remaining author/evidence tasks.
+
+
+## 2026-11-18 — LASI evaluation audit and paper update
+Audited the completed LASI pilot: 66,859 merged records, 65,368 eligible, 100 unique balanced profiles (25 per disease stratum), 300 mode-specific optimizer solves. Acceptance: vegetarian 91/100, combined 96/100, non-vegetarian 98/100; overall 285/300, with 10 reported infeasibilities and 5 timeouts. Below 1500 kcal vegetarian acceptance is 21/27. These are unweighted selected-profile computational results, not nationally representative performance, Stage 1 external validation or clinical benefit.
+The Stage 2 benchmark adapter assigns 0.85/0.10 routing scores and 2800/2600 mg sodium/potassium baselines; unavailable dietary inputs are assumptions, and full counterfactual search is not evaluated. The 30 saved chatbot scenarios are ALL diabetes-only. Script-scored 60/60 includes 26 valid swaps and four no-proposal swaps scored as successful refusals. Mean serving delta: 9.46 versus 16.08 without change penalty (41.1% descriptive reduction). Qwen subset: 2/24 scored success but zero valid swap proposals; its prompt lacks most nutrient coefficients and full plate/objective rules. Comparison fairness, timeout scoring and logs need repair.
+Reran 11 chatbot regression checks: ten pass, one allergy declaration ending in a question mark conflicts with the previous no-mutation expectation. This audit did not fix application code or rerun scientific model benchmarks. Updated both current manuscript paths, preserved BioNutriGPT_Research_Manuscript.pre_LASI_update.md, and created Saved Model/LASI_Evaluation_Audit.json/.md. LASI microdata and identifier-bearing case reports are not added to the submission bundle.
+
+
+## 2026-11-18 — Stage 4 v4 benchmark corrections and approved rerun
+Prepared benchmark_stage4_lasi_conversational_v4.py without overwriting v3 outputs. Excluded six incomplete active-nutrient records from the prompt; canonical validator post-checks, full-precision coefficients and objective weights are now supplied. Added exact input-state logging, scenario-cluster bootstrap intervals, same-state ablation summaries, separated null/malformed/missed-feasible outcome accounting and pre/post source hashes. Six benchmark regression checks passed. Saved v3 post-hoc corrections separately: 25 same-preceding-basket pairs, means 7.72 versus 17.28, descriptive reduction 55.32%; seven true feasible no-proposal misses rather than the ambiguous old count nine. No correction to old Qwen performance is inferred from this reanalysis. User explicitly approved the new GPU run; execution started with 36 preserved participants and 78 fixed turns, plus the 12-participant Qwen subset. Scientific results remain pending until completion.
+
+
+## v4 execution and export correction
+The first approved v4 attempt completed all model calls but failed while assembling the final report: a local variable shadowed the imported paired-ablation analysis function. Only the printed aggregate summaries were recoverable; detailed per-turn logs had not yet been saved. They are explicitly archived as incomplete evidence under Saved Model/stage4_v4_failed_export_attempt/RECOVERED_PRINTED_SUMMARIES_ONLY.json.
+The exporter now uses an unambiguous function alias. Per-turn JSONL journals and atomic completed-stage checkpoints are written before final report assembly. Eight benchmark regression checks now pass, including an end-to-end simulated main/export test and checkpoint persistence test. The simulated test used temporary files and no model calls. A fresh scientific run requires user approval under the requested long-run workflow. The previous aggregate 2/24 Qwen pass rate is not a substitute for missing detailed evidence.
+
+
+## 2026-11-18 — Checkpointed v4 rerun completed and verified
+The explicitly approved checkpointed rerun completed in 1548.32 seconds. All four completed-stage checkpoints and all per-turn journals were saved before final export. The final JSON and Markdown reports were successfully generated. verify_stage4_v4_results.py verified frozen request equality, unique participant counts, disease balance, reported pass counts, all 24 Qwen prompt eligibility/rule checks, checkpoint consistency and unchanged source/input hashes. Actual Qwen model revision: aa8e72537993ba99e69dfaafa59ed015b17504d1, CUDA RTX 3050, 4-bit NF4.
+Full guarded evaluation: 76/78 protocol passes, 29/42 validated revisions (29/30 oracle-feasible), 11 justified refusals and two timeout-related failures, with no invalid proposals. Matched 12-participant comparison: guarded 24/24 versus Qwen 2/24 protocol passes; validated proposals on feasible requests 9/9 versus 0/9. Qwen made eight invalid revision proposals and passed 2/3 targeted nutrient queries. Mean matched response time: guarded 664.14 ms versus Qwen 46111.91 ms; timing excludes model loading and prompt construction.
+Same-input-state ablation: n=25 successful pairs; mean serving changes 7.72 with change penalty versus 16.56 without it (53.38% lower descriptively). Mean change difference 8.84, scenario-cluster bootstrap 95% interval [6.72, 11.12]. This successful-pair conditional analysis is not clinical acceptability evidence or national inference.
+Authoritative aggregate summary: Saved Model/stage4_lasi_v4_verified_summary.md/.json. Full measured report: Saved Model/stage4_lasi_conversational_benchmark_v4_report.json. Measured hashed Python source files preserved under Saved Model/stage4_lasi_v4_measured_source_snapshot. The failed-export attempt remains separately archived and is not pooled with this complete run. Eight benchmark correction checks passed before execution; this does not assert that every unrelated application test passes.
+
+
+STAGE 4 CONVERSATION FIRST SLICE — 2026-11-19
+Added conversation_service.py and wired /api/chat to it: version-aware food context, 40-turn local transcript, clarification choices, food/meal/per-serving multi-nutrient answers and exact replacement quantity requests through existing solver/validator. Frontend clarification buttons added. 19 synthetic/regression tests passed; frontend TypeScript/Vite build passed. This is deterministic contextual chat; general LLM interpretation, source-grounded education and expanded dialogue evaluation remain pending. Historical Stage 4 benchmark results do not evaluate the new layer. See Stage4_Conversation_Upgrade_v2.md.
+
+
+STAGE 4 NATURAL-WORDING INTERPRETER — 2026-11-19
+Implemented optional local Qwen request interpretation with strict IDs/schema validation, confirmation of interpreted mutations, backend-only factual answers and visible fallback. Frontend experimental toggle added, off by default. 25 checks passed using mocked generation; frontend build passed. Six-case actual GPU pilot prepared, awaiting approval. No new LLM performance claim. See Stage4_Conversation_Upgrade_v2.md.
+
+
+STAGE 4 REAL QWEN PILOT — 2026-11-19
+The approved six-request local GPU pilot completed with 0/6 accepted structured interpretations and 6/6 validator rejections. Requests 1–3 had unexpected replacement fields, request 4 supplied null nutrients, and requests 5–6 had unsupported scope fields. This is a failed interpretation pilot, not evidence that the natural-language feature is ready. No plan solver or plan mutation was part of this pilot.
+Original per-request JSONL: Saved Model/stage4_interpreter_v2_pilot.jsonl. Original interpreter/pilot source and failure summary preserved in Saved Model/stage4_interpreter_v2_failed_pilot/. The original exception path discarded raw generations and timing, so exact generated JSON and per-call latency cannot be reconstructed.
+Prepared a revised prompt with an explicit JSON template and per-intent field rules while retaining strict validation. Added opt-in pilot diagnostics retaining raw output, error details and elapsed time on rejection; raw model output is not exposed through the chat API. Rerun will use a separate stage4_interpreter_v2_pilot_r2.jsonl. Fourteen interpreter/conversation checks passed after prompt/logging edits, followed by seven interpreter checks including a new failed-generation diagnostic test. These use mocked generation. Revised actual GPU pilot remains pending user approval. Keep experimental natural wording off for dependable use until validated.
+
+
+STAGE 4 REVISED GPU PILOT — 2026-11-19
+Six-request pilot completed: 2/6 correct full interpretations, 4/6 structurally accepted, 2/6 rejected. A protein question was wrongly interpreted as removal; another clarification carried an irrelevant nutrient. Valid JSON is not semantic accuracy. First call including loading 31.26 s; five warm calls averaged 3.34 s. Experimental mode remains off by default and unvalidated for dependable use. Raw output/timing retained; summary and source snapshots: Saved Model/stage4_interpreter_v2_pilot_r2_summary/. No solver changes or plan mutations occurred. No further GPU run started.
+
+
+STAGE 4 HYBRID ROUTING — 2026-11-19
+Implemented deterministic-first routing: recognized nutrient/portion/revision requests bypass Qwen even with natural mode enabled. Unresolved wording alone uses the model. Negated explicit changes and leave-out requests receive clarification before generation. Model-inferred remove/replace actions require evidence in the original message plus confirmation; information-only requests cannot create pending removals under the tested rules. Additional keep/lock constraints trigger clarification. Clarification/unsupported model responses now reject nonempty action/nutrient fields. Unavailable or rejected interpretation of unresolved wording asks for clarification instead of falling through broad legacy matching.
+30 combined regression tests passed, followed by 19 focused tests after routing refinement. Frontend TypeScript/Vite build passed. Prepared pilot_stage4_hybrid_v3.py: eight synthetic full-conversation requests, real Qwen only for unresolved language, temporary sessions and mocked revision solver. This pilot cannot establish real-food feasibility, clinical safety or general chatbot quality. Its dry-run scenarios were printed; no new GPU calls have started. Independent pilot approval is pending. Natural mode remains experimental and off by default. Earlier failed pilots remain preserved.
+
+
+STAGE 4 HYBRID GPU PILOT COMPLETED — 2026-11-19
+Eight synthetic cases completed: 7/8 expected-handling matches, including planned clarifications; not general accuracy. Five standard-path requests used no model, three used Qwen. No unexpected solver calls; the one intended explicit replacement called a mocked solver. Natural removal asked for confirmation. One natural replacement failed because Qwen invented a lunch restriction; validation rejected it. Standard synthetic/mock responses averaged 19.34 ms; first model response including loading 29.59 s, two warm model responses averaged 2.65 s. Source snapshots, raw outputs and verified summary: Saved Model/stage4_hybrid_v3_pilot_summary/. Real solver feasibility, broad multi-turn quality and educational answers remain untested/unfinished. Natural mode stays experimental and off by default. No further GPU run started.
+
+
+STAGE 4 REPLACEMENT WORDING AND FOLLOW-UPS — 2026-11-19
+Added explicit replacement normalization for “I would rather have … instead of …”, “I'd rather have …”, “Could/Can I have … in place of …”, and “Please use … instead of …”. A trailing comma plus explicit serving count is retained. These recognized forms bypass the LLM and preserve source, replacement and whole-serving quantity. The previously failed hybrid-pilot wording is now covered by a deterministic regression test; this does not retrospectively change that pilot's 7/8 result.
+Missing replacement quantities now produce selectable serving prompts and accept a subsequent reply such as “two servings please”. Quantity context is bound to the accepted plan version and cleared by unrelated intervening messages. Food clarification context is also consumed instead of indefinitely lingering. Extra meal restrictions, extra sentences and weight/volume units prompt clarification rather than being silently discarded by the replacement parser.
+Verification: 35 tests passed (13 contextual conversation tests, 11 interpreter tests and 11 legacy chat repair tests), including four replacement phrasing subcases, quantity completion, stale-quantity rejection, intervening-message cancellation and explicit meal/weight/extra-instruction rejection. All sessions were temporary and synthetic; revision tools were mocked for these new routing tests. No new GPU calls or clinical/real-solver benchmark was run. Natural mode remains experimental and off by default.
+Remaining: a frozen fresh multi-turn evaluation with real local-model residual requests, real-catalog and real-solver revision evaluation, broader semantic coverage, grounded educational explanations and frontend conversation restore. Historical pilot scores remain unchanged.
+
+
+STAGE 4 REAL-CATALOG MULTI-TURN EVALUATION PREPARED — 2026-11-19
+Added evaluate_stage4_real_multiturn_v4.py. Default preparation succeeded against the current 49-food catalog; protocol and input/source hashes saved under Saved Model/stage4_real_multiturn_v4/. Five scenarios / nine turns cover nutrient follow-up, missing replacement quantity, explicit instead-of wording, negation/meal-scope clarification and a residual natural-language removal with confirmation. Uses one saved Stage 2 sample; initial solve and replacement pair selection are fixed. No pair search for feasibility. Every proposal will be independently recalculated/validated, checked for no pre-acceptance mutation, tested against tampering, accepted in an isolated temporary session and rolled back. Absence of a proposal is not counted as successful feasibility. Exceptions and every turn are journaled.
+Only preparation ran. Real initial/revision solves and any local Qwen calls await user approval for this independent experiment. No result or clinical claim is available yet.
+
+
+STAGE 4 REAL-CATALOG MULTI-TURN RUN COMPLETE — 2026-11-19
+Five scenarios / nine turns completed using one saved Stage 2 sample and real catalog/solver. Two requested replacements yielded independently validated proposals with source excluded and target exactly two servings; both passed tamper rejection, acceptance/version, basket equality and rollback checks. All nine turns preserved the accepted plan before explicit acceptance. Natural take-off request failed Qwen schema validation; its scripted confirmation unnecessarily reached Qwen with no pending action. This is not 9/9 chat success or clinical validation. Saved report, journal, verification and source snapshot: Saved Model/stage4_real_multiturn_v4/. No further run started.
+
+
+STAGE 4 COLLOQUIAL REMOVAL REPAIR — 2026-11-19
+Added local take-off/leave-out parsing with explicit confirmation. Food references use a named food or same-version context; ambiguous references ask for selection. Negation, meal restrictions and extra constraints require clarification. Confirmation/cancel without a pending interpretation returns locally without Qwen or solver calls. Added four regression tests; adjusted the existing LLM confirmation fixture to unresolved omit wording because leave-out now routes locally. Historical real-catalog run remains unchanged. No new GPU evaluation performed.
+
+
+BREAKFAST EGG REQUEST AND CATALOG INDEX — 2026-11-19
+Added confirmed one-100-g boiled-egg breakfast requests to conversation_service. Stage 3 receives a fixed one-serving inclusion; generated schedule is checked before proposal and acceptance. Meal requirements persist in accepted revision/preferences and constrain subsequent proposal checks. Pure-vegetarian and recorded egg-allergy requests are blocked; existing exclusions remain enforced. This is daily optimization plus schedule post-validation, not a joint meal-slot optimizer; unsuccessful placement is reported without claiming mathematical infeasibility. 39 existing checks plus two focused breakfast checks passed. Real solver integration for the new breakfast feature has not yet run.
+Created food_catalog_index.json and Food_Catalog_Organization.md grouping all 49 records into readable food groups with separate solver categories, serving basis and source. Nutrient source records and solver categories were not changed. Nuts/seeds-as-fruit remains a documented solver categorization issue requiring feasibility review. Food-group exclusion routing and ingredient completeness remain separate unfinished work.
+
+
+GENERAL MEAL PLACEMENT — 2026-11-19
+Removed breakfast-egg-specific condition and food ID. Shared catalog lookup + configured meal slots + whole catalog serving quantity now handles placement requests; omitted quantities are clarified rather than treated as egg counts. Generic schedule allocation moves requested food servings and verifies exact daily basket conservation. Proposal checks, acceptance, current-plan retrieval and rollback use requested schedules; rollback restores meal preferences. 42 tests passed before final retrieval/rollback corrections, then 31 conversation/legacy checks passed after corrections. Examples cover eggs, oats and lentils through the same path. No real solver rerun. Scope: one requested food at one meal, all its daily servings assigned there; daily nutrient validation does not establish meal-specific nutritional adequacy. Existing deterministic language grammar and default meal scheduler remain; this is not unrestricted natural-language understanding.
+
+
+CHATBOT GROUP PREFERENCES AND REAL INTEGRATION — 2026-11-20
+User revoked per-task approval requests: proceed with authorized work without repeated permission prompts. Added data-driven food_group_preferences.json and generic exclusion parsing for configured groups, including no/without/remove and dont-want phrasing. Entire group IDs are supplied to the optimizer, independently validated and persisted on acceptance; rollback restores group preferences. Multi-ID proposals no longer incorrectly use the single-food exclusion validation branch. 31 prior conversation/legacy tests and three group-specific tests passed. Real-catalog temporary-session run successfully excluded all four identified fish items and accepted a fish-free-by-catalog basket; subsequent egg-at-breakfast request returned no proposal under the sample constraints. No clinical/allergen-free guarantee. Corrected fixed-food-quantity conflict wording. Results: Saved Model/stage4_group_meal_integration_20261120.json. General meal placement still needs broader successful real-case coverage; independent reserved dialogue benchmark, compound-request orchestration, education retrieval and deployment hardening remain pending.
+
+
+ATOMIC COMPOUND PREFERENCES — 2026-11-20
+Added backend/compound_requests.py to compile explicitly separated group exclusions and whole-serving meal placements into one revision specification. All clauses must be represented before confirmation; unsupported clauses, ambiguous food identities, duplicate placements and include/exclude conflicts require clarification without calling the solver. Placement clauses require the full catalog food name or ID and 1–3 daily catalog servings. This is a limited deterministic grammar, not unrestricted language understanding; no food-specific request branch was added. Existing conversational single-removal phrasing remains supported.
+Validation: 49 conversation, interpreter, legacy repair and group tests passed. evaluate_stage4_compound_requests.py ran one saved Stage 2 profile using the real catalog and optimizer in a temporary session. Food selection was fixed as the first non-fish initial-basket food by ID, with its existing daily quantity assigned to Dinner; no alternate candidate search or retries. The combined fish exclusion and dinner placement produced a proposal, passed independent nutrient/basket validation, preserved the active version before acceptance, persisted both preferences on acceptance, and restored the original basket on rollback. Evidence and source hashes: Saved Model/stage4_compound_integration_20261120.json. This engineering regression does not establish clinical benefit, general conversational accuracy, allergen completeness or per-meal nutrient adequacy. Existing frontend confirmation/proposal controls are reused; no browser interaction test was performed. Broader reserved dialogue evaluation, grounded educational answers and deployment hardening remain pending.
+
+
+BROADER DIALOGUE REGRESSION AND PARSING REPAIRS — 2026-11-20
+Added seven adversarial routing/session test methods in verify_stage4_dialogue_edges.py. The initial run found lost serving quantities after ambiguous-food clarification, negative/decimal quantities read as integer substrings, and an unsupported cost condition silently discarded. Replaced substring parsing for single meal placement with complete-request parsing and verified food-description tokens against catalog labels. Ambiguous selection now retains the original quantity; unsupported modifiers and malformed quantities clarify without proposing changes. Generic catalog/meal logic remains; no food-specific branch was added.
+All 56 combined checks passed after repair. Additional checks verify cancellation, intervening questions, stale-version confirmation and read-only nutrient follow-ups. Before/after evidence: Saved Model/stage4_dialogue_edges_before_20261120.txt and stage4_dialogue_edges_after_20261120.json (source hashes included). These are synthetic deterministic regression checks with a mocked proposal tool, not new real-solver results, a GPU language-model benchmark or held-out publication evidence. Earlier real-catalog evidence remains historical. Reserved natural-language evaluation, broader real-catalog coverage, educational retrieval and deployment hardening remain unfinished.
+
+
+REAL-CATALOG DIALOGUE EVALUATION V5 — 2026-11-20
+Ran evaluate_stage4_dialogues_v5.py: 9 scenarios, 17 turns, one saved Stage 2 profile, real catalog/optimizer and two actual Qwen GPU interpretation calls in temporary sessions. All 17 turns preserved the active basket/version before acceptance. Three returned proposals (group exclusion, combined exclusion/placement, two placements) passed independent validation, tamper rejection, acceptance and rollback checks. Cancellation, unsupported cost conditions and negative quantities produced no proposals. The free-form plan question succeeded; the free-form removal failed schema validation because Qwen omitted required neutral fields. No proposal or unintended plan change followed. Thus the run is not a claim of 100% task completion: natural-language revision reliability remains incomplete. Cold plan interpretation took 66.38 s; warm failed removal took 2.91 s, not representative latency estimates. Source hashes, protocol, raw model responses and all per-turn evidence are saved under Saved Model/stage4_dialogues_v5; Report.md distinguishes engineering checks from publication evidence. No production code was changed in this evaluation step. Next: structured-output reliability repair and fresh wording evaluation; broader profiles/browser validation remain pending.
+
+
+STRUCTURED RESPONSE REPAIR AND FRESH GPU CHECK V6 — 2026-11-20
+Updated chat_interpreter.canonicalize to populate only inapplicable neutral fields by intent without overriding supplied values. Required food/action arguments and all nutrient scope fields remain mandatory; strict types, unknown-field/ID checks, semantic guards and confirmation remain enforced. No food-specific rule added. 58 automated tests passed; historical v5 failed removal payload replay passed without altering historical evidence.
+Fresh real Qwen GPU evaluation: four scenarios/six turns, one saved Stage 2 case, real catalog/solver. Named removal succeeded after confirmation and produced one independently validated proposal; tamper rejection, acceptance and rollback passed. Plan overview succeeded. Qwen wrongly interpreted an information question and a negated removal as removals; existing evidence/negation checks rejected both. No unintended change occurred across six turns. Missing-neutral-field failure is repaired, but natural-language semantic reliability remains incomplete; do not call these four model calls 100% successful. Evidence: Saved Model/stage4_structured_v6/Report.md and associated raw outputs/hashes. New runner: evaluate_stage4_structured_v6.py. No browser test or broad clinical/generalization claim.
+
+
+READ-ONLY DESCRIPTIONS AND NEGATION REPAIR V7 — 2026-11-20
+Added generic describe intent to the interpreter and deterministic catalog-based descriptions in conversation_service. Descriptions report serving size, daily quantity and per-serving energy/protein/fibre with missing-value handling; no generated clinical-suitability claims. Explicit descriptive phrasing stays local, ordinal references ask for food selection, and negated omission/substitution stays local without pending actions. Model prompt now explicitly separates descriptions from removals. No food-specific condition introduced.
+62 automated checks passed. Fresh real-catalog evaluation: five scenarios/eight turns and three actual Qwen GPU calls. Two fresh informational phrasings mapped correctly to describe; one removal mapped correctly and produced an independently validated proposal after confirmation. Tamper rejection, acceptance and rollback passed. Ordinal clarification and negated omission worked locally. All eight turns preserved the accepted basket/version before acceptance. Cold interpretation 36.75 s; warm 2.59/2.63 s, not representative performance estimates. Full evidence: Saved Model/stage4_understanding_v7/Report.md plus protocol, source hashes and raw turns. Historical failures retained unchanged. This is targeted engineering regression, not general chatbot accuracy or clinical validation. Reserved dialogue/profile evaluation, browser QA, broader educational answers and deployment hardening remain pending.
+
+
+CURRENT STAGE 2 AUDIT V1 — 2026-11-20
+Executed audit_stage2_current_v1.py against current code without modifying production rules or historical reports. Captured all 39 current v4 rule metadata records; historical report remains v3. All 216 boundary combinations had finite ordered intervals; 27 extreme 25 kg male combinations conflict across envelope protein minimum (56 g) and later filter maximum (50 g). Metadata validator accepts minors and ignores supplied renal/pregnancy flags; negative nutrient override accepted, while contradictory/nonfinite overrides are rejected. Local score perturbation across hardcoded cutoffs produces discontinuous carbohydrate/fibre, CVD nutrient bounds and a 500 kcal energy change in the explicit example. Production Stage 2 still defaults to legacy checkpoint/cutoffs; repaired v2 artifact equivalence was not established. Scope is function-level computational audit, not clinical revalidation, full counterfactual inference or food feasibility. Evidence and prioritized repairs: Saved Model/stage2_current_audit_v1/Report.md, machine-readable cases and source hashes. Next: eligibility/input and cross-rule consistency repairs, then full stability/feasibility experiments with frozen model artifacts. Stage 2 audit is advanced, not fully closed.
+
+
+STAGE 2 ELIGIBILITY AND CONSISTENCY REPAIR — 2026-11-20
+Stage 2 metadata validation now requires age 18+ and rejects explicitly true renal_disease/pregnant/lactating flags, with strict boolean/null typing. Absent flags remain explicitly unknown in validated metadata, not evidence of suitability. JSON patient/pipeline schemas preserve these flags and enforce adult ages; pipeline forwarding retains declared flags. Frontend/TXT collection is not yet implemented and this does not establish a complete clinical screening workflow.
+Protein envelope maximum now matches the existing filter's 2 g/kg ceiling. If the existing floor exceeds this ceiling, Stage2 raises an explicit conflict instead of relaxing either rule. Negative nutrient-bound overrides are rejected. Original 216-case grid: 27 conflicting extreme profiles now rejected; 189 remaining cases retain finite ordered bounds. 42 combined tests passed; following final protein upper-bound alignment all seven Stage2 contract tests passed again. Before-evidence retained under stage2_current_audit_v1; after-evidence/source hashes under Saved Model/stage2_contract_repair_v1/verification.json. No risk-threshold/clinical-reference policy change, training, full counterfactual or food feasibility experiment. CLI defaults, complete input collection, calibrated-model binding and threshold-stability studies remain unfinished.
+
+
+STAGE 2 FORM AND TXT ELIGIBILITY COLLECTION — 2026-11-20
+Added Yes/No/Unknown kidney-disease, pregnancy and breastfeeding fields to the profile form (visible for form and import tabs). Unknown is the initial state; declared true status stops automatic planning in frontend validation and remains rejected by Stage2. API metadata forwards all three flags. TXT comments support renal_disease, pregnant and lactating with yes/no/unknown, true/false/null or 1/0. Invalid values and conflicting duplicate declarations are rejected. Multipart upload forwards the same flags and rejects conflicting explicit file/form values. Imported missing fields reset to unknown via blank metadata, not previous patient values. No new age or therapeutic policy change.
+Eight Stage2 contract tests passed, including TXT tri-state preservation, missing values, malformed tokens and conflicting declarations; frontend TypeScript/Vite production build passed. Python changed-file syntax checked. Browser visual/interaction QA was not performed. Unknown eligibility still does not establish clinical suitability. Next: full counterfactual stability and frozen model-artifact provenance; silent CLI anthropometry defaults remain an outstanding separate issue.
+TXT example (metadata header before the existing 87 values):
+# renal_disease=no pregnant=unknown lactating=no
+
+
+STAGE 2 ARTIFACT BINDING AND GPU STABILITY PILOT — 2026-11-20
+Verified production Stage2 remains on legacy model/preprocessing, raw sigmoid probabilities and fixed 0.617/0.445/0.603 cutoffs, separate from repaired comparison artifacts. Hashed both sets without replacing production assets. Executed six-run CUDA counterfactual pilot on backend sample. Initial v1 mixed supplied and recomputed dietary ratios and is preserved with explicit limitation; reran v2 with consistently recomputed ratios. V2 baseline/repeat, +/-1% weight and +/-1% dietary cases all passed existing filters, had no envelope violations and preserved immutable candidate features. Repeat identical; weight changes altered energy/bounds but not optimized targets for this fixture. Maximum normalized target differences for dietary -/+1% were 1.4576%/1.0311% (denominator max(abs(baseline),1) in field units). No general robustness, clinical or food feasibility claim. Results/source hashes/raw dossiers: Saved Model/stage2_stability_v2/Report.md. Production code unchanged. Next: derived-ratio input consistency and explicit model/calibration/threshold contract, then multi-profile stability and Stage3 realization.
+
+
+DERIVED-RATIO AND MODEL IDENTITY CONTRACT — 2026-11-20
+Added canonicalize_dietary_ratios: computes seven derived fields from raw nutrients, preserves caller and other features, records supplied/derived values and corrections. Shared by Stage1 diagnostic inference and Stage2 before baseline scoring. Production behavior changes for inconsistent ratios; historical evaluations are not silently reattributed to this normalization. Outputs now include checkpoint/preprocessor SHA256, feature-order hash, architecture, raw-sigmoid status, fixed cutoff values/provenance and repaired-v2-equivalence=false. No model migration or calibration change.
+Ten Stage2 contract tests passed. Two CUDA Stage2 runs had identical targets/bindings, no envelope violations and passed implemented filters. Evidence: Saved Model/stage2_ratio_contract_v3/Report.md and raw dossiers. This binds assets but does not validate threshold or model suitability; full Stage1/Stage2 prediction agreement, multi-profile stability, guideline comparator and food realization remain pending. Historical stability pilots preserved. CLI anthropometric defaults and cutoff discontinuities remain unresolved.
+
+
+STAGE 1 / STAGE 2 GPU AGREEMENT VERIFIED — 2026-11-20
+Ran verify_stage12_gpu_agreement.py on the existing sample with supplied versus canonical dietary ratios, using explicit production assets and isolated temporary output destinations under Saved Model/stage12_agreement_v1. Baseline diabetes/obesity/CVD probabilities matched exactly across stages in both cases; model/preprocessor identity, operating cutoffs and ratio audits matched. Final nutrient envelopes identical between cases. Two cases ran on CUDA (5.18 s and 1.87 s). No production code, model or dossier changed in this step. Scope is single-fixture shared-normalization/inference agreement, not repaired-v2 model validation or broad robustness. Report, protocol/hashes and raw per-stage outputs saved. Remaining: multi-profile stability/guideline comparator, Stage3 realization, model-migration compatibility, CLI defaults and threshold policy review.
+
+
+STAGE 1 / STAGE 2 GPU AGREEMENT VERIFIED (v2 — 3 CASES INCLUDING DETERMINISM) — 2026-11-20
+Executed fresh isolated verification runner verify_stage12_agreement_v2.py on NVIDIA GeForce RTX 3050 Laptop GPU (CUDA). Validated baseline prediction agreement between Stage 1 screening (infer_bionutrigpt_pipeline_Stage_1_and_2.py) and Stage 2 counterfactual baseline scoring (stage2_counterfactual_engine.py) across three frozen cases: Case A (supplied dietary ratios), Case B (canonical recomputed ratios), and Case C (repeat of Case B establishing determinism).
+Measured baseline probabilities on the standard 87-feature backend fixture:
+- Diabetes: Stage 1 = 0.34435883, Stage 2 = 0.34435883 (absolute difference: 0.00e+00, PASS <= 1e-07)
+- Obesity: Stage 1 = 0.23807271, Stage 2 = 0.23807271 (absolute difference: 0.00e+00, PASS <= 1e-07)
+- CVD: Stage 1 = 0.03901693, Stage 2 = 0.03901693 (absolute difference: 0.00e+00, PASS <= 1e-07)
+All three cases passed all invariant checks:
+1. Exact probability agreement (max difference 0.00e+00 across all outcomes and cases).
+2. Asset bindings verified: checkpoint SHA-256 (ccb47ba51760335cc56974705ed2e66ca9a45780bc272fb53cd5288b420250ae) and preprocessor SHA-256 (04c69228edbf0ac4fb50c7e65f73e2c017b9eb56288f05cb3da091a0562278c4) matched across stages.
+3. Probability transform confirmed: raw_sigmoid_no_calibration.
+4. Operating cutoffs verified: diabetes 0.617, obesity 0.445, cvd 0.603; classifications agreed.
+5. Ratio recomputation audit matched identically between stages.
+6. Input arrays were not mutated (caller immutability confirmed), and 80 non-derived clinical features remained identical.
+7. Stage 2 nutrient constraint envelopes matched identically between Case A and Case B.
+8. Determinism confirmed: Case B and Case C produced 100% identical outputs.
+Outputs saved in Saved Model/stage12_agreement_v2/ (protocol.json, binding.json, results.json, summary.json, Report.md, and all six raw per-stage JSON files). Earlier v1 evidence in Saved Model/stage12_agreement_v1/ remains preserved. Production code, model weights, and thresholds were not modified.
+
+
+STAGE 1 ROBUSTNESS STUDY COMPLETED — 2026-11-20
+Frozen repaired six-model comparison extended to nine prespecified engineering scenarios on the same 7,004 temporal participants. Whole diet/lipid/both missingness, 20% dietary-cell loss at two seeds, +/-10% dietary and +/-5% lipid perturbations plus joint perturbation use frozen preprocessing/calibrators and derived-feature recomputation. No training or temporal tuning. 54 prediction artifacts/324 metric rows completed and independently checked; neural inference CUDA, classical inference CPU. BioNutriGPT calibrated diabetes AUROC: baseline .810722, missing diet .800802, missing lipids .760739, missing both .744079, joint noise .809445. No overall custom-Transformer robustness advantage established. These are descriptive engineering stresses, not clinically established measurement-error rates, observed missingness or significance evidence; paired robustness uncertainty remains unfinished. V1/v2 failed exports retained as incomplete; v3 verified complete. Research Paper/Stage1_Robustness_v3_Results.md and Saved Model/stage1_robustness_v3 contain reports/protocol/hashes/predictions. Production unchanged.
+
+
+STAGE 1 DEMOGRAPHIC SUBGROUP EVALUATION COMPLETE — 2026-11-20
+Executed comprehensive demographic subgroup evaluation of all six repaired Stage 1 models (logistic regression, histogram boosting, CatBoost, MLP, BioNutriGPT, and FT-Transformer) on the frozen temporal cohort (N=7,004 participants) across three clinical outcomes (Diabetes, CVD primary; Obesity exploratory). Evaluated three demographic dimensions using observed survey metadata (joined by SEQN):
+1. Sex (RIAGENDR): Female (N=3,599), Male (N=3,405).
+2. Age (RIDAGEYR): 20–40 (N=2,257), 41–65 (N=3,173), >65 (N=1,574, top-coded at 80 years).
+3. Race/Ethnicity (RIDRETH1): Mexican American (N=840), Other Hispanic (N=723), Non-Hispanic White (N=2,564), Non-Hispanic Black (N=1,784), Other Race/Multi-Racial (N=1,093).
+Calculated 360 subgroup metric rows (point estimates of AUROC, average precision, Brier score, calibration-in-the-large, joint calibration slope/intercept, and threshold 0.5 metrics) across both calibrated and raw probabilities. Quantified uncertainty using 2,000 participant-level bootstrap replicates per subgroup, drawing shared resample indices across models for paired BioNutriGPT-minus-comparator differences.
+Key findings:
+- Calibrated age-stratified AUROC ranges across six models are 0.706–0.778 for diabetes and 0.710–0.764 for CVD. Of 120 primary-outcome AUROC/Brier contrasts against CatBoost, histogram boosting and FT-Transformer, 12 pointwise intervals exclude zero, with mixed directions. These exploratory comparisons are unadjusted; neither overall architectural superiority nor equivalence is established. The causes of subgroup differences and clinical fairness were not tested.
+- Small-group warning policy: zero groups had N < 100 or < 20 positives/negatives in the observed temporal cohort (lowest was CVD in age 20–40 with 37 positives).
+- Independent verification script (verify_stage1_subgroups_v1.py) passed all checks: input/model hashes, participant alignment, metric recomputations, paired difference directions, interval ordering, and synthetic invariant unit tests. Completed.json and verification.json saved under Saved Model/stage1_subgroups_v1/. Detailed report in Research Paper/Stage1_Subgroup_Results_v1.md. Unweighted sample evaluation; complex survey weighting and design effects remain separate future work.
+
+SUBGROUP AUDIT CORRECTIONS — 2026-11-20
+Corrected numerical ranges and unsupported causal/equivalence claims in subgroup summaries. Independently reproduced 360 calibration rows and all 660 bootstrap intervals; source demographics checked. Repaired shuffled-ID verifier test. Numerical result files, trained models and production behavior unchanged. Extended evidence: Saved Model/stage1_subgroups_v1/extended_verification.json. Complex survey-design evaluation remains pending.
+
+STAGE 1 SURVEY SENSITIVITY — 2026-11-20
+Overall six-model WTDRD1PP-weighted analysis completed on 7,004 participants, 24 strata/49 masked PSUs. Stratified delete-PSU jackknife with 25 degrees of freedom; 54 metric rows and 45 exploratory paired contrasts. Independent weighted AUROC/Brier and replicate interval arithmetic checked. External survey-package validation and survey-aware subgroup analyses remain pending. Selection bias is not removed by these weights. See Research Paper/Stage1_Survey_v1_Results.md. Production unchanged.
+
+SURVEY REFERENCE AND SUBGROUP EVALUATION VERIFIED — 2026-11-20
+R survey 4.5 independently matched the Python overall survey estimates, uncertainty and paired contrasts (54 metric rows/45 contrast rows). Domain evaluation completed for sex, age and RIDRETH1 groups while retaining the full 24-stratum/49-PSU design: 594 total metric rows and 495 paired rows including overall. All 594 point estimates independently checked. Conditional-on-model, unadjusted exploratory contrasts; selection bias, Indian validity and clinical benefit remain unresolved. Weighted calibration diagnostics and clinical-utility analysis are outside this run. See Research Paper/Stage1_Survey_Reference_v1_Results.md and Saved Model/stage1_survey_reference_v1/verification.json. Earlier pending statements about reference-package/subgroup survey evaluation are superseded by this entry. Production unchanged.
+
+WEIGHTED CALIBRATION AND EXPLORATORY DCA VERIFIED — 2026-11-20
+Six frozen models, N=7,004, WTDRD1PP and JKn survey uncertainty. Verified 108 calibration point estimates, 360 bins, 736 net-benefit rows and 644 paired contrasts. BioNutriGPT calibrated offset intercepts: diabetes 0.0512, CVD 0.0273 (intervals include zero), obesity 0.2447 [0.1265,0.3628] indicating average underprediction. DCA is hypothetical further assessment on a cohort including known disease, not established screening/treatment/nutrition utility. No overall Transformer superiority or optimal threshold claim. Calibration SEs from R survey; Python independently checked DCA SEs. See Research Paper/Stage1_Calibration_DCA_v1_Results.md. Production unchanged.
+
+DOWNSTREAM ADDED-VALUE DESIGN AUDIT — 2026-11-20
+Prepared protocol and source coverage audit in Saved Model/stage1_downstream_design_v1/. No optimizer comparison completed. Production Stage2 uses legacy raw probabilities/cutoffs; repaired calibrated predictions require a separate explicit action-policy adapter. Study separates prediction-driven rule branching from counterfactual optimization; measured BMI and known diagnoses take precedence. Outcome-derived labels must not be substituted for reported clinical history. See Research Paper/Stage1_Downstream_Added_Value_Protocol_v1.md.
+
+RESEARCH STAGE 2 RULE ADAPTER IMPLEMENTED — 2026-11-20
+Separate explicit-flag module connects saved repaired calibrated probabilities to reviewed nutrient-bound branches. Rules-only rejects predictions; measured BMI and known diagnoses take precedence; unknown history retained. Eight legacy branch parity checks plus contract checks passed. Five deterministic real temporal records produced 80 valid research envelopes over three models and five exploratory thresholds; no solver or counterfactual study run. Envelopes remain uncertified pending solver target/objective integration and independent nutrient replay. Production unchanged. See Research Paper/Stage2_Research_Adapter_Verification_v1.md.
+
+DOWNSTREAM OPTIMIZER CONNECTION PILOT COMPLETE — 2026-11-20
+Five real temporal profiles, 80 paired arm/threshold solves using identical catalog, mixed mode, fixed rules-only targets and three-second limit. All 80 plans accepted and independently replayed against assigned and common reference constraints. Rules-only feasible 5/5; no added feasibility benefit demonstrated. This is a connection pilot, not the full cohort or clinical added-value study. Report: Research Paper/Stage1_Downstream_Optimizer_Pilot_v1.md. Production unchanged.
+
+
+STAGE 1 ROBUSTNESS UNCERTAINTY EVALUATION & REMAINING AUDIT REPAIRS COMPLETE — 2026-11-21
+Completed the remaining Stage 1 engineering repairs and the paired bootstrap uncertainty evaluation across all six model architectures and nine engineering perturbation scenarios on the frozen temporal cohort (N=7,004 participants).
+
+PART A — DOWNSTREAM AUDIT GAPS CLOSED:
+1. Effective Input Fingerprinting (run_stage1_downstream_study_v2.py): Synchronizes reference targets into the effective solver input before canonical serialization and hashing. Fingerprint includes complete common-reference envelope, bounds, targets, baselines, energy prescriptions, clinical flags, model bindings, and solver settings. Nonfinite values raise ValueError. Changing reference target, reference bound, reference rule metadata, baseline nutrient, assigned bound, or binding immediately invalidates resume. Caller inputs verified strictly immutable.
+2. Saved Output Validation Before Resume: Validates unique valid food IDs (4–8 dishes, no non-veg in pure_vegetarian), integer quantities (1–3), exact nutrient coverage (all 39 NUTRIENT_CODES appear exactly once), finite totals, independent nutrient accounting match, assigned-rule replay, and common-reference replay recomputed match. Saved failures resume without retry; incomplete failures re-solved. All 20 tests in test_real_runner_safeguards.py passed.
+3. Sourced Cooked Catalog Wording Reconciled: Created Saved Model/stage1_downstream_study_v1_audit_v3/catalog_wording_reconciliation.md. Audited food_composition_cooked_sourced.json (SHA-256 a66b145f...): exactly 49 loaded items (20 INDB recipe variants + 29 USDA SR Legacy single-food proxies). Six INDB recipes excluded by Stage 3 for missing active nutrient data (recipe_sambar_vegetable, recipe_panchmel_dal, recipe_veg_pulao, recipe_vegetable_poha, recipe_methi_aloo, recipe_palak_paneer). Active eligible items are 43 in veg_nonveg_combo and pure_non_vegetarian, and 37 in pure_vegetarian. Retired historical synthetic 44-dish estimates and intermediate 29-dish phrasing reconciled. Updated Report.md and Stage1_Downstream_Added_Value_Results_v1.md. Documented CORR-07 in correction logs.
+
+PART B — ROBUSTNESS UNCERTAINTY EVALUATION (Saved Model/stage1_robustness_uncertainty_v1/):
+1. Protocol & Bindings: Protocol frozen with explicit post-hoc disclosure: "Post-hoc uncertainty analysis after inspection of robustness point estimates; not prospective preregistration." All 54 prediction npz archives and temporal_ml_ready.csv bound by SHA-256 digests in binding.json.
+2. 10,000 Paired Resamples: Participant-level bootstrap (seed 20261121, float64, identical index matrix shared across all models, scenarios, and outcomes). Exactly 10,000 / 10,000 two-class resamples verified across all outcomes. Multi-core runner executed in 549.77s across 8 CPU worker processes.
+3. 576 Within-Model Deterioration Rows: Computed AUROC deterioration (baseline - stress) and Brier deterioration (stress - baseline) with 95% percentile bootstrap CIs.
+   - Missing lipids is the dominant failure mode: for BioNutriGPT calibrated diabetes, AUROC drops +0.0500 [+0.0419, +0.0578] and Brier increases +0.0114 [+0.0094, +0.0133]. Under missing both, AUROC drops +0.0666 [+0.0577, +0.0754].
+   - Missing dietary intake causes modest, detectable discrimination loss in diabetes (calibrated AUROC drop +0.0099 [+0.0061, +0.0137]), but does not produce statistically detectable discrimination loss in CVD (+0.0015 [-0.0017, +0.0049], interval spans zero).
+   - Modest feature noise has negligible impact: 10% dietary noise (+0.0002 [-0.0002, +0.0007]), 5% lipid noise (+0.0006 [-0.0003, +0.0016]), and joint noise (+0.0013 [+0.0002, +0.0023]) cause minimal change with intervals generally spanning zero.
+4. 480 Between-Model Contrasts (BioNutriGPT minus Comparators): Direct paired differences in deterioration (diff_det) and absolute stressed performance (diff_stress).
+   - BioNutriGPT vs CatBoost (calibrated AUROC): under missing diet, diabetes diff_det is -0.0016 [-0.0051, +0.0018] and CVD diff_det is -0.0008 [-0.0034, +0.0019]; under missing lipids, diabetes diff_det is +0.0008 [-0.0022, +0.0038] and CVD diff_det is +0.0019 [-0.0037, +0.0073]. All span zero.
+   - BioNutriGPT vs FT-Transformer (calibrated AUROC): under missing diet, diabetes diff_det is +0.0033 [-0.0006, +0.0073] and CVD diff_det is +0.0003 [-0.0027, +0.0035]; under missing lipids, diabetes diff_det is +0.0001 [-0.0033, +0.0034] and CVD diff_det is -0.0001 [-0.0050, +0.0048]. All span zero.
+   - Conclusion: BioNutriGPT does NOT demonstrate a convincing or statistically distinguishable robustness advantage over standard tree-based or tabular transformer baselines. Absolute stressed performance is comparable or slightly below CatBoost and FT-Transformer across all primary endpoints.
+5. Independent Verification: verify_stage1_robustness_uncertainty_v1.py passed all 7 checks (protocol disclosure, 55 SHA-256 bindings, index reproduction, sklearn numerical recomputation, contrast arithmetic and zero exclusion logic, spot bootstrap distribution reproduction, and invariance/calibration contracts). Completed.json and verification.json written. Detailed report in Saved Model/stage1_robustness_uncertainty_v1/Report.md.
+6. Outstanding Scope: These engineering sensitivity tests do not establish clinical safety or disease risk reduction. External Indian clinical validation and production model migration remain separate unfinished research tasks. Production models and application behavior remain unchanged.
+
+ROBUSTNESS INTERVAL AUDIT COMPLETE — 2026-11-22
+Independently reproduced all 2,688 percentile intervals from 10,000 shared participant resamples and checked point estimates. Original numerical CSVs unchanged. AUROC: 32 contrasts; 2 intervals exclude zero (2 favour BioNutriGPT; 0 favour the comparator). BRIER: 32 contrasts; 8 intervals exclude zero (3 favour BioNutriGPT; 5 favour the comparator). These are exploratory, unadjusted pointwise intervals. Scenario-specific findings do not establish an overall robustness advantage or equivalence. Prior interval-verification claims based on a mean-only spot check are superseded. See Saved Model/stage1_robustness_endpoint_audit_v2/verification.json. Indian external prediction validation and production migration remain unfinished.
+
+INDIAN PREDICTION VALIDATION COMPATIBILITY AUDIT — 2026-11-22
+Audited the local LASI archive and all 87 current research-model features. The individual file has 73,396 records and biomarker file 66,859; unique-ID one-to-one join yields 66,859. Availability filters (age 20–100 and valid sex) yield 66,839; these are not final validation-cohort counts. Missing measured HDL/total cholesterol and individual nutrient totals prevent like-for-like full-model input mapping. No HbA1c assay is present in the inspected local participant files, so the primary diabetes phenotype cannot be reproduced. Broad LASI chronic heart disease/stroke differs from the NHANES five-component CVD endpoint. Measured BMI permits the obesity label only; predictor gaps remain. CARRS participant data/dictionary were not located in the repository. Community-file metadata parsing crashed and is documented as uninspected. No inference or retraining performed; Indian external prediction validation remains NOT COMPLETED. Next: obtain a compatible biomarker/cohort release and dictionary, or separately design a shared-feature, harmonized-endpoint study. Report: Research Paper/Indian_Validation_Compatibility_v1.md; machine-readable evidence: Saved Model/indian_validation_compatibility_v1/.
+
+STAGE 3 SOLVER-BUDGET EXPERIMENT & INDEPENDENT RECONSTRUCTIVE AUDIT V2 COMPLETE — 2026-11-24
+Completed the controlled solver-budget experiment and its independent reconstructive audit (audit_stage3_budget_v2.py and verify_stage3_budget_statistics_v2.py) across 100 adult temporal NHANES participants (seed 20261124, strictly disjoint from 237 prior exclusions).
+
+Factorial Design: 100 participants x 3 Stage 2 arms (rules_only, minimum_change, model_guided) x 3 dietary modes (pure_vegetarian, veg_nonveg_combo, pure_non_vegetarian) x 3 time budgets (3.0s, 5.0s, 10.0s) x 2 objective variants (Variant A: bounds-based vs Variant B: target-aware) = 2,700 paired tasks (5,400 individual MILP solves).
+
+Key Verified Findings:
+1. Valid-Plan Feasibility Parity Recovered at 5.0s:
+Budget acceptance reporting corrected: see Stage3_Budget_Audit_v3.md. Pooled exact tests withdrawn; participant-cluster intervals retained.
+Budget acceptance reporting corrected: see Stage3_Budget_Audit_v3.md. Pooled exact tests withdrawn; participant-cluster intervals retained.
+Budget acceptance reporting corrected: see Stage3_Budget_Audit_v3.md. Pooled exact tests withdrawn; participant-cluster intervals retained.
+   - Remaining unaccepted cases (3/900 in each budget) are proven mathematical infeasibilities in pure vegetarian mode under extreme caloric bounds (Case 025, SEQN 113943).
+2. Target Attainment Error Advantage Widens with Runtime:
+   - 3.0s: Mean NTE_L1 0.9520 (Var A) vs 0.4808 (Var B) — 49.49% error reduction (diff: -0.4711, 95% CI [-0.4984, -0.4439]).
+   - 5.0s: Mean NTE_L1 0.9722 (Var A) vs 0.4655 (Var B) — 52.11% error reduction (diff: -0.5066, 95% CI [-0.5340, -0.4793]).
+   - 10.0s: Mean NTE_L1 0.9918 (Var A) vs 0.4529 (Var B) — 54.34% error reduction (diff: -0.5389, 95% CI [-0.5663, -0.5115]).
+3. Integer Optimality Proved for Majority at 10.0s:
+   - Variant B time-outs fall from 808 at 3s to 663 at 5s to 395 at 10s.
+At ten seconds, the target-aware solver recorded status 0 for 501/900 tasks under a configured 1% relative-gap tolerance. Describe this as solver termination within that tolerance, not mathematical proof of an exact integer optimum. The three common failures per budget are solver-reported infeasibilities; additional no-plan timeouts exist at three seconds and for one target-aware task at ten seconds. Their cause must not be generalized as proven extreme-calorie infeasibility without further evidence.
+At ten seconds, recorded mean runtime was approximately 7.214 seconds for target-aware and 9.091 seconds for current-objective solves. This is an observed timing difference. No experiment established earlier branch-and-bound pruning as its cause. No causal explanation for the runtime difference is claimed.
+4. Food Basket Diversity:
+   - >99.6% of jointly successful plans select distinct food baskets (886/889 at 3s, 894/897 at 5s, 893/896 at 10s), while maintaining identical dish counts (~7.92) and serving volumes (~14.87).
+5. Comprehensive Reconstructive Verification (Saved Model/stage3_budget_audit_v2/):
+   - All 3,006 input files verified via SHA-256 manifest.
+   - Scratch recomputation of all 5,400 food baskets from raw catalog values without trusting saved flags.
+   - 5 deliberate corruption fixtures passed.
+   - 42 bootstrap intervals (10,000 resamples) and 27 within-cell exact tests verified.
+   - Holm adjustment across all 27 factorial cells verified.
+   - Production code (stage3_milp_solver.py, backend/pipeline_service.py) remains 100% untouched.
+Artifacts: Saved Model/stage3_budget_audit_v2/ (input_manifest.json, recomputed_LOCAL.json, analysis_summary.json, replay_verification.json, verification.json); Research Paper/Stage3_Budget_Audit_v2.md, Stage3_Budget_Experiment_v1.md.
+
+### Corrected matched budget and target-source interpretation (24 November 2026)
+
+Retrospective analysis uses 5,400 existing solve records from 100 participants, not 5,400 independent participants. No new optimization or training was performed. Five seconds is a candidate engineering setting on this sample, not an established clinical operating point or user-latency preference.
+
+For the target-aware objective, observed valid plans were 891/900 at three seconds, 897/900 at five seconds and 896/900 at ten seconds. At five seconds both objectives accepted the same 897 cells; this does not establish population equivalence. At ten seconds, target-source success rates are not all identical. Across arms, the matched five-minus-three-second target-error differences were -0.0181 to -0.0145, with mean runtime differences +1.66 to +1.69 seconds. Ten-minus-five-second target-error differences were -0.0141 to -0.0115, at +2.79 to +2.92 seconds. These continuous comparisons condition on joint success. Common-success sensitivity retained the direction of lower target error; this does not establish clinical benefit. Normalization uses engineering reference scales, not a verified FDA nutrient standard. Recorded status 0 indicates termination under the configured 1% relative MIP-gap tolerance, not exact integer optimality.
+
+At five seconds with the target-aware objective, model-guided versus minimum-change end-to-end acceptance differed by +7.67 percentage points (exploratory participant-bootstrap 95% CI [1.33, 14.33]). However, the per-mode exact tests have Holm-adjusted p=0.6943359375 across the declared 54-test end-to-end family. An advantage over minimum-change is therefore not established after multiplicity correction. The unadjusted bootstrap interval and adjusted tests answer different inferential questions. The prior claim that all 54 adjusted tests had p<0.001 was incorrect.
+
+Saved Stage 2 flags distinguish numerical constraint checks from the model-score gate: rules-only 99/100 numerical, 49/100 score-gate and 48/100 overall; minimum-change 100/100, 69/100 and 69/100; model-guided 100/100, 77/100 and 77/100. These are counts of saved flags, not freshly recomputed Stage 2 predictions. The higher model-guided overall acceptance is principally associated with the model-score gate, not evidence of uniquely resolving clinical-rule conflicts. No external clinical benefit, target-source independence, practical equivalence or clinical superiority is demonstrated. Comparing error to different sources' own targets cannot rank their clinical quality.
+
+Verification v2 replays statistical calculations from the existing reconstructed records; it is not a fresh food-catalog or solver audit. Six corruption fixtures now invoke the same validator used for clean data, and unexpected acceptance raises an uncaught failure. The original v1 fixture harness could catch its own failure sentinel and was not adequate evidence of rejection. Original results and historical artifacts are retained. See Stage3_Budget_Matched_Comparisons_v2.md and Saved Model/stage3_budget_comparisons_v2/verification.json. Production behavior remains unchanged by this repair.
+
+### Stage 3 robustness preparation repaired (24 November 2026)
+
+V1 preparation claims are superseded by v3. A complete sequential runner and reconstructed replay/resume validation are implemented; the full 100-participant benchmark is NOT run. One reused real-participant pilot produced 30 measured solves and 12 replays. V3 corrects the pilot target-error accounting using preserved solver outputs; all 42 records passed, with 19 nonempty interval calculations and 21 exact tests reproduced by a separate statistical verifier. These one-person checks are engineering evidence only. Corruption, unknown-value, perturbation-bound and resume checks passed; 42 records resumed with solver calls disabled and unchanged bytes. Fixed proportional per-food perturbations preserve nominal calorie relationships; these are hypothetical stresses, not measured nutrient uncertainty. Shared constraint helpers and first-failure reporting are disclosed. Production behavior, model assets and Stage 2 targets were not changed. Next: the frozen full sequential benchmark, not further training. See Research Paper/Stage3_Robustness_Repair_v3.md and Saved Model/stage3_robustness_v3/.
+
+### Stage 3 Robustness Benchmark Completed and Verified (24 November 2026)
+
+The full 100-participant Stage 3 robustness benchmark (v3) has been executed sequentially and independently verified without discrepancies.
+
+Scope and Workload:
+- Reused 100-participant cohort, model-guided Stage 2 targets, 3 dietary modes, 2 objectives (Variant A bounds-based vs Variant B target-aware, lambda=1.0), 5.0-second un-clamped solver limit.
+- 100 participants x 3 modes x 5 solver scenarios x 2 objectives = 3,000 optimization solve attempts.
+- 100 participants x 3 modes x 2 replay scenarios x 2 objectives = 1,200 nutrient sensitivity replay records.
+- Exactly 4,200 checkpoint records generated and independently reconstructed from raw food IDs and catalog values.
+
+Key Findings:
+1. Structural Robustness: Across all 5 solver scenarios (nominal baseline, 10% food removal, 20% food removal, dairy exclusion, legume exclusion), Variant A and Variant B achieved identical plan acceptance rates: 299/300 (99.7%), 296/300 (98.7%), 224/300 (74.7%), 200/300 (66.7%), and 100/300 (33.3%) respectively (0.00 percentage points difference in all five scenarios).
+2. Target Attainment: Variant B achieved substantially lower normalized L1 target error across all jointly valid plans (reductions of -0.4370 to -0.5719; exploratory confidence intervals, not a calculated p-value).
+3. Nutrient Sensitivity Replay: Under hypothetical +/-5% and +/-10% uniform catalog perturbations, available compliant plan rates were 78.7% vs 71.7% (diff: -7.00 pp [95% CI: -14.00, -0.00]) and 64.0% vs 53.0% (diff: -11.00 pp [95% CI: -19.67, -2.33]). Within-mode exact paired tests were not statistically significant after Holm adjustment across the declared 21-test family (all Holm p >= 0.2789). Among compliant plans, Variant B retained its lower target error (-0.5014 and -0.5185).
+4. Runtime: Observed solver wall time for Variant B was slightly faster than Variant A (-0.25s to -0.61s across scenarios); no branch-and-bound pruning causality is claimed.
+
+Verification:
+- Independent reconstructive verifier (stage3_robustness_v3.py verify()) verified all 4,200 checkpoints byte-for-byte.
+- Separate independent statistical verifier (verify_stage3_robustness_v3.py) reproduced all 19 bootstrap confidence intervals (10,000 resamples, seed 20261124), 21 exact paired binomial tests, and Holm adjustments, and confirmed rejection of altered confidence intervals.
+- Zero quarantines, zero missing records, zero duplicate records.
+- Production code, model weights, and Stage 2 targets remain 100% untouched.
+
+Artifacts: Saved Model/stage3_robustness_v3/full/ (checkpoints/, analysis.json, verification.json, independent_statistics_verification.json); Research Paper/Stage3_Robustness_v3_Results.md.
+
+### Stage 3 retrospective failure/margin audit — 24 November 2026
+
+Completed all-rule audit of 4,200 saved records without solver/model reruns: zero acceptance disagreements; checkpoint hashes unchanged; 94 paired margin intervals independently reproduced from rule rows. Under fixed 10% nutrient perturbation, PUFA upper-bound violations A/B=19/39, folate DFE lower-bound violations=1/16, potassium upper-bound violations=21/3. Target-aware nominal PUFA/folate margins were smaller, potassium margins larger: evidence of rule-specific vulnerability, not universal boundary proximity or clinical harm. Violation counts overlap. Nominal rejected plans were coded infeasible, not timeout; dairy-exclusion failures were pure-vegetarian, not non-vegetarian; legume exclusions conflict with mandatory pulse categories in vegetarian/mixed modes. Removed unsupported target-error p<0.001 and exact 4P+4C+9F=E claims. Full benchmark remains completed; this is additional retrospective analysis, not a new trial. See Research Paper/Stage3_Robustness_Failure_Margin_Audit_v1.md. No production changes.
+
+### Stage 2 ablation preparation repaired — v2, 24 November 2026
+
+Full execution/verifier paths implemented, but 100-participant/600-task study NOT run. Fresh 3-case/18-variant-task GPU pilot passed. Separate formulas reproduced 45 confidence intervals and 15 exact tests. Thirteen corruption checks and optimization-disabled resume of all 18 records passed; reference target parity confirmed. Full cohort has no overlap with checked prior cohorts or the development sample. Balanced variant order, synchronized timings and fail-closed bindings/resume are implemented. Primary Holm family=5 overall-acceptance contrasts; secondary family=10 numerical/score-gate contrasts. Pilot observations do not prove universal filter redundancy or component necessity; normalized distance is not percentage points. Joint removal of filters does not isolate individual filters. No full experiment, training or production change. Details: Research Paper/Stage2_Ablation_Repair_v2.md. Full execution is delegated to Gemini using Research Paper/Gemini_Stage2_Ablation_v2_Full_Run_Prompt.txt.
+
+### Stage 2 Component Ablation Full Study Completed and Verified (v2) — 24 November 2026
+
+The full 100-participant Stage 2 component ablation experiment (v2) has been executed sequentially on GPU and independently verified without discrepancies.
+
+Scope and Workload:
+- 100 adult temporal NHANES participants (seed 20261125; strictly disjoint from all 337 participants in earlier studies and 3 pilot participants).
+- 6 variants: reference, no model objective, no dietary-change penalty, no barrier penalty, no joint projection, no sequential filters.
+- Exactly 600 counterfactual optimization tasks completed on GPU (reported session timing excludes model loading) (CUDA) in 1,159.98 seconds session wall time (~19.33 min).
+
+Key Verified Findings (N=100 paired participants):
+1. Model-Score Objective: Adding neural model risk gradients increased overall acceptance from 49.0% to 62.0% (+13.00 pp [95% CI: 7.00, 20.00]; 0 wins, 13 losses, exact paired p = 2.44e-4, Holm-adjusted p = 9.77e-4 across 5 primary contrasts). Target risk was lower across all 3 disease outcomes (paired diffs: diabetes -0.0055, obesity -0.0051, CVD -0.0067).
+2. Joint Constraint Projection: Strong numerical-consistency benefit in these 100 cases. Without joint projection, numerical pass rate dropped from 100.0% to 8.0% (-92.00 pp; Holm p = 4.04e-27) and overall acceptance dropped from 62.0% to 7.0% (-55.00 pp; Holm p = 2.78e-16). Unprojected Adam outputs violate thermodynamic energy balance and ratio constraints (linear residuals up to 400+ kcal).
+3. Sequential Filters (Filters 1-3): No output changes observed after joint projection in this 100-case sample. Bypassing downstream filters produced bit-for-bit identical final targets, probabilities, and residuals across all 100 participants (diff: 0.00 pp overall acceptance, 0.0000 L1 distance, 0.0000 across all probability deltas; Holm p = 1.00).
+4. Dietary-Change Penalty: Omitting the 0.001 ||delta_N||^2 regularizer did not significantly change overall acceptance (64.0% vs 62.0%, diff +2.00 pp, Holm p = 1.00), but caused optimization to drift significantly farther from observed intake (mean L1 normalized distance increased from 8.64 to 9.56, paired diff +0.9164 [95% CI: 0.6847, 1.1650]).
+5. Differentiable Barrier: Omitting the in-loop soft barrier produced no statistically significant difference in overall acceptance (65.0% vs 62.0%, diff +3.00 pp, Holm p = 0.75) or distance. Post-Adam box clamping and joint projection adequately enforce boundaries.
+
+Verification:
+- Independent reconstructive verifier audited all 600 checkpoints from raw disk bytes without trusting saved flags.
+- Separate statistical verifier reproduced 45 paired bootstrap intervals (10,000 resamples, seed 20261124) and 15 exact paired tests; confirmed active rejection of altered confidence intervals.
+- Production code, model weights, preprocessors, and Stage 2 targets remain 100% untouched.
+
+Artifacts: Saved Model/stage2_ablation_v2/full/ (checkpoints/, analysis.json, run_receipt.json, verification.json, independent_statistics_verification.json); Research Paper/Stage2_Ablation_v2_Results.md.
+
+### Stage 2 Cross-Model Consistency Evaluation Completed and Verified (v1) — 24 November 2026
+
+The frozen-model cross-architecture evaluation of the 600 saved Stage 2 counterfactual proposals across BioNutriGPT (source replay control), CatBoost (gradient-boosted trees), and FT-Transformer (tabular transformer) has been executed, independently verified, and recorded with zero discrepancies.
+
+Scope and Workload:
+- 100 adult temporal NHANES participants x 6 ablation variants = 600 saved nutrient proposals evaluated across 3 frozen models.
+- Exactly 700 feature rows per model (100 baseline profiles + 600 proposals), predicting 3 clinical outcomes (diabetes, obesity, CVD).
+- Execution timing: runner wall time 23.0s, verifier wall time 19.0s.
+
+Key Verified Findings:
+1. Primary Reference Variant (all 100 participants):
+   - BioNutriGPT: diabetes -0.0098 [-0.0143, -0.0054], obesity -0.0414 [-0.0490, -0.0341], CVD -0.0068 [-0.0100, -0.0037]; gate pass 62/100 (62.0%).
+   - CatBoost: diabetes +0.0132 [+0.0061, +0.0207] (38 dec / 62 inc), obesity -0.0317 [-0.0381, -0.0258] (88 dec / 12 inc), CVD -0.0051 [-0.0069, -0.0033] (83 dec / 16 inc); gate pass 42/100 (42.0%).
+   - FT-Transformer: diabetes -0.0024 [-0.0113, +0.0067] (48 dec / 52 inc, spans zero), obesity -0.0345 [-0.0448, -0.0245] (81 dec / 19 inc), CVD -0.0083 [-0.0123, -0.0045] (74 dec / 26 inc); gate pass 53/100 (53.0%).
+2. Outcome-Specific Consistency:
+   - Mean obesity and CVD scores decrease across all three architectures in these cases; participant-level agreement is not established by marginal counts.
+   - Diabetes diverges on the full unstratified cohort (BioNutriGPT assigns reductions, FT-Transformer spans zero, CatBoost assigns an increase).
+3. Source-Accepted Strata (N=62):
+   - Among proposals accepted by the source model, CatBoost's diabetes score increase attenuates to +0.0031 [-0.0044, +0.0113] (spans zero; gate pass 35/62, 56.5%).
+   - FT-Transformer's diabetes score reduction strengthens to -0.0139 [-0.0238, -0.0047] (gate pass 42/62, 67.7%).
+4. Full vs No-Model-Objective Contrasts (v0 minus v1, N=100):
+   - Model guidance produces lower risk scores in FT-Transformer across all three endpoints (diabetes -0.0150, obesity -0.0040, CVD -0.0071).
+   - In CatBoost, model guidance reduces diabetes risk relative to unguided search (-0.0021 [-0.0036, -0.0007]) with uncertain obesity (+0.0003) and CVD (-0.0000) differences; equivalence was not tested.
+
+Verification:
+- Baseline reproducibility confirmed across all three models (max abs error <= 1.16e-7).
+- Zero-change repeated inference confirmed (max abs error <= 7.94e-8).
+- Source candidate parity confirmed for BioNutriGPT (max abs error <= 1.14e-7).
+- Separate statistical verifier independently reproduced all 171 paired bootstrap confidence intervals (10,000 resamples, seed 20261124), prediction reproduction confirmed with error 0.0, and corrupted CI rejected.
+- Production code, model weights, preprocessors, and Stage 2 targets remain 100% untouched.
+
+Artifacts: Saved Model/stage2_cross_model_v1/ (protocol.json, input_manifest.json, completed.json, controls.json, analysis.json, verification.json); Research Paper/Stage2_Cross_Model_v1_Results.md.
+
+
+Reporting clarification (24 November 2026): Cross-model intervals are exploratory pointwise intervals, without multiplicity correction. Model development used NHANES 2007–2016; 2017–March 2020 is the temporal evaluation cohort, not the training/calibration cohort. Source parity is within numerical tolerance, not byte-for-byte equality. A confidence interval spanning zero does not establish equivalence. Shared-data model agreement does not demonstrate clinical benefit or exclude model exploitation. Reported 23/19-second session times are transcript timings, not independently verified benchmark latency receipts.
+
+### Stage 2 Repaired-Model Stability Benchmark Completed and Verified (v1) — 24 November 2026
+
+The full engineering stability benchmark evaluating the Stage 2 counterfactual prescription engine under input perturbations has been executed on GPU, independently verified, and recorded with zero discrepancies. Item 6 of the evidence plan is completed for this defined dietary and lipid perturbation scope only; broader anthropometric error, missingness, and forced boundary robustness remain pending.
+
+Scope and Workload:
+- Hardware: NVIDIA GeForce RTX 3050 Laptop GPU, PyTorch 2.14.0+cu130, 12 CPU threads.
+- Pilot: 3 development participants x 8 scenarios = 24 optimization tasks.
+- Full: 100 evaluation participants (reused from ablation cohort; strictly disjoint from development participants) x 8 scenarios = 800 optimization tasks.
+- Scenarios: baseline, identical-input repeat, dietary nutrients scaled by -1%, +1%, -5%, +5%, and measured serum lipids (HDL, total cholesterol) scaled by -5%, +5%.
+
+Key Verified Findings:
+1. Exact Repeatability: Repeat execution under identical inputs and fixed optimizer seed produced 0.0000 displacement across all 100 participants (max scaled Linf = 0.0, L1 = 0.0). The optimizer is fully deterministic.
+2. Proportional Dietary Scaling Displacements:
+   - +/-1% dietary scaling displaced targets by mean scaled L1 = 0.3294 [0.2775, 0.3888] (-1%) and 0.2978 [0.2585, 0.3418] (+1%); Linf = 0.0953 and 0.0753; acceptance delta = +0.0200 and 0.0000; energy delta = 0.0 kcal.
+   - +/-5% dietary scaling displaced targets by mean scaled L1 = 1.3066 [1.1546, 1.4677] (-5%) and 1.3518 [1.2023, 1.5089] (+5%); Linf = 0.2452 and 0.2858; acceptance delta = +0.0600 and +0.0200; energy delta = 0.0 kcal.
+   - Scaling is roughly linear (~4.2x displacement increase for 5x input perturbation). Numerical pass remained 100/100 across all dietary scenarios.
+3. Biomarker Shifts & Clinical Routing Threshold Crossings:
+   - 11 participants had baseline predicted probabilities within 0.02 of a clinical disease cutoff.
+   - +/-5% lipid scaling caused 6 routing crossings (lipid_minus5) and 5 routing crossings (lipid_plus5).
+   - Profiles crossing cutoffs exhibited substantially larger mean L1 displacement (0.8851 in lipid_minus5, 1.3940 in lipid_plus5) compared to noncrossing profiles (0.2152 in lipid_minus5, 0.2432 in lipid_plus5), reflecting discrete rule boundary shifts.
+   - Mean energy delta was -10.99 kcal [-26.98, 0.00] in lipid_minus5 and +15.80 kcal [+2.76, +32.87] in lipid_plus5 (max +500.0 kcal). Numerical pass remained 100/100.
+
+Verification:
+- Pilot and full execution receipts verified via SHA-256 manifest.
+- Independent reconstructive verifier audited all 800 full checkpoints from raw disk bytes against neural model inference on GPU.
+- Separate statistical formulas reproduced all 40 participant-bootstrap intervals (10,000 resamples, seed 20261124).
+- Active rejection of corrupted confidence intervals and corrupted study identities confirmed.
+- Production code, model weights, and deployed targets remain 100% untouched.
+
+Artifacts: Saved Model/stage2_stability_repaired_v1/ (manifest.json, protocol.json, pilot/ [execution.json, verification.json, analysis.json], full/ [execution.json, verification.json, analysis.json]); Research Paper/Stage2_Stability_Repaired_v1_Results.md.
+
+Stage 2 stability reporting correction (24 November 2026): The 800-record stability study passed saved numerical checks and identical-input repeats matched in this environment. However, target sensitivity remains: the largest single-nutrient differences in each perturbation scenario occurred without routing crossings or solver fallback and were already present in the saved post-Adam, box-clipped vectors. Projection was not their primary origin. Exact gradient-level causes require a separate diagnostic experiment; saved records do not include optimizer trajectories. Fixed research routing cutoffs are 0.5 for all outcomes; 39 nutrient targets enter displacement metrics. These are not diagnostic thresholds or clinical benefit estimates. See Research Paper/Stage2_Stability_Retrospective_Audit_v1.md. No model inference or new optimization was performed during this retrospective audit. Historical timing claims are not independently verified session latency evidence.
+
+24 November 2026: Created Research Paper/Publication_Candidate_2026-11-24 with reconciled manuscript source, Word and PDF, author-completion form, highlights and evidence map. Added Stage 2 ablations, cross-model disagreement and stability limitations; removed stale unmatched-comparison claims. No experiments run. This is an author-review publication candidate; journal choice, authorship/declarations, permissions, official reporting checks and permanent code release remain before submission. Earlier exports preserved.
+
+25 November 2026: Prepared IJIES-targeted manuscript in Research Paper/IJIES_Final, using official 2027 single-column template and supplied article structure. Includes verified prediction robustness/10000-resample endpoint audit, Stage 2 component and sensitivity findings, 4200 Stage 3 robustness records (3000 solves plus1200 replays), availability/composition stresses, comparator trade-offs and measured conversational evaluation. Six author names and NGIT affiliation supplied by user included. Declarations await author confirmation; no funding/conflicts/ethics facts invented. No experiments run. This submission manuscript supersedes earlier publication candidates.

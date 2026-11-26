@@ -1,0 +1,1423 @@
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                592 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+ 
+Calibrated Risk Assessment for Perimenopause and Practical Clinical Triage 
+Utilizing Explainable Multimodal Learning 
+ 
+Mohammed Tauqeer Ullah1*          Edara Sreenivasa Reddy2  
+ 
+1Department of Computer Science and Engineering, University College of Engineering & Technology,  
+Acharaya Nagarjuna University, Guntur-522510, Andhra Pradesh, India 
+2School of Computer Science and Engineering, VIT, Amaravati-522241, Andhra Pradesh, India 
+* Corresponding author’s Email: tauqeer.m562@gmail.com 
+ 
+ 
+Abstract: Perimenopausal risk assessment benefits from models that integrate metabolic, reproductive, and mental 
+health signals into a single estimate that is reliable enough for threshold-based referral. Many screening pipelines still 
+process laboratory markers and questionnaire-driven symptoms separately, which limits cross-signal interactions and 
+can yield poorly calibrated probabilities. Standard baselines such as TabNet, FT -Transformer, SAINT, and TabR 
+improve discrimination, but they provide limited support for  actionable, ranked intervention suggestions. This work 
+presents MenoXplain, an explainable multimodal framework that applies modality -aware tabular attention for three -
+class risk stratification and Top -3 intervention ranking, supported by SHapley Additive  exPlanations (SHAP) for 
+global attributions and attention roll-up for instance-level traces. Experiments use the Centers for Disease Control and 
+Prevention (CDC) National Health and Nutrition Examination Survey (NHANES) 2017–March 2020 (Pre-Pandemic) 
+subset of perimenopausal women aged 40–55 years (3,842 participants) with Demographics, Examination, Laboratory, 
+Reproductive Health Questionnaire (RHQ), and Depression Questionnaire (DPQ) features. MenoXplain reaches 0.821 
+accuracy, 0.793 Macro-F1, and 0.907 Area Under the Receiver Operating Characteristic curve (AUROC), exceeding 
+TabR (0.815, 0.788, 0.903) and improving calibration (Brier 0.142, expected calibration error 0.033). The framework 
+supports clinic-facing triage and targeted follow-up, with limitations from cross-sectional data and offline evaluation 
+of recommendation impact. 
+Keywords: Perimenopause, Multimodal tabular learning, Health risk stratification, Intervention recommendation, 
+Calibration, Explainable artificial intelligence, NHANES. 
+ 
+ 
+1. Introduction 
+Perimenopause is a midlife transition in which 
+endocrine changes coincide with shifts in 
+cardiometabolic status, sleep, mood, and daily health 
+behaviors. Clinical risk rarely follows a single marker, 
+and practical screening depends on combining 
+measured vitals, laboratory biomarkers, reproductive 
+health history, and patient -reported outcomes into a 
+coherent decision view [1]. 
+Personalized risk stratification in this setting is 
+challenging because the evidence is heterogeneous 
+and incomplete. Examination var iables are typically 
+available, while laboratory values may be missing for 
+many participants and questionnaire responses can 
+vary in quality. A useful model must learn from 
+partial observations without producing unstable 
+predictions that undermine referral  thresholds. In 
+addition, decision support cannot stop at risk 
+prediction [2]. Screening systems are expected to 
+suggest plausible next steps, such as lifestyle 
+adjustment, mental health follow -up, or targeted 
+clinical testing, and these suggestions need t raceable 
+justification to avoid increasing clinician workload. 
+Conventional screening often relies on rule-based 
+scores or single -domain indices, which are 
+interpretable but limited in capturing interactions 
+across modalities [3]. Classical machine learnin g 
+models improve flexibility, yet they can struggle with 
+nonlinear relationships spread across feature groups 
+and may output probabilities that are poorly 
+
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                593 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+calibrated for threshold-based action [4]. Recent deep 
+tabular approaches improve representation lear ning, 
+but many treat heterogeneous sources as a flat table 
+and provide explanations that are not tightly linked to 
+modality structure [5]. 
+MenoXplain is proposed as an explainable 
+multimodal framework that unifies three-class health 
+risk stratification and  Top-$k$ intervention 
+recommendation for perimenopausal women. The 
+approach uses a modality -aware tabular transformer 
+to preserve structure across demographic, 
+examination, laboratory, reproductive health 
+questionnaire, and depression questionnaire signals  
+[6]. Explanations are provided through SHapley 
+Additive exPlanations (SHAP) for global attribution 
+and attention roll -up for local decision traces, 
+supporting review of both risk scores and ranked 
+actions. 
+The main contributions are summarized as 
+follows: 
+• An explainable multimodal tabular learning 
+framework, MenoXplain, designed for 
+perimenopausal health risk stratification and 
+intervention recommendation within a single 
+pipeline. 
+• A modality-aware fusion strategy using a tabular 
+transformer backbone th at preserves structure 
+across heterogeneous clinical and questionnaire -
+derived feature groups. 
+• A unified evaluation protocol with paired runs 
+and shared seeds that supports fair baseline 
+comparison, ablation-based modality attribution, 
+and statistical significance testing. 
+• Joint reporting of discrimination, calibration, and 
+recommendation quality metrics, enabling 
+assessment of accuracy, probability reliability, 
+and Top-k intervention ranking behavior. 
+• An interpretation layer combining SHapley 
+Additive exPlanations (SHAP) and attention roll-
+up to provide both global drivers and local, 
+participant-level reasoning traces. 
+The paper thereafter unfolds in this manner: In 
+Section 2, the related literature on perimenopausal 
+risk screening, multimodal tabular  learning, 
+calibration, and explainable recommendation models 
+is reviewed. In Section 3, the proposed system and 
+methodology are described comprehensively with 
+cohort construction, feature design, MenoXplain 
+architecture, training objective and explainabil ity 
+components included. The results and discussion are 
+presented in Section 4, emphasizing baseline 
+comparisons, ablation analysis, calibration, 
+intervention ranking performance, and statistical 
+significance testing. The paper is wrapped up in 
+Section 5 w ith the key findings, applications, 
+limitations, and future work directions. 
+2. Related works 
+Recent multimodal clinical prediction studies 
+show that combining heterogeneous inputs can 
+improve discrimination beyond traditional statistical 
+baselines, but pract ical deployment barriers remain. 
+Choi et al. [7] demonstrated real -time deterioration 
+prediction in the emergency department using 
+heterogeneous signals and reported better precision--
+recall behavior than logistic regression, although 
+AUROC and AUPRC reporting was not consistently 
+available and the evidence remained tied to a single -
+center retrospective setting. A broader synthesis by 
+Krasniqi et al. [8] suggests that AUROC values above 
+0.75 are frequently reported for multimodal 
+neoadjuvant response prediction in breast cancer, yet 
+direct comparison is weakened by differences in 
+cohorts, endpoints, and evaluation protocols. Several 
+task-specific systems report strong internal 
+discrimination, for example PE -MVCNet for 
+pulmonary embolism prediction reached AU ROC 
+0.941 with accuracy 0.902 and F1 score 0.906 [9], 
+while multimodal transformer modeling for 
+postoperative delirium reported improved sensitivity 
+and Youden index [10], but both examples highlight 
+common concerns around preprint status, incomplete 
+metric disclosure, and limited cross -site validation. 
+Text and structured record fusion has also shown 
+measurable benefit, as heart failure mortality 
+prediction using admission notes with tabular 
+features achieved AUROC 0.838 internally, 0.849 in 
+prospective testing, and 0.767 externally [11], which 
+illustrates both the value of multimodal integration 
+and the typical performance drop under external 
+generalization. Related screening and intensive care 
+work reports gains from multimodal designs, but 
+results can de pend heavily on cohort composition, 
+supplementary-only reporting, and preprocessing 
+quality for free -text and structured electronic health 
+record features [12, 13]. Recent alignment and fusion 
+preprints further emphasize calibration -aware 
+objectives, contr astive alignment, and unified 
+representations, often reporting improvements in 
+AUROC, F1 score, or Brier score over gradient -
+boosted baselines [14 -17], and additional directions 
+include large language model based summarization 
+for mortality prediction and electrocardiogram plus 
+clinical-variable fusion for laboratory abnormality 
+estimation with AUROC above 0.85 [18]. Across this 
+body of work, two issues recur: probability 
+calibration and decision -oriented outputs are 
+frequently underreported, and model comparisons are 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                594 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+often confounded by inconsistent splits, metrics, or 
+reporting scope, which motivates controlled 
+evaluation with explicit calibration analysis, fair 
+baselines, and interpretable recommendation outputs. 
+3. System methodology 
+This section describes the end -to-end pipeline 
+used to construct a perimenopause -focused cohort, 
+learn multimodal representations from heterogeneous 
+clinical feature groups, and generates both calibrated 
+risk probabilities and ranked intervention 
+recommendations, as shown in Fig. 1. The 
+methodology consists of cohort construction and 
+feature grouping, modality-preserving representation 
+learning, modality -aware fusion, risk and 
+recommendation heads, and a unified training 
+protocol that keeps comparisons fair through a shared 
+in-house implementation and identical data splits for 
+all models. 
+3.1 Problem formulation 
+Let 𝑥𝑖 = {𝑥𝑖(𝑚)}𝑚=1𝑀  denote the multimodal 
+tabular record for participant 𝑖, where each modality 
+𝑚  corresponds to a  feature group (Demographics, 
+Examination, Laboratory, Reproductive Health 
+Questionnaire (RHQ), and Depression Questionnaire 
+(DPQ)). The goal is to predict a three-class health risk  
+ 
+ 
+ 
+Figure. 1 Overall architecture of the proposed 
+MenoXplain framework 
+label 𝑦𝑖 ∈ {1, 2, 3} and to generate a ranked list of 
+interventions from a fixed catalog of 𝐾 actions. The 
+classifier learns a mapping 𝑓𝜃 ∶  𝑥𝑖 ↦ 𝑝𝑖, where 𝑝𝑖 ∈
+[0, 1]3 is a calibrated probability vector, as defined in 
+Eq. (6). The recommender learns a s coring function 
+𝑔𝜑 ∶  𝑥𝑖 ↦ 𝑠𝑖, where 𝑠𝑖 ∈ ℝ𝐾 assigns an intervention 
+relevance score as defined in Eq. (10). 
+3.2 Modality encoding 
+Each modality is projected into a common 
+embedding space to preserve modality identity while 
+allowing cross-modality interaction. For modality m, 
+the raw feature vector 𝑥𝑖(𝑚) ∈  𝑅𝑑𝑚  is mapped to an 
+embedding 𝑒𝑖(𝑚) ∈  𝑅𝑑  using a modality -specific 
+projection, as defined in Eq. (1). In Eq. (1), 𝑊𝑚 ∈
+𝑅𝑑×𝑑𝑚  and 𝑏𝑚 ∈ 𝑅𝑑  are learned parameters. A 
+modality identifier embedding 𝑢𝑚 is added to retain 
+group structure, as defined in Eq. (2). This identifier 
+reduces the risk that large or highly informat ive 
+feature groups dominate attention by allowing the 
+fusion backbone to condition interactions on 
+modality type rather than treating all inputs as 
+interchangeable. 
+ 
+𝑒𝑖(𝑚) = 𝑊𝑚𝑥𝑖(𝑚) + 𝑏𝑚    (1) 
+ 
+𝑒̃𝑖(𝑚) = 𝑒𝑖(𝑚) + 𝑢𝑚     (2) 
+ 
+3.3 Modality-aware transformer fusion 
+The fused representation is learned using multi -
+head self -attention over the set of modality 
+embeddings {𝑒̃𝑖(𝑚)}𝑚=1𝑀  . Attention is computed 
+using scaled dot-product attention, as defined in Eq. 
+(3). In Eq. (3), Q, K, and V are linear pro jections of 
+the stacked modality embeddings, and 𝑑𝑘 is the key 
+dimension. The fused hidden state is updated with a 
+residual connection and layer normalization, as 
+defined in Eq. (4), which stabilizes optimization and 
+supports deeper fusion across heterog eneous feature 
+groups. The formulation in Eq. (4) expresses the 
+attention residual path, while a standard position -
+wise feed -forward sublayer is applied after multi -
+head attention to increase representational capacity 
+within each modality token and to pres erve the 
+residual structure. A pooled participant 
+representation 𝑧𝑖  is produced using mean pooling 
+across modalities, as defined in Eq. (5), where ℎ𝑖(𝑚) 
+denotes the final -layer hidden state associated with 
+modality 𝑚. Mean pooling is used to promote s table 
+aggregation under missingness and heterogeneous 
+
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                595 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+signal strength, and it reduces sensitivity to single -
+modality spikes that can occur with max pooling. 
+ 
+𝐴𝑡𝑡(𝑄, 𝐾, 𝑉) = 𝑠𝑜𝑓𝑡𝑚𝑎𝑥 (
+𝑄𝐾𝑇
+√𝑑𝑘
+) 𝑉   (3) 
+ 
+𝐻(𝑙+1) = 𝐿𝑁 (𝐻(𝑙) + 𝑀𝐻𝐴(𝐻(𝑙)))   (4) 
+ 
+𝑍𝑖 =
+1
+𝑀 ∑ ℎ𝑖(𝑚)𝑀𝑚=1      (5) 
+ 
+3.4 Risk stratification head and classification loss 
+Risk probabilities are obtained using a linear 
+classifier followed by softmax, as defined in Eq. (6), 
+where 𝑜𝑖 ∈ ℝ3 are logits. To address class imbalance 
+and hard samples, training uses a weighted cross -
+entropy loss defined in Eq. (7) and a focal loss ter m 
+defined in Eq. (8). In Eq. (7) and Eq. (8), 𝑤𝑦𝑖 denotes 
+the class weight for the ground -truth class, and 𝛾 is 
+the focal focusing parameter. The final classification 
+loss is a convex combination defined in Eq. (9). The 
+mixing parameter 𝛼  is fixed across all models to 
+ensure that improvements are attributable to 
+representation learning and fusion, not to differential 
+tuning of the loss shape. 
+ 
+𝑃𝑖 = 𝑠𝑜𝑓𝑡𝑚𝑎𝑥(𝑂𝑖), 𝑂𝑖 = 𝑊𝑐𝑧𝑖 + 𝑏𝑐   (6) 
+ 
+ℒ𝑊𝐶𝐸 = −𝑤𝑦𝑖log (𝑃𝑖[𝑦𝑖])    (7) 
+ 
+ℒ𝐹𝑜𝑐𝑎𝑙 = −𝑤𝑦𝑖(1 −(𝑃𝑖[𝑦𝑖])𝛾 log (𝑃𝑖[𝑦𝑖])  (8) 
+ 
+ℒ𝑐𝑙𝑠 =  𝛼ℒ𝑊𝐶𝐸 + (1 − 𝛼)ℒ𝐹𝑜𝑐𝑎𝑙   (9) 
+ 
+3.5 Intervention recommendation head 
+Interventions are modeled as a fixed catalog of K 
+actions that is shared across all models to ensure fair 
+comparison under identical recommendation targets. 
+Each intervention is represented by a learnable 
+prototype {𝑣𝑘}𝑘=1𝐾  aligned to a clinically 
+meaningful action (for example lifestyle counseling, 
+targeted laboratory follow -up, or mental health 
+referral). A relevance score for intervention 𝑘  is 
+produced by a compatibility function defined in Eq. 
+(10), which measures alignment between  the 
+participant representation and the intervention 
+prototype. The recommendation objective uses a 
+multi-label logistic loss defined in Eq. (11), where 
+𝑟𝑖𝑘 ∈ {0, 1}  indicates whether intervention 𝑘  is 
+relevant for participant 𝑖  under the  study labeling 
+protocol. Top -3 recommendations are obtained by 
+selecting the three largest scores from Eq. (10), which 
+yields a ranked shortlist for decision support. 
+ 
+𝑠𝑖𝑘 = 𝑉𝑘𝑍𝑖                            (10) 
+ 
+ℒ𝑟𝑒𝑐 = − ∑ [𝑟𝑖𝑘𝑙𝑜𝑔𝜎(𝑠𝑖𝑘) + (1 −𝐾𝑘=1
+𝑟𝑖𝑘) log(1 − 𝜎(𝑠𝑖𝑘))]              (11) 
+ 
+3.6 Joint training objective and post-hoc 
+calibration 
+The final objective combines classification and 
+recommendation losses, as defined in Eq. (12). In Eq. 
+(12), 𝛽  controls the influence of recommendation 
+learning on the shared representation. After training, 
+temperature scaling is applied to logits to impro ve 
+probability calibration, as defined in Eq. (13), where 
+T > 0 is selected on the validation set to reduce 
+calibration error. This calibration step supports 
+threshold-based clinical decisions by making 
+predicted probabilities more aligned with empirical 
+outcome frequencies. 
+ 
+ℒ = ℒ𝑐𝑙𝑠 + ℒ𝑟𝑒𝑐               (12) 
+ 
+𝑃𝑖(𝑇) = 𝑠𝑜𝑓𝑡𝑚𝑎𝑥 (𝑜𝑖𝑇 )              (13) 
+ 
+3.7 Training procedure 
+Algorithm 1 summarizes the end -to-end training 
+pipeline. The algorithm uses the joint objective from 
+Eq. (12), the classification loss from Eq. (9), and the 
+recommendation loss from Eq. (11). Early stopping 
+monitors validation Macro -F1 computed from 
+probabilities in Eq. (6), while calibration is finalized 
+using Eq. (13). 
+ 
+Step  Algorithm 1 Training procedure for 
+MenoXplain 
+1 Training set 𝒟𝑡𝑟, validation set 𝒟𝑣𝑎, 
+epochs E, patience P, learning rate η 
+2 Initialize parameters θ, φ (encoder, 
+classifier, recommender), and optimizer 
+(AdamW) 
+3 best ← −∞, stall ← 0 
+4 for epoch=1 to E 
+5 for mini-batch ℬ ⊂ 𝒟𝑡𝑟 
+6 Encode modalities using Eq. (1) and Eq. 
+(2) 
+7 Fuse with transformer using Eq. (3) and 
+Eq. (4); pool using Eq. (5) 
+8 Compute class probabilities using Eq. (6) 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                596 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+9 Compute ℒ𝑐𝑙𝑠 using Eq. (7), Eq. (8), and 
+Eq. (9) 
+10 Compute recommendation scores using 
+Eq. (10) and loss ℒ𝑟𝑒𝑐 using Eq. (11) 
+11 Compute total loss ℒ using Eq. (12) 
+12 Update parameters with optimizer step 
+13 end for 
+14 Evaluate Macro-F1 on 𝒟𝑣𝑎 using 
+probabilities from Eq. (6) 
+15 if Macro-F1 improves 
+16 Save checkpoint; best ← Macro-F1; stall 
+← 0 
+17 else 
+18 stall ← stall + 1 
+19 end if 
+20 if stall ≥ P 
+21 Stop training (early stopping) 
+22 break 
+23 end if 
+24 end for 
+25 Fit temperature T on 𝒟𝑣𝑎and output 
+calibrated probabilities using Eq. (13) 
+ 
+4. Results and discussion 
+4.1 Dataset details 
+Table 1 reports the dataset used in this study. The 
+experiments rely on NHANES 2017 –March 2020 
+(Pre-Pandemic), a combined release that yields a 
+stable pre-pandemic analytical sample. The data are 
+provided by the CDC National Health and Nutrition 
+Examination Survey and include standardized 
+instruments and measurement protocols, which 
+supports reproducible cohort selection and feature 
+construction. NHANES is cross -sectional and 
+nationally representative, so the analysis targets 
+population-level risk patterns rather than individual  
+longitudinal change. The cohort is restricted to adult  
+ 
+ 
+Table 1. Dataset Description 
+Item Description 
+Dataset NHANES 2017–March 2020 (Pre-
+Pandemic) 
+Source CDC National Health and Nutrition 
+Examination Survey 
+Data type Cross-sectional, nationally 
+representative 
+Population Adult women 
+Modules used Demographics, Examination, 
+Laboratory, RHQ, DPQ 
+Pre-pandemic 
+rationale 
+CDC-recommended combination of 
+2017–2018 and 2019–Mar 2020 
+women to match the intended use case of 
+perimenopausal health risk screening. Variables are 
+drawn from Demographics, Examination, Laboratory, 
+RHQ, and DPQ, enabling a multimodal tabular view 
+that includes socioeconomic attributes, measured 
+vitals and anthropometrics, biochemical indicators, 
+reproductive health questionnaire responses, and 
+depression screening signals. The pre -pandemic file 
+is formed by the CDC-recommended combination of 
+the 2017 –2018 cycle with the 2019 –March 2020 
+release, which improves coverage and reduces 
+variability caused by  shorter collection windows 
+(Table 1). Risk stratification is evaluated as a three -
+class task (Low, Moderate, High) using fixed splits 
+that preserve class proportions across train, validation, 
+and test partitions to avoid distribution shifts that can 
+inflate performance. The training set includes 2,689 
+participants with 45.6% Low, 37.6% Moderate, and 
+16.8% High, the validation set includes 383 
+participants with 44.6% Low, 38.4% Moderate, and 
+17.0% High, and the test set includes 770 participants 
+with 44.7% Low, 37.5% Moderate, and 17.8% High. 
+This split stability motivates Macro -F1 as a primary 
+metric, since accuracy alone can overstate 
+performance when the High -risk class is smaller 
+(Table 2). 
+4.2 Cohort definition and feature modalities 
+A perimenopause -focused cohort was derived 
+from NHANES by restricting the sample to female 
+participants aged 40 –55 years and using menstrual 
+and menopause indicators from the Reproductive 
+Health Questionnaire (RHQ) as the operational proxy 
+for transition status. Pregnancy, surgical menopause, 
+and records with critical missing fields needed for 
+label formation or model inputs were excluded, and 
+an additional missingness screen removed 
+participants with more than 40% missing features to 
+reduce reliance on heavy imputation and p reserve 
+comparability across individuals. After these filters, 
+the final analytic cohort contained 3,842 participants 
+(Table 3). The resulting sample shows midlife 
+clinical variability that motivates multimodal 
+modeling, with mean age 47.8±4.2 years, BMI 
+29.1±6.3 kg/m², waist circumference 94.7±14.8 cm, 
+and blood pressure levels of 124.6±16.9 mmHg  
+ 
+ 
+Table 2. Risk Labels and Data Splits 
+Split Samples Low Moderate High 
+Train (70%) 2,689 45.6% 37.6% 16.8% 
+Validation 
+(10%) 
+383 44.6% 38.4% 17.0% 
+Test (20%) 770 44.7% 37.5% 17.8% 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                597 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+Table 3. Cohort Construction (Perimenopausal Women) 
+Criterion Description 
+Gender Female participants only 
+Age range 40–55 years 
+Perimenopause 
+proxy 
+Menstrual and menopause 
+indicators from RHQ 
+Exclusions Pregnancy, surgical menopause, 
+critical data missing 
+Missingness filter Records with >40% missing 
+features removed 
+Final sample size 3,842 participants 
+ 
+ 
+systolic and 76.8±10.7 mmHg diastolic. Behavioral 
+and symptom -related markers are also present, as 
+15.9% report current smoking, 13.6% meet PHQ-9 ≥ 
+10, and 8.3% report hormone therapy use, which 
+provides context for interpreting downstream risk 
+stratification performance (Table 4). The feature 
+design follows a modality grouping strategy rather 
+than a flat feature pool: demographics contributes 12 
+features with 0.8% median missingness, reproductive 
+health contributes 22 features with 6.5% missingness, 
+mental health contributes 10 features with 2.1% 
+missingness, examination contributes 9 features with 
+1.4% missingness, laboratory contributes 18 features 
+with 9.8% missingness, lifestyle contributes 14 
+features with 7.2% missingness, and medication 
+indicators contribute 11 features with 4.9% 
+missingness. In total, 96 features are used for 
+multimodal tabular fusion,  balancing coverage and 
+clinical richness while keeping the input space 
+tractable for model training (Table 5). 
+4.3 Risk label construction (low/moderate/high) 
+The risk label for each participant was 
+constructed as a rule -based proxy triage score 
+grounded in standard cardiometabolic and mental 
+health screening thresholds, and it is important to 
+clarify upfront that this label represents a structured 
+triage index derived from established clinical cutoffs 
+rather than a prospectively validated outcome or 
+confirmed perimenopause diagnosis - the goal of  
+ 
+ 
+Table 4. Descriptive Statistics of Final Cohort 
+Variable Value 
+Age (years) 47.8 ± 4.2 
+BMI (kg/m²) 29.1 ± 6.3 
+Waist circumference (cm) 94.7 ± 14.8 
+Systolic BP (mmHg) 124.6 ± 16.9 
+Diastolic BP (mmHg) 76.8 ± 10.7 
+Current smokers 15.9% 
+PHQ-9 ≥ 10 13.6% 
+Hormone therapy users 8.3% 
+Table 5. Modalities and Feature Composition 
+Modality Examples Features Median 
+Missingness 
+Demographics Age, 
+education, 
+income 
+12 0.8% 
+Reproductive 
+health 
+Menstrual 
+history, 
+menopause 
+status 
+22 6.5% 
+Mental health PHQ-9 items 10 2.1% 
+Examination BMI, BP, 
+waist 
+9 1.4% 
+Laboratory HbA1c, 
+glucose, lipids 
+18 9.8% 
+Lifestyle Activity, 
+alcohol, diet 
+14 7.2% 
+Medications Prescription 
+indicators 
+11 4.9% 
+Total Multimodal 
+tabular input 
+96 — 
+ 
+ 
+MenoXplain is therefore to learn a multimodal 
+representation that generalizes this proxy score across 
+heterogeneous feature groups to support referral 
+prioritization, not to assert direct clinical prediction 
+of disease. A participant -level risk flag set was 
+computed from examination, laboratory, and 
+depression screening variables routinely used in 
+midlife triage, where elevated blood pressure was 
+flagged at SBP ≥ 130 mmHg or DBP ≥ 80 mmHg, 
+obesity at BMI ≥ 30 kg/m² or waist circumference ≥ 
+88 cm, dysglycemia at HbA1c  ≥ 5.7% or fasting 
+glucose ≥ 100 mg/dL, dyslipidemia at LDL ≥ 130 
+mg/dL, triglycerides ≥ 150 mg/dL, or HDL < 50 
+mg/dL, and clinically relevant depressive burden at 
+PHQ-9 ≥ 10; these flags were summed into an ordinal 
+score and participants were stratified a s Low (0 –1 
+active criteria), Moderate (exactly 2), or High (3 or 
+more). Since several of these label-defining variables 
+are also model inputs, a potential construct -validity 
+concern arises that the model may simply reproduce 
+threshold-counting logic, so a rule-component 
+ablation was run by removing all label -defining 
+variables from the input while retaining demographic, 
+reproductive health, lifestyle, and medication 
+features like Macro-F1 dropped from 0.793 to 0.611, 
+confirming that meaningful signal is los t without 
+these features but that the model also captures 
+complementary patterns beyond pure threshold 
+reproduction, a finding discussed further in Section 4. 
+Missingness was handled conservatively by setting 
+any missing criterion to 0 unless a medication 
+indicator provided direct evidence of the condition, 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                598 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+and participants with critical fields missing across 
+multiple label -defining components were already 
+excluded during cohort construction as described in 
+Table 3. 
+4.4 Training and model configuration 
+All comparative experiments were conducted 
+under a shared protocol using a unified in -house 
+codebase with identical preprocessing, data splits, 
+loss weighting, early -stopping rules, and evaluation 
+scripts to ensure that any observed performance 
+differences are attributable to modeling choices 
+rather than implementation inconsistencies. 
+MenoXplain uses a modality -aware tabular 
+transformer backbone with embedding dimension 
+128, a 4-layer 8-head attention stack, dropout of 0.20, 
+and AdamW optimization at a learning rate of 2×10⁻⁴ 
+with batch size 128, trained with a combined 
+weighted cross -entropy and focal loss (γ = 1.5) 
+objective and early stopping at patience 10 on 
+validation Macro-F1 over 10 paired runs with shared 
+seeds. The baseline set was deliberately ex panded 
+beyond deep tabular learners to include logistic 
+regression with L2 regularization and a tuned 
+XGBoost model, since gradient -boosted tree 
+ensembles and regularized linear models represent 
+well-established reference points in real -world 
+tabular pract ice that any proposed deep learning 
+framework should be measured against; logistic 
+regression was tuned over regularization strength and 
+solver settings while XGBoost was tuned over tree 
+depth, learning rate, subsample ratio, and number of  
+ 
+ 
+Table 6. Training and Model Configuration 
+Aspect Setting 
+Implementation Unified in-house codebase 
+Fusion backbone Modality-aware Tabular 
+Transformer 
+Embedding 
+dimension 
+128 
+Transformer 
+layers / heads 
+4 layers / 8 heads 
+Dropout 0.20 
+Optimizer AdamW 
+Learning rate 2e-4 
+Batch size 128 
+Loss Weighted cross-entropy + focal 
+loss (γ = 1.5) 
+Early stopping Patience = 10 (validation Macro-
+F1) 
+Data splits Identical for all models 
+Repeated runs 10 paired runs with shared seeds 
+Explainability SHAP (global) + attention roll-up 
+(local) 
+estimators, with all models including deep tabular 
+baselines (TabNet, FT -Transformer, SAINT, and 
+TabR) optimized under the same 30 -trial bounded 
+random search using validation Macro -F1 as the 
+selection criterion, with final configurations reported 
+in Table 7 and search ranges in Table 8. 
+4.5 Model comparison 
+Performance comparisons were conducted across 
+both classical and deep tabular baselines under the 
+same in-house pipeline and fixed splits to provide a 
+comprehensive reference landscape. Logistic 
+regression, included as a regularized linear baseline, 
+achieves accuracy 0.763 with Macro -F1 0.731 and 
+AUROC 0.849, reflecting the limits of linear decision 
+boundaries when faced with nonlinear cross -modal 
+interactions in this cohort. XGBoost, as a tuned 
+gradient-boosted decision tree baseline representing 
+strong re al-world tabular practice, improves 
+substantially to accuracy 0.803, Macro-F1 0.774, and 
+AUROC 0.892, confirming that tree-based ensembles 
+remain highly competitive and should not be omitted 
+from tabular benchmarks. Among deep tabular 
+methods, TabNet reach es accuracy 0.784 with 
+Macro-F1 0.754 and AUROC 0.875, while FT - 
+ 
+ 
+Table 7. Baseline-specific configurations 
+Model Final configuration (selected by 
+validation Macro-F1) 
+Logistic 
+Regression 
+L2 regularization; C = 0.1; solver = 
+lbfgs; max iter = 1000; class weight = 
+balanced 
+XGBoost max depth = 6; learning rate = 0.05; n 
+estimators = 500; subsample = 0.8; 
+colsample bytree = 0.8; scale pos 
+weight = balanced; early stopping 
+rounds = 20 
+TabNet Decision steps Nd = 4; attention steps 
+Na = 4; feature dim d = 32; relaxation γ 
+= 1.5; sparsity λ = 1e−4; virtual batch 
+size = 128; dropout = 0.10 
+FT-
+Transformer 
+Categorical embeddings + numeric 
+projections; layers = 4; heads = 8; 
+embedding dim = 128; FFN dim = 256; 
+attention dropout = 0.10; residual 
+dropout = 0.10 
+SAINT Row/column attention enabled; layers 
+= 4; heads = 8; embedding dim = 128; 
+FFN dim = 256; attention dropout = 
+0.10; tabular mix augmentation 
+disabled (parity setting) 
+TabR Residual MLP blocks = 4; hidden 
+width = 256; dropout = 0.15; layer 
+norm enabled; gated residual enabled; 
+temperature scaling on validation set 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                599 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+Table 8. Hyperparameter tuning space and parity budget 
+for each baseline 
+Model Search space (range) 
+Logistic 
+Regression 
+C ∈ [1e−3, 10] (log-uniform); solver ∈ 
+{lbfgs, saga}; max iter ∈ {500, 1000} 
+XGBoost max depth ∈ {4, 6, 8}; learning rate ∈ 
+[0.01, 0.2] (log-uniform); n estimators 
+∈ {200, 500, 800}; subsample ∈ [0.6, 
+1.0]; colsample bytree ∈ [0.6, 1.0] 
+TabNet d ∈ {16, 32, 64}; steps ∈ {3, 4, 5}; γ ∈ 
+[1.2, 1.8]; λ ∈ [1e−6, 1e−3] (log-
+uniform); dropout ∈ [0.0, 0.2] 
+FT-
+Transformer 
+layers ∈ {3, 4, 5}; heads ∈ {4, 8}; 
+embed dim ∈ {96, 128, 160}; FFN dim 
+∈ {192, 256, 320}; dropout ∈ [0.0, 0.2] 
+SAINT layers ∈ {3, 4, 5}; heads ∈ {4, 8}; 
+embed dim ∈ {96, 128, 160}; FFN dim 
+∈ {192, 256, 320}; dropout ∈ [0.0, 
+0.2]; row/col attention ∈ {on, off} 
+TabR blocks ∈ {3, 4, 5}; hidden width ∈ 
+{192, 256, 320}; dropout ∈ [0.0, 0.2]; 
+gated residual ∈ {on, off}; temperature 
+scaling ∈ {on, off} 
+ 
+ 
+Transformer improves to accuracy 0.801 with Macro-
+F1 0.772 and AUROC 0.889. SAINT provides a 
+similar profile with accuracy 0.804, Macro-F1 0.775, 
+and AUROC 0.891. TabR is the strongest deep 
+tabular baseline, achieving accuracy 0.815, Macro-F1 
+0.788, and AUROC 0.903. MenoXplain achieves the 
+best results across all metrics with accuracy 0.821, 
+Macro-F1 0.793, and AUROC 0.907, indicating that 
+modality-aware multimodal fusion provides 
+consistent gains over both classical and deep tabular 
+approaches under the co ntrolled evaluation protocol 
+(Table 9).  
+4.6 Calibration performance 
+Reliable decision support requires not only 
+accurate classification but also well -calibrated 
+probabilities that reflect real risk frequency. In our 
+evaluation, MenoXplain achieves the strongest  
+ 
+ 
+Table 9. Model Comparison 
+Model Accuracy Macro-
+F1 
+AUROC 
+(OvR) 
+Logistic 
+Regression 
+0.763 0.731 0.849 
+XGBoost 0.803 0.774 0.892 
+TabNet 0.784 0.754 0.875 
+FT-Transformer 0.801 0.772 0.889 
+SAINT 0.804 0.775 0.891 
+TabR 0.815 0.788 0.903 
+MenoXplain 0.821 0.793 0.907 
+calibration profile across all three measures, with a 
+Brier score of 0.142, an expected calibration error 
+(ECE) of 0.033, and a negative log-likelihood (NLL) 
+of 0.541 (Table 10). TabR is the closest baseline with 
+Brier 0.145, ECE 0.035, and NLL 0.552, whil e 
+SAINT and FT -Transformer follow with slightly 
+larger gaps, for example SAINT records Brier 0.149 
+and ECE 0.039, and FT -Transformer records Brier 
+0.151 and ECE 0.040. TabNet shows the weakest 
+calibration among the compared methods with Brier 
+0.158, ECE 0. 044, and NLL 0.596. The consistent 
+ordering across Brier, ECE, and NLL indicates that 
+the improvement is not tied to a single metric choice 
+and suggests that MenoXplain produces probability 
+outputs that are more trustworthy for downstream 
+thresholding and intervention selection (Table 10). 
+4.7 Intervention recommendation performance 
+Intervention ranking was evaluated to assess 
+whether the framework can prioritize practical next 
+steps beyond assigning risk classes. MenoXplain 
+achieves the strongest Top -3 performance, with 
+Precision@3 of 0.741, Recall@3 of 0.702, and 
+nDCG@3 of 0.781 (Ta ble 10). The closest baseline 
+is the TabR -based recommender at 0.728 
+Precision@3, 0.684 Recall@3, and 0.766 nDCG@3, 
+while SAINT -based and FT -Transformer-based 
+variants are lower at 0.713 and 0.707 Precision@3 
+with nDCG@3 of 0.748 and 0.741, respectively. 
+TabNet-based recommendation yields the weakest 
+ranking quality (Precision@3 0.690, Recall@3 0.646, 
+nDCG@3 0.724). The consistent advantage across 
+Precision@3, Recall@3, and nDCG@3 indicates that 
+the gains reflect better ordering of relevant 
+interventions ra ther than improvement on a single 
+metric (Table 11). 
+4.8 Statistical significance analysis 
+To verify that observed improvements are not 
+explained by run -to-run variability, we performed 
+paired significance tests across identical runs and 
+shared random seeds using Macro-F1 as the primary 
+class-balanced metric. MenoXplain records a mean 
+Macro-F1 of 0.793±0.008, while TabNet records 
+0.754±0.009, yielding strong evidence of 
+improvement with a paired t -test p = 0.0006 and 
+Wilcoxon p = 0.0010, alongside large eff ect sizes 
+(Cohen’s d = 2.55, Cliff’s δ = 0.86) (Table 12). 
+Against FT -Transformer, the baseline mean is 
+0.772±0.008, with p = 0.0032 by paired t-test and p = 
+0.0039 by Wilcoxon, again supported by sizable 
+effects (d = 1.51, δ = 0.74).  
+SAINT shows a similar pattern, with 0.775±0.010  
+ 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                600 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+ 
+Figure. 2 Model Comparison 
+ 
+ 
+Table 10. Calibration performance on the test set 
+Model Brier 
+Score  
+ECE  NLL  
+TabNet 0.158 0.044 0.596 
+FT-Transformer 0.151 0.040 0.572 
+SAINT 0.149 0.039 0.568 
+TabR 0.145 0.035 0.552 
+MenoXplain 0.142 0.033 0.541 
+ 
+ 
+Table 11. Intervention Recommendation Performance 
+Model Precision@
+3 
+Recall@
+3 
+nDCG@
+3 
+TabNet-
+based 
+0.690 0.646 0.724 
+FT-
+Transformer
+-based 
+0.707 0.662 0.741 
+SAINT-
+based 
+0.713 0.668 0.748 
+TabR-based 0.728 0.684 0.766 
+MenoXplain 
+(end-to-end) 
+0.741 0.702 0.781 
+ 
+ 
+and p = 0.0048 and p = 0.0061, with d = 1.34 and δ = 
+0.71. The closest baseline is TabR at 0.788±0.007, 
+where the gap is smaller but remains statistically 
+supported under both tests (p = 0.0410 and p = 
+0.0480) with moderate effect magnitudes (d = 0.63, δ 
+= 0.33). The agreement between parametric and non-
+parametric results, together with effect size reporting, 
+strengthens the claim that MenoXplain provides 
+consistent gains under the controlled in -house 
+evaluation setting (Fig. 3). 
+4.9 Confusion matrix analysis 
+Across all models, most errors occur between 
+adjacent classes, which is expected for ordinal -like 
+risk levels. TabNet achieves 604 correct predictions 
+out of 770, with Low recall of 0.866 (298/344), 
+Moderate recall of 0.772 (223/289), and High recall 
+of 0.606 (83/137), where High is most often reduced 
+to Moderate (40 cases). FT-Transformer improves to 
+617 correct, increasing recall to 0.878 (302/344) for 
+Low, 0.789 (228/289) for Moderate, and 0.635 
+(87/137) for High, while keeping extreme High -to-
+Low shi fts limited (12 cases). SAINT reaches 619 
+correct and strengthens Moderate separation, with 
+Moderate recall of 0.803 (232/289) and fewer 
+Moderate-to-High errors (20 cases), while High 
+recall remains 0.628 (86/137) and still concentrates 
+confusion in High -to-Moderate (39 cases). TabR 
+produces 628 correct and is the strongest baseline for 
+High detection, with High recall of 0.664 (91/137) 
+and reduced High-to-Moderate confusion (35 cases). 
+MenoXplain attains the highest overall correct count 
+at 633 and shows t he best High recall at 0.686 
+(94/137), while also improving Moderate recall to 
+0.813 (235/289) and reducing severe High -to-Low 
+underestimation to 8 cases, which supports safer 
+triage under the shared test setting (Fig. 4). 
+4.10 Accuracy and loss trend 
+Validation learning dynamics show a consistent 
+pattern of rising accuracy and falling loss across all 
+models, with clear separation emerging after the first  
+ 
+
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                601 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+Table 12. Statistical Significance Analysis (Macro-F1) 
+Comparison 
+vs 
+MenoXplain 
+Baseline (mean±sd) MenoXplain (mean±sd) t-test p Wilcoxon p Cohen’s d Cliff’s δ 
+TabNet 0.754 ± 0.009 0.793 ± 0.008 0.0006 0.0010 2.55 0.86 
+FT-
+Transformer 
+0.772 ± 0.008 0.793 ± 0.008 0.0032 0.0039 1.51 0.74 
+SAINT 0.775 ± 0.010 0.793 ± 0.008 0.0048 0.0061 1.34 0.71 
+TabR 0.788 ± 0.007 0.793 ± 0.008 0.0410 0.0480 0.63 0.33 
+ 
+ 
+ 
+Figure. 3 Statistical Significance Analysis 
+ 
+few epochs (Table 13). TabNet  starts at 0.638 
+accuracy with loss 1.02 at epoch 1 and improves to 
+0.760 with loss 0.75 by epoch 15, reaching its best 
+validation accuracy of 0.764 at epoch 16 with best 
+loss 0.742, which indicates early stabilization but a 
+smaller late -stage gain. FT -Transformer begins at 
+0.652 with loss 0.99 and reaches 0.786 with loss 0.71 
+at epoch 15, achieving best validation accuracy 0.792 
+at epoch 18 with best loss 0.694, reflecting stronger 
+mid-training improvement and better convergence 
+than TabNet. SAINT follows a similar trajectory, 
+moving from 0.649 and 1.00 at epoch 1 to 0.788 and 
+0.70 at epoch 15, with best validation accuracy 0.795 
+at epoch 19 and best loss 0.689, suggesting slightly 
+improved fit and generalization relative to FT -
+Transformer. TabR shows the m ost competitive 
+baseline behavior, rising from 0.661 and 0.97 at 
+epoch 1 to 0.802 and 0.67 at epoch 15, then peaking 
+at 0.808 at epoch 20 with best loss 0.659, which is 
+consistent with its stronger overall performance in the 
+comparative results. MenoXplain exhibits the fastest 
+and most stable improvement, starting at 0.668 
+accuracy with loss 0.96 at epoch 1, reaching 0.814 
+with loss 0.64 by epoch 15, and attaining the best 
+validation accuracy of 0.820 at epoch 21 with the 
+lowest best loss of 0.632, indicati ng both better 
+optimization progress and a lower residual error floor 
+under the shared training protocol. 
+ 
+ 
+Figure. 4 Test-set confusion matrices 
+ 
+ 
+4.11 Intervention catalog and label rules 
+A fixed catalog of K=15 candidate interventions 
+was constructed b y mapping actionable clinical 
+decisions onto NHANES -derivable variables, with 
+each intervention grounded in widely adopted 
+guideline thresholds rather than arbitrary cutoffs, 
+covering examination -triggered actions (I1 –I3),  
+ 
+
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                602 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+Table 13. Accuracy/Loss Trend (Validation Set) 
+Model Epoch 1 Epoch 5 Epoch 10 Epoch 15 Best 
+Epoch 
+Best Val 
+Acc 
+Best Val 
+Loss 
+TabNet 0.638 / 
+1.02 
+0.712 / 
+0.86 
+0.748 / 
+0.78 
+0.760 / 
+0.75 
+16 0.764 0.742 
+FT-
+Transformer 
+0.652 / 
+0.99 
+0.731 / 
+0.83 
+0.770 / 
+0.75 
+0.786 / 
+0.71 
+18 0.792 0.694 
+SAINT 0.649 / 
+1.00 
+0.734 / 
+0.82 
+0.772 / 
+0.74 
+0.788 / 
+0.70 
+19 0.795 0.689 
+TabR 0.661 / 
+0.97 
+0.746 / 
+0.80 
+0.784 / 
+0.72 
+0.802 / 
+0.67 
+20 0.808 0.659 
+MenoXplain 0.668 / 
+0.96 
+0.756 / 
+0.78 
+0.792 / 
+0.70 
+0.814 / 
+0.64 
+21 0.820 0.632 
+ 
+ 
+laboratory-driven follow -ups (I4 –I6), a bundled 
+cardiometabolic plan (I7), lifestyle counseling (I8 –
+I10), mental health screening actions from the 
+Depression Questionnaire (I11 –I13), and 
+reproductive health review items from the 
+Reproductive Health Questionnaire (I14–I15), where 
+blood pressure interventions (I1 –I2) follow 
+ACC/AHA 2017 thresholds, weight management (I3) 
+uses NHLBI obesity criteria, glycemia interventions 
+(I4–I5) follow ADA cutoffs, lipid manag ement (I6) 
+applies ATP III criteria, depression screening (I11 –
+I12) follows USPSTF PHQ-9 thresholds, menopause 
+review (I14 –I15) follows NAMS guidance, and 
+lifestyle interventions (I8 –I10) are mapped from 
+NHANES behavioral indicators, while the 
+cardiometabolic bundle (I7) requires any two of four 
+criteria reflecting cumulative risk rather than isolated 
+markers. Since several catalog rules share feature 
+overlap with model inputs, two leakage -robust 
+settings were evaluated: in the masked setting where 
+all labe l-defining and intervention -triggering 
+variables were excluded, nDCG@3 decreased from 
+0.781 to 0.674, and in the intervention -split setting 
+reporting performance only for interventions without 
+feature overlap with label -defining variables (I8, I9, 
+I10, I13, I14, I15), nDCG@3 remained competitive 
+at 0.731, suggesting the framework captures cross -
+modal patterns beyond threshold reproduction, 
+though prospective validation remains necessary. 
+Safety-oriented evaluation showed over -triage rates 
+below 6.2% across all demographic subgroups, 
+recommendation-level subgroup calibration 
+remained consistent with classification calibration 
+results in Tables 15 –17, and binary relevance labels 
+were assigned conservatively with relevance set to 0 
+when measurements were absent, except for I2 and I5 
+where medication indicators served as direct 
+confirmation, with the catalog scope intentionally 
+bounded to NHANES -derivable actions excluding 
+interventions requiring imaging, specialist referral 
+pathways, or pharmacological dosing data. 
+4.12 Subgroup performance and calibration 
+across demographic strata 
+To assess screening reliability across clinically 
+relevant population subgroups, discrimination and 
+calibration were evaluated across age bands and 
+sociodemographic strata available in NHANES, 
+where performance across age groups showed a 
+stable and slightly improving trend with Macro -F1 
+increasing from 0.786 in the 40 –44 band (N=250) to 
+0.795 in 45–49 (N=270) and 0.801 in 50–55 (N=250), 
+AUROC ranging narrowly from 0.902 to 0 .913, and 
+calibration tracking similarly with Brier scores of 
+0.145, 0.141, and 0.139 and ECE values of 0.036, 
+0.033, and 0.030 respectively (Table 15), while 
+education strata showed consistent gaps most visible 
+in calibration where ECE decreased from 0.03 8 for 
+participants with at most high school education 
+(N=310) to 0.029 for college graduates (N=210) with 
+Macro-F1 ranging from 0.784 to 0.804 (Table 16), 
+and income-to-poverty ratio stratification followed a 
+similar direction where the low PIR group (N=24 0) 
+showed Macro-F1 0.781 and ECE 0.039 compared to 
+Macro-F1 0.806 and ECE 0.028 in the high PIR 
+group (N=220) (Table 17), with the consistent 
+directionality across both metrics suggesting that 
+subgroup-specific probability reliability should be 
+monitored i n threshold -based referral deployment, 
+and post-hoc temperature scaling fitted separately per 
+subgroup noted as a practical mitigation for persistent 
+ECE gaps. 
+5. Conclusion 
+MenoXplain improves perimenopausal risk 
+stratification and intervention prioritization by fusing 
+multimodal tabular signals with modality -aware 
+attention under a controlled protocol. On NHANES 
+2017–March 2020 pre -pandemic data for women  
+ 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                603 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+Table 14. Intervention catalog and label rules 
+ID Intervention Modules (y_{ik}=1) if… (short rule) Missing handling 
+I1 BP follow-up Exam SBP ≥130 or DBP ≥80. If SBP & DBP 
+missing → 0. 
+I2 HTN referral Exam+Meds SBP ≥140 or DBP ≥90 or BP med=1. If BP missing but 
+med=1 → 1. 
+I3 Weight plan Exam BMI ≥30 or waist ≥88 cm. Use available 
+measure. 
+I4 Prediabetes follow-
+up 
+Lab HbA1c ≥5.7% or glucose ≥100. If both missing → 0. 
+I5 Diabetes escalation Lab+Meds HbA1c ≥6.5% or glucose ≥126 or diabetes 
+med=1. 
+If labs missing but 
+med=1 → 1. 
+I6 Lipid management Lab LDL ≥130 or TG ≥150 or HDL <50. If lipids missing → 0. 
+I7 Cardio-metabolic 
+bundle 
+Exam+Lab+Life Any 2 of: obesity, high BP, high 
+glucose/HbA1c, dyslipidemia. 
+If <2 observed → 0. 
+I8 Smoking cessation Lifestyle Current smoker=Yes. If missing → 0. 
+I9 Activity increase Lifestyle Activity below guideline proxy. If missing → 0. 
+I10 Alcohol counseling Lifestyle High-risk alcohol indicator=1. If missing → 0. 
+I11 Depression follow-
+up 
+DPQ PHQ-9 total ≥10. If missing → 0. 
+I12 Safety check DPQ PHQ-9 item 9 >0. If missing → 0. 
+I13 Sleep counseling DPQ PHQ-9 sleep item (item 3) >0. If missing → 0. 
+I14 Menopause review RHQ Transition/irregularity flag=1 or HT use=1. If RHQ missing → 0. 
+I15 HT med review RHQ+Meds Hormone therapy indicator=1. If missing → 0. 
+ 
+ 
+Table 15. Age bands (NHANES women, 40–55) 
+Subgroup (Age) N Macro-F1 AUROC Brier ECE 
+40–44 250 0.786 0.902 0.145 0.036 
+45–49 270 0.795 0.909 0.141 0.033 
+50–55 250 0.801 0.913 0.139 0.030 
+Overall 770 0.793 0.907 0.142 0.033 
+ 
+ 
+Table 16. Education strata 
+Subgroup (Education) N Macro-F1 AUROC Brier ECE 
+≤ High school 310 0.784 0.900 0.147 0.038 
+Some college/AA 250 0.792 0.907 0.142 0.033 
+College+ 210 0.804 0.914 0.138 0.029 
+Overall 770 0.793 0.907 0.142 0.033 
+ 
+ 
+Table 17. Income-to-poverty ratio (PIR) strata 
+Subgroup (PIR) N Macro-F1 AUROC Brier ECE 
+Low (<1.30) 240 0.781 0.898 0.148 0.039 
+Middle (1.30–3.50) 310 0.793 0.908 0.142 0.033 
+High (>3.50) 220 0.806 0.915 0.137 0.028 
+Overall 770 0.793 0.907 0.142 0.033 
+ 
+ 
+aged 40 –55 years (N=3,842), the model achieves 
+0.821 accuracy, 0.793 Macro-F1, and 0.907 AUROC, 
+exceeding the strongest baseline TabR (0.815 
+accuracy, 0.788 Macro -F1, 0.903 AUROC) and 
+producing better-calibrated probabilities (Brier 0.142, 
+expected calibration error 0.033, negative log -
+likelihood 0.541). The recommendation module also 
+improves Top -3 ranking quality, reaching 
+Precision@3 0.741, Recall@3 0.702, and nDCG@3 
+0.781, which supports triage and targeted follow -up 
+in clinic -facing workflows, with SHapley Additive 
+exPlanations (SHAP) and attention roll-up providing 
+interpretable traces. It is important to note that the 
+risk label used in this study is a rule -based proxy 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                604 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+triage score derived from established cardiometabolic 
+and mental health thresholds rather than a 
+prospectively validated clinical outcome, and the 
+framework is therefore intended to support referral 
+prioritization in a screening context rather than direct 
+clinical diagnosis. Limitations include the c ross-
+sectional design, partial laboratory coverage, overlap 
+between label -defining variables and model inputs, 
+and offline evaluation of recommendation impact. 
+Future work should prioritize external validation 
+against clinician -assigned triage decisions us ing 
+independent cohorts such as the UK Biobank and the 
+Study of Women's Health Across the Nation 
+(SWAN), linkage to longitudinal outcomes including 
+cardiovascular events and confirmed menopause 
+diagnosis to establish endpoint -grounded clinical 
+relevance, a nd prospective deployment studies that 
+assess real -world recommendation impact. 
+Additional directions include robustness evaluation 
+under distribution shifts across clinical sites, 
+subgroup-specific recalibration to address 
+performance gaps observed across  education and 
+income strata, and fairness -aware training to ensure 
+equitable screening support across diverse 
+perimenopausal populations. 
+Conflicts of Interest 
+Authors declare that they have no conflicts of 
+interest. 
+Author Contributions 
+The authors confirm their contributions to the 
+paper as follows: Conceptualization, design, analysis 
+and Implementation carried out by Mohammed 
+Tauqeer Ullah. Validation and proofreadin g 
+performed by Edara Sreenivasa Reddy. Two authors 
+reviewed the results and approved the final version of 
+the manuscript. 
+ 
+Notation Table 
+Symbol Meaning 
+𝑖 Participant index 
+𝑚 ∈ {1, … , 𝑀} Modality (feature group) 
+index 
+𝑀 Number of modalities  
+(𝑥𝑖 = {𝑥𝑖𝑚}{𝑚=1}{𝑀} ) Multimodal tabular record of participant (i) 
+𝑥𝑖(𝑚) ∈ ℝ𝑑𝑚 Raw feature vector for modality (m) 
+𝑑𝑚 Feature dimension of 
+modality (m) 
+𝑒𝑖(𝑚) ∈ ℝ𝑑 Modality embedding after projection 
+𝑒̃𝑖(𝑚) Modality embedding with identifier added 
+(𝑊𝑚, 𝑏𝑚) Projection weights and 
+bias for modality (m) 
+(𝑢𝑚) Modality identifier 
+embedding 
+(𝑄, 𝐾, 𝑉) Query/Key/Value 
+projections in attention 
+(𝑑𝑘) Attention key dimension 
+(𝐻{(𝑙)}) Hidden representation at 
+transformer layer (l) 
+𝑀𝐻𝐴(⋅) Multi-head attention 
+operator 
+𝐿𝑁(⋅) Layer normalization 
+(ℎ𝑖{(𝑚)}) Final-layer hidden state for modality (m) 
+𝑧𝑖 ∈ ℝ𝑑 Pooled participant 
+representation 
+𝑦𝑖 ∈ {1,2,3} Risk class label 
+(Low/Moderate/High) 
+𝑜𝑖 ∈ ℝ3 Classification logits 
+𝑝𝑖 ∈ [0,1]3 Predicted class 
+probability vector 
+(𝑊𝑐, 𝑏𝑐) Classifier weights and 
+bias 
+(𝑤{𝑦𝑖}) Class weight for ground-truth class 
+𝛾 Focal loss focusing 
+parameter 
+𝛼 Mixing weight for WCE 
+vs. focal loss 
+𝐾 Number of interventions 
+in the catalog 
+(𝑣𝑘) Learnable prototype for 
+intervention (k) 
+(𝑠{𝑖𝑘}) Score of intervention (k) 
+for participant (i) 
+𝑟𝑖𝑘 ∈ {0,1} Relevance label for 
+intervention (k) 
+𝜎 ⊙ Logistic sigmoid 
+𝐿𝑊𝐶𝐸, 𝐿𝑓𝑜𝑐𝑎𝑙, 𝐿𝑐𝑙𝑠 Weighted CE, focal, and 
+classification loss 
+𝐿𝑟𝑒𝑐 Recommendation loss 
+𝛽 Weight for 
+recommendation 
+objective  
+𝑇 Temperature scaling 
+parameter for calibration 
+ 
+References 
+[1] Y. Wang, C. Yin, and P. Zhang, “Multimodal 
+risk prediction with physiological signals, 
+medical images and clinical notes ”, Heliyon, 
+Vol. 10, No. 3, e26772, 2024, doi: 
+10.1016/j.heliyon.2024.e26772. 
+[2] R. Rong, Z. Gu, H. Lai, J. Sun, W. Zhang, and 
+Y. Chen, “A deep learning model for clinical 
+outcome prediction using longitudinal inpatient 
+Received:  January 27, 2026.     Revised: March 16, 2026.                                                                                                605 
+International Journal of Intelligent Engineering and Systems, Vol.19, No.5, 2026           DOI: 10.22266/ijies2026.0531.34 
+ 
+This article is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.  
+License details: https://creativecommons.org/licenses/by-sa/4.0/ 
+electronic health records”, JAMIA Open, Vol. 8, 
+No. 2, 2025, doi: 10.1093/jamiaopen/ooaf026. 
+[3] T. Nishizawa, M. Ogawa, A. Muramatsu, K. 
+Takahashi, Y. Suzuki, and H. Yamamoto, 
+“Attention-based multimodal deep learning for 
+interpretable pathologic response prediction in 
+breast cancer ”, Journal of Tra nslational 
+Medicine, Vol. 23, No. 1, 2025, doi: 
+10.1186/s12967-025-06617-w. 
+[4] M. K. Siam, M. J. H. Faruk, B. He, J. Q. Cheng, 
+and H. Gu, “Multimodal models in healthcare: 
+Methods, challenges, and future directions for 
+enhanced clinical decision support ”, 
+Information, Vol. 16, No. 11, 971, 2025, doi: 
+10.3390/info16110971. 
+[5] A. Agnihotri and R. Saravanakumar, 
+“Harnessing generative AI for transforming 
+marketing strategies: Enhancing consumer 
+engagement through precision and 
+personalization”, In: Proc. of 2025 5th 
+International Conference on Pervasive 
+Computing and Social Networking (ICPCSN) , 
+pp. 1522 –1527, 2025, doi: 
+10.1109/ICPCSN65854.2025.11035208. 
+[6] T. Hama, K. Yamashita, R. Sato, and Y. 
+Kobayashi, “Enhancing patient outcome 
+prediction through deep m eta-learning 
+(MetaPred)”, Journal of Medical Internet 
+Research, Vol. 27, e57358, 2025, doi: 
+10.2196/57358. 
+[7] A. Choi, K. Lee, H. Hyun, J. Park, S. Kim, and 
+Y. Lee, “A novel deep learning algorithm for 
+real-time prediction of clinical deterioration in 
+the ED”, Scientific Reports , Vol. 14, No. 1, 
+13457, 2024, doi: 10.1038/s41598-024-80268-7. 
+[8] E. Krasniqi, L. Bernardini, F. Arizzi, M. Rossi, 
+G. Bianchi, and A. Verdi, “Multimodal deep 
+learning approaches for predicting neoadjuvant 
+treatment response in breast cancer: A 
+systematic review ”, BioData Mining , Vol. 18, 
+No. 1, 25, 2025, doi: 10.1186/s13062 -025-
+00661-8. 
+[9] Z. Guo, Z. Wang, R. Ge, X. Liu, Y. Zhang, and 
+H. Chen, “Multimodal deep learning for 
+pulmonary embolism prediction (PE -
+MVCNet)”, arXiv Preprint, arXiv:2402.17187, 
+2024. 
+[10] B. Wang, K. Cai, Y. Zhang, and Y. Guo, 
+“Transformer representation learning for 
+dynamic multimodal physiological data”, arXiv 
+Preprint, arXiv:2504.04120, 2025. 
+[11] Z. Gao, X. Liu, Y. Kang, P. Hu, X. Zhang, W. 
+Yan, M. Yan, P. Yu, Q. Zhang, W. Xiao, and Z. 
+Zhang, “Improving the prognostic evaluation 
+precision of hospital outcomes for heart failure 
+using admission notes and clinical tabular data: 
+Multimodal deep learning model ”, Journal of 
+Medical Internet Researc h, Vol. 26, e54363, 
+2024, doi: 10.2196/54363. 
+[12] W. Zhao, Q. Li, H. Chen, J. Wang, Y. Liu, and 
+X. Zhang, “Development and validation of a 
+multimodal deep learning algorithm for 
+pulmonary hypertension screening (MMF-PH)”, 
+npj Digital Medicine , Vol. 8, No.  1, 18, 2025, 
+doi: 10.1038/s41746-025-01593-3. 
+[13] Y. Ruan, D. J. Tan, S.-K. Ng, L. Huang, and M. 
+Feng, “Towards accurate and reliable ICU 
+outcome prediction: A belief function theory 
+multimodal framework”, Journal of Healthcare 
+Informatics Research, 2025, doi: 
+10.1007/s41666-025-00219-3. 
+[14] Y. Ruan, D. J. Tan, S.-K. Ng, L. Huang, and M. 
+Feng, “Evidence-based multimodal fusion on 
+structured EHRs and free -text notes for ICU 
+outcome prediction ”, arXiv Preprint, 
+arXiv:2501.04389, 2025. 
+[15] S. Ketabi and D. Ramachandram, “Bridging 
+electronic health records and clinical texts: 
+Contrastive learning for enhanced clinical 
+tasks”, arXiv Preprint, arXiv:2505.17643, 2025. 
+[16] C.-T. Dao, A. T. Nguyen, L. H. Nguyen, and M. 
+D. Tran, “CURENet: Combining unified 
+representations for efficient chronic disease 
+prediction”, arXiv Preprint, arXiv:2511.11423, 
+2025. 
+[17] X. Zhang, Z. Liu, J. Wu, and Y. Chen, 
+“TabulaTime: A novel multimodal deep 
+learning framework for acute coronary 
+syndrome prediction ”, arXiv Preprint, 
+arXiv:2502.17049, 2025. 
+[18] H. Battula, J. Liu, and J. Srivastava, “Enhancing 
+in-hospital mortality prediction using multi -
+representational learning with LLM -generated 
+expert summaries ”, arXiv preprint , 
+arXiv:2411.16818, 2024. 
+ 
+ 

@@ -1,0 +1,46 @@
+{
+  "Stage 1 comparison": {
+    "local_source": "Research Paper/Stage1_Comparison_v2_Current_Results.md",
+    "sha256": "a40909c609ce2911ccb82587e55f9b24a17831532f9d506c59d79edd75fefeee"
+  },
+  "Stage 1 paired model uncertainty": {
+    "local_source": "Research Paper/Stage1_Paired_Uncertainty_v2/Report.md",
+    "sha256": "822ca31e1d28221ce15118f35c6b8d8f9a7bdb69ec65e7765cccd298104af51d"
+  },
+  "Stage 1 robustness and endpoint audit": {
+    "local_source": "Research Paper/Stage1_Robustness_v3_Results.md",
+    "sha256": "c0bfee945e571cd423089d45b4de7e0b779d8290249cb1e9213fd0171795231c"
+  },
+  "Stage 2 matched targets": {
+    "local_source": "Research Paper/Stage2_Comparison_Study_v2.md",
+    "sha256": "42c3dfb9c17ed64288155a09da783f4915ecafa67d4792dc57dd1988d97dd4a6"
+  },
+  "Stage 2 ablations": {
+    "local_source": "Research Paper/Stage2_Ablation_v2_Results.md",
+    "sha256": "ab638bb11bcac111d75bdd89b9937e3f8cb3e0cf793f0a012137620cd34169d0"
+  },
+  "Stage 2 cross-model": {
+    "local_source": "Research Paper/Stage2_Cross_Model_v1_Results.md",
+    "sha256": "3bb02b79046b07ff40d51d750e3e5e5783f9f0f3d5709ffe83ca20c0a3558c77"
+  },
+  "Stage 2 stability": {
+    "local_source": "Research Paper/Stage2_Stability_Repaired_v1_Results.md",
+    "sha256": "a2b3cd91021434c770a053a83e907da098f978ec82d76637638ddaf6b6df137f"
+  },
+  "Stage 2 sensitivity diagnosis": {
+    "local_source": "Research Paper/Stage2_Stability_Retrospective_Audit_v1.md",
+    "sha256": "f2649a72fc64a17bf23521cfb0d1ef3ff69e164daa752a907d434506b9fe0325"
+  },
+  "Stage 3 robustness": {
+    "local_source": "Research Paper/Stage3_Robustness_v3_Results.md",
+    "sha256": "8b9ceeeb361256576c5a94133902904b740e8c75a1061cbb49ae1e8cd99da5bc"
+  },
+  "Stage 3 all-rule margins": {
+    "local_source": "Research Paper/Stage3_Robustness_Failure_Margin_Audit_v1.md",
+    "sha256": "761b8d467f226e3789282c6a7b07ca1e73a461a393552505783cefe0dcfaec4b"
+  },
+  "Conversational measured evaluation": {
+    "local_source": "Saved Model/stage4_lasi_v4_verified_summary.json",
+    "sha256": "2be41574d683fc43805a6d8d8ec1fe3ee1079325a2c651cad72943df0e240577"
+  }
+}

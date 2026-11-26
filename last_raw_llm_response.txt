@@ -1,9 +1,9 @@
 {
-  "health_narrative": "Your recent health check-up shows that you're in a good place. We've made some adjustments to your meals to help you stay healthy and energized. Your body is working well, and we're making sure you get all the nutrients you need.",
+  "health_narrative": "Your body is working hard, and it needs the right fuel to stay healthy. We've created a meal plan that includes all the foods from your food basket, so you can enjoy a balanced diet that supports your health goals.",
   "biomarker_driver_explanations": [
     {
-      "modality": "Blood tests",
-      "plain_language_explanation": "We use blood tests to understand how your body is doing. These tests can show if you might be at risk for certain health problems."
+      "modality": "Blood Tests",
+      "plain_language_explanation": "The foods we chose are based on what your body needs to stay healthy. They help manage your blood levels of important nutrients and substances."
     }
   ],
   "meal_schedule": [
@@ -15,73 +15,71 @@
           "food_id": "recipe_dal_palak",
           "name": "Arhar with spinach (Arhar dal aur palak)",
           "quantity": 1,
-          "guidance": "Enjoy your Arhar with spinach. It's a great way to start your day with a nutritious meal."
+          "guidance": "Enjoy your Arhar dal with spinach for a nutritious start to your day."
         }
       ],
-      "guidance": "Start your day with a balanced breakfast. Enjoy your Arhar with spinach. It's a great way to start your day with a nutritious meal."
+      "guidance": "Start your day with a bowl of Arhar dal with spinach. It's packed with nutrients and will give you energy to begin your activities."
     },
     {
       "meal": "Mid-Morning Snack",
-      "time": "10:30",
-      "items": [
-        {
-          "food_id": "recipe_brown_rice_cooked",
-          "name": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
-          "quantity": 1,
-          "guidance": "Take a small portion of cooked rice. It's a good source of carbohydrates and fiber."
-        }
-      ],
-      "guidance": "Have a mid-morning snack. A small portion of cooked rice is a good choice. It's a good source of carbohydrates and fiber."
-    },
-    {
-      "meal": "Lunch",
-      "time": "13:00",
+      "time": "10:00",
       "items": [
         {
           "food_id": "recipe_plain_dosa",
           "name": "Plain dosa",
           "quantity": 1,
-          "guidance": "Enjoy a plain dosa. It's a tasty and nutritious option for lunch."
+          "guidance": "Have a small serving of plain dosa for a quick snack to keep you going until lunch."
         }
       ],
-      "guidance": "Have a nutritious lunch. Enjoy a plain dosa. It's a tasty and nutritious option for lunch."
+      "guidance": "Enjoy a plain dosa as a mid-morning snack. It's a good source of carbohydrates and protein to keep you energized."
+    },
+    {
+      "meal": "Lunch",
+      "time": "12:30",
+      "items": [
+        {
+          "food_id": "recipe_brown_rice_cooked",
+          "name": "Brown rice, cooked (Bhure chawal)",
+          "quantity": 1,
+          "guidance": "Eat a portion of brown rice for a filling and nutritious lunch."
+        }
+      ],
+      "guidance": "Take a portion of brown rice for lunch. It's a great source of carbohydrates and fiber to keep you full and satisfied."
     },
     {
       "meal": "Evening Snack",
       "time": "17:00",
       "items": [
         {
-          "food_id": "recipe_bhindi_masala",
-          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "food_id": "recipe_cabbage_peas",
+          "name": "Cabbage and peas (Pattagobhi aur matar)",
           "quantity": 1,
-          "guidance": "Have a side of okra fry. It's a simple and delicious snack to enjoy after work."
+          "guidance": "Have a small portion of cabbage and peas for an evening snack."
         }
       ],
-      "guidance": "Have a simple and delicious snack. Have a side of okra fry. It's a simple and delicious snack to enjoy after work."
+      "guidance": "Enjoy a small portion of cabbage and peas as an evening snack. It's a good source of vegetables and protein to keep you feeling full."
     },
     {
       "meal": "Dinner",
       "time": "19:30",
       "items": [
         {
-          "food_id": "recipe_cabbage_peas",
-          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "food_id": "recipe_skim_milk",
+          "name": "Skim milk / toned milk (plain)",
           "quantity": 1,
-          "guidance": "End your day with a healthy dinner. Enjoy cabbage and peas. It's a balanced meal that will keep you full and satisfied."
+          "guidance": "Drink a glass of skim milk for a satisfying and nutritious dinner."
         }
       ],
-      "guidance": "End your day with a healthy dinner. Enjoy cabbage and peas. It's a balanced meal that will keep you full and satisfied."
+      "guidance": "End your day with a glass of skim milk. It's a good source of calcium and protein to help you relax and sleep better."
     }
   ],
   "culinary_directives": [
-    "Use fresh ingredients whenever possible.",
-    "Cook your meals at home to better control the quality and quantity of ingredients.",
-    "Stay hydrated throughout the day, especially during meals."
+    "Make sure to drink plenty of water throughout the day to stay hydrated."
   ],
   "lifestyle_hydration_guidance": {
-    "hydration": "Drink plenty of water throughout the day, especially before and after meals.",
+    "hydration": "Stay hydrated by drinking water throughout the day. Aim for at least 8 cups (64 ounces) of water per day.",
     "post_meal_activity": "After meals, take a short walk to aid digestion and promote overall health.",
-    "sleep_hygiene": "Ensure you get enough sleep each night to support your body's natural rhythms and processes."
+    "sleep_hygiene": "Ensure you get 7-9 hours of quality sleep each night to support your health and well-being."
   },
-  "closing_message": "We hope these meal suggestions help you feel your best. Remember, it's important to listen to your body and adjust as needed. If you have any questions or concerns, please don't hesitate to reach out."
+  "closing_message": "We hope this meal plan helps you feel your best. If you have any questions or need adjustments, please don't hesitate to reach out to your healthcare provider."
 }

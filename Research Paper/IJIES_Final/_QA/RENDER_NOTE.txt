@@ -1,0 +1,1 @@
+Word PDF export and Poppler preview used; standard render_docx.py requires LibreOffice unavailable in this environment. All page thumbnails inspected; figure clipping repaired before final export. Template retained unmodified. Authorship confirmed; required declarations still unconfirmed.

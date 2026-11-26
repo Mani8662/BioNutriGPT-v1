@@ -1,3 +1,40 @@
+CURRENT STATUS — 26 NOVEMBER 2026
+This is a cumulative historical log. Dated claims below describe their original snapshot;
+this status block and later corrected reports take precedence over obsolete "pending",
+legacy-production, perfect-safety and journal-tier claims. Earlier entries are preserved.
+
+Stage 1: repaired cohort/labels/preprocessing; six-family four-configuration comparison;
+20,000-resample paired uncertainty;25architecture fits; missing/noisy-input evaluation
+and corrected10,000-resample endpoint audit; unweighted subgroups, survey reference,
+calibration/DCA;4,800-task prediction-routing downstream study; repaired deployment and
+Stage1/2 binding checks completed within their stated scopes. No overall Transformer
+advantage and no Indian external prediction validation established.
+Stage 2:32-profile audit/repair;100 x 3 matched methods;100x6ablations;700 rows/scorer frozen
+cross-model evaluation;100x8stability tasks and600 comparison retrospective audit complete.
+Filters1–3 only removed jointly; full counterfactual threshold sweep not done. Instability
+and scorer disagreement remain findings, not repaired-away clinical risks.
+Stage 3:900translation records,1,800initial target-aware outputs,5,400controlled-budget
+solves and corrected paired analysis;4,200robustness records (3,000 solves+1,200replays)
+and94margin intervals audited. Production bounds-based vs experimental target-aware
+paths remain distinct;5s results did not deploy a5s default.
+Stage 4: historical measured LASI78 turns and matched24 turns plus successful-pair ablation;
+subsequent contextual/group/meal/compound/guard repairs and v4/v5/v6/v7small real-catalog
+evaluations documented. Latest v7:8 turns,3 Qwen calls,1proposal;62 automated checks recorded.
+Broader current-code dialogue generalization, nutrition education and multi-user hardening
+remain incomplete. Do not call historical78 turns a fresh benchmark of today's code.
+Publication: IJIES_Final Word/PDF/supplement prepared25 November; six authors and shared
+affiliation included. Author-confirmed administrative declarations remain outstanding.
+
+Documentation reconciliation completed26November:
+- Replaced Current_Model_Explanation.txt with current architecture, deployment defaults,
+  all-stage results, numeric source tables, exact87 features and tuning settings.
+- Rewrote both root challenge-file spellings consistently and refreshed Stage3challenges.
+- Preserved previous copies in Documentation_History/2026-11-26_before_sync/.
+- Added Documentation_Evidence_Index_20261126.json with source report hashes.
+- No training, GPU inference, solver benchmark, browser test or manuscript changes.
+
+---------------------- ORIGINAL CUMULATIVE HISTORY ----------------------
+
 STAGE 3 BUDGET REPORTING CORRECTION v3 — 2026-11-24
 At five seconds, both objectives returned 897/900 valid plans with no discordant cells in this sample. This is identical observed acceptance, not demonstrated equivalence or noninferiority. The [0, 0] empirical bootstrap interval occurs because every sampled paired difference is zero; it does not establish zero population difference. Each budget contains nine repeated target-source/mode cells for each of 100 participants. Pooled McNemar p-values have been removed; participant-cluster intervals and the 27 within-cell exact tests with their Holm adjustments are retained.
 The corrected statistical verifier reproduced 42 confidence intervals and 27 valid within-cell exact tests and checked all 3,006 input manifest hashes. Three invalid pooled exact tests were withdrawn. This correction reused the existing reconstructed records and prior arithmetic audit; it did not rerun meal optimization or repeat the full basket reconstruction. Existing verifier fixture checks are retained without treating them as new end-to-end corruption tests. Original v2 evidence remains unchanged.
@@ -891,3 +928,5 @@ Artifacts: Saved Model/stage2_stability_repaired_v1/ (manifest.json, protocol.js
 Stage 2 stability reporting correction (24 November 2026): The 800-record stability study passed saved numerical checks and identical-input repeats matched in this environment. However, target sensitivity remains: the largest single-nutrient differences in each perturbation scenario occurred without routing crossings or solver fallback and were already present in the saved post-Adam, box-clipped vectors. Projection was not their primary origin. Exact gradient-level causes require a separate diagnostic experiment; saved records do not include optimizer trajectories. Fixed research routing cutoffs are 0.5 for all outcomes; 39 nutrient targets enter displacement metrics. These are not diagnostic thresholds or clinical benefit estimates. See Research Paper/Stage2_Stability_Retrospective_Audit_v1.md. No model inference or new optimization was performed during this retrospective audit. Historical timing claims are not independently verified session latency evidence.
 
 24 November 2026: Created Research Paper/Publication_Candidate_2026-11-24 with reconciled manuscript source, Word and PDF, author-completion form, highlights and evidence map. Added Stage 2 ablations, cross-model disagreement and stability limitations; removed stale unmatched-comparison claims. No experiments run. This is an author-review publication candidate; journal choice, authorship/declarations, permissions, official reporting checks and permanent code release remain before submission. Earlier exports preserved.
+
+25 November 2026: Prepared IJIES-targeted manuscript in Research Paper/IJIES_Final, using official 2027 single-column template and supplied article structure. Includes verified prediction robustness/10000-resample endpoint audit, Stage 2 component and sensitivity findings, 4200 Stage 3 robustness records (3000 solves plus1200 replays), availability/composition stresses, comparator trade-offs and measured conversational evaluation. Six author names and NGIT affiliation supplied by user included. Declarations await author confirmation; no funding/conflicts/ethics facts invented. No experiments run. This submission manuscript supersedes earlier publication candidates.

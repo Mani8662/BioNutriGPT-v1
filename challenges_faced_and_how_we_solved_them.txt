@@ -1,535 +1,124 @@
-================================================================================
-BIONUTRIGPT: CHALLENGES FACED & HOW WE SOLVED THEM (Q1 & Q2 PAPER GUIDE)
-================================================================================
-Purpose: Documents every real technical, clinical, and statistical challenge
-encountered from raw CDC NHANES ingestion through ML-ready preprocessing, and
-how each solution strengthens the novelty and rigor of our paper for Q1/Q2
-journals (e.g., IEEE JBHI, Nature Digital Medicine, Artificial Intelligence in
-Medicine).
+BIONUTRIGPT — CHALLENGES, REPAIRS AND REMAINING LIMITS
+Updated26 November 2026. Current status, not a claim that all challenges are solved.
+Original historical narrative is preserved under Documentation_History/2026-11-26_before_sync/.
+Evidence numbers below refer to saved studies; this documentation pass ran no experiments.
 
---------------------------------------------------------------------------------
-CHALLENGE 1: THE 57% MISSING FASTING BLOOD DRAW DILEMMA
---------------------------------------------------------------------------------
-The Problem:
-  - Standard NHANES metabolic models rely on Glucose (LBXGLU), Triglycerides
-    (LBXTR), and LDL Cholesterol (LBDLDL). However, CDC only collects these in
-    a morning fasting subsample (~44% of eligible adults; 15,760 out of 35,502).
-  - Almost 57% of participants visited clinics later in the day without fasting.
-  - Most prior studies either:
-      (a) Threw away 57% of patients (shrinking the dataset to ~10k-14k), OR
-      (b) Used software imputation to guess ~20,000 missing blood test values,
-          a fatal scientific flaw ("synthetic blood assays") that causes Q1/Q2
-          medical reviewers to reject the study.
+1. Diabetes leakage, ambiguous outcomes and inconsistent cohorts — repaired for current study.
+HbA1c was historically a predictor while also defining diabetes. It is now label-only;
+glucose is excluded from the primary phenotype and predictors. Missing/refused outcomes
+cannot establish negatives. Current development24,136 and temporal7,004 replace legacy
+counts for current results. Earlier high AUROCs are not directly comparable. Lipids still
+require blood: removed the non-invasive claim. Imputation is not inherently fabricated
+biology; the real issues are appropriate measurement handling, leakage and honest scope.
+Source: Research Paper/Stage1_Repair_v2_Report.md.
 
-How We Solved It (Q1/Q2 Dataset & Clinical Novelty):
-  - Switched exclusively to the 3 universal NON-FASTING blood tests measured
-    across ~94% of clinical visits regardless of time of day: HbA1c (LBXGH),
-    HDL Cholesterol (LBDHDD), and Total Cholesterol (LBXTC), yielding 33,263
-    adults in that step and 30,740 final verified adults with 0% imputed labs.
-  - Deliberately omitted Friedewald LDL (which mathematically requires missing
-    fasting Triglycerides: LDL = TC - HDL - TG/5) and refused regression-based
-    lab estimation (e.g., predicting glucose or TG from other columns), keeping
-    100% real empirical biochemistry with zero synthetic lab assays.
-  - Computed Non-HDL Cholesterol (Total Cholesterol - HDL) directly. Modern
-    AHA/ACC/ESC cardiology guidelines recognize Non-HDL as equal or superior to
-    fasting LDL—capturing all atherogenic particles (LDL + VLDL + IDL + Lp(a))
-    and catching hidden risk in diabetic/obese patients whose LDL looks normal.
-  - Q1/Q2 Advantage: Eliminates "synthetic biology," doubles the usable cohort
-    to 30,740 verified adults, and enables anytime walk-in clinic and telehealth
-    screening without an 8-12 hour overnight fast.
+2. Preprocessing/calibration and application/research mismatch — repaired release deployed in code.
+Training-fitted transforms, explicit validation/calibration partitions and versioned hashes
+prevent asset mixing. Default repaired_v1 aligns Stage1/2;7,004 prediction matches,
+128 raw-input parity checks and6 negative checks recorded. Incomplete requests reject.
+Historical source assembly remains unavailable; code default is not proof of a running
+server or Indian clinical validation. Source: Stage1_Deployment_v1.md in Research Paper/.
 
---------------------------------------------------------------------------------
-CHALLENGE 2: HIDDEN PATIENT DUPLICATION IN CDC'S 2017-2020 RELEASE
---------------------------------------------------------------------------------
-The Problem:
-  - Due to COVID-19 interruptions, CDC combined the 2017-2018 cycle and the
-    2019-March 2020 cycle into a single "2017-2020 Pre-Pandemic" release and
-    assigned brand-new Patient IDs (SEQN) to everyone.
-  - Simply appending 2017-2020 onto our 2005-2018 dataset would secretly put
-    the exact same 5,856 adults from 2017-2018 into BOTH the training set and
-    the future test set under two different ID numbers — causing severe
-    patient-level data leakage.
+3. Extra neural complexity without clear gain — measured, not solved by claim inflation.
+Six-model matched comparison and25ablation fits show no overall Transformer advantage.
+Removing MoE cuts parameters1,295,623->700,675 without a detected adjusted primary loss.
+MoE remains in deployed model; no unsupported statement that it is necessary or superior.
+Sources: Stage1_Comparison_v2_Current_Results.md, Stage1_Ablation_v2_Results.md.
 
-How We Solved It (Anti-Contamination Verification):
-  - Explicitly excluded all 5,856 rows belonging to the standalone 2017-2018
-    cycle before merging the 9,693 adults from the 2017-2020 Pre-Pandemic
-    release (merge_raw_datasets.py).
-  - Verified 0 overlapping Patient IDs across all 45,980 merged adults and
-    across the final 23,694 Train / 7,046 Future Test cohorts.
+4. Incorrect statistical units/intervals and weak corruption checks — corrected in named audits.
+Repeated modes/arms share participants; pooled exact tests were withdrawn where invalid.
+Use paired/participant-cluster inference and declared multiplicity families. Stage 1
+robustness10,000-resample audit reproduced2,688 intervalpairs; budget audit42 intervals
+and27 within-cell tests; Stage 3 margins94 intervals. Fixture checks must invoke real
+validators and fail if corruption is accepted. CIs containing zero do not prove equivalence.
+Verification can share parsing/preprocessing dependencies and is not always independent
+end-to-end reproduction. Sources: Stage3_Budget_Audit_v3.md, Stage3_Budget_Matched_Comparisons_v2.md,
+Stage1_Robustness_v3_Results.md, Stage3_Robustness_Failure_Margin_Audit_v1.md.
 
---------------------------------------------------------------------------------
-CHALLENGE 3: SURVEY DISCONTINUATIONS & COLUMN RENAMING ACROSS 15 YEARS
---------------------------------------------------------------------------------
-The Problem:
-  - Survey questions changed across CDC cycles, breaking multi-year continuity:
-      1. The 2005-2006 cycle (5,563 adults) predated the WHO Global Physical
-         Activity Questionnaire (GPAQ: PAQ605-PAQ675, PAD680), leaving exercise
-         100% blank.
-      2. The 2021-2023 post-pandemic cycle dropped occupational activity, walking/
-         biking transport, and physician sleep trouble (SLQ050) — losing 10 of
-         15 lifestyle features. Meanwhile, 2017-2020 omitted household size (DMDHHSIZ).
-      3. CDC renamed identical columns mid-series (Marital Status: DMDMARTL ->
-         DMDMARTZ; Sleep Duration: SLD010H -> SLD012).
-      4. Legacy merges left 134 completely empty (100% NaN) retired columns.
+5. Demographic selection, missingness and survey effects — evaluated within a limited scope.
+Missing both lipids/diet drops diabetes AUROC .8107->.7441. Survey and subgroup evaluation
+completed, but weighting does not undo cohort selection or demonstrate fairness.
+Weighted diabetes AUROC .8402 is not interchangeable with unweighted .8107.
+Application still requires complete inputs. Indian external prediction data remain missing.
 
-How We Solved It (Cohort Alignment & Feature Harmonization):
-  - Anchored the study to the unified WHO GPAQ era (2007-2020), removing
-    2005-2006 (lacks modern GPAQ) and excluding 2021-2023 so we retain all 15
-    multimodal physical activity, sedentary sitting, and sleep features intact.
-  - Harmonized renamed columns (MARITAL_STATUS, SLEEP_HOURS), dropped DMDHHSIZ
-    and all 134 dead 100%-empty columns, guaranteeing that Train (2007-2016) and
-    Future Test (2017-2020) share the exact same 69 real measured columns with
-    zero dead columns.
+6. Sequential nutrient repairs broke earlier rules — numerical joint repair implemented.
+32-profile development audit originally3 accepted/28 calorie violations. Joint projection
+and final re-audit yielded25 accepted,7 score-gate refusals,0 numerical violations.
+LP fallback can establish feasibility, not nearest-target optimality.100x6ablation
+numerical passes drop100->8 without projection. Rules are engineering prescriptions,
+not a clinically validated guideline implementation for every patient.
 
---------------------------------------------------------------------------------
-CHALLENGE 4: DIRECT TARGET LEAKAGE IN 324 RAW SURVEY COLUMNS
---------------------------------------------------------------------------------
-The Problem:
-  - Raw NHANES files contain 324 "cheating" columns that directly reveal the
-    target diagnosis: anthropometric body measures (BMX*, WHQ*, WHD*, BMI* —
-    which mathematically define Obesity) and medical/diet diagnosis interviews
-    (MCQ*, DIQ*, CDQ*, DRQSDT* — literally asking "Did a doctor tell you that
-    you have diabetes or heart disease?").
-  - Leaving any of these in produces fake ~99% accuracy that collapses in real
-    preventive screening when diagnosis is unknown.
+7. Model exploitation and unstable targets — unresolved scientific limitations exposed.
+Full100proposal diabetes score change is -.0098 in BioNutriGPT but+.0132 in CatBoost;
+FT interval includes zero.800stability tasks pass numerical rules, yet1%input changes
+can strongly alter individual vitamin targets without routing/fallback. Largest changes
+already exist post-Adam/box clipping; exact gradient mechanism is not established.
+Remaining: trajectory diagnostics on development cases and independent validation.
+Sources: Stage2_Cross_Model_v1_Results.md, Stage2_Stability_Retrospective_Audit_v1.md.
 
-How We Solved It (Strict Anti-Leakage Feature Hygiene):
-  - Stripped all 324 target-leaking columns plus 126 redundant dietary sub-codes
-    and administrative flags in preprocess_raw_genuinely.py.
-  - Restricted model inputs purely to 64 genuine pre-diagnosis predictors across
-    4 modalities: Blood Biomarkers (4), Demographics (6), 24h Diet (39), and
-    Lifestyle/Sleep (15).
+8. Food provenance, B12 placeholders and overclaimed cooked-dish validation — repaired provenance.
+Historical44estimated recipes/IFCT CSV are not the present food data. IFCT lacks a B12
+column; uniform .05/.50 placeholders cannot be used as measured values. Current sourced
+catalog49 records (20 INDB variants29 USDA proxies),43complete for active fields. Missing
+nutrients stay unknown; source proxies and estimated servings are disclosed. Not all
+39 nutrients or allergens are known. Full laboratory/recipe validation remains absent.
 
---------------------------------------------------------------------------------
-CHALLENGE 5: SAS FLOAT ARTIFACTS, SENTINEL CODES & SKIP-PATTERN FALSE BLANKS
---------------------------------------------------------------------------------
-The Problem:
-  - Raw CDC SAS XPT exports contained hidden formatting errors:
-      1. 41,769 floating-point underflow glitches (~5.3976e-79 instead of 0.0).
-      2. NHANES "Refused / Don't Know" numeric codes (7, 9, 77, 99, 7777, 9999)
-         sitting directly inside numeric columns (e.g., 9,999 sitting minutes!).
-      3. Skip-pattern false blanks: respondents who answered "No" to vigorous
-         work activity had blank weekly duration instead of 0.0 minutes.
-      4. Unreliable dietary recalls (DR1DRSTZ != 1) and impossible calorie/lab
-         typos.
+9. MUFA prescription exceeded catalog capability — historical rule conflict reviewed/repaired.
+Old independent21.8g MUFA minimum exceeded17.593g attainable in that diagnostic catalog.
+Replaced standalone minimum with a total-fat component envelope; this is not a MUFA
+RDA/UL or proof that every new profile is feasible. Historical diagnostic catalog differs
+from current49 foods; do not reuse those feasibility counts as present performance.
 
-How We Solved It (Deterministic Clinical Sanitization):
-  - Fixed all 41,769 near-zero float glitches cleanly to 0.0.
-  - Converted all NHANES sentinel codes (7/9, 77/99, 7777/9999) to genuine NaN.
-  - Applied deterministic survey skip logic (e.g., "No" to an activity domain
-    or non-smoker -> 0.0 min/wk or status 0) instead of guessing values.
-  - Enforced reliable food diary screening (DR1DRSTZ == 1, all 39 nutrients
-    present) and removed 283 clinical outliers (<500 or >8,000 kcal; extreme
-    implausible lab typos).
+10. Calorie pass mislabeled as overall nutrient compliance — fail-closed acceptance implemented.
+Stage 3 rechecks nutrient totals, quantities, categories, calories and ratios; unknown
+active values exclude foods. Active slack cannot buy acceptance.4,200robustness records
+were reconstructed without classification disagreement. Timeouts and infeasibility
+remain different; solver status0 at1%gap is not proof of exact optimum.
 
---------------------------------------------------------------------------------
-CHALLENGE 6: PREVENTING TEMPORAL LEAKAGE WHILE PRESERVING REAL DISEASE DRIFT
---------------------------------------------------------------------------------
-The Problem:
-  - Standard random 70/15/15 splits or k-fold cross-validation mix 2007 and 2020
-    patients together, leaking future lifestyle and population patterns into
-    training.
-  - Conversely, preprocessing the Future Test file with its *own* independent
-    mean and standard deviation would erase real-world temporal disease drift
-    (Diabetes prevalence rose from 12.75% in 2007-2016 to 20.00% in 2017-2020),
-    making higher-risk 2017-2020 patients look artificially "average."
+11. Closer targets versus solver budget and robustness — measured trade-off remains.
+Initial3s B produced fewer valid plans; controlled5s A/B both897/900, not equivalence.
+Target-aware B improves target distance but under10%composition uncertainty has159/300
+valid baskets vs192/300 for A. Failures are nutrient-specific; no universal boundary
+mechanism proven. B remains experimental; production defaults1.5s/cap3s unchanged.
+Whole servings do not establish human palatability or real cost savings.
 
-How We Solved It (Prospective Temporal Split + Train-Only Parameter Fitting):
-  - Enforced a strict chronological split: 2007-2016 (23,694 patients) for
-    training and 2017-2020 (7,046 completely unseen patients) as a prospective
-    external test cohort.
-  - Fitted all statistical parameters (medians, modes, skewness checks, tail
-    clipping bounds, and StandardScaler means/stds) STRICTLY on Train (2007-2016),
-    saved them into preprocessing_artifacts.joblib, and applied those exact frozen
-    rules separately to Train and Test. Both cohorts share one identical clinical
-    ruler with zero future data leakage.
+12. Food exclusions conflict with mandatory plate categories — detected, not always repaired.
+Dairy removal leaves200/300 valid; legume removal100/300 per objective in the study.
+Rules can require excluded categories. Return explicit refusal instead of silently
+relaxing nutrient rules. This does not establish that no alternative healthy diet exists.
 
---------------------------------------------------------------------------------
-CHALLENGE 7: INFORMATIVE MISSINGNESS & ZERO-IQR FAILURE OF ROBUSTSCALER
---------------------------------------------------------------------------------
-The Problem:
-  1. Non-Random Survey Skips: Household Income Ratio (INDFMPIR) was missing in
-     8.31% of Train (1,970 rows) and 12.19% of Test (859 rows). Simply dropping
-     these rows wastes >2,800 patients, while silent median filling loses the
-     socioeconomic clue that the patient declined to report income.
-  2. Extreme Skew & Zero-IQR Trap: Micronutrients had extreme skew (Vitamin K
-     skew = 26.12, up to 15,857 mcg), while sparse lifestyle variables
-     (DR1TALCO, PA_VIG_WORK_MIN_WK, PA_VIG_REC_MIN_WK) had >75% zeros, making
-     their Interquartile Range IQR = 0. Standard RobustScaler fails on IQR = 0
-     columns (leaving raw extreme spikes unscaled for neural networks), while
-     aggressive 1%/99% outlier clipping would flatten real severe diabetic HbA1c.
+13. Fish removal replaced fish with another fish; meal requests were narrow — generic data-driven repair.
+Group metadata excludes all matching catalog IDs; meal placement/quantity requirements
+are generic rather than breakfast-egg special cases. Supported compound clauses execute
+atomically. Unsupported restrictions clarify rather than silently disappear. Real-catalog
+and synthetic checks exist; all possible phrasing/food combinations are not validated.
 
-How We Solved It (Dual-Channel Missingness + Two-Stage Normalization):
-  - Added 5 explicit 0/1 missingness indicator flags (INDFMPIR_MISS,
-    SLEEP_HOURS_MISS, PAD680_MISS, PA_TOTAL_MET_MIN_WK_MISS, OTHER_FEATURE_MISS)
-    prior to Train-median/mode imputation — preserving non-response patterns.
-  - Replaced raw RobustScaler with a two-stage transform:
-      1. Applied log(1 + x) across 55 right-skewed positive features (reducing
-         Vitamin K skew from 26.12 down to 0.17 while keeping rank order).
-      2. Applied ultra-gentle [0.1%, 99.9%] Train quantile clipping (retaining
-         severe diabetic HbA1c extremes) followed by StandardScaler across all
-         64 continuous features (max |z| = 6.5367, 0 NaNs, 0 Infs).
-  - Engineered 10 clinical nutrition/lipid/sleep ratios (e.g., Total/HDL ratio,
-    Willett fiber density, Na/K ratio, |Sleep - 7.5| U-shape risk) and cleanly
-    one-hot encoded nominal categories (Race, Marital Status, Smoking) into
-    88 balanced numeric features ready for any deep or tree-based model.
+14. LLM valid JSON was mistaken for correct intent — guarded hybrid interpretation implemented.
+Initial0/6 structured successes; revised only2/6 semantic matches despite4 valid schemas.
+Deterministic-first routing, semantic/negation checks and confirmation stop unintended
+mutations. v7recorded8 turns/3 actual model calls/1 validated proposal on one profile,
+with62 automated checks. This does not establish general-chatbot reliability.
 
---------------------------------------------------------------------------------
-CHALLENGE 8: CULTURAL MISMATCH & THE "RAW FOOD FALLACY" IN STAGE 3
---------------------------------------------------------------------------------
-The Problem:
-  - Western Datasets Fail in India: Most AI nutrition tools default to the US
-    Department of Agriculture (USDA) database. Recommending bagels, bacon, and
-    canned beans to Indian patients fails culturally and nutritionally because
-    Indian cuisine relies on specific pulses (toor, moong, chana), flours (atta,
-    jowar, ragi), regional vegetables, curd, and spices.
-  - The "Raw Food Fallacy": Asking an algorithm to recommend raw ingredients
-    (e.g., "eat 42 grams of raw atta, 18 grams of dry lentils, and 7 grams of
-    mustard oil") is clinically useless because humans do not consume dry
-    agricultural commodities—they eat cooked, composite dishes.
+15. State, allergy and rollback bugs — targeted repairs and checks completed.
+Server-stored proposals/version fingerprints are checked before acceptance; allergy
+updates invalidate pending plans; allergy warnings persist across rollback. Current
+catalog has incomplete allergen data. Never claim allergen-free or clinically safe from
+numerical acceptance alone. Multi-user concurrency/access hardening remains pending.
 
-How We Solved It (Cultural Grounding & Recipe-Level MILP):
-  - Switched from USDA to the official National Institute of Nutrition (ICMR-NIN)
-    Indian Food Composition Tables (IFCT 2017), containing 528 key Indian foods
-    analyzed across 151 chemical components.
-  - Mapped raw IFCT foods into standardized cooked Indian recipe units (e.g.,
-    1 Katori Moong Dal, 2 Phulkas, 1 Cup Palak Sabzi) using IIIT Delhi's RecipeDB.
-  - Formulated a Mixed-Integer Linear Program (MILP) that calculates exact integer
-    household servings, ensuring the diet is both 100% mathematically balanced
-    and culturally realistic for Indian families.
+16. Synthetic/fixed-count LLM reports and failed exports — excluded from current empirical claims.
+The old claimed100-case report was not100measured LLM calls. Corrected checkpointed
+run retains prompts/raw outputs/journals. Historical measured78 turns:76protocol passes;
+matched guarded24/24vsQwen2/24. Qwen8 invalid proposals plus1 malformed response.
+Later chatbot changes are separate targeted checks, not a retrospective improvement of
+those results. No missing raw logs are fabricated; cold/warm latency scopes remain explicit.
 
---------------------------------------------------------------------------------
-CHALLENGE 9: LIVE REMOTE API VS. LOCAL-FIRST CACHING (RUNTIME LAG & REPRODUCIBILITY)
---------------------------------------------------------------------------------
-The Problem:
-  - Querying an external food database API on every patient run creates severe
-    technical and scientific issues:
-      1. Runtime Lag: Live web calls add 1 to 3 seconds of network latency per
-         patient, making clinical software feel slow and unresponsive.
-      2. Single Point of Failure: Academic and government servers frequently suffer
-         from downtime, network dropouts, or rate limits. If the external API goes
-         down, the entire AI pipeline crashes.
-      3. Solver Incompatibility: A Mixed-Integer Linear Program (MILP) needs all
-         528 foods in memory at the exact same millisecond to solve mathematical
-         equations. It cannot query an API "one food at a time."
-      4. Q1 Reproducibility Rejection: Q1 journal reviewers test open-source code;
-         if the repository fails to run offline due to an external API block, the
-         paper is immediately rejected.
+17. US screening plus Indian food planning — scope clarified, not external validation.
+LASI100 selected profiles/300plans yielded91/96/98 accepted by mode using adapted rules.
+This is not Stage 1 prediction validation or a nationally representative patient sample.
+No longitudinal health outcomes, clinical trial or dietitian-rated acceptability exists.
 
-How We Solved It (Local-First Caching with Smart Auto-Sync):
-  - Packaged the official ICMR-NIN IFCT 2017 dataset as a high-speed, local
-    Parquet/CSV matrix directly inside the repository.
-  - Loading time dropped from 2,000 ms to < 5 ms, and the MILP solver finishes
-    in under 100 ms with 0% runtime lag and 100% offline reliability.
-  - Implemented an optional startup sync check (`--update-food-db`) so if ICMR
-    releases a revised edition in the future, the local cache updates automatically
-    without risking pipeline downtime during routine patient consultations.
-
---------------------------------------------------------------------------------
-CHALLENGE 10: THE CLINICAL OPAQUENESS TRAP — FULL-SPECTRUM RISK PROFILING, PREVENTATIVE ACTIONS & STAGED PROGNOSIS
---------------------------------------------------------------------------------
-The Problem:
-  - Standard machine learning models suffer from the "Opaque Output Trap":
-      1. Black-Box Probabilities: Outputting raw numbers like "Diabetes: 82%, CVD: 65%"
-         provides zero explanation of WHY the patient is sick or what dietary and
-         metabolic failure modes caused it.
-      2. The "Arbitrary Metric Selection" Fallacy: Displaying only 3 or 4 cherry-picked
-         ratios ignores the full spectrum of human nutrition (micronutrients, minerals,
-         protein adequacy, sedentary behavior, active travel, sleep disturbance).
-      3. The "Harsh All-or-Nothing Warning" Fallacy: Presenting a single catastrophic
-         warning (e.g., "you will suffer heart failure") sounds alarmist and medically
-         unrealistic. In clinical pathophysiology, diseases progress in distinct,
-         graded stages—starting with early reversible metabolic friction before advancing
-         to permanent structural organ damage.
-      4. Missing Preventative Guidance: Alerting a patient to a risk without providing
-         targeted, actionable dietary or lifestyle modifications leaves the patient
-         anxious but unable to correct the defect.
-      5. TRIPOD-AI & STROBE-AI Mandate: Top-tier Q1 journals (The Lancet Digital Health,
-         Nature Digital Medicine, IEEE JBHI) require clinical decision support systems
-         to provide transparent, causal, and actionable interpretability.
-
-How We Solved It (Clinical Prognosis & Preventative Action Architecture):
-  - Engineered a full-spectrum Hierarchical Risk Deconstruction framework that
-    evaluates all 39 nutrients and 19 lifestyle features across 17 distinct clinical
-    domains without retraining the neural network:
-      1. Layer 1 (Multi-Disease Clinical Endpoints): Evaluates CVD, Diabetes, and
-         Obesity probabilities against calibrated clinical operating cutoffs.
-      2. Layer 2 (Comprehensive Nutritional Risk Stratification across 9 Domains):
-           * Glycemic Dynamics (Sugar-to-Fiber ratio & sugar % of kcal)
-           * Vascular & Electrolyte Homeostasis (Sodium-to-Potassium ratio & sodium mg)
-           * Lipid Particle Quality (Saturated fat % of kcal & cholesterol)
-           * Microbiome & Gut Barrier (Dietary fiber adequacy vs. DRI)
-           * Muscle Mass Defense & Protein Adequacy (Protein g/kg body weight)
-           * Bone & Mineral Health (Calcium & Magnesium vs. DRI)
-           * Hematological & Oxygen Transport (Iron & Vitamin B12 vs. DRI)
-           * Endothelial Antioxidant Defense (Vitamin C & Alpha-tocopherol)
-           * Metabolic & Toxicological Strain (Alcohol & Caffeine load)
-      3. Layer 3 (Comprehensive Weight & Lifestyle Stratification across 8 Domains):
-           * Thermodynamic Energy Balance (Caloric Surplus/Deficit vs. Mifflin-St Jeor TDEE)
-           * Anthropometric Adiposity Load (Body Mass Index - BMI)
-           * Sarcopenic Obesity Index (Fat accumulation combined with muscle atrophy/inactivity)
-           * Occupational Sedentary Deconditioning (Daily sitting minutes PAD680)
-           * Physical Activity Volume Deficit (Weekly MET-minutes vs. WHO 600 MET target)
-           * Active Transport Deficit (Walking/Biking commuting minutes)
-           * Circadian Appetite Regulation (Nightly sleep hours vs. 7.5h optimum)
-           * Nocturnal Sleep Quality & Airway Strain (Sleep trouble indicator SLQ050)
-      4. Layer 4 (Clinical Prognosis & Preventative Action Plan):
-         For every evaluated metric, the system provides:
-           - Targeted Action to Minimize Risk: Clear, concrete, and compassionate dietary
-             or lifestyle instructions (e.g., pairing carbohydrates with 10–15g viscous fiber,
-             limiting sodium to <2,000 mg while boosting potassium vegetables, breaking prolonged
-             sitting every 45 minutes).
-           - Staged Clinical Progression (Levels of Consequence):
-             * Level 1 (Early Manifestation - Reversible): Short-term metabolic friction
-               (e.g., postprandial lethargy, subtle vascular tension, muscle LPL shutdown).
-             * Level 2 (Advanced Progression - Structural): Long-term structural disease
-               progression if unaddressed (e.g., beta-cell exhaustion, left ventricular remodeling,
-               coronary plaque calcification, ectopic visceral fat infiltration).
-  - Zero Retraining & Mathematical Elegance:
-    Achieved with 0% changes to neural network weights, 0% changes to the 88 features,
-    and 0% feature leakage—derived natively from Stage 1 attention tensors and Stage 2
-    thermodynamic equations.
-
---------------------------------------------------------------------------------
-CHALLENGE 11: ADVERSARIAL STRESS TESTING & EDGE-CASE NUMERICAL ROBUSTNESS (5,000 CASES)
---------------------------------------------------------------------------------
-The Problem:
-  - Subjecting Stage 1 and Stage 2 to massive stress testing across 5,000 synthetic
-    clinical boundary cases and extreme patient phenotypes uncovered four hidden
-    failure modes that standard evaluation never caught:
-      1. The High-Caloric Fiber Ceiling Trap: In heavy, active patients (TDEE > 4,285 kcal),
-         the dietary fiber floor formula (14g / 1,000 kcal) scaled above 60g, exceeding
-         the hardcoded upper bound of 60.0g and crashing Stage 2 with an infeasible bound error.
-      2. The Low-Weight Protein RDA Inversion: In severe cachexia or low body weight (<28 kg),
-         the adult RDA protein floor (56g) exceeded the upper bound (2.0 * weight = 50g),
-         causing lower > upper infeasibility.
-      3. The Negative Log1p Sleep Deviation Crash: Providing raw signed sleep deviations
-         (e.g., 4h sleep -> -3.5h deviation) triggered undefined log1p(-3.5) crashes
-         because training had used absolute values (.abs()).
-      4. The Ultra-Healthy Baseline Ratio Trap: In patients entering with pristine baseline
-         diets (e.g., Na/K ratio = 0.20), Filter 3 demanded that post-intervention ratios
-         remain <= 0.20, requiring impossible potassium intakes (>15,000 mg) and causing
-         unwarranted filter rejection.
-
-How We Solved It (Rigorous Q1 Verification & Engineering Invariants):
-  - Dynamic Bound Clamping:
-    * Set fiber_max = max(60.0, fiber_min + 10.0), guaranteeing feasibility even for 6,000+ kcal athletic regimes.
-    * Set prot_max = max(2.0 * weight, prot_min + 5.0), eliminating RDA bound inversions.
-  - Defensive Feature Preprocessing:
-    * Enforced abs() for SLEEP_DEV_FROM_7_5 and max(val, 0.0) across all log1p intake columns
-      prior to normalization, achieving a 100.0% pass rate (5,000 / 5,000) on Stage 1 stress tests.
-  - Clinical Guideline Ratio Ceilings:
-    * Aligned Filter 3 targets to clinical guideline maximums: target_ratio = max(baseline_ratio, clinical_cutoff),
-      ensuring that patients already in the optimal range (<1.00 sugar/fiber, <1.00 Na/K, <0.40 sat/unsat)
-      are verified without demanding unphysical mega-dosing.
-  - Linear Pareto Hinge Loss in Stage 2:
-    * Added a direct Pareto penalty (lambda * sum(ReLU(P* - P0))) to the Adam optimization objective,
-      preventing the gradient descent from improving heart disease risk at the cost of worsening diabetes.
-  - Normal-Weight Clinical Reassurance:
-    * Updated terminal and JSON report formatting to classify "NORMAL" and "SAFE" metrics under
-      reassuring preservation guidance rather than disease progression warnings.
-
---------------------------------------------------------------------------------
-CHALLENGE 12: DISCRETE INTEGER MEAL SYNTHESIS VS CONTINUOUS MICRONUTRIENT ENVELOPE
-(L1 GOAL-PROGRAMMING SLACKS & SUB-60MS HiGHS SOLVER)
---------------------------------------------------------------------------------
-The Problem:
-  - Stage 2 counterfactual optimization outputs an individualized, continuous 39-dimensional
-    nutrient vector (e.g. 1.23 mg Vitamin B1, 28.4 mcg Selenium, 1962.0 kcal).
-  - In Stage 3, cooked Indian food is consumed as discrete household servings (q_i in {0, 1, 2, 3}
-    for whole bowls of dal, phulkas, cups of rice, and sabzis).
-  - Natural cooked foods bundle all 39 nutrients together in fixed biological ratios. Without artificial
-    chemical multivitamin tablets or synthetic fortifiers, it is mathematically impossible for any discrete
-    combination of 4 to 8 whole cooked dishes to land simultaneously within 39 tight continuous bounds.
-  - A classical hard-constrained MILP formulation immediately returns "INFEASIBLE" (no solution exists),
-    crashing the clinical pipeline. Furthermore, unbounded integer branch-and-bound searches risk freezing
-    interactive web APIs (>5-10 seconds latency).
-
-How We Solved It:
-  - Two-Sided L1 Goal-Programming Formulation:
-    * Replaced rigid equality/tight bounds with two-sided L1 slack variables:
-      L_k <= sum_i(F_k,i * q_i) + e-_k - e+_k <= U_k, where e+_k, e-_k >= 0.
-    * Normalized slack penalties by nutrient scale and weighted them by clinical priority (DR1TKCAL: 100,
-      DR1TSODI: 30, DR1TPROT: 28, DR1TFIBE: 25, DR1TPOTA: 25, DR1TSFAT: 22).
-    * This guarantees mathematical feasibility for 100% of patient profiles while tightly penalizing
-      deviations from therapeutic targets.
-  - Anti-Freeze HiGHS Execution Budget (<=50 ms):
-    * Implemented the solver using SciPy's HiGHS C++ engine (`scipy.optimize.milp`) with a hard 50 ms
-      timeout (`DEFAULT_TIME_LIMIT_SEC = 0.05`).
-    * Implemented a fast deterministic recovery candidate evaluated under the identical objective function,
-      preventing any unhandled timeout crashes.
-  - Empirical Verification:
-    * Reference patient (1962 kcal target): Delivered 1,963.0 kcal (0.05% error, 1 kcal delta), 83.6g protein,
-      48.9g fiber, Na/K ratio 0.48 in 57.3 ms. Passed calories, macros, Na/K ratio, and fiber adequacy.
-    * Evaluated in the unified master runner `infer_bionutrigpt_pipeline_Stage_1_2_and_3.py`.
-
---------------------------------------------------------------------------------
-CHALLENGE 13: THE COMPOSITE RECIPE FALLACY: MODELING COOKING OIL, AROMATICS,
-AND GRAVY IN DISCRETE MEAL SYNTHESIS
---------------------------------------------------------------------------------
-The Problem:
-  - Naive clinical dietary algorithms optimize across single raw ingredients in isolation
-    (e.g., "The patient needs 12g protein -> prescribe 40g raw chickpeas").
-  - In practice, a patient does not eat raw chickpeas; they cook them into a composite dish
-    (e.g. Chana Masala) by adding 1-2 tsp cooking oil (5-10g fat), onions, tomatoes, and salt.
-  - If cooking oil and seasoning are ignored by the optimizer, the patient consumes an extra
-    100-300 unrecorded calories and 10-15g of unmonitored fat, severely violating their
-    Stage 2 cardiometabolic prescription (e.g. saturated fat <= 10% of calories, sodium <= 2000mg).
-
-How We Solved It:
-  - Composite Cooked Recipe Matrix (RecipeDB Culinary Schema):
-    * Discarded single-ingredient optimization in favor of finished cooked dish vectors:
-      1 Katori Chana Masala (150g) = 40g dry chana (protein/fiber) + 5g cooking oil (45 kcal,
-      5g MUFA/PUFA) + 30g onion/tomato gravy (potassium, lycopene, sugars) + culinary salt (260mg Na).
-    * Integrated culinary fats, gravies, and seasoning sodium directly into the linear constraint
-      matrix across all 586 database items (`food_composition_ifct2017.csv`).
-  - Automated Multi-Objective Balancing:
-    * Because cooking fats are tracked inside each recipe's nutrient vector, the MILP solver
-      automatically pairs higher-fat curries with dry breads (e.g., Whole-Wheat Phulka with
-      1.5g fat, rather than deep-fried Puri with 20g fat) and steamed sabzis.
-    * Guaranteed that delivered daily saturated fat, sodium, and caloric balance remain strictly
-      within clinical safety bounds.
-
---------------------------------------------------------------------------------
-CHALLENGE 14: THE LLM ARITHMETIC & SERVING DRIFT FALLACY (STAGE 4 VULNERABILITY)
---------------------------------------------------------------------------------
-PROBLEM:
-  When prompting Large Language Models (LLMs) to generate patient meal plans, LLMs exhibit severe
-  stochastic failure modes in clinical settings:
-    1. Arithmetic Hallucination: Recalculating nutrient totals with basic math errors (e.g. summing
-       50g + 40g = 110g, or inventing calorie numbers incompatible with Atwater factors).
-    2. Serving Drift: Altering discrete portions (e.g., changing 1 Katori prescribed by Stage 3
-       into 2 bowls for lunch and 2 bowls for dinner, quadrupling patient intake).
-    3. Food Invention: Introducing dishes unlisted in the solved Stage 3 food basket (e.g., adding
-       salmon, oatmeal, or unprescribed snacks).
-    4. Schema Corruption: Generating unparseable Markdown or truncated JSON tokens.
-
-HOW WE SOLVED IT:
-  We established the "Zero Calculation Authority" paradigm in `stage4_clinical_compiler.py`:
-    * Absolute Mathematical Disenfranchisement: The LLM is denied any calculation or editing authority
-      over nutrient numbers. All macronutrient quantities, discrete serving counts (q_i), gram weights,
-      and 39-nutrient deliverables are injected verbatim from the upstream Stage 2/3 dossier.
-    * Chrono-Nutritional Allocation Algorithm: A deterministic heuristic algorithm maps the Stage 3
-      discrete basket into five physiological feeding windows (07:30 Breakfast, 10:30 Mid-Morning Snack,
-      13:00 Lunch, 16:30 Evening Snack, 19:30 Dinner).
-    * Automated Four-Invariant Post-Hoc Audit: Every generated report is checked against:
-        - Invariant 1 (Food Conservation): {dishes scheduled} == {Stage 3 food basket} (0% hallucinations).
-        - Invariant 2 (Quantity Conservation): sum_{meals} servings == q_i (100% exact match).
-        - Invariant 3 (Zero Recalculation Drift): No nutrient values may be modified.
-        - Invariant 4 (Strict JSON Schema): 100% parseable, structured clinical JSON.
-    * Fallback Circuit Breaker: If any invariant check fails or an LLM crashes, the system instantly
-      falls back to the deterministic compiler, guaranteeing 100.0% crash-free clinical delivery.
-    * 500-Case Stress Testing (`test_stage4_stress_test.py`): Verified 100.00% pass rate across 500
-      adversarial patient cases (37.0 dossiers/second, 24.58 ms mean latency).
-
---------------------------------------------------------------------------------
-CHALLENGE 15: THE HiGHS PRESOLVE HORIZON VS 1,250 DECISION VARIABLES (STAGE 3)
---------------------------------------------------------------------------------
-PROBLEM:
-  In the embedded 20-food fallback catalog, SciPy HiGHS solved the MILP in under 50 ms. However, when
-  expanding to the comprehensive 586-item database (ICMR-NIN IFCT 2017 + RecipeDB), the formulation
-  expanded to 1,217 constraint rows, 1,252 columns (586 binary z_i, 586 integer q_i, 64 continuous
-  slacks), and 19,973 nonzeros. With an aggressive 50 ms timeout, HiGHS was halted during presolve
-  LP relaxation before root branch-and-bound could produce an integer incumbent, triggering the heuristic
-  fallback unnecessarily.
-
-HOW WE SOLVED IT:
-  1. Horizon Recalibration: Profiled HiGHS across time horizons (0.1s, 0.2s, 0.35s, 0.5s, 1.0s). At
-     0.35s–0.50s, HiGHS consistently completes presolve, finds initial integer feasible solutions via
-     feasibility pump and randomized rounding, and achieves tight optimality gaps in 200–400 ms.
-  2. Candidate Prioritization: Assigned selection cost = 1.0 to authentic ready-to-eat cooked dishes
-     and fresh whole fruits, and cost = 10.0 to raw agricultural commodities (raw grains, flours, barks)
-     and high-fat confectionery (Khoa).
-  3. Deterministic Heuristic Tie-Breaker Alignment: Updated `_heuristic_incumbent()` to sort by
-     selection cost first and caloric delta second, ensuring the heuristic fallback never selects
-     raw agricultural ingredients or high-fat sweets even under adversarial stress conditions.
-
---------------------------------------------------------------------------------
-CHALLENGE 16: THE REAL LOCAL LLM RELIABILITY PARADOX & THE "ZERO HALLUCINATION" FALLACY (STAGE 4)
---------------------------------------------------------------------------------
-PROBLEM:
-  Deploying a real local language model (Qwen 2.5 3B Instruct 4-bit NF4) directly into clinical decision
-  support exposed severe systemic vulnerabilities that peer reviewers flagged:
-  1. The "Zero Hallucination" Claim: Stating that an LLM architecture is "zero-hallucination" is
-     scientifically untenable because an unconstrained generative model's open-ended prose cannot be
-     mathematically guaranteed against hallucinated assertions.
-  2. Unconstrained Raw LLM Failure: When tested on real clinical dossiers, the raw unconstrained LLM modified
-     serving quantities in 100% of cases (100/100), introduced invalid food identifiers in 65% of cases (65/100),
-     and suffered a 65% JSON parsing failure rate due to token budget exhaustion and syntax truncation.
-  3. LLM Attribution Leakage: Reviewers noted that previous benchmarks risked giving the LLM credit for
-     nutritional optimization and calorie accuracy that was actually mathematically computed by Stage 3.
-
-HOW WE SOLVED IT:
-  1. Independent Real LLM Reliability Evaluation: Developed a frozen 100-case diverse clinical testset
-     (`real_llm_evaluation_testset_100.json`, SHA256: 0FC1ACAC42AAAAFBF14540901574FCCB88D0010135A86996B635AC9109A8C1F5)
-     spanning 5 distinct cardiometabolic archetypes (N=20 each). Evaluated the LLM separately from the MILP solver.
-  2. Guarded AST Circuit-Breaker: Designed an Abstract Syntax Tree (AST) validator enforcing 4 deterministic invariants:
-     - Invariant 1 (Food Conservation): Only dishes in the Stage 3 basket are permitted in schedules.
-     - Invariant 2 (Quantity Conservation): Integer serving counts match Stage 3 outputs exactly.
-     - Invariant 3 (Zero Calculation Authority): Strips and suppresses uncertified nutritional claims in text.
-     - Invariant 4 (JSON Contract): Automatically repairs and canonicalizes malformed or truncated LLM output.
-  3. Rigorous Terminology Refinement: Formally replaced universal "zero hallucination" claims with:
-     "zero unauthorized food identifier or quantity modifications in validated outputs".
-  4. Empirical Verification: Guarded AST achieved 100/100 (100.0%, 95% CI [96.3%, 100.0%]) invariant
-     compliance vs. 0/100 (0.0%, 95% CI [0.0%, 3.7%]) for the raw LLM across all 5 archetypes.
-
---------------------------------------------------------------------------------
-CHALLENGE 17: EDGE LATENCY INCONSISTENCY & THE "SUB-SECOND COMPLETE PIPELINE" CONTRADICTION
---------------------------------------------------------------------------------
-PROBLEM:
-  The project simultaneously claimed a "sub-second edge execution pipeline" while reporting local LLM
-  runtimes of ~22.5s on AC power and up to 106s on battery power-saving mode. Peer reviewers noted this
-  as an internal contradiction: an end-to-end pipeline that takes 22.5s cannot be described as "sub-second".
-
-HOW WE SOLVED IT:
-  1. Formal Latency Decomposition into Three Operational Modes:
-     - Mode A: Deterministic Pre-LLM Pipeline (Stages 1–3 + AST Circuit-Breaker):
-       Stage 1 (14.8 ms) + Stage 2 (18.2 ms) + Stage 3 MILP (317.5 ms) + Stage 4 AST (24.5 ms)
-       = Mean 375.0 ms | p50: 295.4 ms | p95: 448.2 ms.
-       --> Sub-second claim: STRICTLY VALIDATED (YES).
-     - Mode B: Full End-to-End Pipeline with Local GPU LLM (AC Wall Power):
-       Qwen 2.5 3B NF4 throughput = 16.14 tokens/second.
-       Schedule generation = Mean 22.50 s | p50: 22.09 s | p95: 24.81 s.
-       End-to-end latency = Mean 22.87 s.
-       --> Sub-second claim: NOT SUPPORTED (Seconds-scale natural language narrative).
-     - Mode C: Full End-to-End Pipeline on Battery Power-Saving (5–8W Limit):
-       Hardware throttling reduces throughput to 2.20 tokens/second.
-       Schedule generation = Mean 96.80 s | p50: 95.39 s | p95: 106.40 s.
-       End-to-end latency = Mean 97.17 s.
-       --> Sub-second claim: NOT SUPPORTED.
-  2. Precision in Scientific Claims: Confined all "sub-second" claims strictly to the deterministic
-     mathematical screening and optimization core (Mode A), enabling instant walk-in clinic feedback,
-     while presenting Mode B/C as asynchronous comprehensive narrative compilation.
-
---------------------------------------------------------------------------------
-Q1/Q2 REVIEWER DEFENSE SUMMARY (WHY THESE SOLUTIONS WIN ACCEPTANCE)
---------------------------------------------------------------------------------
-  1. 0% Synthetic Blood Labs   : Refused to guess ~20k missing fasting labs or
-                                 fabricate Friedewald LDL; replaced with exact
-                                 non-fasting HbA1c, HDL, TC & AHA-backed Non-HDL.
-  2. Walk-In Clinic Ready      : Works morning or afternoon without fasting.
-  3. True Temporal Validation  : 2007-2016 Train (23,694) -> 2017-2020 Unseen
-                                 Future Test (7,046) with 0 patient overlap.
-  4. Zero Cheating / Leakage   : Removed 324 target-revealing columns & locked
-                                 all imputation/scaling strictly to Train only.
-  5. Numerically Sound ML Prep : Solved IQR=0 trap via log1p + 0.1%/99.9% clip +
-                                 StandardScaler + dual-channel _MISS indicators.
-  6. Culturally Grounded Stage 3: Replaced Western USDA with ICMR-NIN IFCT 2017;
-                                 solved discrete cooked dishes (MILP) instead of
-                                 unusable raw grain grams.
-  7. High-Speed Local Cache    : Eliminated live API downtime and latency lag
-                                 (<100 ms solve time); guarantees 100% offline
-                                 reproducibility for Q1 peer reviewers.
-  8. Full-Spectrum XAI & Staged Prognosis: Evaluates all 39 nutrients and 19 lifestyle
-                                 features across 17 clinical domains with actionable
-                                 interventions and graded (early vs. advanced) prognostic
-                                 stages, satisfying TRIPOD-AI and STROBE-AI guidelines.
-  9. Massive Stress Tested Invariants: 100% crash-free across 5,000 adversarial cases;
-                                 dynamic bound relaxation and Pareto hinge optimization
-                                 guarantee physical and mathematical feasibility.
-  10. Decoupled LLM Evaluation & AST Guardrails: 100-case frozen benchmark across 5 archetypes
-                                 proves 100.0% invariant compliance and zero unauthorized food or
-                                 quantity modifications vs 0% for unconstrained raw LLMs.
-  11. Decomposed Real-Time Latency: Sub-second execution (<400 ms) strictly confirmed for the
-                                 deterministic mathematical core; 22.9s profiled for on-device narrative.
-================================================================================
+18. Conflicting historical documents and manuscript readiness — current account consolidated.
+Old narratives are archived; current explanation separates deployment, research and
+historical snapshots. Latest IJIES package has12 pages/9 tables/2 figures and six authors.
+Funding/conflicts/contributions/ethics/data-access declarations await confirmation.
+Publication readiness and journal acceptance cannot be guaranteed by a tier label.
