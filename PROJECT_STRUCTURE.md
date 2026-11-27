@@ -46,6 +46,7 @@ BioNutriGPT-v1/
 │   └── backend/
 │       ├── main.py                                 # FastAPI application and route definitions
 │       ├── pipeline_service.py                     # Bridge between web requests and clinical pipeline
+│       ├── food_vision_service.py                  # Food photo and nutrition label vision analyzer
 │       ├── document_ingestion.py                   # Medical report PDF / image OCR & regex feature extractor
 │       ├── schemas.py                              # Pydantic request / response contracts
 │       ├── chat_service.py                         # Conversational LLM dietitian service

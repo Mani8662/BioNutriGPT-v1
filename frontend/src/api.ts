@@ -9,6 +9,7 @@ import type {
   ChatAcceptResponse,
   PlanSessionRecord,
   TxtParseResponse,
+  FoodPhotoAnalysisResponse,
 } from "./types/api";
 
 async function request<T>(
@@ -80,6 +81,32 @@ export const api = {
         throw new Error(data?.detail || "Could not process document file.");
       }
       return data as TxtParseResponse;
+    } finally {
+      clearTimeout(timeout);
+    }
+  },
+  uploadFoodPhoto: async (
+    file: File,
+    hdl: number = 56.0,
+    totalChol: number = 178.0,
+  ): Promise<FoodPhotoAnalysisResponse> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("hdl", String(hdl));
+    formData.append("total_chol", String(totalChol));
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 180000);
+    try {
+      const response = await fetch("/api/upload-food-photo", {
+        method: "POST",
+        body: formData,
+        signal: controller.signal,
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok) {
+        throw new Error(data?.detail || "Could not analyze food photo.");
+      }
+      return data as FoodPhotoAnalysisResponse;
     } finally {
       clearTimeout(timeout);
     }

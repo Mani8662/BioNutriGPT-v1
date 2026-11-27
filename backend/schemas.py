@@ -177,6 +177,29 @@ class TxtParseResponse(BaseModel):
     extracted_items: list[dict[str, Any]] | None = None
 
 
+class DetectedFoodItem(BaseModel):
+    name: str
+    portion: str
+    weight_g: float
+    confidence: float = 0.90
+    category: str | None = None
+
+
+class FoodPhotoAnalysisResponse(BaseModel):
+    success: bool
+    meal_type: str
+    is_nutrition_label: bool = False
+    detected_items: list[DetectedFoodItem]
+    nutrition_summary: dict[str, float]
+    extracted_nutrients: dict[str, float]
+    derived_ratios: dict[str, float]
+    biomarkers: dict[str, float]
+    features: list[float]
+    metadata: dict[str, Any]
+    summary: str
+    raw_vector_text: str | None = None
+
+
 # ---------------------------------------------------------------------------
 # Sub-models for ScreeningResult
 # ---------------------------------------------------------------------------

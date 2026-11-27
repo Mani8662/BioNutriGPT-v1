@@ -31,6 +31,45 @@ export interface TxtParseResponse {
   extracted_items?: Array<{ name: string; value: number; unit?: string }> | null;
 }
 
+export interface DetectedFoodItem {
+  name: string;
+  portion: string;
+  weight_g: number;
+  confidence: number;
+  category?: string | null;
+}
+
+export interface FoodPhotoAnalysisResponse {
+  success: boolean;
+  meal_type: string;
+  is_nutrition_label: boolean;
+  detected_items: DetectedFoodItem[];
+  nutrition_summary: {
+    calories: number;
+    protein_g: number;
+    carbs_g: number;
+    fat_g: number;
+    fiber_g: number;
+    sugars_g: number;
+    sodium_mg: number;
+    potassium_mg: number;
+    caffeine_mg: number;
+  };
+  extracted_nutrients: Record<string, number>;
+  derived_ratios: Record<string, number>;
+  biomarkers: {
+    LBDHDD: number;
+    LBXTC: number;
+    NON_HDL_CHOL: number;
+    CHOL_HDL_RATIO: number;
+    NON_HDL_TO_HDL_RATIO: number;
+  };
+  features: number[];
+  metadata: Partial<PatientMetadata>;
+  summary: string;
+  raw_vector_text?: string | null;
+}
+
 export interface RevisionDiff {
   added: Array<{ food_id: string; name: string; quantity: number }>;
   removed: Array<{ food_id: string; name: string; quantity: number }>;

@@ -39,12 +39,14 @@ from schemas import (
     ScreeningResult,
     SessionCreateRequest,
     TxtParseResponse,
+    FoodPhotoAnalysisResponse,
 )
 import pipeline_service as ps
 import chat_service
 import conversation_service
 import plan_store
 import document_ingestion
+import food_vision_service
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 LOGGER = logging.getLogger("BioNutriGPT.API")
@@ -194,6 +196,48 @@ async def upload_document_file(file: UploadFile = File(...)) -> TxtParseResponse
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=f"Error extracting features from document '{filename}': {exc}"
+        ) from exc
+
+
+@app.post("/api/upload-food-photo", response_model=FoodPhotoAnalysisResponse, tags=["Input Processing"])
+async def upload_food_photo_file(
+    file: UploadFile = File(...),
+    hdl: float = Form(56.0),
+    total_chol: float = Form(178.0),
+) -> FoodPhotoAnalysisResponse:
+    """Upload a meal plate or nutrition label photo, extract 39 dietary nutrients using multimodal vision,
+    derive 7 nutritional ratios, and return the profile ready for serum biomarker review."""
+    filename = file.filename or "food_photo.jpg"
+    suffix = filename.lower().split(".")[-1] if "." in filename else ""
+    supported = {"png", "jpg", "jpeg", "webp", "bmp", "tiff"}
+    if suffix not in supported:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Please upload an image file ({', '.join(sorted(supported))})."
+        )
+
+    try:
+        content_bytes = await file.read(15 * 1024 * 1024 + 1)
+        if len(content_bytes) > 15 * 1024 * 1024:
+            raise HTTPException(
+                status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                detail="Food photo exceeds the 15 MB limit."
+            )
+
+        analysis = food_vision_service.process_food_photo_intake(
+            image_bytes=content_bytes,
+            filename=filename,
+            hdl=hdl,
+            total_chol=total_chol,
+        )
+        return FoodPhotoAnalysisResponse(**analysis)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        LOGGER.error("Food vision processing error for '%s': %s\n%s", filename, exc, traceback.format_exc())
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"Error processing food photo '{filename}': {exc}"
         ) from exc
 
 

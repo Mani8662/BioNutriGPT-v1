@@ -12,3 +12,4 @@ accelerate
 bitsandbytes
 pypdf
 pillow
+google-genai>=0.3.0

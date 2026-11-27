@@ -44,6 +44,7 @@ import type {
   MealPlanPreferences,
   ChatResponse,
   PlanSessionRecord,
+  FoodPhotoAnalysisResponse,
 } from "./types/api";
 
 const pages = [
@@ -291,6 +292,31 @@ export default function App() {
         p.summary || "Document parsed and 87-feature clinical profile extracted successfully.",
       );
     });
+  }
+  function importFoodPhoto(p: FoodPhotoAnalysisResponse) {
+    if (
+      !p.features ||
+      p.features.length !== FEATURE_DEFINITIONS.length ||
+      p.features.some((v) => !Number.isFinite(v))
+    ) {
+      throw new Error(
+        "Could not assemble a valid 87-feature profile from the food photo. Please try a clearer picture.",
+      );
+    }
+    invalidate();
+    setValues(p.features.map(String));
+    const age = FEATURE_DEFINITIONS.findIndex((f) => f.name === "RIDAGEYR"),
+      sex = FEATURE_DEFINITIONS.findIndex((f) => f.name === "SEX_FEMALE");
+    setMeta({
+      ...blankMeta,
+      ...p.metadata,
+      age_years: p.metadata.age_years ?? p.features[age],
+      is_female: p.metadata.is_female ?? Boolean(p.features[sex]),
+    });
+    setSample(false);
+    setToast(
+      p.summary || "Food nutrients and biomarkers applied successfully to your profile.",
+    );
   }
   function screen() {
     const message = validateProfile(values, meta);
@@ -833,6 +859,7 @@ export default function App() {
                 loadSample={example}
                 importText={importText}
                 importDocument={importDocument}
+                importFoodPhoto={importFoodPhoto}
                 run={screen}
                 busy={!!busy}
                 sample={sample}
