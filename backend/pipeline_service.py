@@ -695,3 +695,344 @@ def get_hardware_status() -> dict[str, Any]:
         "vram_free_gb": vram_free,
         "pipeline_loaded": True
     }
+
+
+# ---------------------------------------------------------------------------
+# Document & Photo Clinical Feature Extraction
+# ---------------------------------------------------------------------------
+
+CLINICAL_FEATURE_ALIASES: dict[str, list[str]] = {
+    "LBDHDD": [
+        "hdl", "hdl cholesterol", "high density lipoprotein", "hdl-c", "hdl-chol", "s. hdl", "serum hdl", "good cholesterol"
+    ],
+    "LBXTC": [
+        "total cholesterol", "s. cholesterol", "serum cholesterol", "cholesterol total", "cholesterol, total", "total chol", "s. chol", "cholesterol"
+    ],
+    "NON_HDL_CHOL": [
+        "non-hdl cholesterol", "non hdl", "non-hdl-c", "non hdl cholesterol", "non-hdl chol"
+    ],
+    "CHOL_HDL_RATIO": [
+        "total / hdl ratio", "chol / hdl ratio", "total/hdl", "tc/hdl", "tc/hdl ratio", "chol/hdl"
+    ],
+    "NON_HDL_TO_HDL_RATIO": [
+        "non-hdl / hdl ratio", "non-hdl/hdl", "non hdl to hdl"
+    ],
+    "DR1TSODI": [
+        "sodium", "serum sodium", "na+", "s. sodium"
+    ],
+    "DR1TPOTA": [
+        "potassium", "serum potassium", "k+", "s. potassium"
+    ],
+    "DR1TCALC": [
+        "calcium", "total calcium", "serum calcium", "ca++", "s. calcium"
+    ],
+    "DR1TMAGN": [
+        "magnesium", "serum magnesium", "mg++", "s. magnesium"
+    ],
+    "DR1TPHOS": [
+        "phosphorus", "serum phosphorus", "phosphate"
+    ],
+    "DR1TIRON": [
+        "iron", "serum iron", "total iron", "fe"
+    ],
+    "DR1TZINC": [
+        "zinc", "serum zinc"
+    ],
+    "DR1TKCAL": [
+        "calories", "energy", "total calories", "total energy", "caloric intake", "kcal"
+    ],
+    "DR1TPROT": [
+        "protein", "total protein", "dietary protein"
+    ],
+    "DR1TCARB": [
+        "carbohydrates", "carbs", "total carbohydrates", "dietary carbohydrate"
+    ],
+    "DR1TTFAT": [
+        "total fat", "dietary fat", "fat"
+    ],
+    "DR1TSFAT": [
+        "saturated fat", "saturated fatty acids", "sat fat"
+    ],
+    "DR1TMFAT": [
+        "monounsaturated fat", "mufa", "mono fat"
+    ],
+    "DR1TPFAT": [
+        "polyunsaturated fat", "pufa", "poly fat"
+    ],
+    "DR1TFIBE": [
+        "dietary fiber", "fiber", "total fiber"
+    ],
+    "DR1TSUGR": [
+        "total sugars", "sugar", "sugars", "dietary sugar"
+    ],
+    "DR1TCHOL": [
+        "dietary cholesterol"
+    ],
+    "DR1TVC": [
+        "vitamin c", "ascorbic acid"
+    ],
+    "DR1TVB12": [
+        "vitamin b12", "cobalamin", "b12"
+    ],
+    "DR1TVARA": [
+        "vitamin a"
+    ],
+    "DR1TATOC": [
+        "vitamin e", "alpha-tocopherol"
+    ],
+    "SLEEP_HOURS": [
+        "sleep", "sleep duration", "sleep hours", "sleep per night", "hours of sleep", "nocturnal sleep"
+    ],
+}
+
+
+def extract_metadata_from_text(document_text: str) -> dict[str, Any]:
+    """Extract clinical metadata from patient headers (Age, Sex, Weight, Height, Activity)."""
+    metadata: dict[str, Any] = {
+        "age_years": None,
+        "weight_kg": None,
+        "height_cm": None,
+        "is_female": None,
+        "activity_level": None,
+    }
+    # Age
+    age_match = re.search(r"\b(?:age|patient\s+age)\s*[:=]?\s*(\d{1,3})\b", document_text, re.I)
+    if not age_match:
+        age_match = re.search(r"\b(\d{1,3})\s*(?:years?|yrs?|y)\s*(?:old)?\b", document_text, re.I)
+    if age_match:
+        try:
+            val = float(age_match.group(1))
+            if 1 <= val <= 120:
+                metadata["age_years"] = val
+        except ValueError:
+            pass
+
+    # Sex / Gender
+    sex_match = re.search(r"\b(?:sex|gender)\s*[:=]?\s*(female|male|f|m)\b", document_text, re.I)
+    if not sex_match:
+        sex_match = re.search(r"\b(?:\d{1,3}\s*(?:y|yrs?|years?)\s*[/,-]\s*)(female|male|f|m)\b", document_text, re.I)
+    if sex_match:
+        s = sex_match.group(1).lower()
+        metadata["is_female"] = s in ("female", "f")
+
+    # Weight
+    w_match = re.search(r"\b(?:weight|wt|body\s+weight)\s*[:=]?\s*(\d{2,3}(?:\.\d+)?)\s*(?:kg|kgs)?\b", document_text, re.I)
+    if w_match:
+        try:
+            w = float(w_match.group(1))
+            if 20 <= w <= 300:
+                metadata["weight_kg"] = w
+        except ValueError:
+            pass
+
+    # Height
+    h_match = re.search(r"\b(?:height|ht|body\s+height)\s*[:=]?\s*(\d{2,3}(?:\.\d+)?)\s*(?:cm)?\b", document_text, re.I)
+    if h_match:
+        try:
+            h = float(h_match.group(1))
+            if 60 <= h <= 250:
+                metadata["height_cm"] = h
+        except ValueError:
+            pass
+
+    # Activity level
+    act_match = re.search(r"\b(?:activity\s+level|activity)\s*[:=]?\s*(sedentary|light|moderate|active)\b", document_text, re.I)
+    if act_match:
+        metadata["activity_level"] = act_match.group(1).lower()
+
+    return metadata
+
+
+def extract_document_pipeline_features(document_text: str) -> dict[str, Any]:
+    """Extract clinical entities from report text and assemble into exact 87-feature project format."""
+    features: dict[str, float] = {}
+    lines = document_text.splitlines()
+    extracted_items: list[dict[str, Any]] = []
+
+    # 1. Header Metadata
+    metadata = extract_metadata_from_text(document_text)
+    if metadata["age_years"] is not None:
+        features["RIDAGEYR"] = metadata["age_years"]
+        extracted_items.append({"name": "RIDAGEYR", "label": "Age", "value": metadata["age_years"], "unit": "years", "is_derived": False})
+    if metadata["is_female"] is not None:
+        features["SEX_FEMALE"] = 1.0 if metadata["is_female"] else 0.0
+        extracted_items.append({"name": "SEX_FEMALE", "label": "Sex (Female=1, Male=0)", "value": features["SEX_FEMALE"], "unit": "0 or 1", "is_derived": False})
+
+    unit_aliases = {
+        "mg/dL": r"mg\s*/\s*dL",
+        "g": r"\bg\b",
+        "mg": r"\bmg\b",
+        "mcg": r"(?:mcg|µg|ug)",
+        "kcal": r"\bkcal\b",
+        "hours/night": r"(?:hours?|hrs?)(?:\s*/\s*night)?",
+        "years": r"\byears?\b",
+        "ratio": r"\bratio\b",
+        "%": r"%",
+        "min/day": r"min(?:utes)?\s*/\s*day",
+        "min/week": r"min(?:utes)?\s*/\s*w(?:ee)?k",
+        "MET-min/wk": r"MET",
+    }
+
+    # 2. Extract features by alias or label
+    for definition in FEATURE_DEFINITIONS:
+        code = definition["name"]
+        if code in features:
+            continue
+
+        aliases = [code, definition["label"]]
+        if code in CLINICAL_FEATURE_ALIASES:
+            aliases.extend(CLINICAL_FEATURE_ALIASES[code])
+
+        matches = []
+        for line in lines:
+            line_str = line.strip()
+            if not line_str:
+                continue
+
+            matched = False
+            for alias in aliases:
+                pattern = r"\b" + re.escape(alias) + r"\b"
+                m = re.search(pattern, line_str, re.I)
+                if m:
+                    matched = True
+                    tail = line_str[m.end():]
+                    numbers = re.findall(r"(?<![\w.])[-+]?(?:\d+\.?\d*|\.\d+)(?![\w.])", tail)
+                    if numbers:
+                        matches.append((line_str, numbers[0]))
+                    break
+            if matched and matches:
+                break
+
+        if not matches:
+            continue
+
+        evidence, raw_value = matches[0]
+        expected_unit = definition["unit"]
+        unit_pattern = unit_aliases.get(expected_unit)
+        has_unit = bool(unit_pattern and re.search(unit_pattern, evidence, re.I))
+        is_binary = expected_unit == "0 or 1" and raw_value in {"0", "1"}
+
+        if not has_unit and not is_binary:
+            if code not in {"LBXTC", "LBDHDD", "NON_HDL_CHOL", "DR1TKCAL", "DR1TPROT", "DR1TCARB", "DR1TTFAT"}:
+                continue
+
+        try:
+            val = float(raw_value)
+            if math.isfinite(val) and definition["min_val"] <= val <= definition["max_val"]:
+                features[code] = val
+                extracted_items.append({"name": code, "label": definition["label"], "value": val, "unit": definition["unit"], "is_derived": False})
+        except ValueError:
+            continue
+
+    # 3. Clinical lipid derivations
+    if "LBXTC" in features and "LBDHDD" in features:
+        tc = features["LBXTC"]
+        hdl = features["LBDHDD"]
+        if "NON_HDL_CHOL" not in features:
+            val = round(tc - hdl, 2)
+            features["NON_HDL_CHOL"] = val
+            extracted_items.append({"name": "NON_HDL_CHOL", "label": "Non-HDL Cholesterol (Derived)", "value": val, "unit": "mg/dL", "is_derived": True})
+        if "CHOL_HDL_RATIO" not in features and hdl > 0:
+            val = round(tc / hdl, 2)
+            features["CHOL_HDL_RATIO"] = val
+            extracted_items.append({"name": "CHOL_HDL_RATIO", "label": "Total / HDL Ratio (Derived)", "value": val, "unit": "ratio", "is_derived": True})
+        if "NON_HDL_TO_HDL_RATIO" not in features and hdl > 0:
+            val = round((tc - hdl) / hdl, 2)
+            features["NON_HDL_TO_HDL_RATIO"] = val
+            extracted_items.append({"name": "NON_HDL_TO_HDL_RATIO", "label": "Non-HDL / HDL Ratio (Derived)", "value": val, "unit": "ratio", "is_derived": True})
+
+    # 4. Dietary macronutrient ratio derivations
+    if "DR1TKCAL" in features and features["DR1TKCAL"] > 0:
+        kcal = features["DR1TKCAL"]
+        if "DR1TPROT" in features and "PROT_PCT_KCAL" not in features:
+            val = round((features["DR1TPROT"] * 4.0 / kcal) * 100.0, 2)
+            features["PROT_PCT_KCAL"] = val
+            extracted_items.append({"name": "PROT_PCT_KCAL", "label": "Protein % of Energy (Derived)", "value": val, "unit": "%", "is_derived": True})
+        if "DR1TCARB" in features and "CARB_PCT_KCAL" not in features:
+            val = round((features["DR1TCARB"] * 4.0 / kcal) * 100.0, 2)
+            features["CARB_PCT_KCAL"] = val
+            extracted_items.append({"name": "CARB_PCT_KCAL", "label": "Carb % of Energy (Derived)", "value": val, "unit": "%", "is_derived": True})
+        if "DR1TTFAT" in features and "FAT_PCT_KCAL" not in features:
+            val = round((features["DR1TTFAT"] * 9.0 / kcal) * 100.0, 2)
+            features["FAT_PCT_KCAL"] = val
+            extracted_items.append({"name": "FAT_PCT_KCAL", "label": "Fat % of Energy (Derived)", "value": val, "unit": "%", "is_derived": True})
+        if "DR1TFIBE" in features and "FIBER_PER_1000_KCAL" not in features:
+            val = round(features["DR1TFIBE"] / (kcal / 1000.0), 2)
+            features["FIBER_PER_1000_KCAL"] = val
+            extracted_items.append({"name": "FIBER_PER_1000_KCAL", "label": "Fiber per 1000 kcal (Derived)", "value": val, "unit": "g/1000kcal", "is_derived": True})
+
+    if "DR1TSUGR" in features and "DR1TFIBE" in features and "SUGAR_TO_FIBER_RATIO" not in features:
+        val = round(features["DR1TSUGR"] / (features["DR1TFIBE"] + 1.0), 2)
+        features["SUGAR_TO_FIBER_RATIO"] = val
+        extracted_items.append({"name": "SUGAR_TO_FIBER_RATIO", "label": "Sugar-to-Fiber Ratio (Derived)", "value": val, "unit": "ratio", "is_derived": True})
+
+    if "DR1TSODI" in features and "DR1TPOTA" in features and "SODIUM_POTASSIUM_RATIO" not in features:
+        val = round(features["DR1TSODI"] / (features["DR1TPOTA"] + 1.0), 2)
+        features["SODIUM_POTASSIUM_RATIO"] = val
+        extracted_items.append({"name": "SODIUM_POTASSIUM_RATIO", "label": "Sodium-to-Potassium Ratio (Derived)", "value": val, "unit": "ratio", "is_derived": True})
+
+    if "SLEEP_HOURS" in features and "SLEEP_DEV_FROM_7_5" not in features:
+        val = round(features["SLEEP_HOURS"] - 7.5, 2)
+        features["SLEEP_DEV_FROM_7_5"] = val
+        extracted_items.append({"name": "SLEEP_DEV_FROM_7_5", "label": "Sleep Deviation from 7.5h (Derived)", "value": val, "unit": "hours", "is_derived": True})
+
+    # 5. Build full 87-feature array in exact FEATURE_DEFINITIONS order
+    defaults_by_name = {f["name"]: float(f["default_val"]) for f in FEATURE_DEFINITIONS}
+    ordered_87: list[float] = []
+    for field in FEATURE_DEFINITIONS:
+        name = field["name"]
+        if name in features:
+            ordered_87.append(features[name])
+        else:
+            ordered_87.append(defaults_by_name.get(name, 0.0))
+
+    # 6. Format raw vector text with clinical metadata
+    raw_parts = [str(round(v, 4) if isinstance(v, float) else v) for v in ordered_87]
+    meta_parts = []
+    if metadata["weight_kg"] is not None:
+        meta_parts.append(f"weight_kg={metadata['weight_kg']}")
+    else:
+        meta_parts.append("weight_kg=74.0")
+    if metadata["height_cm"] is not None:
+        meta_parts.append(f"height_cm={metadata['height_cm']}")
+    else:
+        meta_parts.append("height_cm=176.0")
+    if metadata["age_years"] is not None:
+        meta_parts.append(f"age_years={metadata['age_years']}")
+    elif "RIDAGEYR" in features:
+        meta_parts.append(f"age_years={features['RIDAGEYR']}")
+    if metadata["is_female"] is not None:
+        meta_parts.append(f"is_female={'true' if metadata['is_female'] else 'false'}")
+    elif "SEX_FEMALE" in features:
+        meta_parts.append(f"is_female={'true' if features['SEX_FEMALE'] == 1.0 else 'false'}")
+    if metadata["activity_level"] is not None:
+        meta_parts.append(f"activity_level={metadata['activity_level']}")
+    else:
+        meta_parts.append("activity_level=sedentary")
+
+    raw_vector_text = " ".join(raw_parts) + "\n# CLINICAL_METADATA: " + " ".join(meta_parts)
+
+    summary_labels = [item["label"].replace(" (Derived)", "") for item in extracted_items]
+    summary_msg = f"Retrieved {len(extracted_items)} inputs from document ({', '.join(summary_labels[:6])}{', ...' if len(summary_labels) > 6 else ''}). Formatted into 87-feature project order."
+
+    # Fill metadata defaults if not found
+    final_metadata = {
+        "weight_kg": metadata["weight_kg"] if metadata["weight_kg"] is not None else 74.0,
+        "height_cm": metadata["height_cm"] if metadata["height_cm"] is not None else 176.0,
+        "age_years": metadata["age_years"] if metadata["age_years"] is not None else (features.get("RIDAGEYR", 42.0)),
+        "is_female": metadata["is_female"] if metadata["is_female"] is not None else (bool(features.get("SEX_FEMALE", 0))),
+        "activity_level": metadata["activity_level"] or "sedentary",
+        "renal_disease": False,
+        "pregnant": False,
+        "lactating": False,
+    }
+
+    return {
+        "features": ordered_87,
+        "metadata": final_metadata,
+        "feature_count": len(ordered_87),
+        "is_valid": True,
+        "summary": summary_msg,
+        "raw_vector_text": raw_vector_text,
+        "extracted_items": extracted_items,
+    }

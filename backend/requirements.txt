@@ -5,6 +5,10 @@ python-multipart
 numpy
 pandas
 scipy
+scikit-learn
 torch
 transformers
+accelerate
 bitsandbytes
+pypdf
+pillow

@@ -265,6 +265,33 @@ export default function App() {
       );
     });
   }
+  function importDocument(file: File) {
+    act("Analyzing report and extracting lab biomarkers…", async () => {
+      const p = await api.uploadDocument(file);
+      if (
+        !p.is_valid ||
+        p.features.length !== FEATURE_DEFINITIONS.length ||
+        p.features.some((v) => !Number.isFinite(v))
+      )
+        throw new Error(
+          "Could not extract a valid 87-feature profile from this document. Please check the file.",
+        );
+      invalidate();
+      setValues(p.features.map(String));
+      const age = FEATURE_DEFINITIONS.findIndex((f) => f.name === "RIDAGEYR"),
+        sex = FEATURE_DEFINITIONS.findIndex((f) => f.name === "SEX_FEMALE");
+      setMeta({
+        ...blankMeta,
+        ...p.metadata,
+        age_years: p.metadata.age_years ?? p.features[age],
+        is_female: p.metadata.is_female ?? Boolean(p.features[sex]),
+      });
+      setSample(false);
+      setToast(
+        p.summary || "Document parsed and 87-feature clinical profile extracted successfully.",
+      );
+    });
+  }
   function screen() {
     const message = validateProfile(values, meta);
     if (message) {
@@ -805,6 +832,7 @@ export default function App() {
                 setValue={updateValue}
                 loadSample={example}
                 importText={importText}
+                importDocument={importDocument}
                 run={screen}
                 busy={!!busy}
                 sample={sample}

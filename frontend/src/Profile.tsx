@@ -21,6 +21,7 @@ interface Props {
   setValue: (i: number, v: string) => void;
   loadSample: () => void;
   importText: (t: string) => void;
+  importDocument?: (file: File) => void;
   run: () => void;
   busy: boolean;
   sample: boolean;
@@ -37,18 +38,28 @@ export default function Profile(p: Props) {
   const count = p.values.filter((v) => v !== "").length;
   async function file(file?: File) {
     if (!file) return;
-    if (file.size > 1024 * 1024) {
-      setFileError("Choose a TXT file smaller than 1 MB.");
+    if (file.size > 10 * 1024 * 1024) {
+      setFileError("Choose a file smaller than 10 MB.");
       return;
     }
-    if (!file.name.toLowerCase().endsWith(".txt")) {
-      setFileError("Please choose a .txt file.");
+    const name = file.name.toLowerCase();
+    const isDoc = /\.(pdf|png|jpe?g|webp|bmp|tiff)$/i.test(name);
+    const isTxt = /\.(txt|csv)$/i.test(name);
+    if (!isDoc && !isTxt) {
+      setFileError("Please choose a supported file (.pdf, photo/image, .txt, or .csv).");
       return;
     }
     try {
       setFileError("");
-      setText(await file.text());
       setFileName(file.name);
+      if (isDoc) {
+        if (p.importDocument) {
+          p.importDocument(file);
+        }
+      } else {
+        const textContent = await file.text();
+        setText(textContent);
+      }
     } catch {
       setFileError(
         "This file could not be read. Choose it again or paste the text below.",
@@ -120,12 +131,12 @@ export default function Profile(p: Props) {
             <div className="import-panel">
               <label className="upload-box">
                 <Upload size={28} />
-                <strong>{fileName || "Choose a health profile"}</strong>
-                <span>TXT file · maximum 1 MB</span>
+                <strong>{fileName || "Choose a medical report or health profile"}</strong>
+                <span>PDF, photo (PNG/JPG/WEBP), or TXT/CSV · maximum 10 MB</span>
                 <input
-                  aria-label="Choose TXT file"
+                  aria-label="Choose medical report or TXT file"
                   type="file"
-                  accept=".txt,text/plain"
+                  accept=".txt,.csv,.pdf,.png,.jpg,.jpeg,.webp,.bmp,.tiff,application/pdf,image/*"
                   onChange={(e) => file(e.target.files?.[0])}
                 />
               </label>

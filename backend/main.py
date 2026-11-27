@@ -44,6 +44,7 @@ import pipeline_service as ps
 import chat_service
 import conversation_service
 import plan_store
+import document_ingestion
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 LOGGER = logging.getLogger("BioNutriGPT.API")
@@ -137,12 +138,62 @@ async def upload_txt_file(file: UploadFile = File(...)) -> TxtParseResponse:
             metadata=metadata,
             feature_count=len(values),
             is_valid=True,
-            summary=f"Successfully extracted {len(values)} features from '{file.filename}'."
+            summary=f"Successfully extracted {len(values)} features from '{file.filename}'.",
+            raw_vector_text=content_str,
         )
     except Exception as exc:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=f"Error parsing file '{file.filename}': {exc}"
+        ) from exc
+
+
+@app.post("/api/upload-document", response_model=TxtParseResponse, tags=["Input Processing"])
+async def upload_document_file(file: UploadFile = File(...)) -> TxtParseResponse:
+    """Upload a medical/lab report (PDF, PNG, JPG, JPEG, WEBP, BMP, TIFF) or patient profile (TXT, CSV),
+    extract clinical inputs, derive required ratios, and format into the exact 87-feature project order."""
+    filename = file.filename or "uploaded_file"
+    suffix = filename.lower().split(".")[-1] if "." in filename else ""
+    supported = {"txt", "csv", "pdf", "png", "jpg", "jpeg", "webp", "bmp", "tiff"}
+    if suffix not in supported:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported file format '{suffix}'. Supported formats: {', '.join(sorted(supported))}"
+        )
+
+    try:
+        content_bytes = await file.read(10 * 1024 * 1024 + 1)
+        if len(content_bytes) > 10 * 1024 * 1024:
+            raise HTTPException(
+                status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                detail="File size exceeds the 10 MB limit."
+            )
+
+        if suffix in {"txt", "csv"}:
+            content_str = content_bytes.decode("utf-8-sig", errors="replace")
+            try:
+                values, metadata = ps.parse_raw_text(content_str)
+                return TxtParseResponse(
+                    features=values,
+                    metadata=metadata,
+                    feature_count=len(values),
+                    is_valid=True,
+                    summary=f"Successfully extracted {len(values)} features and {len(metadata)} metadata fields from '{filename}'.",
+                    raw_vector_text=content_str,
+                )
+            except Exception:
+                pass  # Fallback to document pipeline feature extraction if not standard vector format
+
+        extracted_text, method = document_ingestion.extract_document_text(filename, content_bytes)
+        result = ps.extract_document_pipeline_features(extracted_text)
+        return TxtParseResponse(**result)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        LOGGER.error("Document extraction error for '%s': %s\n%s", filename, exc, traceback.format_exc())
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"Error extracting features from document '{filename}': {exc}"
         ) from exc
 
 

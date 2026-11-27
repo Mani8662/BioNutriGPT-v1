@@ -173,6 +173,8 @@ class TxtParseResponse(BaseModel):
     feature_count: int
     is_valid: bool
     summary: str
+    raw_vector_text: str | None = None
+    extracted_items: list[dict[str, Any]] | None = None
 
 
 # ---------------------------------------------------------------------------

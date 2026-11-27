@@ -64,6 +64,26 @@ async function request<T>(
 export const api = {
   health: () => request<HealthStatus>("/health"),
   parse: (text: string) => request<TxtParseResponse>("/parse-txt", { text }),
+  uploadDocument: async (file: File): Promise<TxtParseResponse> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 180000);
+    try {
+      const response = await fetch("/api/upload-document", {
+        method: "POST",
+        body: formData,
+        signal: controller.signal,
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok) {
+        throw new Error(data?.detail || "Could not process document file.");
+      }
+      return data as TxtParseResponse;
+    } finally {
+      clearTimeout(timeout);
+    }
+  },
   screen: (features: number[], metadata: PatientMetadata) =>
     request<ScreeningResult>("/screen", {
       schema_version: "nhanes-87-v2",

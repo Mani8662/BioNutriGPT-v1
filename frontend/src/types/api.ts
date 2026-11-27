@@ -27,6 +27,8 @@ export interface TxtParseResponse {
   feature_count: number;
   is_valid: boolean;
   summary: string;
+  raw_vector_text?: string | null;
+  extracted_items?: Array<{ name: string; value: number; unit?: string }> | null;
 }
 
 export interface RevisionDiff {

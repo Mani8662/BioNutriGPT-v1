@@ -12,3 +12,11 @@ Saved Model/stage4_lasi_v3_frozen_scenarios.json
 Saved Model/stage4_lasi_v4_frozen_scenarios.json
 Saved Model/stage4_v4_failed_export_attempt/stage4_lasi_v4_frozen_scenarios.json
 Saved Model/stage4_lasi_v4_checkpoints/
+
+# Python and Local Cache
+__pycache__/
+*.pyc
+.venv/
+backend/data/
+frontend/dist/
+backend/test_extraction.py
