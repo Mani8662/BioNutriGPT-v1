@@ -1,9 +1,0 @@
-IJIES manuscript prepared 25 November 2026 using the official single-column template encouraged for new submissions. Use BioNutriGPT_IJIES.docx and BioNutriGPT_IJIES.pdf; earlier manuscript folders are superseded for this submission. No new experiments were run.
-
-Author order and affiliation match the supplied names. Dandetikar Mani Kumar is the corresponding author at dandetikarmanikumar@gmail.com.
-
-Only author-confirmed administrative information remains: conflicts of interest; individual author contributions; funding/acknowledgements; institutional ethics determination and LASI access acknowledgements as applicable. These are not inferred. IJIES requires conflicts and author-contribution statements. They must be inserted before upload; the scientific text contains no fabricated declarations or placeholder claims. The author confirmation question remains open in the chat. A public code release is not claimed.
-
-Read and approve the manuscript and AI-use disclosure before submitting, consistent with IJIES policy. This package is not a submission action or acceptance guarantee. Only the manuscript is required for initial submission; the journal says a cover letter is unnecessary. Supplementary_Methods provides the exact predictor inventory and training grid if accepted as accompanying material. Source protocols and confidential participant records are not packaged for upload.
-
-Official requirements checked: https://inass.org/publications/pub-docusubmission/ and https://inass.org/publications/pub-submissionguidelines/ . The supplied article informed organization only; its text, findings and author declarations were not reused as our own.

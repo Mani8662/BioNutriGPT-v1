@@ -1,1 +1,0 @@
-Interrupted on repeated metrics.csv export with Windows OSError 22; preserved partial outputs. V3 uses distinct per-scenario metrics and a final aggregate export.

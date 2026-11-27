@@ -1,6 +1,0 @@
-# Optional; installation must match the operating system, Python and CUDA.
--r requirements-core.txt
-transformers
-accelerate
-bitsandbytes
-safetensors

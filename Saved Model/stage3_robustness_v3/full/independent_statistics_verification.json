@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "intervals": 19,
-  "exact_tests": 21,
-  "changed_ci_rejected": true,
-  "scope": "Independent statistical formulas; shared plan-audit helpers. Pilot intervals are mechanical checks, not population evidence.",
-  "script_sha256": "6bb5784ff6aa071e354b8c3bf568a99a13eccc8e3a446f6c3055bdf587c87fa2",
-  "analysis_sha256": "f123eb3922d34cd2d7e887587f6e361cbf4deceff6fcac097c4140acbd393488"
-}

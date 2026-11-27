@@ -1,1 +1,0 @@
-Word exported PDF: 23 pages. All page thumbnails inspected for broad layout; 13 tables and architecture figure present. render_docx.py unavailable because LibreOffice missing; used installed Word PDF export and bundled pdf2image/Poppler for preview. This is not journal-specific formatting approval.

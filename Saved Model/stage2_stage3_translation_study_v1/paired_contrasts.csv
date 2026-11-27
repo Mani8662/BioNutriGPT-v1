@@ -1,4 +1,0 @@
-contrast,role,arm1,arm2,s3_feasibility_diff_pp,s3_feasibility_exact_p,e2e_acceptance_diff_pp,e2e_ci_lower_pp,e2e_ci_upper_pp,e2e_exact_p,dist_diff,dist_ci_lower,dist_ci_upper
-Primary: Model-Guided (C) vs Minimum-Change (B),primary,model_guided,minimum_change,0.33,1.0,7.33,2.0,13.33,2.744048833847046e-05,0.0521,-0.1488,0.2552
-Secondary: Model-Guided (C) vs Rules-Only (A),secondary,model_guided,rules_only,0.0,1.0,29.0,18.0,39.0,3.4466261850741707e-18,-0.5626,-1.2992,0.29
-Secondary: Minimum-Change (B) vs Rules-Only (A),secondary,minimum_change,rules_only,-0.33,1.0,21.67,11.0,32.33,6.207629780314812e-11,-0.6147,-1.3987,0.2589

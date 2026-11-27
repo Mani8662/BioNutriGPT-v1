@@ -1,7 +1,0 @@
-{
-  "status": "passed",
-  "records": 4200,
-  "paired_margin_intervals_reproduced": 94,
-  "input_checkpoint_hashes_verified": 4200,
-  "scope": "Independent aggregation/interval formulas from exported rule rows; does not independently reimplement all clinical-policy rules."
-}

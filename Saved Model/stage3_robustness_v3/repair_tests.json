@@ -1,6 +1,0 @@
-{
-  "status": "passed",
-  "pilot_records": 42,
-  "mutation_checks": 11,
-  "scope": "One reused real participant engineering pilot, not synthetic cohort evidence; CI and perturbation checks also passed"
-}

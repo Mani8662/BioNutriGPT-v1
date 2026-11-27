@@ -1,6 +1,0 @@
-{
-  "passed": true,
-  "cases": 2,
-  "target_envelopes_identical": true,
-  "scope": "Single fixture GPU agreement, not a model-validity/generalization test."
-}

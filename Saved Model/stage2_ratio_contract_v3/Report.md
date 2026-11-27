@@ -1,9 +1,0 @@
-# Derived input and model binding contract
-
-2026-11-20. Production Stage1 screening and Stage2 now both recompute all seven dietary ratios using the existing Stage2 nutrient formulas. Caller arrays are copied, all other features remain unchanged, and supplied/derived ratios plus changed fields are recorded. This is explicit normalization, not rejection of mismatched ratios. It changes inference for previously inconsistent inputs; historical model evaluation results are not retrospectively updated or assumed applicable to altered input normalization.
-
-Both outputs now include checkpoint/preprocessor SHA-256, architecture, feature-order hash, raw-sigmoid probability transform and fixed cutoff provenance. This is an auditable identity contract, not proof the chosen artifacts/thresholds are clinically appropriate. No calibration, model migration or checkpoint replacement was performed. Repaired-v2 equivalence remains false. Asset paths in the evaluation binding distinguish the legacy and repaired files.
-
-Ten contract tests passed, including ratio idempotence, exact preservation of non-ratio inputs, no caller mutation and hash change after artifact changes. Two real CUDA Stage2 runs passed existing filters, had no envelope violations and produced identical nutrient envelopes and model bindings. The pilot supplied consistently recomputed ratios; supplied-ratio correction itself was covered by automated tests. Stage1's new shared normalization path was code-reviewed, not independently GPU-compared in this two-run Stage2 check.
-
-Remaining: validate shared Stage1/Stage2 predictions end to end, select a validated model/calibration/threshold contract before migration, run multiple-profile counterfactual stability and guideline-only comparison, and test Stage3 realization. Fixed threshold discontinuities and silent CLI weight/height defaults remain unresolved. No general robustness, causal or clinical-benefit claim follows from this work.

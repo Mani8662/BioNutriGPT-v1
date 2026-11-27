@@ -1,7 +1,0 @@
-stage,rows_before,rows_after,rows_dropped,reason
-deduplicate_seqn,45980,45980,0,Remove duplicate SEQN rows
-filter_cycles_2007_2020,45980,40417,5563,Drop 2005-2006 cycle (lacks WHO GPAQ PAQ605-PAD680; 100% blank exercise)
-require_complete_targets,40417,35502,4915,"Require observed binary {0, 1} labels for Diabetes, Obesity, and CVD"
-require_measured_non_fasting_labs,35502,33263,2239,"Require real measured HbA1c (LBXGH), HDL (LBDHDD), and Total Cholesterol (LBXTC)"
-require_reliable_nutrition,33263,31023,2240,Require DR1DRSTZ == 1 reliable dietary recall and all 39 DR1T nutrients
-filter_clinical_and_dietary_outliers,31023,30740,283,Drop implausible recalls (DR1TKCAL <500 or >8000 kcal) & lab extremes
