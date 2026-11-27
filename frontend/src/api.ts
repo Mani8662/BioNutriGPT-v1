@@ -89,11 +89,15 @@ export const api = {
     file: File,
     hdl: number = 56.0,
     totalChol: number = 178.0,
+    mealText: string = "",
   ): Promise<FoodPhotoAnalysisResponse> => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("hdl", String(hdl));
     formData.append("total_chol", String(totalChol));
+    if (mealText) {
+      formData.append("meal_text", mealText);
+    }
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 180000);
     try {

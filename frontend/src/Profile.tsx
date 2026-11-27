@@ -45,6 +45,7 @@ export default function Profile(p: Props) {
     [foodAnalyzing, setFoodAnalyzing] = useState(false),
     [foodError, setFoodError] = useState(""),
     [foodAnalysis, setFoodAnalysis] = useState<FoodPhotoAnalysisResponse | null>(null),
+    [mealNotes, setMealNotes] = useState(""),
     [hdlInput, setHdlInput] = useState(p.values[0] || "56"),
     [tcInput, setTcInput] = useState(p.values[1] || "178"),
     [nonHdlInput, setNonHdlInput] = useState(p.values[2] || "122"),
@@ -87,7 +88,7 @@ export default function Profile(p: Props) {
     try {
       const h = parseFloat(hdlInput) || 56.0;
       const tc = parseFloat(tcInput) || 178.0;
-      const result = await api.uploadFoodPhoto(file, h, tc);
+      const result = await api.uploadFoodPhoto(file, h, tc, mealNotes);
       setFoodAnalysis(result);
     } catch (err: any) {
       setFoodError(err?.message || "Could not analyze the food photo. Please try a clearer picture.");
@@ -292,6 +293,28 @@ export default function Profile(p: Props) {
                     onChange={(e) => handleFoodPhotoSelect(e.target.files?.[0])}
                   />
                 </label>
+
+                <div style={{ marginTop: "14px", display: "flex", flexDirection: "column", gap: "6px" }}>
+                  <label style={{ fontSize: "13px", fontWeight: "550", color: "#254441" }}>
+                    Optional: Specify dishes or food notes (especially for home-cooked meals without printed labels)
+                  </label>
+                  <input
+                    type="text"
+                    value={mealNotes}
+                    onChange={(e) => setMealNotes(e.target.value)}
+                    placeholder="e.g. 2 whole wheat roti, 1 katori moong dal, 1 cup mixed sabzi, 1 cup chai"
+                    style={{
+                      padding: "10px 14px",
+                      borderRadius: "8px",
+                      border: "1.5px solid #bdd5d2",
+                      fontSize: "14px",
+                      background: "#ffffff",
+                    }}
+                  />
+                  <span style={{ fontSize: "12px", color: "#618480" }}>
+                    Uses local Qwen 2.5 3B and local ICMR-NIN IFCT 2017 to calibrate exact portion weights and micro/macronutrients with 0 external APIs.
+                  </span>
+                </div>
 
                 {foodAnalyzing && (
                   <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "14px", background: "#e8f4f3", borderRadius: "8px", marginTop: "14px", color: "#0b5c56" }}>

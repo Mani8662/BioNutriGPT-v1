@@ -101,32 +101,23 @@ def compute_biomarker_ratios(hdl: float, total_chol: float) -> dict[str, float]:
     }
 
 
-def analyze_food_image_with_gemini(image_bytes: bytes, mime_type: str = "image/jpeg") -> dict[str, Any] | None:
-    """Analyze image using Gemini Multimodal Vision API if GEMINI_API_KEY is available."""
-    api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
+def extract_nutrients_with_local_qwen(ocr_text: str, meal_text: str = "") -> dict[str, Any] | None:
+    """Use on-device local Qwen 2.5 3B Instruct to parse food items and clinical nutrients from local OCR text."""
+    combined_text = f"{ocr_text}\n{meal_text}".strip()
+    if not combined_text:
         return None
 
     try:
-        from google import genai
-        from google.genai import types
-
-        client = genai.Client(api_key=api_key)
-
+        import infer_bionutrigpt_pipeline_Stage_1_to_4 as p14
         prompt = (
-            "You are a clinical dietitian and nutrition computer vision specialist. "
-            "Examine this image carefully. It could be either:\n"
-            "1. A photo of a meal, plate of food, dish, or beverage (e.g. Indian meal, dal, roti, rice, sabzi, coffee/tea).\n"
-            "2. A photo of a packaged food Nutrition Facts label.\n\n"
-            "Identify all visible food items and estimate their typical portion sizes in grams. "
-            "Then calculate the estimated nutritional content for the meal or extract exact numbers from the label.\n"
-            "Provide the output strictly in this JSON format:\n"
+            "You are a clinical dietitian and nutrition parsing assistant. "
+            "Extract all food items, serving portions, and nutritional values from the text below.\n"
+            "Map all nutritional values into this strict JSON format:\n"
             "{\n"
             '  "is_nutrition_label": true or false,\n'
             '  "meal_type": "Breakfast" | "Lunch" | "Dinner" | "Snack" | "Beverage" | "Packaged Food",\n'
             '  "detected_items": [\n'
-            '    {"name": "Whole Wheat Roti", "portion": "2 medium rotis", "weight_g": 60.0, "confidence": 0.95},\n'
-            '    {"name": "Toor Dal Tadka", "portion": "1 katori", "weight_g": 150.0, "confidence": 0.92}\n'
+            '    {"name": "Food name", "portion": "serving description", "weight_g": estimated_grams}\n'
             "  ],\n"
             '  "nutrients": {\n'
             '    "DR1TKCAL": calories (kcal),\n'
@@ -160,33 +151,19 @@ def analyze_food_image_with_gemini(image_bytes: bytes, mime_type: str = "image/j
             '    "DR1TCAFF": caffeine (mg),\n'
             '    "DR1TALCO": alcohol (g)\n'
             "  }\n"
-            "}"
+            "}\n"
+            f"INPUT TEXT:\n{combined_text[:2000]}\n\n"
+            "JSON:"
         )
-
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=[
-                types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
-                prompt,
-            ],
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                temperature=0.1,
-            ),
-        )
-
-        if response and response.text:
-            cleaned = response.text.strip()
-            if cleaned.startswith("```json"):
-                cleaned = cleaned[7:]
-            if cleaned.startswith("```"):
-                cleaned = cleaned[3:]
-            if cleaned.endswith("```"):
-                cleaned = cleaned[:-3]
-            parsed = json.loads(cleaned.strip())
-            return parsed
+        cfg = p14.CompilerConfig(backend="transformers", max_new_tokens=400)
+        res = p14._run_transformers_backend(prompt, cfg)
+        m = re.search(r"\{.*\}", res.text, re.DOTALL)
+        if m:
+            parsed = json.loads(m.group(0))
+            if isinstance(parsed, dict) and "nutrients" in parsed:
+                return parsed
     except Exception as exc:
-        LOGGER.warning("Gemini multimodal food vision call failed: %s", exc)
+        LOGGER.info("Local Qwen parsing skipped or failed: %s; using local deterministic extractor", exc)
 
     return None
 
@@ -281,22 +258,29 @@ def process_food_photo_intake(
     filename: str,
     hdl: float = 56.0,
     total_chol: float = 178.0,
+    meal_text: str = "",
 ) -> dict[str, Any]:
-    """Process an uploaded meal or nutrition label image into an 87-feature profile vector."""
+    """Process an uploaded meal or nutrition label image into an 87-feature profile vector locally."""
     if not image_bytes:
         raise ValueError("The uploaded image is empty.")
 
-    mime_type = "image/jpeg"
-    ext = Path(filename).suffix.lower()
-    if ext in {".png"}:
-        mime_type = "image/png"
-    elif ext in {".webp"}:
-        mime_type = "image/webp"
+    # 1. Run local on-device OCR on the image
+    ocr_text = ""
+    try:
+        try:
+            from backend import document_ingestion
+        except ImportError:
+            import document_ingestion
+        ocr_text, _ = document_ingestion.extract_document_text(filename, image_bytes)
+    except Exception as exc:
+        LOGGER.info("Local OCR did not find printed text (%s); proceeding with local food catalog matching", exc)
 
-    # Step 1: Attempt Multimodal AI Vision
-    analysis = analyze_food_image_with_gemini(image_bytes, mime_type=mime_type)
+    # 2. Try parsing with Local Qwen 2.5 3B (if text/description available)
+    analysis = None
+    if ocr_text or meal_text:
+        analysis = extract_nutrients_with_local_qwen(ocr_text=ocr_text, meal_text=meal_text)
 
-    # Step 2: Fallback to Catalog/OCR Estimator if Vision API is offline or unconfigured
+    # 3. Fallback to Local Catalog & Deterministic Estimator (zero network calls)
     if not analysis or "nutrients" not in analysis:
         analysis = fallback_catalog_food_estimator(filename, image_bytes)
 
@@ -314,7 +298,10 @@ def process_food_photo_intake(
     biomarkers = compute_biomarker_ratios(hdl=hdl, total_chol=total_chol)
 
     # Step 5: Merge all features into FEATURE_DEFINITIONS order (87 features)
-    from backend.pipeline_service import FEATURE_DEFINITIONS
+    try:
+        from backend.pipeline_service import FEATURE_DEFINITIONS
+    except ImportError:
+        from pipeline_service import FEATURE_DEFINITIONS
 
     all_features_map = {**biomarkers, **dietary_features, **derived_ratios}
     defaults_by_name = {f["name"]: float(f["default_val"]) for f in FEATURE_DEFINITIONS}

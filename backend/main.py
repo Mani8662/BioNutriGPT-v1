@@ -204,8 +204,9 @@ async def upload_food_photo_file(
     file: UploadFile = File(...),
     hdl: float = Form(56.0),
     total_chol: float = Form(178.0),
+    meal_text: str = Form(""),
 ) -> FoodPhotoAnalysisResponse:
-    """Upload a meal plate or nutrition label photo, extract 39 dietary nutrients using multimodal vision,
+    """Upload a meal plate or nutrition label photo, extract 39 dietary nutrients locally,
     derive 7 nutritional ratios, and return the profile ready for serum biomarker review."""
     filename = file.filename or "food_photo.jpg"
     suffix = filename.lower().split(".")[-1] if "." in filename else ""
@@ -229,6 +230,7 @@ async def upload_food_photo_file(
             filename=filename,
             hdl=hdl,
             total_chol=total_chol,
+            meal_text=meal_text,
         )
         return FoodPhotoAnalysisResponse(**analysis)
     except HTTPException:
