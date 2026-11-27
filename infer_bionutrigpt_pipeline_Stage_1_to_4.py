@@ -498,31 +498,37 @@ def _load_local_qwen_cached(model_name: str) -> tuple[Any, Any]:
     except ImportError as exc:
         raise Stage4Error("Local Qwen execution requires `transformers`, `torch`, `accelerate`, and `bitsandbytes`.") from exc
 
-    LOGGER.info("Configuring 4-bit BitsAndBytes quantization for %s...", model_name)
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True,
-    )
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    if "3b" in model_name.lower():
-        device_map = "cuda:0" if torch.cuda.is_available() else "auto"
-        max_mem = None
+    if not torch.cuda.is_available():
+        load_kwargs: dict[str, Any] = {
+            "device_map": "cpu",
+            "torch_dtype": torch.float32,
+        }
     else:
-        device_map = "auto"
-        max_mem = {0: "3.5GiB", "cpu": "16GiB"} if torch.cuda.is_available() else None
+        LOGGER.info("Configuring 4-bit BitsAndBytes quantization for %s...", model_name)
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.float16,
+            bnb_4bit_use_double_quant=True,
+        )
+        if "3b" in model_name.lower():
+            device_map = "cuda:0"
+            max_mem = None
+        else:
+            device_map = "auto"
+            max_mem = {0: "3.5GiB", "cpu": "16GiB"}
 
-    load_kwargs: dict[str, Any] = {
-        "quantization_config": bnb_config,
-        "device_map": device_map,
-        "torch_dtype": torch.float16,
-    }
-    if max_mem:
-        load_kwargs["max_memory"] = max_mem
+        load_kwargs: dict[str, Any] = {
+            "quantization_config": bnb_config,
+            "device_map": device_map,
+            "torch_dtype": torch.float16,
+        }
+        if max_mem:
+            load_kwargs["max_memory"] = max_mem
 
     try:
         model = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
@@ -885,7 +891,8 @@ def validate_dossier(payload: Any) -> ValidatedDossier:
         delivered_nutrition=list(stage3.get('delivered_nutrition', [])),
         clinical_verification={}, solver_metadata={}, accepted=True,
     )
-    if not s3.validate_candidate(current_output, s3.load_food_database(), dict(stage2))['accepted']:
+    dietary_mode = stage3.get('dietary_mode') or stage3.get('dietary_preference') or stage3.get('solver_metadata', {}).get('dietary_mode') or 'veg_nonveg_combo'
+    if not s3.validate_candidate(current_output, s3.load_food_database(), dict(stage2), dietary_mode=dietary_mode)['accepted']:
         raise Stage4Error('Stage 3 plan does not pass current catalog and active-rule validation.')
 
     basket = stage3.get("solved_food_basket") or stage3.get("basket")

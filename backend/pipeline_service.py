@@ -517,6 +517,7 @@ def run_optimization(
         dt_s3_ms = (time.perf_counter() - t0) * 1000.0
 
         stage3_dict = stage3_output.to_dict()
+        stage3_dict["dietary_mode"] = dietary_mode
         catalog_notes = {
             "pure_vegetarian": "Pure vegetarian plan generated from sourced lacto-vegetarian Indian & USDA entries.",
             "veg_nonveg_combo": "Vegetarian + non-vegetarian combo combining sourced Indian vegetarian dishes with non-veg protein options.",
