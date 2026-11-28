@@ -1,9 +1,9 @@
 {
-  "health_narrative": "Your body is working hard, and it needs the right fuel to stay healthy. We've created a meal plan that includes all the foods from your food basket, so you can enjoy a balanced diet that supports your health goals.",
+  "health_narrative": "Your body is working hard, and we want to help you eat the right foods to keep it healthy. We've made a plan that includes all the foods from your special basket, so you can feel great every day.",
   "biomarker_driver_explanations": [
     {
-      "modality": "Blood Tests",
-      "plain_language_explanation": "The foods we chose are based on what your body needs to stay healthy. They help manage your blood levels of important nutrients and substances."
+      "modality": "Blood tests",
+      "plain_language_explanation": "We look at what's in your blood to see how well your body is doing. This helps us know if we need to change your food plan."
     }
   ],
   "meal_schedule": [
@@ -15,10 +15,17 @@
           "food_id": "recipe_dal_palak",
           "name": "Arhar with spinach (Arhar dal aur palak)",
           "quantity": 1,
-          "guidance": "Enjoy your Arhar dal with spinach for a nutritious start to your day."
+          "items": [
+            {
+              "food_id": "recipe_dal_palak",
+              "name": "Arhar with spinach (Arhar dal aur palak)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 150 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "Start your day with a bowl of Arhar dal with spinach. It's packed with nutrients and will give you energy to begin your activities."
+      "guidance": "Enjoy your Arhar with spinach. It's packed with nutrients that help your body work well."
     },
     {
       "meal": "Mid-Morning Snack",
@@ -28,10 +35,17 @@
           "food_id": "recipe_plain_dosa",
           "name": "Plain dosa",
           "quantity": 1,
-          "guidance": "Have a small serving of plain dosa for a quick snack to keep you going until lunch."
+          "items": [
+            {
+              "food_id": "recipe_plain_dosa",
+              "name": "Plain dosa",
+              "quantity": 1,
+              "serving_unit": "1 standardized 100 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "Enjoy a plain dosa as a mid-morning snack. It's a good source of carbohydrates and protein to keep you energized."
+      "guidance": "Have a plain dosa. It's a good snack to keep you going until lunch."
     },
     {
       "meal": "Lunch",
@@ -41,45 +55,108 @@
           "food_id": "recipe_brown_rice_cooked",
           "name": "Brown rice, cooked (Bhure chawal)",
           "quantity": 1,
-          "guidance": "Eat a portion of brown rice for a filling and nutritious lunch."
+          "items": [
+            {
+              "food_id": "recipe_brown_rice_cooked",
+              "name": "Brown rice, cooked (Bhure chawal)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 100 g portion"
+            }
+          ]
+        },
+        {
+          "food_id": "recipe_bhindi_masala",
+          "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+          "quantity": 1,
+          "items": [
+            {
+              "food_id": "recipe_bhindi_masala",
+              "name": "Okra/Lady's fingers fry (Bhindi sabzi/sabji/subji)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 120 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "Take a portion of brown rice for lunch. It's a great source of carbohydrates and fiber to keep you full and satisfied."
+      "guidance": "Eat some brown rice and okra. These foods are full of vitamins and minerals that help your body stay strong."
     },
     {
       "meal": "Evening Snack",
-      "time": "17:00",
+      "time": "18:00",
       "items": [
         {
-          "food_id": "recipe_cabbage_peas",
-          "name": "Cabbage and peas (Pattagobhi aur matar)",
+          "food_id": "recipe_skim_curd",
+          "name": "Skim-milk curd / dahi (plain)",
           "quantity": 1,
-          "guidance": "Have a small portion of cabbage and peas for an evening snack."
+          "items": [
+            {
+              "food_id": "recipe_skim_curd",
+              "name": "Skim-milk curd / dahi (plain)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 150 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "Enjoy a small portion of cabbage and peas as an evening snack. It's a good source of vegetables and protein to keep you feeling full."
+      "guidance": "Have some plain curd. It's a good snack to help you feel full and satisfied."
     },
     {
       "meal": "Dinner",
-      "time": "19:30",
+      "time": "20:30",
       "items": [
         {
-          "food_id": "recipe_skim_milk",
-          "name": "Skim milk / toned milk (plain)",
+          "food_id": "recipe_pomegranate_arils",
+          "name": "Fresh pomegranate arils (Anar dana)",
           "quantity": 1,
-          "guidance": "Drink a glass of skim milk for a satisfying and nutritious dinner."
+          "items": [
+            {
+              "food_id": "recipe_pomegranate_arils",
+              "name": "Fresh pomegranate arils (Anar dana)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 85 g portion"
+            }
+          ]
+        },
+        {
+          "food_id": "recipe_greek_yogurt_nonfat",
+          "name": "Nonfat Greek yogurt / hung curd (plain)",
+          "quantity": 1,
+          "items": [
+            {
+              "food_id": "recipe_greek_yogurt_nonfat",
+              "name": "Nonfat Greek yogurt / hung curd (plain)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 200 g portion"
+            }
+          ]
+        },
+        {
+          "food_id": "recipe_spinach_cooked",
+          "name": "Spinach, cooked, boiled (Palak sabzi)",
+          "quantity": 1,
+          "items": [
+            {
+              "food_id": "recipe_spinach_cooked",
+              "name": "Spinach, cooked, boiled (Palak sabzi)",
+              "quantity": 1,
+              "serving_unit": "1 standardized 120 g portion"
+            }
+          ]
         }
       ],
-      "guidance": "End your day with a glass of skim milk. It's a good source of calcium and protein to help you relax and sleep better."
-    }
+      "guidance": "Enjoy fresh pomegranate arils, nonfat Greek yogurt, and cooked spinach. These foods are rich in nutrients that help your body stay healthy."
   ],
   "culinary_directives": [
-    "Make sure to drink plenty of water throughout the day to stay hydrated."
+    "Start your day with a bowl of Arhar with spinach. It's a tasty and nutritious start.",
+    "Have a plain dosa for a mid-morning snack. It's easy on your tummy.",
+    "For lunch, enjoy some brown rice and okra. These foods are packed with vitamins and minerals.",
+    "Have some plain curd as an evening snack. It's a good way to feel full and satisfied.",
+    "End your day with fresh pomegranate arils, nonfat Greek yogurt, and cooked spinach. These foods are rich in nutrients."
   ],
   "lifestyle_hydration_guidance": {
-    "hydration": "Stay hydrated by drinking water throughout the day. Aim for at least 8 cups (64 ounces) of water per day.",
-    "post_meal_activity": "After meals, take a short walk to aid digestion and promote overall health.",
-    "sleep_hygiene": "Ensure you get 7-9 hours of quality sleep each night to support your health and well-being."
+    "hydration": "Drink plenty of water throughout the day to stay hydrated.",
+    "post_meal_activity": "After meals, take a short walk to help digest your food better.",
+    "sleep_hygiene": "Make sure to get enough sleep and maintain a regular sleep schedule."
   },
-  "closing_message": "We hope this meal plan helps you feel your best. If you have any questions or need adjustments, please don't hesitate to reach out to your healthcare provider."
+  "closing_message": "We hope this meal plan helps you feel great every day. If you have any questions or concerns, please talk to your healthcare provider."
 }

@@ -70,14 +70,14 @@ warnings.filterwarnings(
 # Input parsing and metadata resolution.
 # ---------------------------------------------------------------------------
 def parse_patient_vector(file_path: Path) -> np.ndarray:
-    """Read one raw Stage 1 patient vector and return finite float32[88].
+    """Read one raw Stage 1 patient vector and return finite float32[87].
 
     Supported formats:
       * .txt: one comma-separated or whitespace-separated line, optionally
         wrapped in square brackets
-      * .csv: one row with 88 columns or 88 rows with one column
-      * .npy: NumPy array containing exactly 88 values
-      * .json: JSON array containing exactly 88 values
+      * .csv: one row with 87 columns (or legacy 88 columns)
+      * .npy: NumPy array containing 87 values (or legacy 88 values)
+      * .json: JSON array containing 87 values (or legacy 88 values)
     """
     path = Path(file_path).expanduser()
     if not path.is_file():
@@ -110,17 +110,17 @@ def parse_patient_vector(file_path: Path) -> np.ndarray:
         # First interpret the file as a headerless numeric matrix, which is the
         # expected form for one-row or one-column vectors.
         frame = pd.read_csv(path, header=None)
-        if frame.shape == (1, s1.NUM_FEATURES):
+        if frame.shape in ((1, s1.NUM_FEATURES), (1, 88)):
             values = pd.to_numeric(frame.iloc[0], errors="raise").to_numpy(dtype=np.float32)
-        elif frame.shape == (s1.NUM_FEATURES, 1):
+        elif frame.shape in ((s1.NUM_FEATURES, 1), (88, 1)):
             values = pd.to_numeric(frame.iloc[:, 0], errors="raise").to_numpy(dtype=np.float32)
         else:
             # Also tolerate a conventional header row if it leaves one numeric
             # record with the required columns (or the transposed one-column form).
             frame = pd.read_csv(path)
-            if frame.shape == (1, s1.NUM_FEATURES):
+            if frame.shape in ((1, s1.NUM_FEATURES), (1, 88)):
                 values = pd.to_numeric(frame.iloc[0], errors="raise").to_numpy(dtype=np.float32)
-            elif frame.shape == (s1.NUM_FEATURES, 1):
+            elif frame.shape in ((s1.NUM_FEATURES, 1), (88, 1)):
                 values = pd.to_numeric(frame.iloc[:, 0], errors="raise").to_numpy(dtype=np.float32)
             else:
                 raise ValueError(
@@ -142,6 +142,11 @@ def parse_patient_vector(file_path: Path) -> np.ndarray:
 
     else:
         raise ValueError("Unsupported patient file type. Use .txt, .csv, .npy, or .json.")
+
+    if values.shape == (88,):
+        # Legacy 88-feature format containing LBXGH at index 0.
+        # Drop index 0 to align with repaired 87-feature production model.
+        values = values[1:]
 
     if values.shape != (s1.NUM_FEATURES,):
         raise ValueError(

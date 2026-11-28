@@ -434,6 +434,41 @@ def extract_json_object(raw_text: str) -> dict[str, Any]:
             data = json.loads(snippet)
             if isinstance(data, dict):
                 return data
+        except Exception:
+            pass
+
+        # Attempt 1: Fix missing closing brace before array close
+        repaired_text = re.sub(
+            r'("guidance"\s*:\s*"[^"]*"\s*)\n(\s*\]\s*,\s*\n\s*"culinary_directives")',
+            r"\1\n    }\n\2",
+            snippet,
+        )
+        try:
+            data = json.loads(repaired_text)
+            if isinstance(data, dict):
+                return data
+        except Exception:
+            pass
+
+        # Attempt 2: Use json_repair if available
+        try:
+            import json_repair
+            repaired_data = json_repair.loads(snippet)
+            if isinstance(repaired_data, dict):
+                if "meal_schedule" in repaired_data and isinstance(repaired_data["meal_schedule"], list) and len(repaired_data["meal_schedule"]) > 0:
+                    last_meal = repaired_data["meal_schedule"][-1]
+                    if isinstance(last_meal, dict):
+                        for key in ["culinary_directives", "lifestyle_hydration_guidance", "closing_message"]:
+                            if key in last_meal and key not in repaired_data:
+                                repaired_data[key] = last_meal.pop(key)
+                return repaired_data
+        except Exception:
+            pass
+
+        try:
+            data = json.loads(snippet)
+            if isinstance(data, dict):
+                return data
         except Exception as exc:
             raise Stage4Error(f"Extracted JSON block could not be decoded: {exc}") from exc
     raise Stage4Error("Could not locate a top-level JSON object in the model output.")

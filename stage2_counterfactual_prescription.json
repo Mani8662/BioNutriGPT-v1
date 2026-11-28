@@ -17,15 +17,23 @@
   },
   "derived_input_audit": {
     "policy": "recompute_from_raw_nutrients_v1",
-    "changed_fields": [],
+    "changed_fields": [
+      "PROT_PCT_KCAL",
+      "CARB_PCT_KCAL",
+      "FAT_PCT_KCAL",
+      "FIBER_PER_1000_KCAL",
+      "SUGAR_TO_FIBER_RATIO",
+      "SODIUM_POTASSIUM_RATIO",
+      "SAT_TO_UNSAT_FAT_RATIO"
+    ],
     "supplied": [
-      18.090452261306535,
-      50.25125628140703,
-      31.65829145728643,
-      15.075376884422111,
-      1.3548387096774193,
-      0.5427020851185376,
-      0.3991130820399113
+      18.09000015258789,
+      50.25,
+      31.649999618530273,
+      15.069999694824219,
+      1.350000023841858,
+      0.5400000214576721,
+      0.38999998569488525
     ],
     "derived": [
       18.090452261306535,
@@ -36,7 +44,16 @@
       0.5427020851185376,
       0.3991130820399113
     ],
-    "other_derived_changes": {}
+    "other_derived_changes": {
+      "CHOL_HDL_RATIO": {
+        "supplied": 3.1785709857940674,
+        "derived": 3.1785714285714284
+      },
+      "NON_HDL_TO_HDL_RATIO": {
+        "supplied": 2.1785709857940674,
+        "derived": 2.1785714285714284
+      }
+    }
   },
   "nutrient_ruleset_version": "adult-food-rule-review-v4-exposure-separated",
   "clinical_prescribing_validated": false,
@@ -535,11 +552,11 @@
     },
     {
       "nutrient": "DR1TVB1",
-      "baseline": 1.4,
+      "baseline": 1.399999976158142,
       "target": 1.3889201879503645,
       "min_bound": 1.2000000476837158,
       "max_bound": 1000000.0,
-      "delta": -0.011079812049635374,
+      "delta": -0.011079788207777552,
       "rule_provenance": {
         "nutrient": "DR1TVB1",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -562,11 +579,11 @@
     },
     {
       "nutrient": "DR1TVB2",
-      "baseline": 1.6,
+      "baseline": 1.600000023841858,
       "target": 1.8110307455063894,
       "min_bound": 1.2999999523162842,
       "max_bound": 1000000.0,
-      "delta": 0.21103074550638934,
+      "delta": 0.21103072166453152,
       "rule_provenance": {
         "nutrient": "DR1TVB2",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -616,11 +633,11 @@
     },
     {
       "nutrient": "DR1TVB6",
-      "baseline": 1.8,
+      "baseline": 1.7999999523162842,
       "target": 2.0531263351442397,
       "min_bound": 1.2999999523162842,
       "max_bound": 100.0,
-      "delta": 0.25312633514423966,
+      "delta": 0.2531263828279555,
       "rule_provenance": {
         "nutrient": "DR1TVB6",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -751,11 +768,11 @@
     },
     {
       "nutrient": "DR1TVB12",
-      "baseline": 4.2,
+      "baseline": 4.199999809265137,
       "target": 4.5256881713862676,
       "min_bound": 2.4000000953674316,
       "max_bound": 1000000.0,
-      "delta": 0.3256881713862674,
+      "delta": 0.32568836212113084,
       "rule_provenance": {
         "nutrient": "DR1TVB12",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -967,11 +984,11 @@
     },
     {
       "nutrient": "DR1TCOPP",
-      "baseline": 1.2,
+      "baseline": 1.2000000476837158,
       "target": 1.0368335247040126,
       "min_bound": 0.8999999761581421,
       "max_bound": 10.0,
-      "delta": -0.16316647529598738,
+      "delta": -0.16316652297970324,
       "rule_provenance": {
         "nutrient": "DR1TCOPP",
         "ruleset_version": "adult-food-rule-review-v4-exposure-separated",
@@ -1158,7 +1175,7 @@
       "optimization_status": "numerical_solver_converged",
       "objective_value": 4.853736110184471e-05,
       "projection_distance_normalized": 0.00985265051667263,
-      "runtime_ms": 404.87130000019533,
+      "runtime_ms": 259.98089999984586,
       "max_bound_residual": 0.0,
       "max_linear_residual": 0.0
     },
@@ -1221,7 +1238,7 @@
     "optimization_status": "numerical_solver_converged",
     "objective_value": 4.853736110184471e-05,
     "projection_distance_normalized": 0.00985265051667263,
-    "runtime_ms": 404.87130000019533,
+    "runtime_ms": 259.98089999984586,
     "max_bound_residual": 0.0,
     "max_linear_residual": 0.0
   },
