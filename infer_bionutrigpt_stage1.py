@@ -83,26 +83,35 @@ def parse_single_line_txt(file_path: Path) -> np.ndarray:
         except ValueError:
             continue
 
-    if len(values) != 88:
-        raise ValueError(f"Expected exactly 88 numbers in '{file_path}', but found {len(values)} values.")
+    if len(values) == 87:
+        pass
+    elif len(values) == 88:
+        # Detected legacy 88-element vector with HbA1c (LBXGH) at position 0.
+        # Drop it to match the repaired 87-feature zero-target-leakage model.
+        print("[INFO] Detected legacy 88-feature vector. Dropping index 0 (LBXGH / HbA1c) to match repaired 87-feature zero-leakage model.")
+        values = values[1:]
+    else:
+        raise ValueError(f"Expected 87 numbers (or legacy 88 with HbA1c) in '{file_path}', but found {len(values)} values.")
 
     return np.array(values, dtype=np.float32)
 
 
-def preprocess_raw_vector(raw_vector_88: np.ndarray, artifact_path: Path) -> np.ndarray:
-    """Preprocesses a raw clinical 88-vector if values are unnormalized."""
+def preprocess_raw_vector(raw_vector: np.ndarray, artifact_path: Path) -> np.ndarray:
+    """Preprocesses a raw clinical 87-feature vector if values are unnormalized."""
+    if len(raw_vector) == 88:
+        raw_vector = raw_vector[1:]
     # Check if vector looks already normalized (e.g., standard scores usually between -5 and +5)
     # If raw values contain Total Cholesterol (~180) or Calories (~2000), it's unnormalized.
-    is_raw = bool(raw_vector_88[2] > 20.0 or raw_vector_88[6] > 100.0)
+    is_raw = bool(raw_vector[1] > 20.0 or raw_vector[5] > 100.0)
     if not is_raw:
-        return raw_vector_88.copy()
+        return raw_vector.copy()
 
     if not artifact_path.is_file():
         raise FileNotFoundError(f"Preprocessing artifact not found at {artifact_path}")
 
     import joblib
     art = joblib.load(artifact_path)
-    df = pd.DataFrame([raw_vector_88], columns=s1.FEATURE_COLS)
+    df = pd.DataFrame([raw_vector], columns=s1.FEATURE_COLS)
 
     for c in art["log1p_cols"]:
         df[c] = np.log1p(np.maximum(df[c], 0))
@@ -117,14 +126,18 @@ def preprocess_raw_vector(raw_vector_88: np.ndarray, artifact_path: Path) -> np.
 
 def predict_patient(
     model: s1.BioNutriGPTStage1,
-    feature_vector_88: np.ndarray,
+    feature_vector: np.ndarray,
     device: torch.device,
 ) -> dict[str, Any]:
-    """Runs a single 88-dimensional patient vector through the network."""
-    if feature_vector_88.shape != (88,):
-        raise ValueError(f"Expected feature vector of shape (88,), got {feature_vector_88.shape}")
+    """Runs a single 87-dimensional patient vector through the network."""
+    expected_dim = len(s1.FEATURE_COLS)
+    if feature_vector.shape != (expected_dim,):
+        if feature_vector.shape == (88,):
+            feature_vector = feature_vector[1:]
+        else:
+            raise ValueError(f"Expected feature vector of shape ({expected_dim},), got {feature_vector.shape}")
 
-    x = torch.from_numpy(feature_vector_88.astype(np.float32)).unsqueeze(0).to(device)
+    x = torch.from_numpy(feature_vector.astype(np.float32)).unsqueeze(0).to(device)
 
     with torch.no_grad():
         logits, _, attn = model(x)
