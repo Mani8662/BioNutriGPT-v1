@@ -32,11 +32,17 @@ candidates = [
     CURRENT_DIR.parent / "Less Data",
 ]
 LESS_DATA_DIR = next(
-    (c for c in candidates if (c / "infer_bionutrigpt_pipeline_Stage_1_and_2.py").is_file()),
-    CURRENT_DIR.parent
+    (
+        c
+        for c in candidates
+        if (c / "infer_bionutrigpt_pipeline_Stage_1_and_2.py").is_file()
+        or (c / "Stage 2" / "infer_bionutrigpt_pipeline_Stage_1_and_2.py").is_file()
+    ),
+    CURRENT_DIR.parent,
 )
-if str(LESS_DATA_DIR) not in sys.path:
-    sys.path.insert(0, str(LESS_DATA_DIR))
+for _sub in (LESS_DATA_DIR, LESS_DATA_DIR / "Stage 1", LESS_DATA_DIR / "Stage 2", LESS_DATA_DIR / "Stage 3", LESS_DATA_DIR / "Stage 4"):
+    if _sub.is_dir() and str(_sub) not in sys.path:
+        sys.path.insert(0, str(_sub))
 
 # Import canonical upstream modules
 import infer_bionutrigpt_pipeline_Stage_1_and_2 as p12

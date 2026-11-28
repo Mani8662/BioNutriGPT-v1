@@ -14,7 +14,7 @@ from typing import Any
 import uuid
 
 ROOT = Path(__file__).resolve().parent.parent
-SESSIONS_DIR = ROOT / "Saved Model" / "plan_sessions"
+SESSIONS_DIR = Path(__file__).resolve().parent / "plan_sessions"
 
 
 def _now_iso() -> str:

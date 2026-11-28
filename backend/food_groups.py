@@ -4,7 +4,10 @@ import re
 from pathlib import Path
 
 def definitions():
-    return json.loads((Path(__file__).resolve().parent.parent/'food_group_preferences.json').read_text())['groups']
+    root = Path(__file__).resolve().parent.parent
+    candidate = root / 'Stage 3' / 'food_group_preferences.json'
+    path = candidate if candidate.is_file() else (root / 'food_group_preferences.json')
+    return json.loads(path.read_text())['groups']
 
 def excluded_ids(groups, catalog):
     known={f.food_id for f in catalog}; result=set(); definitions_by_group=definitions()
