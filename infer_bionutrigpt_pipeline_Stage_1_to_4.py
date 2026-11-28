@@ -498,7 +498,10 @@ def _load_local_qwen_cached(model_name: str) -> tuple[Any, Any]:
     except ImportError as exc:
         raise Stage4Error("Local Qwen execution requires `transformers`, `torch`, `accelerate`, and `bitsandbytes`.") from exc
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True, local_files_only=True)
+    except Exception:
+        tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
 
@@ -531,12 +534,18 @@ def _load_local_qwen_cached(model_name: str) -> tuple[Any, Any]:
             load_kwargs["max_memory"] = max_mem
 
     try:
-        model = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
+        try:
+            model = AutoModelForCausalLM.from_pretrained(model_name, local_files_only=True, **load_kwargs)
+        except Exception:
+            model = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
     except Exception as exc:
         LOGGER.warning("Accelerate device mapping hit an error (%s); falling back to device_map='auto'", exc)
         load_kwargs["device_map"] = "auto"
         load_kwargs.pop("max_memory", None)
-        model = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
+        try:
+            model = AutoModelForCausalLM.from_pretrained(model_name, local_files_only=True, **load_kwargs)
+        except Exception:
+            model = AutoModelForCausalLM.from_pretrained(model_name, **load_kwargs)
 
     _TORCH_MODEL_CACHE[model_name] = (tokenizer, model)
     return tokenizer, model

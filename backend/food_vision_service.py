@@ -101,6 +101,144 @@ def compute_biomarker_ratios(hdl: float, total_chol: float) -> dict[str, float]:
     }
 
 
+LABEL_NUTRIENT_PATTERNS: dict[str, list[str]] = {
+    "DR1TKCAL": [
+        r"(?:calories|energy|calorie)\s*[:=]?\s*(\d+(?:\.\d+)?)",
+    ],
+    "DR1TTFAT": [
+        r"(?:total\s+fat|fat)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+        r"(?:total\s+fat|fat)\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+    ],
+    "DR1TSFAT": [
+        r"(?:saturated\s+fat|sat\s+fat)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+        r"(?:saturated\s+fat|sat\s+fat)\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+    ],
+    "DR1TMFAT": [
+        r"(?:monounsaturated\s+fat|mufa)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+    ],
+    "DR1TPFAT": [
+        r"(?:polyunsaturated\s+fat|pufa)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+    ],
+    "DR1TCHOL": [
+        r"(?:cholesterol|cholesteral)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:cholesterol|cholesteral)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TSODI": [
+        r"(?:sodium)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:sodium)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TCARB": [
+        r"(?:total\s+carbohydrate|carbohydrates?|carbs?)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+        r"(?:total\s+carbohydrate|carbohydrates?|carbs?)\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+    ],
+    "DR1TFIBE": [
+        r"(?:dietary\s+fiber|fiber|fibre)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+        r"(?:dietary\s+fiber|fiber|fibre)\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+    ],
+    "DR1TSUGR": [
+        r"(?:total\s+sugars?|sugars?|added\s+sugars?)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+        r"(?:total\s+sugars?|sugars?|added\s+sugars?)\s*(\d+(?:\.\d+)?)\s*(?:g|q|9)",
+    ],
+    "DR1TPROT": [
+        r"(?:protein)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:g|q|9|a)",
+        r"(?:protein)\s*(\d+(?:\.\d+)?)\s*(?:g|q|9|a)",
+    ],
+    "DR1TCALC": [
+        r"(?:calcium)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:calcium)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TIRON": [
+        r"(?:iron)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:iron)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TPOTA": [
+        r"(?:potassium)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:potassium)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TMAGN": [
+        r"(?:magnesium)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:magnesium)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TZINC": [
+        r"(?:zinc)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:zinc)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TCAFF": [
+        r"(?:caffeine)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:caffeine)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TVC": [
+        r"(?:vitamin\s+c|ascorbic\s+acid)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+        r"(?:vitamin\s+c|ascorbic\s+acid)\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TVD": [
+        r"(?:vitamin\s+d)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:mcg|µg|ug|iu)?",
+    ],
+    "DR1TVB12": [
+        r"(?:vitamin\s+b12|b12|cobalamin)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:mcg|µg|ug)",
+    ],
+    "DR1TVB6": [
+        r"(?:vitamin\s+b6|b6|pyridoxine)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TVB1": [
+        r"(?:vitamin\s+b1|b1|thiamin)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TVB2": [
+        r"(?:vitamin\s+b2|b2|riboflavin)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TNIAC": [
+        r"(?:niacin|vitamin\s+b3)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TFDFE": [
+        r"(?:folate|folic\s+acid)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:mcg|µg|ug)",
+    ],
+    "DR1TATOC": [
+        r"(?:vitamin\s+e)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*mg",
+    ],
+    "DR1TVK": [
+        r"(?:vitamin\s+k)\s*[:=]?\s*(\d+(?:\.\d+)?)\s*(?:mcg|µg|ug)",
+    ],
+}
+
+
+def parse_nutrition_facts_label_text(text: str) -> dict[str, Any] | None:
+    """Deterministic extractor for tabular Nutrition Facts label OCR text."""
+    if not text:
+        return None
+
+    nutrients: dict[str, float] = {}
+    for code, patterns in LABEL_NUTRIENT_PATTERNS.items():
+        for pat in patterns:
+            m = re.search(pat, text, re.I)
+            if m:
+                try:
+                    nutrients[code] = float(m.group(1))
+                    break
+                except ValueError:
+                    pass
+
+    # Must find at least 3 label lines (e.g. Calories + Fat + Protein) to be a valid label
+    if len(nutrients) < 3:
+        return None
+
+    serving_match = re.search(r"serving\s+size\s*[:=]?\s*([^\n\r]+)", text, re.I)
+    serving_str = serving_match.group(1).strip() if serving_match else "1 serving"
+
+    return {
+        "is_nutrition_label": True,
+        "meal_type": "Packaged Food",
+        "detected_items": [
+            {
+                "name": "Packaged Food Item (Nutrition Facts)",
+                "portion": serving_str,
+                "weight_g": 100.0,
+                "confidence": 0.98,
+            }
+        ],
+        "nutrients": nutrients,
+    }
+
+
 def extract_nutrients_with_local_qwen(ocr_text: str, meal_text: str = "") -> dict[str, Any] | None:
     """Use on-device local Qwen 2.5 3B Instruct to parse food items and clinical nutrients from local OCR text."""
     combined_text = f"{ocr_text}\n{meal_text}".strip()
@@ -275,14 +413,17 @@ def process_food_photo_intake(
     except Exception as exc:
         LOGGER.info("Local OCR did not find printed text (%s); proceeding with local food catalog matching", exc)
 
-    # 2. Try parsing with Local Qwen 2.5 3B (if text/description available)
-    analysis = None
-    if ocr_text or meal_text:
-        analysis = extract_nutrients_with_local_qwen(ocr_text=ocr_text, meal_text=meal_text)
+    # 2. Check for Nutrition Facts Label text (deterministic high-accuracy OCR parse)
+    analysis = parse_nutrition_facts_label_text(ocr_text)
 
-    # 3. Fallback to Local Catalog & Deterministic Estimator (zero network calls)
+    # 3. Check if meal text itself is a Nutrition Facts label
+    if not analysis and meal_text:
+        analysis = parse_nutrition_facts_label_text(meal_text)
+
+    # 4. Fallback to Local Catalog & Deterministic Estimator (grounded in IFCT 2017 & cooked recipes)
     if not analysis or "nutrients" not in analysis:
-        analysis = fallback_catalog_food_estimator(filename, image_bytes)
+        effective_name = f"{filename} {meal_text}"
+        analysis = fallback_catalog_food_estimator(effective_name, image_bytes)
 
     extracted_nutrients = analysis.get("nutrients", {})
 
