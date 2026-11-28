@@ -36,7 +36,7 @@ interface Props {
 }
 export default function Profile(p: Props) {
   const [section, setSection] = useState("Basics"),
-    [tab, setTab] = useState("form"),
+    [tab, setTab] = useState("photo"),
     [text, setText] = useState(""),
     [fileName, setFileName] = useState(""),
     [search, setSearch] = useState(""),
